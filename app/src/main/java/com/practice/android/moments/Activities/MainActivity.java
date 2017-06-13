@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +22,13 @@ public class MainActivity extends AppCompatActivity {
     Button signin, signup; // sign in  and sign up button
     GoogleSignInOptions gso;//google sign button
 
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog; //dialog variable
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    SignInButton mGooglebutton;
+    FirebaseAuth.AuthStateListener authStateListener;
+    GoogleApiClient googleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +49,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Signup.class));
             }
         });
+
+
+// signin button
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog = new ProgressDialog(getApplicationContext());//dialog created
                 progressDialog.onStart();
                 progressDialog.setMessage("Please wait Validating");
                 progressDialog.show();
+
+
             }
         });
 
