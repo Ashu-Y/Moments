@@ -1,5 +1,6 @@
 package com.practice.android.moments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button signin, signup; // sign in  and sign up button
     GoogleSignInOptions gso;//google sign button
 
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +31,24 @@ public class MainActivity extends AppCompatActivity {
         signin = (Button) findViewById(R.id.button);
         signup = (Button) findViewById(R.id.button2);
 
-
+//Intent from login to new user signup page
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Signup.class));
             }
         });
+    signin.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.onStart();
+            progressDialog.setMessage("Please wait Validating");
+            progressDialog.show();
 
+
+        }
+    });
 
     }
 }
