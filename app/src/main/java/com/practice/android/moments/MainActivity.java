@@ -38,17 +38,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Signup.class));
             }
         });
-    signin.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            progressDialog = new ProgressDialog(getApplicationContext());
-            progressDialog.onStart();
-            progressDialog.setMessage("Please wait Validating");
-            progressDialog.show();
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog.onStart();
+                progressDialog.setMessage("Please wait Validating");
+                progressDialog.show();
 
-    if()
-        }
-    });
+                if (true) {
+                }
+            }
+        });
 
     }
 }
