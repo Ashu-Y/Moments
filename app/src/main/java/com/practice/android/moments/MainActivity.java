@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait Validating");
                 progressDialog.show();
 
-                if (true) {
-                }
             }
         });
 
