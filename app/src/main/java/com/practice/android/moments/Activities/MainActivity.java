@@ -1,4 +1,4 @@
-package com.practice.android.moments;
+package com.practice.android.moments.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.practice.android.moments.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,17 +39,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Signup.class));
             }
         });
-    signin.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            progressDialog = new ProgressDialog(getApplicationContext());
-            progressDialog.onStart();
-            progressDialog.setMessage("Please wait Validating");
-            progressDialog.show();
-
-    if()
-        }
-    });
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(getApplicationContext());
+                progressDialog.onStart();
+                progressDialog.setMessage("Please wait Validating");
+                progressDialog.show();
+            }
+        });
 
     }
 }
