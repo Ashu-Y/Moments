@@ -13,6 +13,6 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        Toast.makeText(Signup.this, "sfdsgs", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Signup.this, "Sign Up", Toast.LENGTH_SHORT).show();
     }
 }

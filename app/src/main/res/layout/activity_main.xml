@@ -85,13 +85,13 @@
     <TextView
         android:id="@+id/gooview"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_height="55dp"
         android:layout_below="@+id/textView2"
         android:layout_marginEnd="33dp"
         android:layout_marginTop="19dp"
         android:layout_toStartOf="@+id/button2"
         android:gravity="center"
-        android:text="Sign in with Google"
+        android:text="OR"
         android:textSize="18sp" />
 
 
@@ -99,9 +99,10 @@
         android:id="@+id/goobut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/gooview"
-        android:layout_toEndOf="@+id/gooview">
+        android:layout_below="@+id/gooview"
+        android:layout_toStartOf="@+id/button">
 
     </com.google.android.gms.common.SignInButton>
+
 
 </RelativeLayout>
