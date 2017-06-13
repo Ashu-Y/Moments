@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookButtonBase;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
@@ -28,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     SignInButton mGooglebutton;
     FirebaseAuth.AuthStateListener authStateListener;
     GoogleApiClient googleApiClient;
+    FacebookAuthCredential facebookAuthCredential;
+    FacebookButtonBase facebookButtonBase;
+    CallbackManager callbackManager;
+
 
 
     @Override
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please wait Validating");
                 progressDialog.show();
 
-
+//
             }
         });
 

@@ -104,5 +104,12 @@
 
     </com.google.android.gms.common.SignInButton>
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/gooview"
+        android:layout_below="@+id/gooview"
+        android:layout_gravity="center_horizontal" />
 
 </RelativeLayout>
