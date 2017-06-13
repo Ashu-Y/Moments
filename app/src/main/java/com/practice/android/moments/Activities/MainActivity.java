@@ -42,14 +42,6 @@ public class MainActivity extends AppCompatActivity {
         signin = (Button) findViewById(R.id.button);
         signup = (Button) findViewById(R.id.button2);
 
-//Intent from login to new user signup page
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Signup.class));
-            }
-        });
-
 
 // signin button
         signin.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //Intent from login to new user signup page
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, Signup.class));
+            }
+        });
+
 
     }
 }
