@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.practice.android.moments.MainActivity"
-
-        tools:ignore="HardcodedText,RtlHardcoded">
+android:background="#3ff2ce"
+    tools:ignore="HardcodedText,RtlHardcoded">
 
     <EditText
         android:id="@+id/Emailogin"
@@ -85,24 +83,24 @@
         android:textSize="18sp" />
 
     <TextView
-    android:id="@+id/gooview"
-    android:layout_width="wrap_content"
-    android:layout_height="35dp"
-    android:layout_below="@+id/textView2"
-    android:layout_marginEnd="33dp"
-    android:layout_marginTop="19dp"
-    android:layout_toStartOf="@+id/button2"
-    android:gravity="center"
-    android:text="Sign in with Google"
-    android:textSize="18sp" />
+        android:id="@+id/gooview"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/textView2"
+        android:layout_marginEnd="33dp"
+        android:layout_marginTop="19dp"
+        android:layout_toStartOf="@+id/button2"
+        android:gravity="center"
+        android:text="Sign in with Google"
+        android:textSize="18sp" />
 
 
     <com.google.android.gms.common.SignInButton
-    android:id="@+id/goobut"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignTop="@+id/gooview"
-    android:layout_toEndOf="@+id/gooview">
+        android:id="@+id/goobut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/gooview"
+        android:layout_toEndOf="@+id/gooview">
 
     </com.google.android.gms.common.SignInButton>
 
