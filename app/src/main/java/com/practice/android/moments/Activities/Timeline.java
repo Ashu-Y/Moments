@@ -48,6 +48,13 @@ public class Timeline extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /*
+    If navigation drawer is opened and Back Button is pressed then it
+    will take it to Timeline Activity
+    and Back Button is pressed it will open a dialog box written You want to exit!!!!
+    if pressed yes then it will exit
+    else it remain the same
+          */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     //    ProgressDialog progressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
         updateUI(currentUser);
         firebaseAuth.addAuthStateListener(authStateListener);
     }
@@ -127,7 +128,10 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
+    /*When Back Button is pressed it will open a dialog box written You want to exit!!!!
+      if pressed yes then it will exit
+      else it remain the same
+      */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
