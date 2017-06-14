@@ -1,11 +1,14 @@
 apply plugin: 'com.android.application'
 
+/* 1)(Creative SDK) Apply the Gradle Retrolambda Plugin */
+apply plugin: 'me.tatarka.retrolambda'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.practice.android.moments.editing"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -18,6 +21,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+/* 2)(Creative SDK) Compile for Java 1.8 or greater */
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    /* 3)(Creative SDK) Exclude duplicate licenses */
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+        pickFirst 'AndroidManifest.xml'
+    }
+
     productFlavors {
     }
 }
@@ -29,5 +49,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    /* 4)(Creative SDK) Add the CSDK framework dependencies (Make sure these version numbers are correct) */
+    compile 'com.adobe.creativesdk.foundation:auth:0.9.1251'
     testCompile 'junit:junit:4.12'
 }

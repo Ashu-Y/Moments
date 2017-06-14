@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.practice.android.moments.R;
 
 public class Signup extends AppCompatActivity {
-
+    //variables
     EditText name, email, password, conpassword, phone;
     Button sub, backtosign;
 
@@ -20,9 +20,9 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+// giving data from xml to variables
 
         name = (EditText) findViewById(R.id.nameca);
-
         email = (EditText) findViewById(R.id.emailuser);
         password = (EditText) findViewById(R.id.passworduser);
         conpassword = (EditText) findViewById(R.id.conpassworduser);
