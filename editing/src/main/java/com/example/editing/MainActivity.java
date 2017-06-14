@@ -1,4 +1,4 @@
-package com.practice.android.moments;
+package com.example.editing;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
