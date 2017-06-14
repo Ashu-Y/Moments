@@ -43,7 +43,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/passwordca"
+        android:id="@+id/passworduser"
         android:layout_width="198sp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -56,12 +56,12 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/conpasswordca"
+        android:id="@+id/conpassworduser"
         android:layout_width="198sp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/passwordca"
+        android:layout_below="@+id/passworduser"
         android:layout_marginLeft="32sp"
         android:layout_marginStart="32sp"
         android:layout_marginTop="20sp"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/conpasswordca"
+        android:layout_below="@+id/conpassworduser"
         android:layout_marginLeft="32sp"
         android:layout_marginStart="32sp"
         android:layout_marginTop="20sp"
