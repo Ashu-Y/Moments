@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text=" Moment Sign In "
-        android:textSize="50sp" />
+        android:textSize="40sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
