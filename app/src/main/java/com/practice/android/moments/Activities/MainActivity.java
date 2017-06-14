@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
