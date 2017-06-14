@@ -32,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     SignInButton mGooglebutton;
-    FirebaseAuth.AuthStateListener authStateListener;
     GoogleApiClient googleApiClient;
-
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
         signup = (Button) findViewById(R.id.button2);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.getCurrentUser();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() != null) {
+//                    startActivity(new Intent(MainActivity.this, Timeline.class));
+                    Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
 
 
 // signin button
@@ -71,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     //
@@ -100,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
 
                             Toast.makeText(MainActivity.this, "Problem in Signin", Toast.LENGTH_SHORT).show();
+
                         }
+
                     }
                 });
     }
