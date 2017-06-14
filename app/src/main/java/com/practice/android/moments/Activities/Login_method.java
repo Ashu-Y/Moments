@@ -30,6 +30,7 @@ public class Login_method extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Login_method.this, MainActivity.class));
+                finish();
 
             }
         });
@@ -38,7 +39,7 @@ public class Login_method extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Login_method.this, PhoneAuth.class));
-
+                finish();
             }
         });
 
