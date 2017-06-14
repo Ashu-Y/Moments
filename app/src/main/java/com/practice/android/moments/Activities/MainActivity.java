@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Signup.class));
-
             }
         });
 
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
         builder1.setMessage("You want to exit!!!!");
         builder1.setCancelable(true);
