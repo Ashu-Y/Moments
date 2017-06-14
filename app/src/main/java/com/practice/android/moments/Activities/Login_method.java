@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.practice.android.moments.R;
 
 import static java.lang.System.exit;
@@ -17,6 +18,8 @@ public class Login_method extends AppCompatActivity {
     Button ViaEmail;
     Button Viaphone;
 
+    GoogleSignInOptions googleSignInOptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,8 @@ public class Login_method extends AppCompatActivity {
 
         ViaEmail = (Button) findViewById(R.id.Emailact);
         Viaphone = (Button) findViewById(R.id.Phoneact);
+
+//        googleSignInOptions = new GoogleSignInOptions(Login_method.this);
 
 
         ViaEmail.setOnClickListener(new View.OnClickListener() {
