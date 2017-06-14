@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-//                    startActivity(new Intent(MainActivity.this, Timeline.class));
+                    startActivity(new Intent(MainActivity.this, Timeline.class));
                     Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                 }
             }
