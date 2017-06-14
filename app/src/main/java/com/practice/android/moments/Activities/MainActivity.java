@@ -1,6 +1,5 @@
 package com.practice.android.moments.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,14 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,13 +21,11 @@ public class MainActivity extends AppCompatActivity {
     //variables
     EditText login, pass; // login and password edittext
     Button signin, signup; // sign in  and sign up button
-    GoogleSignInOptions gso;//google sign button
+//    GoogleSignInOptions gso;//google sign button
 
-    ProgressDialog progressDialog; //dialog variable
+    //    ProgressDialog progressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
-    SignInButton mGooglebutton;
-    GoogleApiClient googleApiClient;
+
     private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
@@ -53,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-//                    startActivity(new Intent(MainActivity.this, Timeline.class));
+                    startActivity(new Intent(MainActivity.this, Timeline.class));
                     Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         };
@@ -76,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Signup.class));
+
             }
         });
 
@@ -106,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Password Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

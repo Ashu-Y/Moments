@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -24,14 +23,14 @@
                 android:layout_weight="0.60"
                 android:gravity="center"
                 android:text="username"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4"
                 android:scaleType="centerCrop"
-                android:src="@drawable/coffee_mug2"/>
+                android:src="@drawable/coffee_mug2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,13 +44,13 @@
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
                     android:paddingLeft="8dp"
-                    android:src="@drawable/like"/>
+                    android:src="@drawable/like" />
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
-                    android:src="@drawable/comment"/>
+                    android:src="@drawable/comment" />
 
             </LinearLayout>
 

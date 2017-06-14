@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "181144605993",
+    "firebase_url": "https://moments-443fc.firebaseio.com",
+    "project_id": "moments-443fc",
+    "storage_bucket": "moments-443fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181144605993:android:658a38e36e1a6258",
+        "android_client_info": {
+          "package_name": "com.practice.android.moments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181144605993-a20loo32jjh7bhcerj0967uq6cab9c3n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.practice.android.moments",
+            "certificate_hash": "6f6e599d832be8d75608a101b69fa22af0430423"
+          }
+        },
+        {
+          "client_id": "181144605993-201u6cq32f3152402ikhc5j7jru14v85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDCpDceJU2xfd9FNDFrx1equ_9x9piHyU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181144605993-201u6cq32f3152402ikhc5j7jru14v85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
