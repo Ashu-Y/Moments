@@ -32,6 +32,20 @@ public class Signup extends AppCompatActivity {
         backtosign = (Button) findViewById(R.id.loginuser);
 
 
+        sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+
+
+
+
+
         backtosign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
