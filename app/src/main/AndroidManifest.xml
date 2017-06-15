@@ -58,7 +58,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.Login_method" />
-        <activity android:name=".Activities.PhoneAuth"></activity>
+        <activity android:name=".Activities.PhoneAuth" />
     </application>
 
 </manifest>
