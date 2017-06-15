@@ -3,6 +3,7 @@ package com.practice.android.moments.Activities;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -61,7 +62,9 @@ public class Timeline extends AppCompatActivity
                             @Override
                             public void onResult(Status status) {
                                 Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-//                                startActivity(new Intent(Timeline.this, Login_method.class));
+
+
+                                startActivity(new Intent(Timeline.this, Login_method.class));
 
                             }
                         });
