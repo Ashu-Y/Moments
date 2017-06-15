@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     ProgressDialog mProgressDialog;
 
-    private FirebaseAuth.AuthStateListener authStateListener;
+    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Signinserver();
 
             }
