@@ -1,10 +1,15 @@
 package com.practice.android.moments.Activities;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -13,10 +18,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.appindexing.Action;
+import com.google.firebase.appindexing.FirebaseUserActions;
+import com.google.firebase.appindexing.builders.Actions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
+import com.practice.android.moments.RecyclerView.Contact;
+import com.practice.android.moments.RecyclerView.ContactsAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -122,6 +134,55 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+    public class UserListActivity extends AppCompatActivity {
+
+        ArrayList<Contact> contacts;
+
+        @SuppressLint("MissingSuperCall")
+        @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            // ...
+            // Lookup the recyclerview in activity layout
+            RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
+
+            // Initialize contacts
+            contacts = Contact.createContactsList(20);
+            // Create adapter passing in the sample user data
+            ContactsAdapter adapter = new ContactsAdapter(this, contacts);
+            // Attach the adapter to the recyclerview to populate items
+            rvContacts.setAdapter(adapter);
+            // Set layout manager to position the items
+            rvContacts.setLayoutManager(new LinearLayoutManager(this));
+            // That's all!
+        }
+
+        /**
+         * ATTENTION: This was auto-generated to implement the App Indexing API.
+         * See https://g.co/AppIndexing/AndroidStudio for more information.
+         */
+        public Action getIndexApiAction() {
+            return Actions.newView("UserList", "http://[ENTER-YOUR-URL-HERE]");
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+
+            // ATTENTION: This was auto-generated to implement the App Indexing API.
+            // See https://g.co/AppIndexing/AndroidStudio for more information.
+            FirebaseUserActions.getInstance().start(getIndexApiAction());
+        }
+
+        @Override
+        public void onStop() {
+
+            // ATTENTION: This was auto-generated to implement the App Indexing API.
+            // See https://g.co/AppIndexing/AndroidStudio for more information.
+            FirebaseUserActions.getInstance().end(getIndexApiAction());
+            super.onStop();
+        }
     }
 
     private void showProgressDialog() {
