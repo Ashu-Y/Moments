@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     //variables
     EditText login, pass; // login and password edittext
     Button signin, signup; // sign in  and sign up button
-//    GoogleSignInOptions gso;//google sign button
 
     //    ProgressDialog progressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
@@ -84,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         currentUser = firebaseAuth.getCurrentUser();
         updateUI(currentUser);
-        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     private void updateUI(FirebaseUser currentUser) {
+
 
     }
 
@@ -96,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         String strLogin = login.getText().toString().trim();
         String strpassword = pass.getText().toString().trim();
 
+        showProgressDialog();
 
         if (TextUtils.isEmpty(strLogin)) {
             //email empty
@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    private void showProgressDialog() {
     }
 
 }
