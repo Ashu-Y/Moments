@@ -2,6 +2,8 @@ package com.practice.android.moments.RecyclerView;
 
 import java.util.ArrayList;
 
+import static android.R.attr.id;
+
 /**
  * Created by gmgautam5000 on 6/15/2017.
  */
@@ -34,4 +36,9 @@ public class Contact {
 
             return contacts;
         }
+
+
+    public Object getId() {
+        return id;
+    }
 }

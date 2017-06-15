@@ -8,9 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.practice.android.moments.R;
 
@@ -24,10 +24,26 @@ import java.util.List;
 
 
 
-public class ContactsAdapter extends
-        RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
+public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
 
+    // Store a member variable for the contacts
+    List<Contact> mContacts;
+    // Store the context for easy access
+    Context mContext;
+
+    // Pass in the contact array into the constructor
+    List<Contact> contacts;
+    public ContactsAdapter(Context context, List<Contact> contacts){
+        mContacts = contacts;
+        mContext = context;
+    }
+
+
+    // Easy access to the context object in the recyclerview
+    private Context getContext() {
+        return mContext;
+    }
 
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
@@ -51,25 +67,12 @@ public class ContactsAdapter extends
             ImageViewNo3 = (ImageView) itemView.findViewById(R.id.imageview3);
         }
     }
-   {
 
 
-        // Store a member variable for the contacts
-        List<Contact> mContacts;
-        // Store the context for easy access
-         Context mContext;
 
-        // Pass in the contact array into the constructor
-         List<Contact> contacts;
-       ContactsAdapter(Context context, mContext, List<Contact> contacts) {
-            mContacts = contacts;
-            mContext = Context;
-        }
 
-        // Easy access to the context object in the recyclerview
-        private Context getContext() {
-            return mContext;
-        }
+
+
     @Override
     public ContactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -92,10 +95,12 @@ public class ContactsAdapter extends
         Contact contact = mContacts.get(position);
 
         // Set item views based on your views and data model
+        viewHolder.ImageViewNo1.setImageResource(R.drawable.coffee_mug2);
+        viewHolder.ImageViewNo2.setImageResource(R.drawable.coffee_mug2);
+        viewHolder.ImageViewNo3.setImageResource(R.drawable.coffee_mug2);
         TextView textView = viewHolder.nameTextView;
         textView.setText(contact.getName());
-        ImageView imageview = viewHolder.ImageView;
-        ImageView.setText("Message");
+
     }
 
     // Returns the total count of items in the list
@@ -103,26 +108,5 @@ public class ContactsAdapter extends
     public int getItemCount() {
         return mContacts.size();
     }
-    }
-public class UserListActivity extends AppCompatActivity {
 
-    ArrayList<Contact> contacts;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // ...
-        // Lookup the recyclerview in activity layout
-        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvContacts);
-
-        // Initialize contacts
-        contacts = Contact.createContactsList(20);
-        // Create adapter passing in the sample user data
-        ContactsAdapter adapter = new ContactsAdapter(this, contacts);
-        // Attach the adapter to the recyclerview to populate items
-        rvContacts.setAdapter(adapter);
-        // Set layout manager to position the items
-        rvContacts.setLayoutManager(new LinearLayoutManager(this));
-        // That's all!
-    }
-}
 }
