@@ -8,14 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.R;
 
 import static java.lang.System.exit;
 
 public class Login_method extends AppCompatActivity {
 
+    private static Object GoogleSignInApi;
     Button ViaEmail;
     Button Viaphone;
+    GoogleSignInOptions googleSignInOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,13 @@ public class Login_method extends AppCompatActivity {
         ViaEmail = (Button) findViewById(R.id.Emailact);
         Viaphone = (Button) findViewById(R.id.Phoneact);
 
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+                requestIdToken(getString(R.string.default_web_client_id)).
+                requestEmail().
+                build();
 
+
+//move to email activity
         ViaEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +44,7 @@ public class Login_method extends AppCompatActivity {
 
             }
         });
-
+//move to phone activity
         Viaphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,8 +53,31 @@ public class Login_method extends AppCompatActivity {
             }
         });
 
-
     }
+
+//    private void signIn() {
+//        Intent signInIntent = Login_method.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//            if (result.isSuccess()) {
+//                // Google Sign In was successful, authenticate with Firebase
+//                GoogleSignInAccount account = result.getSignInAccount();
+//                firebaseAuthWithGoogle(account);
+//            } else {
+//                // Google Sign In failed, update UI appropriately
+//                // ...
+//            }
+//        }
+//    }
+
 
     /*When Back Button is pressed it will open a dialog box written You want to exit!!!!
       if pressed yes then it will exit
@@ -76,5 +109,11 @@ public class Login_method extends AppCompatActivity {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseAuth.getInstance().getCurrentUser();
     }
 }

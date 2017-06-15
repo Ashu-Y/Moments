@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/linearlayout1">
 
 
             <TextView
@@ -23,6 +24,7 @@
                 android:layout_weight="0.60"
                 android:gravity="center"
                 android:text="username"
+                android:id="@+id/textview1"
                 android:textSize="18sp" />
 
             <ImageView
@@ -30,6 +32,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="4"
                 android:scaleType="centerCrop"
+                android:id="@+id/imageView1"
                 android:src="@drawable/coffee_mug2" />
 
             <LinearLayout
@@ -37,6 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
+                android:id="@+id/linearlayout2"
                 android:weightSum="1">
 
                 <ImageView
@@ -44,13 +48,15 @@
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
                     android:paddingLeft="8dp"
+                    android:id="@+id/imageview2"
                     android:src="@drawable/like" />
 
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
-                    android:src="@drawable/comment" />
+                    android:src="@drawable/comment"
+                    android:id="@+id/imageview3"/>
 
             </LinearLayout>
 
