@@ -2,6 +2,7 @@ package com.practice.android.moments.Activities;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     //    ProgressDialog progressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
+    ProgressDialog mProgressDialog;
 
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -135,6 +137,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
     public class UserListActivity extends AppCompatActivity {
 
         ArrayList<Contact> contacts;
@@ -185,7 +204,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showProgressDialog() {
-    }
 
 }
