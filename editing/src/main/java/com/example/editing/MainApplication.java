@@ -15,7 +15,7 @@ public class MainApplication extends Application implements IAdobeAuthClientCred
     private static final String CREATIVE_SDK_CLIENT_ID = "5d03e796d6c84d5fabe3015d3bc85053";
     private static final String CREATIVE_SDK_CLIENT_SECRET = "e03c7a54-a8b1-4d94-9d2f-98121380e390";
     private static final String CREATIVE_SDK_REDIRECT_URI = "ams+02a638ea6407c54257dcd43ad41b8657ccadae38://adobeid/5d03e796d6c84d5fabe3015d3bc85053";
-    private static final String[] CREATIVE_SDK_SCOPES = {"ashutosh.yadav.15cse@bml.edu.in", "Ashutosh Yadav", "address"};
+    private static final String[] CREATIVE_SDK_SCOPES = {"email", "profile", "address"};
 
     @Override
     public void onCreate() {

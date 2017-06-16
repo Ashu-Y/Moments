@@ -21,6 +21,12 @@
         android:text="Open Image Editor"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:text="Save"
+        android:layout_height="wrap_content"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

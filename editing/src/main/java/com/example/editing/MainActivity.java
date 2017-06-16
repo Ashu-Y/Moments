@@ -1,6 +1,8 @@
 package com.example.editing;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 import com.adobe.creativesdk.aviary.AdobeImageIntent;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mOpenGalleryButton;
     private Button mLaunchImageEditorButton;
+    private Button save;
     private ImageView mSelectedImageView;
 
     private Uri mSelectedImageUri;
@@ -42,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
         mOpenGalleryButton = (Button) findViewById(R.id.openGalleryButton);
         mLaunchImageEditorButton = (Button) findViewById(R.id.launchImageEditorButton);
+        save = (Button) findViewById(R.id.save);
+
         mSelectedImageView = (ImageView) findViewById(R.id.editedImageView);
 
 
@@ -82,13 +89,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File myDir = new File(root + "/Moments");
+        File myDir = new File(root.toString() + "/Moments");
 
         if (!myDir.exists()) {
             myDir.mkdirs();
         }
+
+        save.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+        View content = findViewById(R.id.editedImageView);
+        content.setDrawingCacheEnabled(true);
+        Bitmap bitmap = content.getDrawingCache();
+
+        File cachePath = new File(myDir + "/moments_10000.jpg");
+        try {
+            cachePath.createNewFile();
+            FileOutputStream ostream = new FileOutputStream(cachePath);
+            bitmap.compress(CompressFormat.JPEG, 100, ostream);
+            ostream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            }
+        });
 
     }
 
