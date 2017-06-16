@@ -21,10 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Fragments.BlankFragment;
 import com.practice.android.moments.Models.Post;
@@ -63,25 +60,24 @@ public class Timeline extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Button fragButton = (Button) findViewById(R.id.SignOut);
-        fragButton.setOnClickListener(new View.OnClickListener() {
+        Sign_Out = (Button) findViewById(R.id.SignOut);
+        Sign_Out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 FirebaseAuth.getInstance().signOut();
-                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-                                Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-
-
-                                startActivity(new Intent(Timeline.this, Login_method.class));
-
-                            }
-                        });
-
+                Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Timeline.this, Login_method.class));
+//
+//                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+//                        new ResultCallback<Status>() {
+//                            @Override
+//                            public void onResult(Status status) {
+//                                Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(Timeline.this, Login_method.class));
+//                            }
+//                        });
             }
         });
 
@@ -125,8 +121,6 @@ public class Timeline extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
-
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Timeline.this);
             builder1.setMessage("You want to exit!!!!");
             builder1.setCancelable(true);
@@ -136,9 +130,11 @@ public class Timeline extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-//                            exit(0);
                             finish();
+                            System.exit(0);
                         }
+
+
                     });
 
             builder1.setNegativeButton(
@@ -146,7 +142,7 @@ public class Timeline extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-
+                            Toast.makeText(Timeline.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                         }
                     });
 

@@ -2,9 +2,11 @@ package com.practice.android.moments.Activities;
 
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -139,5 +141,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+        builder1.setMessage("You want to exit!!!!");
+        builder1.setCancelable(true);
 
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+//                        exit(0);
+                        startActivity(new Intent(MainActivity.this, Login_method.class));
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+//                        Toast.makeText(MainActivity.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
 }
