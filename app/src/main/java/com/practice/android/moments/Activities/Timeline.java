@@ -23,8 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Fragments.BlankFragment;
 import com.practice.android.moments.R;
 
-import static java.lang.System.exit;
-
 public class Timeline extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     FragmentTransaction fragmentTransaction;
@@ -94,8 +92,11 @@ public class Timeline extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-                            exit(0);
+                            finish();
+                            System.exit(0);
                         }
+
+
                     });
 
             builder1.setNegativeButton(
