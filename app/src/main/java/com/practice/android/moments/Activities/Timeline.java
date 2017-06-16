@@ -94,7 +94,6 @@ public class Timeline extends AppCompatActivity
                                         startActivity(new Intent(Timeline.this, Login_method.class));
                                     }
                                 });
-
             }
         });
 
