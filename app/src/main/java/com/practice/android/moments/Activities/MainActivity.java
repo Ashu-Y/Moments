@@ -1,6 +1,7 @@
 package com.practice.android.moments.Activities;
 
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,20 +21,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
 
-import static java.lang.System.exit;
-
 public class MainActivity extends AppCompatActivity {
 
     //variables
     EditText login, pass; // login and password edittext
     Button signin, signup; // sign in  and sign up button
-//    GoogleSignInOptions gso;//google sign button
 
     //    ProgressDialog progressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
+    ProgressDialog mProgressDialog;
 
-    private FirebaseAuth.AuthStateListener authStateListener;
+    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +64,10 @@ public class MainActivity extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Signinserver();
 
             }
         });
-
 
         //Intent from login to new user signup page
         signup.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
@@ -88,18 +84,17 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         currentUser = firebaseAuth.getCurrentUser();
         updateUI(currentUser);
-        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     private void updateUI(FirebaseUser currentUser) {
 
     }
 
-    //
     public void Signinserver() {
         String strLogin = login.getText().toString().trim();
         String strpassword = pass.getText().toString().trim();
 
+        showProgressDialog();
 
         if (TextUtils.isEmpty(strLogin)) {
             //email empty
@@ -117,10 +112,12 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
+                        hideProgressDialog();
                         if (!task.isSuccessful()) {
-
                             Toast.makeText(MainActivity.this, "Problem in Signin", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, Timeline.class));
+                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -128,10 +125,22 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    /*When Back Button is pressed it will open a dialog box written You want to exit!!!!
-      if pressed yes then it will exit
-      else it remain the same
-      */
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
@@ -143,7 +152,8 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        exit(0);
+//                        exit(0);
+                        startActivity(new Intent(MainActivity.this, Login_method.class));
                     }
                 });
 
@@ -152,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-
+//                        Toast.makeText(MainActivity.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                     }
                 });
 

@@ -68,7 +68,7 @@
         android:layout_toEndOf="@+id/button"
         android:layout_toRightOf="@+id/button"
         android:background="#76bc34"
-        android:text="create it" />
+        android:text="Be one" />
 
     <TextView
         android:id="@+id/textView2"
@@ -82,34 +82,5 @@
         android:text="Not a member"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/gooview"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_below="@+id/textView2"
-        android:layout_marginEnd="33dp"
-        android:layout_marginTop="19dp"
-        android:layout_toStartOf="@+id/button2"
-        android:gravity="center"
-        android:text="OR"
-        android:textSize="18sp" />
-
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/goobut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/gooview"
-        android:layout_toStartOf="@+id/button">
-
-    </com.google.android.gms.common.SignInButton>
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/gooview"
-        android:layout_below="@+id/gooview"
-        android:layout_gravity="center_horizontal" />
 
 </RelativeLayout>
