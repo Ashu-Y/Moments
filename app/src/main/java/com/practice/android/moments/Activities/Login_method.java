@@ -72,8 +72,8 @@ public class Login_method extends AppCompatActivity {
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                firebaseUser = firebaseAuth.getCurrentUser();
-//                startActivity(new Intent(Login_method.this, Timeline.class));
+                firebaseUser = firebaseAuth.getCurrentUser();
+                startActivity(new Intent(Login_method.this, Timeline.class));
                 Toast.makeText(Login_method.this, "Logged in", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -124,6 +124,7 @@ public class Login_method extends AppCompatActivity {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             } else {
+                Toast.makeText(this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -176,7 +177,7 @@ public class Login_method extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-
+                        Toast.makeText(Login_method.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -187,7 +188,7 @@ public class Login_method extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
+//        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
