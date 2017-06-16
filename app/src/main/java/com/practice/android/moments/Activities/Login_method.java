@@ -26,8 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.practice.android.moments.R;
 
-import static java.lang.System.exit;
-
 public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
@@ -40,6 +38,7 @@ public class Login_method extends AppCompatActivity {
     FirebaseUser firebaseUser;
     FirebaseAuth.AuthStateListener authStateListener;
     com.google.android.gms.common.SignInButton signInButton;
+    GoogleSignInAccount account;
    
 
     @Override
@@ -63,7 +62,7 @@ public class Login_method extends AppCompatActivity {
                 .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+                        Toast.makeText(Login_method.this, "Check ur connection", Toast.LENGTH_SHORT).show();
                     }
                 }).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
 
@@ -72,8 +71,8 @@ public class Login_method extends AppCompatActivity {
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                firebaseUser = firebaseAuth.getCurrentUser();
-//                startActivity(new Intent(Login_method.this, Timeline.class));
+                firebaseUser = firebaseAuth.getCurrentUser();
+                startActivity(new Intent(Login_method.this, Timeline.class));
                 Toast.makeText(Login_method.this, "Logged in", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -107,6 +106,10 @@ public class Login_method extends AppCompatActivity {
 
     }
 
+
+    // Google Sign-in Button Code
+    //Starts
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -121,9 +124,11 @@ public class Login_method extends AppCompatActivity {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
+                account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
             } else {
+                Toast.makeText(this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
                 // Google Sign In failed, update UI appropriately
                 // ...
             }
@@ -138,7 +143,7 @@ public class Login_method extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
+                        Log.i(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -146,11 +151,18 @@ public class Login_method extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(Login_method.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(Login_method.this, Timeline.class));
+                            Toast.makeText(Login_method.this, "Logged in via Google", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
     }
 
+
+    // Google Sign-in Button Code
+    //Ends
 
     /*When Back Button is pressed it will open a dialog box written You want to exit!!!!
       if pressed yes then it will exit
@@ -167,7 +179,8 @@ public class Login_method extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        exit(0);
+                        System.exit(0);
+
                     }
                 });
 
@@ -176,7 +189,7 @@ public class Login_method extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-
+                        Toast.makeText(Login_method.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -187,7 +200,7 @@ public class Login_method extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
+//        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
