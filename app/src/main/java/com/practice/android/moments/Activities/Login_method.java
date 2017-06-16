@@ -123,6 +123,7 @@ public class Login_method extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
+
             } else {
                 Toast.makeText(this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
                 // Google Sign In failed, update UI appropriately
@@ -147,6 +148,10 @@ public class Login_method extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(Login_method.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(Login_method.this, Timeline.class));
+                            Toast.makeText(Login_method.this, "Logged in", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
