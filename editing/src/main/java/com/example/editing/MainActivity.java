@@ -152,8 +152,10 @@ public class MainActivity extends AppCompatActivity {
 
                     if(fileNames[i].equals(img_name.getText().toString() + ".jpg")){
 
+
                         Toast.makeText(MainActivity.this, "Image with same name already exists in the Moments folder",
                                 Toast.LENGTH_SHORT).show();
+                        imageExistsPopup();
                         return;
 
                     }
@@ -190,6 +192,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void imageExistsPopup(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Error");
+        builder.setMessage("Image with same name Exists");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int button) {
+                dialog.dismiss();
+                saveImage();
+            }
+        });
+
+        builder.show();
+    }
 
     /* 3) Handle the results */
     @Override

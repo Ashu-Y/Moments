@@ -11,27 +11,27 @@
 
     <Button
         android:id="@+id/openGalleryButton"
-        android:layout_width="wrap_content"
-        android:text="Open Gallery"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Image"/>
 
     <Button
         android:id="@+id/launchImageEditorButton"
-        android:layout_width="wrap_content"
-        android:text="Open Image Editor"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Image Editor"/>
 
     <Button
         android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:text="Save"
-        android:layout_height="wrap_content"/>
-
-    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Save"/>
+
+    <ImageView
         android:id="@+id/editedImageView"
-        android:adjustViewBounds="true"
-        android:layout_gravity="center"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"/>
 
 </LinearLayout>
