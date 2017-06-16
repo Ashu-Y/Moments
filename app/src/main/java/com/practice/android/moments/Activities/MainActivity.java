@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         //Intent from login to new user signup page
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Signup.class));
             }
         });
-
 
     }
 
@@ -88,10 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser) {
 
-
     }
 
-    //
     public void Signinserver() {
         String strLogin = login.getText().toString().trim();
         String strpassword = pass.getText().toString().trim();
@@ -114,10 +110,12 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
+                        hideProgressDialog();
                         if (!task.isSuccessful()) {
-
                             Toast.makeText(MainActivity.this, "Problem in Signin", Toast.LENGTH_SHORT).show();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, Timeline.class));
+                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
 
                         }
 
