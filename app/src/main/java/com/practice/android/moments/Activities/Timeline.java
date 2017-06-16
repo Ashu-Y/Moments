@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -84,6 +85,7 @@ public class Timeline extends AppCompatActivity
             public void onClick(View v) {
                 Log.i(TAG, "You clicked onClick Button");
                 FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
                 Auth.GoogleSignInApi.signOut(googleApiClient)
                         .setResultCallback(
                                 new ResultCallback<Status>() {
@@ -147,8 +149,9 @@ public class Timeline extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-//                            finish();
-                            System.exit(0);
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(1);
                         }
 
 

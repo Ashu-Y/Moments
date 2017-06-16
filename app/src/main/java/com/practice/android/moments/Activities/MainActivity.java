@@ -86,8 +86,16 @@ public class MainActivity extends AppCompatActivity {
         updateUI(currentUser);
     }
 
-    private void updateUI(FirebaseUser currentUser) {
 
+    private void updateUI(FirebaseUser user) {
+        hideProgressDialog();
+        if (user != null) {
+            startActivity(new Intent(MainActivity.this, Timeline.class));
+
+        } else {
+            Toast.makeText(MainActivity.this, "No user.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void Signinserver() {
@@ -112,13 +120,12 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        hideProgressDialog();
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Problem in Signin", Toast.LENGTH_SHORT).show();
-                        } else {
-                            startActivity(new Intent(MainActivity.this, Timeline.class));
-                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
 
+                        if (!task.isSuccessful()) {
+                            updateUI(null);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                            updateUI(currentUser);
                         }
 
                     }
@@ -152,7 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-//                        exit(0);
                         startActivity(new Intent(MainActivity.this, Login_method.class));
                     }
                 });
@@ -162,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-//                        Toast.makeText(MainActivity.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                     }
                 });
 
