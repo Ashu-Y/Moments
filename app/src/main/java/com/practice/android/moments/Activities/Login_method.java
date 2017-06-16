@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.practice.android.moments.R;
 
+
 public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
