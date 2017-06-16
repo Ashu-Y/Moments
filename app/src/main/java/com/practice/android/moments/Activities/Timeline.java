@@ -89,7 +89,7 @@ public class Timeline extends AppCompatActivity
                                 new ResultCallback<Status>() {
                                     @Override
                                     public void onResult(Status status) {
-                                        Log.i(TAG, "log off from google sign button");
+//                                        Log.i(TAG, "log off from google sign button");
                                         Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Timeline.this, Login_method.class));
                                     }
