@@ -187,14 +187,14 @@ public class Login_method extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-//        firebaseAuth.addAuthStateListener(authStateListener);
+        firebaseAuth.addAuthStateListener(authStateListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         if (authStateListener != null) {
-//            firebaseAuth.removeAuthStateListener(authStateListener);
+            firebaseAuth.removeAuthStateListener(authStateListener);
         }
     }
 
