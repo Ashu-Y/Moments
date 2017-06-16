@@ -106,8 +106,11 @@ public class MainActivity extends AppCompatActivity {
         content.setDrawingCacheEnabled(true);
         Bitmap bitmap = content.getDrawingCache();
 
-        File cachePath = new File(myDir + "/moments_10000.jpg");
+
+
         try {
+
+            File cachePath = new File(myDir + "/moments_10000.jpg");
             cachePath.createNewFile();
             FileOutputStream ostream = new FileOutputStream(cachePath);
             bitmap.compress(CompressFormat.JPEG, 100, ostream);
