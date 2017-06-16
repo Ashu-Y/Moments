@@ -11,6 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,10 +27,20 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Fragments.BlankFragment;
+import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
+import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
+
+import java.util.ArrayList;
 
 public class Timeline extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private RecyclerView mRecyclerView;
+    private PostRecyclerAdapter mPostRecyclerAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Post> mPostArrayList;
+
     FragmentTransaction fragmentTransaction;
     Button Sign_Out;
     GoogleApiClient mGoogleApiClient;
@@ -43,7 +56,7 @@ public class Timeline extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -71,6 +84,31 @@ public class Timeline extends AppCompatActivity
 
             }
         });
+
+        //Recycler
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        mLayoutManager = new LinearLayoutManager(this);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mPostArrayList = new ArrayList<>();
+
+        mPostArrayList.add(new Post("gautam", R.drawable.c1));
+        mPostArrayList.add(new Post("hitesh", R.drawable.c2));
+        mPostArrayList.add(new Post("piyush", R.drawable.c3));
+        mPostArrayList.add(new Post("abhya", R.drawable.c4));
+        mPostArrayList.add(new Post("mansi", R.drawable.c5));
+        mPostArrayList.add(new Post("naman", R.drawable.c6));
+        mPostArrayList.add(new Post("rajat", R.drawable.c7));
+
+        mPostRecyclerAdapter = new PostRecyclerAdapter(getApplicationContext(), mPostArrayList);
+
+        RecyclerView.ItemDecoration itemDecoration = new
+                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
+        mRecyclerView.setAdapter(mPostRecyclerAdapter);
 
     }
 

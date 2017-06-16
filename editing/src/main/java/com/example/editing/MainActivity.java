@@ -3,6 +3,7 @@ package com.example.editing;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.adobe.creativesdk.aviary.AdobeImageIntent;
+
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -78,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+
+        File myDir = new File(root + "/Moments");
+
+        if (!myDir.exists()) {
+            myDir.mkdirs();
+        }
 
     }
 
