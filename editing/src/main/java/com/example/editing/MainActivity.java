@@ -1,15 +1,19 @@
 package com.example.editing;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -34,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private Button save;
     private ImageView mSelectedImageView;
 
+    Bitmap bitmap;
+    File myDir;
+
     private Uri mSelectedImageUri;
 
     @Override
@@ -50,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.save);
 
         mSelectedImageView = (ImageView) findViewById(R.id.editedImageView);
-
 
 
 //        /* 1) Make a new Uri object (Replace this with a real image on your device) */
@@ -77,13 +83,13 @@ public class MainActivity extends AppCompatActivity {
         mLaunchImageEditorButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSelectedImageUri != null){
+                if (mSelectedImageUri != null) {
                     Intent imageEditorIntent = new AdobeImageIntent.Builder(MainActivity.this)
                             .setData(mSelectedImageUri)
                             .build();
 
                     startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Select an image from the Gallery", Toast.LENGTH_LONG).show();
                 }
             }
@@ -91,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         File root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
 
-        File myDir = new File(root.toString() + "/Moments");
+        myDir = new File(root.toString() + "/Moments");
 
         if (!myDir.exists()) {
             myDir.mkdirs();
@@ -102,28 +108,88 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-        View content = findViewById(R.id.editedImageView);
-        content.setDrawingCacheEnabled(true);
-        Bitmap bitmap = content.getDrawingCache();
+                ImageView content = (ImageView) findViewById(R.id.editedImageView);
+                content.setDrawingCacheEnabled(true);
+                bitmap = content.getDrawingCache();
 
+//                try {
+//
+//                    File cachePath = new File(myDir + "/moments_10000.jpg");
+//                    cachePath.createNewFile();
+//                    FileOutputStream ostream = new FileOutputStream(cachePath);
+//                    bitmap.compress(CompressFormat.JPEG, 100, ostream);
+//                    ostream.close();
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
-
-        try {
-
-            File cachePath = new File(myDir + "/moments_10000.jpg");
-            cachePath.createNewFile();
-            FileOutputStream ostream = new FileOutputStream(cachePath);
-            bitmap.compress(CompressFormat.JPEG, 100, ostream);
-            ostream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                saveImage();
 
             }
         });
 
     }
+
+    public void saveImage() {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.save_as_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText img_name = (EditText) dialogView.findViewById(R.id.img_name);
+
+        dialogBuilder.setTitle("Save As...");
+        dialogBuilder.setMessage("Enter image name:");
+        dialogBuilder.setIcon(R.drawable.like);
+
+        dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int whichButton) {
+
+                String[] fileNames = myDir.list();
+                for (int i = 0; i < fileNames.length; i++){
+
+                    if(fileNames[i].equals(img_name.getText().toString() + ".jpg")){
+
+                        Toast.makeText(MainActivity.this, "Image with same name already exists in the Moments folder",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+
+                    }
+                }
+
+                try {
+
+                    File cachePath = new File(myDir + "/" + img_name.getText().toString() + ".jpg");
+                    cachePath.createNewFile();
+                    FileOutputStream ostream = new FileOutputStream(cachePath);
+                    bitmap.compress(CompressFormat.JPEG, 100, ostream);
+                    ostream.close();
+
+                    Toast.makeText(MainActivity.this, "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+
+        if (mSelectedImageUri != null) {
+            AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.show();
+        } else {
+            Toast.makeText(MainActivity.this, "Select an image first", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
     /* 3) Handle the results */
     @Override
