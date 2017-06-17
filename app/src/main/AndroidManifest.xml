@@ -27,12 +27,11 @@
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Signup">
-
-        </activity>
+        <activity android:name=".Activities.Signup"></activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -52,17 +51,17 @@
         <activity
             android:name=".Activities.Timeline"
             android:label="@string/title_activity_timeline"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Login_method"></activity>
-        <activity android:name=".Activities.PhoneAuth"></activity>
+        <activity android:name=".Activities.Login_method" />
+        <activity android:name=".Activities.PhoneAuth" />
+        <activity android:name=".Activities.Phoneprovider"></activity>
     </application>
 
 </manifest>
