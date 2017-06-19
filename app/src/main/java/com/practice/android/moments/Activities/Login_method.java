@@ -113,7 +113,7 @@ public class Login_method extends AppCompatActivity {
         Viaphone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login_method.this, PhoneAuth.class));
+                startActivity(new Intent(Login_method.this, Phoneprovider.class));
                 finish();
             }
         });
@@ -129,13 +129,9 @@ public class Login_method extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 showProgressDialog();
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                Log.d(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId() +
-                        "\n" + loginResult.getAccessToken().getToken());
+                Log.d(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
 
                 handleFacebookAccessToken(loginResult.getAccessToken());
-
-//                startActivity(new Intent(Login_method.this, Timeline.class));
-
             }
 
             @Override
@@ -152,13 +148,8 @@ public class Login_method extends AppCompatActivity {
                 updateUI(null);
             }
         });
-
-
         //Facebook Button Ends
-
-
     }
-
 
     // Google Sign-in Button Code
     //Starts
@@ -189,7 +180,6 @@ public class Login_method extends AppCompatActivity {
 
 //callback to the facebook login button
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -203,10 +193,7 @@ public class Login_method extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-
-
                             Toast.makeText(Login_method.this, "Logged in via Google", Toast.LENGTH_SHORT).show();
-
                             firebaseUser = firebaseAuth.getCurrentUser();
                             updateUI(firebaseUser);
                         } else {
@@ -216,7 +203,6 @@ public class Login_method extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                     }
                 });
     }
@@ -233,10 +219,8 @@ public class Login_method extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-
                             firebaseUser = firebaseAuth.getCurrentUser();
                             Toast.makeText(Login_method.this, "FaceBook Sign in Sucess", Toast.LENGTH_SHORT).show();
-
                             updateUI(firebaseUser);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -254,10 +238,8 @@ public class Login_method extends AppCompatActivity {
         hideProgressDialog();
         if (user != null) {
             startActivity(new Intent(Login_method.this, Timeline.class));
-
         } else {
-            Toast.makeText(Login_method.this, "No user.",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login_method.this, "No user.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -267,7 +249,6 @@ public class Login_method extends AppCompatActivity {
             mProgressDialog.setMessage("PLease wait");
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 
@@ -276,7 +257,6 @@ public class Login_method extends AppCompatActivity {
             mProgressDialog.hide();
         }
     }
-
 
     // Google Sign-in Button Code
     //Ends
@@ -290,7 +270,6 @@ public class Login_method extends AppCompatActivity {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(Login_method.this);
         builder1.setMessage("You want to exit!!!!");
         builder1.setCancelable(true);
-
         builder1.setPositiveButton(
                 "Yes",
                 new DialogInterface.OnClickListener() {
@@ -299,7 +278,6 @@ public class Login_method extends AppCompatActivity {
                         moveTaskToBack(true);
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
-
                     }
                 });
 

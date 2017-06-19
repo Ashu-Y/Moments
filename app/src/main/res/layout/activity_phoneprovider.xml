@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3ff2ce"
-    tools:context="com.practice.android.moments.Activities.PhoneAuth"
+    tools:context="com.practice.android.moments.Activities.Phoneprovider"
     tools:ignore="HardcodedText,RtlHardcoded,ButtonStyle">
 
     <TextView

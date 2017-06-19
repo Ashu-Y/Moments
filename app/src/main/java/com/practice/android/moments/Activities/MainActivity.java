@@ -2,11 +2,9 @@ package com.practice.android.moments.Activities;
 
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
     EditText login, pass; // login and password edittext
     Button signin, signup; // sign in  and sign up button
 
-    //    ProgressDialog progressDialog; //dialog variable
+    ProgressDialog mProgressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
-    ProgressDialog mProgressDialog;
 
     FirebaseAuth.AuthStateListener authStateListener;
 
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, Timeline.class));
 
         } else {
-            Toast.makeText(MainActivity.this, "No user.",
+            Toast.makeText(MainActivity.this, "Authentication failed.",
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -109,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Email  Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-
         if (TextUtils.isEmpty(strpassword)) {
             //password empty
             Toast.makeText(MainActivity.this, "Password Empty", Toast.LENGTH_SHORT).show();
@@ -120,14 +116,12 @@ public class MainActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if (!task.isSuccessful()) {
                             updateUI(null);
                         } else {
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             updateUI(currentUser);
                         }
-
                     }
                 });
     }
@@ -138,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
             mProgressDialog.setMessage("PLease wait");
             mProgressDialog.setIndeterminate(true);
         }
-
         mProgressDialog.show();
     }
 
@@ -150,28 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
-        builder1.setMessage("You want to exit!!!!");
-        builder1.setCancelable(true);
-
-        builder1.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                        startActivity(new Intent(MainActivity.this, Login_method.class));
-                    }
-                });
-
-        builder1.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+        startActivity(new Intent(MainActivity.this, Login_method.class));
     }
 }
