@@ -76,12 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
@@ -120,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             updateUI(null);
                         } else {
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            updateUI(currentUser);
+                            startActivity(new Intent(MainActivity.this, Timeline.class));
                         }
                     }
                 });

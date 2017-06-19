@@ -3,6 +3,7 @@ package com.practice.android.moments.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
@@ -32,6 +36,7 @@ public class Signup extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 // giving data from xml to variables
 
         name = (EditText) findViewById(R.id.nameca);
@@ -105,10 +110,27 @@ public class Signup extends AppCompatActivity {
                     updateUI(null);
                     Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
                     return;
+                } else {
+                    firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
+                            addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    hideProgressDialog();
+                                    if (!task.isSuccessful()) {
+                                        // there was an error
+                                        if (password.length() < 6) {
+                                            password.setError(getString(R.string.minimum_password));
+                                        } else {
+                                            Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                        }
+                                    } else {
+                                        startActivity(new Intent(Signup.this, Timeline.class));
+                                        finish();
+                                    }
+
+                                }
+                            });
                 }
-
-
-
             }
         });
 
@@ -130,8 +152,6 @@ public class Signup extends AppCompatActivity {
             startActivity(new Intent(Signup.this, Timeline.class));
         } else {
             Log.w(TAG, "No Authenticated user found");
-
-//            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,13 +169,6 @@ public class Signup extends AppCompatActivity {
             mProgressDialog.hide();
         }
     }
-
-
-
-
-
-
-
 
 
 }
