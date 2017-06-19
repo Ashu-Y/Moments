@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 content = (ImageView) findViewById(R.id.editedImageView);
-                content.destroyDrawingCache();
+//                content.destroyDrawingCache();
                 saveImage();
-
+                content.destroyDrawingCache();
 
             }
         });
