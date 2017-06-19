@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mLaunchImageEditorButton;
     private Button save;
     private ImageView mSelectedImageView;
+    ImageView content;
 
     Bitmap bitmap;
     File myDir;
@@ -107,24 +108,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                ImageView content = (ImageView) findViewById(R.id.editedImageView);
-                content.setDrawingCacheEnabled(true);
-                bitmap = content.getDrawingCache();
-
-//                try {
-//
-//                    File cachePath = new File(myDir + "/moments_10000.jpg");
-//                    cachePath.createNewFile();
-//                    FileOutputStream ostream = new FileOutputStream(cachePath);
-//                    bitmap.compress(CompressFormat.JPEG, 100, ostream);
-//                    ostream.close();
-//
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
+                content = (ImageView) findViewById(R.id.editedImageView);
+                content.destroyDrawingCache();
                 saveImage();
+
 
             }
         });
@@ -132,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void saveImage() {
+
+
+        content.setDrawingCacheEnabled(true);
+        bitmap = content.getDrawingCache();
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.save_as_dialog, null);
@@ -189,6 +181,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(MainActivity.this, "Select an image first", Toast.LENGTH_SHORT).show();
         }
+
+
 
     }
 
