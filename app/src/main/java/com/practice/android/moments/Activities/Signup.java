@@ -1,20 +1,29 @@
 package com.practice.android.moments.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
 
 public class Signup extends AppCompatActivity {
+    private static final String TAG = "Sign up";
     //variables
     EditText name, email, password, conpassword, phone;
     Button sub, backtosign;
+    ProgressDialog mProgressDialog;
+
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -22,6 +31,7 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        firebaseAuth = FirebaseAuth.getInstance();
 // giving data from xml to variables
 
         name = (EditText) findViewById(R.id.nameca);
@@ -37,6 +47,7 @@ public class Signup extends AppCompatActivity {
         sub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showProgressDialog();
 
 
                 String user_name = name.getText().toString().trim();
@@ -46,33 +57,52 @@ public class Signup extends AppCompatActivity {
                 String user_phone = phone.getText().toString().trim();
 
 
+                //Email  check
                 if (TextUtils.isEmpty(user_email)) {
+                    updateUI(null);
                     Toast.makeText(getApplicationContext(), "Enter Email address!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                if (TextUtils.isEmpty(user_password)) {
-                    Toast.makeText(getApplicationContext(), "Enter Password!", Toast.LENGTH_SHORT).show();
+                //phone number check
+                if (TextUtils.isEmpty(user_phone)) {
+                    updateUI(null);
+                    Toast.makeText(getApplicationContext(), "Enter Phone Number!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //password check
+                if (TextUtils.isEmpty(user_password)) {
+                    updateUI(null);
+                    Toast.makeText(getApplicationContext(), "Enter Password!", Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                    return;
+                }
+
+                //name check
                 if (TextUtils.isEmpty(user_name)) {
+                    updateUI(null);
                     Toast.makeText(getApplicationContext(), "Enter Name!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //confirm password check
                 if (TextUtils.isEmpty(user_confirmpassword)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+                    updateUI(null);
+                    Toast.makeText(getApplicationContext(), "Enter Confirm password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
 
+                //password length
                 if (user_password.length() < 6) {
+                    updateUI(null);
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                //check if both pass are same
                 if (TextUtils.isEmpty(user_confirmpassword) != TextUtils.isEmpty(user_password)) {
+                    updateUI(null);
                     Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -82,13 +112,7 @@ public class Signup extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
+//back button to sign in page
         backtosign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,4 +122,40 @@ public class Signup extends AppCompatActivity {
         });
 
     }
+
+
+    private void updateUI(FirebaseUser user) {
+        hideProgressDialog();
+        if (user != null) {
+            startActivity(new Intent(Signup.this, Timeline.class));
+        } else {
+            Log.w(TAG, "No Authenticated user found");
+
+//            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
+    }
+
+
+
+
+
+
+
+
+
 }
