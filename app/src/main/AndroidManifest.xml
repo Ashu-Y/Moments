@@ -51,7 +51,7 @@
         <activity
             android:name=".Activities.Timeline"
             android:label="@string/title_activity_timeline"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +60,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.Login_method" />
-        <activity android:name=".Activities.Phoneprovider"></activity>
+        <activity android:name=".Activities.Phoneprovider" />
+        <activity android:name=".Activities.ResetPassword"></activity>
     </application>
 
 </manifest>

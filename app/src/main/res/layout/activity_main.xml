@@ -82,5 +82,16 @@
         android:text="Not a member"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/passreset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp"
+        android:clickable="true"
+        android:text="Forgot Password!!! RESET NOW"
+        android:textSize="18sp" />
+
 
 </RelativeLayout>

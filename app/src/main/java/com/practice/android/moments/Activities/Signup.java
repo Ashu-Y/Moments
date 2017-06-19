@@ -167,8 +167,14 @@ public class Signup extends AppCompatActivity {
     private void hideProgressDialog() {
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.hide();
+
         }
+
+
     }
 
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Signup.this, Login_method.class));
+    }
 }

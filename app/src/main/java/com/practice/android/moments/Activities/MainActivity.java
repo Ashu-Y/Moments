@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     //variables
     EditText login, pass; // login and password edittext
     Button signin, signup; // sign in  and sign up button
-
+    TextView Reset;
     ProgressDialog mProgressDialog; //dialog variable
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         signin = (Button) findViewById(R.id.button);
         signup = (Button) findViewById(R.id.button2);
+
+        Reset = (TextView) findViewById(R.id.passreset);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.getCurrentUser();
@@ -71,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Signup.class));
+            }
+        });
+
+        Reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ResetPassword.class));
+                finish();
             }
         });
 

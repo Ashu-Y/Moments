@@ -298,13 +298,6 @@ public class Login_method extends AppCompatActivity {
         alert11.show();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        updateUI(firebaseUser);
-
-    }
 
     @Override
     public void onStop() {

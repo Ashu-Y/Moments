@@ -1,5 +1,6 @@
 package com.practice.android.moments.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,15 +10,13 @@ import android.widget.EditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.R;
 
-//import com.google.firebase.auth.PhoneAuthProvider;
-
 public class Phoneprovider extends AppCompatActivity {
     private static final String TAG = "Phone Auth Provider";
     EditText phone_number, Verfiy_code, phone_pass;
     Button EnterIn, Verify, Resend;
 
     FirebaseAuth firebaseAuth;
-    String mVerificationId;
+//    String mVerificationId;
 //    private PhoneAuthProvider.ForceResendingToken mResendToken;
 //    private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
 
@@ -36,6 +35,12 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Verify.setVisibility(View.VISIBLE);
+                Verfiy_code.setVisibility(View.VISIBLE);
+                Resend.setVisibility(View.VISIBLE);
+                phone_pass.setVisibility(View.GONE);
+                EnterIn.setVisibility(View.GONE);
 
 
             }
@@ -91,5 +96,10 @@ public class Phoneprovider extends AppCompatActivity {
         Verify.setVisibility(View.GONE);
         Verfiy_code.setVisibility(View.GONE);
         Resend.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(Phoneprovider.this, Login_method.class));
     }
 }
