@@ -104,11 +104,13 @@ public class MainActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(strLogin)) {
             //email empty
             Toast.makeText(MainActivity.this, "Email  Empty", Toast.LENGTH_SHORT).show();
+            updateUI(null);
             return;
         }
         if (TextUtils.isEmpty(strpassword)) {
             //password empty
             Toast.makeText(MainActivity.this, "Password Empty", Toast.LENGTH_SHORT).show();
+            updateUI(null);
             return;
         }
 

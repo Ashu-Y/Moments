@@ -1,6 +1,5 @@
 package com.practice.android.moments.Activities;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +29,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
-import com.practice.android.moments.Fragments.BlankFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
@@ -209,16 +207,11 @@ public class Timeline extends AppCompatActivity
 //        } else if (id == R.id.nav_manage) {
 //
 //        } else
-        if (id == R.id.nav_profile) {
-
-            Fragment fragmentA = new BlankFragment();
-
-
-            fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.timeline, fragmentA).addToBackStack(null).commit();
-
-
-        }
+//        if (id == R.id.nav_profile) {
+//
+//
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

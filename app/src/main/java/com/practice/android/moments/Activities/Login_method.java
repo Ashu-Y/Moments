@@ -144,7 +144,7 @@ public class Login_method extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-
+                Log.e(TAG, error.getMessage());
                 Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
