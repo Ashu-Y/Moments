@@ -68,8 +68,6 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                user = FirebaseAuth.getInstance().getCurrentUser();
-
                 final String Email = emailverify.getText().toString().trim();
                 final String NewPassword = newpassword.getText().toString().trim();
                 final String NewConfirmPassword = newconfirmpassword.getText().toString().trim();
@@ -78,7 +76,7 @@ public class ResetPassword extends AppCompatActivity {
 
                 AuthCredential credential = EmailAuthProvider.getCredential(Email, "password1234");
                 Log.i(Tag, "THis is the " + credential);
-
+                user = FirebaseAuth.getInstance().getCurrentUser();
                 //confirm password check
 
                 if (TextUtils.isEmpty(NewConfirmPassword)) {
