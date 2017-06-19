@@ -35,6 +35,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.practice.android.moments.R;
 
+import java.util.Arrays;
+
 
 public class Login_method extends AppCompatActivity {
 
@@ -122,7 +124,7 @@ public class Login_method extends AppCompatActivity {
         //Facebook Sign in Variable
         loginButton = (LoginButton) findViewById(R.id.Face_login_button);
         callbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
@@ -136,14 +138,13 @@ public class Login_method extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                showProgressDialog();
                 Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
 
             @Override
             public void onError(FacebookException error) {
-                showProgressDialog();
+
                 Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
@@ -212,6 +213,7 @@ public class Login_method extends AppCompatActivity {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        Log.i(TAG, "Credential:" + "\n" + credential);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -229,7 +231,7 @@ public class Login_method extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-                        hideProgressDialog();
+
                     }
                 });
     }
@@ -239,7 +241,9 @@ public class Login_method extends AppCompatActivity {
         if (user != null) {
             startActivity(new Intent(Login_method.this, Timeline.class));
         } else {
-            Toast.makeText(Login_method.this, "No user.", Toast.LENGTH_SHORT).show();
+            Log.w(TAG, "No Authenticated user found");
+
+//            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
         }
     }
 
