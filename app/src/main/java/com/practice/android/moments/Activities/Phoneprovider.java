@@ -200,10 +200,6 @@ public class Phoneprovider extends AppCompatActivity {
         if (firebaseUser != null) {
             startActivity(new Intent(Phoneprovider.this, Timeline.class));
             finish();
-        } else {
-            Verify.setVisibility(View.GONE);
-            Verfiy_code.setVisibility(View.GONE);
-            Resend.setVisibility(View.GONE);
         }
     }
 
