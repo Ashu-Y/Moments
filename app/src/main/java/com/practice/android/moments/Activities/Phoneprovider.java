@@ -58,10 +58,6 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EnterIn.setVisibility(View.GONE);
-                Verfiy_code.setVisibility(View.VISIBLE);
-
-
                 if (!validatePhoneNumber()) {
                     return;
 
@@ -94,6 +90,8 @@ public class Phoneprovider extends AppCompatActivity {
 
             }
         });
+
+
         Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
@@ -126,7 +124,7 @@ public class Phoneprovider extends AppCompatActivity {
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(Phoneprovider.this, new OnCompleteListener<AuthResult>() {
-                    @SuppressWarnings("ConstantConditions")
+                    @SuppressWarnings({"ConstantConditions", "ThrowableResultOfMethodCallIgnored"})
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -156,7 +154,7 @@ public class Phoneprovider extends AppCompatActivity {
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
+                120,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks);        // OnVerificationStateChangedCallbacks
@@ -171,7 +169,7 @@ public class Phoneprovider extends AppCompatActivity {
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                60,                 // Timeout duration
+                120,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks,         // OnVerificationStateChangedCallbacks
@@ -194,10 +192,6 @@ public class Phoneprovider extends AppCompatActivity {
         if (firebaseUser != null) {
             startActivity(new Intent(Phoneprovider.this, Timeline.class));
             finish();
-        } else {
-            EnterIn.setVisibility(View.VISIBLE);
-            Verfiy_code.setVisibility(View.GONE);
-
         }
     }
 
