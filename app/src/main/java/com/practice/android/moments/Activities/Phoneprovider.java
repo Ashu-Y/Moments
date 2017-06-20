@@ -37,8 +37,6 @@ public class Phoneprovider extends AppCompatActivity {
     private EditText Verfiy_code;
     private EditText phone_pass;
     private Button EnterIn;
-    private Button Verify;
-    private Button Resend;
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
@@ -50,24 +48,22 @@ public class Phoneprovider extends AppCompatActivity {
         phone_number = (EditText) findViewById(R.id.field_phone_number);
         Verfiy_code = (EditText) findViewById(R.id.field_verification_code);
         EnterIn = (Button) findViewById(R.id.button_start_verification);
-        Verify = (Button) findViewById(R.id.button_verify_phone);
-        Resend = (Button) findViewById(R.id.button_resend);
+        Button verify = (Button) findViewById(R.id.button_verify_phone);
+        Button resend = (Button) findViewById(R.id.button_resend);
         phone_pass = (EditText) findViewById(R.id.password_field);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
 
         EnterIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EnterIn.setVisibility(View.GONE);
+                Verfiy_code.setVisibility(View.VISIBLE);
 
 
                 if (!validatePhoneNumber()) {
-                    Verify.setVisibility(View.VISIBLE);
-                    Verfiy_code.setVisibility(View.VISIBLE);
-                    Resend.setVisibility(View.VISIBLE);
-                    EnterIn.setVisibility(View.GONE);
-
+                    return;
 
                 }
                 startPhoneNumberVerification(phone_number.getText().toString());
@@ -76,7 +72,7 @@ public class Phoneprovider extends AppCompatActivity {
             }
         });
 
-        Verify.setOnClickListener(new View.OnClickListener() {
+        verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String code = Verfiy_code.getText().toString();
@@ -89,7 +85,7 @@ public class Phoneprovider extends AppCompatActivity {
             }
         });
 
-        Resend.setOnClickListener(new View.OnClickListener() {
+        resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -124,8 +120,6 @@ public class Phoneprovider extends AppCompatActivity {
                 mResendToken = token;
             }
         };
-
-
     }
 
 
@@ -162,7 +156,7 @@ public class Phoneprovider extends AppCompatActivity {
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                120,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks);        // OnVerificationStateChangedCallbacks
@@ -177,7 +171,7 @@ public class Phoneprovider extends AppCompatActivity {
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                120,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks,         // OnVerificationStateChangedCallbacks
@@ -200,6 +194,10 @@ public class Phoneprovider extends AppCompatActivity {
         if (firebaseUser != null) {
             startActivity(new Intent(Phoneprovider.this, Timeline.class));
             finish();
+        } else {
+            EnterIn.setVisibility(View.VISIBLE);
+            Verfiy_code.setVisibility(View.GONE);
+
         }
     }
 
