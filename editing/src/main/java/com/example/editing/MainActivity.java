@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mEditedImageView = (ImageView) findViewById(R.id.editedImageView);
 
 
+
         mOpenGalleryButton = (Button) findViewById(R.id.openGalleryButton);
         mLaunchImageEditorButton = (Button) findViewById(R.id.launchImageEditorButton);
         save = (Button) findViewById(R.id.save);
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         save.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
                 content = (ImageView) findViewById(R.id.editedImageView);
 //                content.destroyDrawingCache();

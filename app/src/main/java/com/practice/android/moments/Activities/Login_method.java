@@ -125,7 +125,8 @@ public class Login_method extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.Face_login_button);
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton
+                .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
