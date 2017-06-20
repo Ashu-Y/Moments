@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3ff2ce"
+    tools:context="com.practice.android.moments.Activities.Phoneprovider"
+    tools:ignore="HardcodedText,RtlHardcoded,ButtonStyle">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Login "
+        android:textSize="30sp" />
+
+
+    <Button
+        android:id="@+id/button_start_verification"
+        android:layout_width="150dp"
+        android:layout_height="50sp"
+        android:layout_below="@+id/password_field"
+        android:layout_marginLeft="110sp"
+        android:layout_marginTop="140sp"
+        android:text="@string/start_phone_auth"
+        android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+    <Button
+        android:id="@+id/button_verify_phone"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="34dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toStartOf="@+id/textView3"
+        android:text="@string/verify_phone_auth"
+        android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+    <Button
+        android:id="@+id/button_resend"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_verify_phone"
+        android:layout_alignBottom="@+id/button_verify_phone"
+        android:layout_gravity="end"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/textView3"
+        android:text="@string/resend_phone_auth"
+        android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+
+    <EditText
+        android:id="@+id/field_phone_number"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="90dp"
+        android:digits="0123456789+-"
+        android:gravity="center"
+        android:hint="@string/hint_phone_number"
+        android:inputType="phone"
+        android:maxLength="14" />
+
+    <EditText
+        android:id="@+id/password_field"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/field_phone_number"
+        android:layout_below="@+id/field_phone_number"
+        android:layout_gravity="center"
+        android:layout_marginTop="49dp"
+        android:gravity="center"
+        android:hint="@string/hint_phone_number_password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/field_verification_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_field"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="42dp"
+        android:gravity="center"
+        android:hint="@string/hint_verification_code"
+        android:inputType="number" />
+
+</RelativeLayout>

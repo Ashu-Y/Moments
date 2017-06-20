@@ -1,6 +1,5 @@
 package com.practice.android.moments.Activities;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,13 +22,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
-import com.practice.android.moments.Fragments.BlankFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
@@ -84,12 +83,13 @@ public class Timeline extends AppCompatActivity
             public void onClick(View v) {
                 Log.i(TAG, "You clicked onClick Button");
                 FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
                 Auth.GoogleSignInApi.signOut(googleApiClient)
                         .setResultCallback(
                                 new ResultCallback<Status>() {
                                     @Override
                                     public void onResult(Status status) {
-                                        Log.i(TAG, "log off from google sign button");
+//                                        Log.i(TAG, "log off from google sign button");
                                         Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(Timeline.this, Login_method.class));
                                     }
@@ -147,8 +147,9 @@ public class Timeline extends AppCompatActivity
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
-//                            finish();
-                            System.exit(0);
+                            moveTaskToBack(true);
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(1);
                         }
 
 
@@ -206,16 +207,11 @@ public class Timeline extends AppCompatActivity
 //        } else if (id == R.id.nav_manage) {
 //
 //        } else
-        if (id == R.id.nav_profile) {
-
-            Fragment fragmentA = new BlankFragment();
-
-
-            fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.timeline, fragmentA).addToBackStack(null).commit();
-
-
-        }
+//        if (id == R.id.nav_profile) {
+//
+//
+//
+//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
