@@ -2,23 +2,44 @@ package com.practice.android.moments.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.practice.android.moments.R;
+
+import java.util.concurrent.TimeUnit;
 
 public class Phoneprovider extends AppCompatActivity {
     private static final String TAG = "Phone Auth Provider";
-    EditText phone_number, Verfiy_code, phone_pass;
-    Button EnterIn, Verify, Resend;
+    private EditText phone_number;
+    private EditText Verfiy_code;
+    private EditText phone_pass;
+    private Button EnterIn;
+    private Button Verify;
+    private Button Resend;
 
-    FirebaseAuth firebaseAuth;
-//    String mVerificationId;
-//    private PhoneAuthProvider.ForceResendingToken mResendToken;
-//    private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private String mVerificationId;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +57,33 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Verify.setVisibility(View.VISIBLE);
-                Verfiy_code.setVisibility(View.VISIBLE);
-                Resend.setVisibility(View.VISIBLE);
-                phone_pass.setVisibility(View.GONE);
-                EnterIn.setVisibility(View.GONE);
+
+                if (!validatePhoneNumber()) {
+                    Verify.setVisibility(View.VISIBLE);
+                    Verfiy_code.setVisibility(View.VISIBLE);
+                    Resend.setVisibility(View.VISIBLE);
+                    phone_pass.setVisibility(View.GONE);
+                    EnterIn.setVisibility(View.GONE);
+
+                    return;
+                }
+                startPhoneNumberVerification(phone_number.getText().toString());
 
 
             }
         });
+
         Verify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String code = Verfiy_code.getText().toString();
+                if (TextUtils.isEmpty(code)) {
+                    Verfiy_code.setError("Cannot be empty.");
+                    return;
+                }
+
+                verifyPhoneNumberWithCode(mVerificationId, code);
+
 
             }
         });
@@ -56,46 +92,109 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                resendVerificationCode(phone_number.getText().toString(), mResendToken);
+
+
             }
         });
+        Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onVerificationCompleted(PhoneAuthCredential credential) {
+                Log.d(TAG, "onVerificationCompleted:" + credential);
+                signInWithPhoneAuthCredential(credential);
+            }
+
+            @Override
+            public void onVerificationFailed(FirebaseException e) {
+                Log.w(TAG, "onVerificationFailed", e);
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    Toast.makeText(Phoneprovider.this, "Wrong Number Entered", Toast.LENGTH_SHORT).show();
+                } else if (e instanceof FirebaseTooManyRequestsException) {
+                    Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
+                            Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCodeSent(String verificationId,
+                                   PhoneAuthProvider.ForceResendingToken token) {
+                Log.d(TAG, "onCodeSent:" + verificationId);
+                mVerificationId = verificationId;
+                mResendToken = token;
+            }
+        };
 
 
-        firebaseAuth.getInstance();
-//        Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-//            @Override
-//            public void onVerificationCompleted(PhoneAuthCredential credential) {
-//                Log.d(TAG, "onVerificationCompleted:" + credential);
-//                signInWithPhoneAuthCredential(credential);
-//            }
-//
-//            @Override
-//            public void onVerificationFailed(FirebaseException e) {
-//                Log.w(TAG, "onVerificationFailed", e);
-//                if (e instanceof FirebaseAuthInvalidCredentialsException) {
-//                    mPhoneNumberField.setError("Invalid phone number.");
-//                } else if (e instanceof FirebaseTooManyRequestsException) {
-//                    Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
-//                            Snackbar.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCodeSent(String verificationId,
-//                                   PhoneAuthProvider.ForceResendingToken token) {
-//                Log.d(TAG, "onCodeSent:" + verificationId);
-//                mVerificationId = verificationId;
-//                mResendToken = token;
-//            }
-//        };
     }
 
+
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = task.getResult().getUser();
+                            startActivity(new Intent(Phoneprovider.this, Timeline.class));
+                            finish();
+                        } else {
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Verfiy_code.setError("Invalid code.");
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    private void startPhoneNumberVerification(String phoneNumber) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                Callbacks);        // OnVerificationStateChangedCallbacks
+    }
+
+    private void verifyPhoneNumberWithCode(String verificationId, String code) {
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        signInWithPhoneAuthCredential(credential);
+    }
+
+    private void resendVerificationCode(String phoneNumber,
+                                        PhoneAuthProvider.ForceResendingToken token) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                this,               // Activity (for callback binding)
+                Callbacks,         // OnVerificationStateChangedCallbacks
+                token);             // ForceResendingToken from callbacks
+    }
+
+    private boolean validatePhoneNumber() {
+        String phoneNumber = phone_number.getText().toString();
+        if (TextUtils.isEmpty(phoneNumber)) {
+            phone_number.setError("Invalid phone number.");
+            return false;
+        }
+        return true;
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Verify.setVisibility(View.GONE);
-        Verfiy_code.setVisibility(View.GONE);
-        Resend.setVisibility(View.GONE);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            startActivity(new Intent(Phoneprovider.this, Timeline.class));
+            finish();
+        } else {
+            Verify.setVisibility(View.GONE);
+            Verfiy_code.setVisibility(View.GONE);
+            Resend.setVisibility(View.GONE);
+        }
     }
 
     @Override
