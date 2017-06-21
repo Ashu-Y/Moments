@@ -3,6 +3,7 @@ package com.practice.android.moments.Activities;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -200,9 +201,14 @@ public class Timeline extends AppCompatActivity
 
 //        if (id == R.id.nav_camera) {
 //            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
+//            startActivity(new Intent("android.provider.MediaStore.ACTION_IMAGE_CAPTURE"));
+//        } else
 //
-//        } else if (id == R.id.nav_slideshow) {
+        if (id == R.id.nav_gallery) {
+            Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
+            startActivityForResult(i,0);
+        }
+//        else if (id == R.id.nav_slideshow) {
 //
 //        } else if (id == R.id.nav_manage) {
 //

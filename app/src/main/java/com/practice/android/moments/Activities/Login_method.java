@@ -125,7 +125,8 @@ public class Login_method extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.Face_login_button);
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton
+                .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -144,7 +145,8 @@ public class Login_method extends AppCompatActivity {
 
             @Override
             public void onError(FacebookException error) {
-                Log.e(TAG, error.getMessage());
+                Log.e(TAG,error.getMessage());
+
                 Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
@@ -298,6 +300,13 @@ public class Login_method extends AppCompatActivity {
         alert11.show();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        updateUI(firebaseUser);
+
+    }
 
     @Override
     public void onStop() {
