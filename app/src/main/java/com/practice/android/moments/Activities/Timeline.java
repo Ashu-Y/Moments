@@ -1,6 +1,8 @@
 package com.practice.android.moments.Activities;
 
 import android.Manifest;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,6 +40,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.practice.android.moments.Fragments.ProfileScreenFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
@@ -51,8 +54,14 @@ public class Timeline extends AppCompatActivity
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     private static final int REQUEST_WRITE_STORAGE = 1;
+
     private Button Sign_Out;
     private GoogleApiClient googleApiClient;
+
+  
+    FragmentManager fragmentManager;
+    ProfileScreenFragment profFragment;
+
     private RecyclerView mRecyclerView;
     private PostRecyclerAdapter mPostRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -70,6 +79,9 @@ public class Timeline extends AppCompatActivity
         setContentView(R.layout.activity_timeline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fragmentManager = getFragmentManager();
+        profFragment = new ProfileScreenFragment();
 
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -224,21 +236,24 @@ public class Timeline extends AppCompatActivity
                 fn_Choose_Image();
             }
         } else
-//
+
             if (id == R.id.nav_gallery) {
                 Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
                 startActivity(i);
             }
-//        else if (id == R.id.nav_slideshow) {
+=======
+       
+//       else if (id == R.id.nav_slideshow) {
+
 //
 //        } else if (id == R.id.nav_manage) {
 //
-//        } else
-//        if (id == R.id.nav_profile) {
-//
-//
-//
-//        }
+        } else
+        if (id == R.id.nav_profile) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
+            fragmentTransaction.commit();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
