@@ -20,9 +20,9 @@
         android:id="@+id/button_start_verification"
         android:layout_width="150dp"
         android:layout_height="50sp"
-        android:layout_below="@+id/password_field"
-        android:layout_marginLeft="110sp"
-        android:layout_marginTop="140sp"
+        android:layout_below="@+id/field_verification_code"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
         android:text="@string/start_phone_auth"
         android:theme="@style/ThemeOverlay.MyDarkButton" />
 
@@ -30,10 +30,10 @@
         android:id="@+id/button_verify_phone"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/field_verification_code"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="34dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="140dp"
         android:layout_toStartOf="@+id/textView3"
         android:text="@string/verify_phone_auth"
         android:theme="@style/ThemeOverlay.MyDarkButton" />
@@ -65,7 +65,7 @@
         android:inputType="phone"
         android:maxLength="14" />
 
-    <EditText
+    <!--<EditText
         android:id="@+id/password_field"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
@@ -75,13 +75,13 @@
         android:layout_marginTop="49dp"
         android:gravity="center"
         android:hint="@string/hint_phone_number_password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword" />-->
 
     <EditText
         android:id="@+id/field_verification_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password_field"
+        android:layout_below="@+id/field_phone_number"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="42dp"
