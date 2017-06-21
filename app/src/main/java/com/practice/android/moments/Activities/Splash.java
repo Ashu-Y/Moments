@@ -10,7 +10,7 @@ import com.practice.android.moments.R;
 
 public class Splash extends AppCompatActivity {
 
-    FirebaseUser user;
+    private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 

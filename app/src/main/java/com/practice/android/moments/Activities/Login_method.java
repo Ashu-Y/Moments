@@ -42,19 +42,19 @@ public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 0;
-    Button ViaEmail;
-    Button Viaphone;
-    GoogleSignInOptions googleSignInOptions;
-    GoogleApiClient googleApiClient;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
-    FirebaseAuth.AuthStateListener authStateListener;
-    com.google.android.gms.common.SignInButton signInButton;
-    GoogleSignInAccount account;
-    LoginButton loginButton;
-    CallbackManager callbackManager;
+    private Button ViaEmail;
+    private Button Viaphone;
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleApiClient googleApiClient;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private com.google.android.gms.common.SignInButton signInButton;
+    private GoogleSignInAccount account;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
-    ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
 
     @Override
@@ -128,29 +128,29 @@ public class Login_method extends AppCompatActivity {
         loginButton
                 .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                showProgressDialog();
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                Log.d(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        showProgressDialog();
+                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                        Log.d(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
 
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
-                updateUI(null);
-            }
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.e(TAG,error.getMessage());
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e(TAG, error.getMessage());
 
-                Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
-                updateUI(null);
-            }
-        });
+                        Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                });
         //Facebook Button Ends
     }
 

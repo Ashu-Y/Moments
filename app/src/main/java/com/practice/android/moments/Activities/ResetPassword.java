@@ -22,12 +22,12 @@ import com.practice.android.moments.R;
 
 public class ResetPassword extends AppCompatActivity {
     private static final String Tag = "Reset Password";
-    Button emailVerfified, passwordreset;
-    EditText emailverify, newpassword, newconfirmpassword;
-    TextView passw;
+    private Button emailVerfified, passwordreset;
+    private EditText emailverify, newpassword, newconfirmpassword;
+    private TextView passw;
 
-    FirebaseAuth firebaseAuth;
-    FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onStart() {
