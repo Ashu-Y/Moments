@@ -236,10 +236,6 @@ public class Timeline extends AppCompatActivity
             startActivity(i);
         }
 
-//       else if (id == R.id.nav_slideshow) {
-
-//
-//        } else if (id == R.id.nav_manage) {
         if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
