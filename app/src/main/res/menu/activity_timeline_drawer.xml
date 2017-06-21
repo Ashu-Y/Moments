@@ -13,15 +13,28 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow"/>
+            android:title="Photos And Videos"/>
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools"/>
+            android:id="@+id/nav_Friends"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="Friends"/>
+
+        <item
+            android:id="@+id/nav_NearByFriends"
+            android:icon="@drawable/ic_people_black_24dp"
+            android:title="Near by Friends"/>
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_perm_identity_black_24dp"
             android:title="Profile" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_share_black_24dp"
+            android:title="Share" />
+        <item
+            android:id="@+id/nav_Logout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Log Out" />
     </group>
 
 
