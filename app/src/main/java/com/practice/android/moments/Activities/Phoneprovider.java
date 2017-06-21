@@ -33,11 +33,13 @@ public class Phoneprovider extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    Button verify;
+    Button resend;
+    private String mVerificationId;
     private EditText phone_number;
     private EditText Verfiy_code;
     private EditText phone_pass;
     private Button EnterIn;
-    private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
 
@@ -48,9 +50,9 @@ public class Phoneprovider extends AppCompatActivity {
         phone_number = (EditText) findViewById(R.id.field_phone_number);
         Verfiy_code = (EditText) findViewById(R.id.field_verification_code);
         EnterIn = (Button) findViewById(R.id.button_start_verification);
-        Button verify = (Button) findViewById(R.id.button_verify_phone);
-        Button resend = (Button) findViewById(R.id.button_resend);
-        phone_pass = (EditText) findViewById(R.id.password_field);
+        verify = (Button) findViewById(R.id.button_verify_phone);
+        resend = (Button) findViewById(R.id.button_resend);
+//        phone_pass = (EditText) findViewById(R.id.password_field);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
@@ -59,11 +61,14 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!validatePhoneNumber()) {
-                    return;
 
+
+                } else {
+                    EnterIn.setVisibility(View.GONE);
+                    verify.setVisibility(View.VISIBLE);
+                    resend.setVisibility(View.VISIBLE);
+                    startPhoneNumberVerification(phone_number.getText().toString());
                 }
-                startPhoneNumberVerification(phone_number.getText().toString());
-
 
             }
         });
@@ -91,12 +96,17 @@ public class Phoneprovider extends AppCompatActivity {
             }
         });
 
+        CALLBACKMETHOD();
 
+
+    }
+
+    private void CALLBACKMETHOD() {
         Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-                signInWithPhoneAuthCredential(credential);
+//                signInWithPhoneAuthCredential(credential);
             }
 
             @Override
@@ -118,6 +128,7 @@ public class Phoneprovider extends AppCompatActivity {
                 mResendToken = token;
             }
         };
+
     }
 
 
@@ -135,7 +146,7 @@ public class Phoneprovider extends AppCompatActivity {
 
                             DatabaseReference currentuser_db = databaseReference.child(user_id);
                             currentuser_db.child("phone").setValue(phone_number.getText().toString());
-                            currentuser_db.child("Password").setValue(phone_pass.getText().toString());
+//                            currentuser_db.child("Password").setValue(phone_pass.getText().toString());
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));
 
@@ -161,8 +172,11 @@ public class Phoneprovider extends AppCompatActivity {
     }
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithPhoneAuthCredential(credential);
+
+        if (code.length() > 0) {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        }
     }
 
     private void resendVerificationCode(String phoneNumber,
@@ -185,6 +199,7 @@ public class Phoneprovider extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -193,6 +208,9 @@ public class Phoneprovider extends AppCompatActivity {
             startActivity(new Intent(Phoneprovider.this, Timeline.class));
             finish();
         }
+        EnterIn.setVisibility(View.VISIBLE);
+        verify.setVisibility(View.INVISIBLE);
+        resend.setVisibility(View.INVISIBLE);
     }
 
     @Override
