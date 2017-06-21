@@ -241,15 +241,12 @@ public class Timeline extends AppCompatActivity
                 Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
                 startActivity(i);
             }
-=======
-       
+
 //       else if (id == R.id.nav_slideshow) {
 
 //
 //        } else if (id == R.id.nav_manage) {
-//
-        } else
-        if (id == R.id.nav_profile) {
+//if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
             fragmentTransaction.commit();
