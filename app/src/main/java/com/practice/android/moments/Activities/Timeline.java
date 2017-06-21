@@ -51,7 +51,6 @@ public class Timeline extends AppCompatActivity
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     private static final int REQUEST_WRITE_STORAGE = 1;
-    private static boolean PERMISSION_GRANTED = false;
     Button Sign_Out;
     GoogleApiClient googleApiClient;
     private RecyclerView mRecyclerView;
@@ -221,12 +220,8 @@ public class Timeline extends AppCompatActivity
 
                 fn_Choose_Image();
             } else {
-                PERMISSION_GRANTED = isStoragePermissionGranted();
-
-                if(PERMISSION_GRANTED){
-                    fn_Choose_Image();
-                }
-
+                isStoragePermissionGranted();
+                fn_Choose_Image();
             }
         } else
 //
