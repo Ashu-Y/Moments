@@ -126,9 +126,7 @@ public class Phoneprovider extends AppCompatActivity {
                 mResendToken = token;
             }
         };
-
     }
-
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         firebaseAuth.signInWithCredential(credential)
