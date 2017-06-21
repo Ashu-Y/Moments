@@ -221,6 +221,16 @@ public class Timeline extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if (id == R.id.nav_home){
+            startActivity(new Intent(this, Timeline.class));
+
+//            if(profFragment != null){
+//                FragmentManager fm = getFragmentManager();
+//                FragmentTransaction ft = fm.beginTransaction();
+//            }
+//
+
+        } else
 
         if (id == R.id.nav_camera) {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)

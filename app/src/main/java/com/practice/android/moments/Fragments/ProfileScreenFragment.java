@@ -1,9 +1,12 @@
 package com.practice.android.moments.Fragments;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -13,15 +16,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.practice.android.moments.R;
+
+import java.io.File;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileScreenFragment extends Fragment {
 
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
-    FloatingActionButton fabGallery;
-    Context mContext;
+    private FloatingActionButton fabGallery;
+    private TextView prof_logout;
+    private CircleImageView profile_pic;
 
 
     @Nullable
@@ -32,12 +43,34 @@ public class ProfileScreenFragment extends Fragment {
         Log.i("ProfileScreenFrag", "onCreateView");
 
         fabGallery = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
+        prof_logout = (TextView) v.findViewById(R.id.prof_logout);
+        profile_pic = (CircleImageView) v.findViewById(R.id.user_profile_photo);
+
         fabGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fn_Choose_Image();
             }
         });
+
+//        prof_logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("ProfileScreenFragment", "You clicked onClick Button");
+//                FirebaseAuth.getInstance().signOut();
+//                LoginManager.getInstance().logOut();
+//                Auth.GoogleSignInApi.signOut(googleApiClient)
+//                        .setResultCallback(
+//                                new ResultCallback<Status>() {
+//                                    @Override
+//                                    public void onResult(Status status) {
+////                                        Log.i(TAG, "log off from google sign button");
+//                                        Toast.makeText(getActivity(), "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+//                                        startActivity(new Intent(getActivity(), Login_method.class));
+//                                    }
+//                                });
+//            }
+//        });
 
         return v;
     }
@@ -63,5 +96,63 @@ public class ProfileScreenFragment extends Fragment {
         myAlertDialog.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        String picturePath;
+        Uri uri;
+        Bitmap thumbnail;
+        if (requestCode == GALLERY_PICTURE && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
+            c.moveToFirst();
+            int columnIndex = c.getColumnIndex(filePath[0]);
+            picturePath = c.getString(columnIndex);
+
+            profile_pic.setImageURI(data.getData());
+
+            c.close();
+
+            try {
+                thumbnail = (BitmapFactory.decodeFile(picturePath));
+                Log.e("gallery.***********692." + thumbnail, picturePath);
+                uri = Uri.fromFile(new File(picturePath));
+            } catch (Exception e) {
+                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
+                e.printStackTrace();
+            }
+
+
+        }  else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            Uri selectedImageUri = data.getData();
+
+            profile_pic.setImageURI(selectedImageUri);
+
+            picturePath = getRealPathFromURI(selectedImageUri);
+
+            try {
+                thumbnail = (BitmapFactory.decodeFile(picturePath));
+                Log.e("gallery.***********692." + thumbnail, picturePath);
+                uri = Uri.fromFile(new File(picturePath));
+            } catch (Exception e) {
+                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public String getRealPathFromURI (Uri contentUri) {
+        String path = null;
+        String[] proj = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(column_index);
+        }
+        cursor.close();
+        return path;
+    }
 }
