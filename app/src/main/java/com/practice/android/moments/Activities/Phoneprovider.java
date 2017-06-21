@@ -51,7 +51,6 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn = (Button) findViewById(R.id.button_start_verification);
         verify = (Button) findViewById(R.id.button_verify_phone);
         resend = (Button) findViewById(R.id.button_resend);
-//        phone_pass = (EditText) findViewById(R.id.password_field);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
@@ -202,10 +201,6 @@ public class Phoneprovider extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (firebaseUser != null) {
-//            startActivity(new Intent(Phoneprovider.this, Timeline.class));
-//            finish();
-//        }
         EnterIn.setVisibility(View.VISIBLE);
         verify.setVisibility(View.INVISIBLE);
         resend.setVisibility(View.INVISIBLE);
