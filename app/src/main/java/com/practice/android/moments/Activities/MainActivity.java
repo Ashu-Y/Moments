@@ -23,14 +23,14 @@ import com.practice.android.moments.R;
 public class MainActivity extends AppCompatActivity {
 
     //variables
-    EditText login, pass; // login and password edittext
-    Button signin, signup; // sign in  and sign up button
-    TextView Reset;
-    ProgressDialog mProgressDialog; //dialog variable
-    FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
+    private EditText login, pass; // login and password edittext
+    private Button signin, signup; // sign in  and sign up button
+    private TextView Reset;
+    private ProgressDialog mProgressDialog; //dialog variable
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
 
-    FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
