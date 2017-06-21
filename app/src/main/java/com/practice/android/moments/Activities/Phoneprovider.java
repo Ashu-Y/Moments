@@ -33,12 +33,11 @@ public class Phoneprovider extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    Button verify;
-    Button resend;
+    private Button verify;
+    private Button resend;
     private String mVerificationId;
     private EditText phone_number;
     private EditText Verfiy_code;
-    private EditText phone_pass;
     private Button EnterIn;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
@@ -52,7 +51,6 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn = (Button) findViewById(R.id.button_start_verification);
         verify = (Button) findViewById(R.id.button_verify_phone);
         resend = (Button) findViewById(R.id.button_resend);
-//        phone_pass = (EditText) findViewById(R.id.password_field);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
@@ -128,9 +126,7 @@ public class Phoneprovider extends AppCompatActivity {
                 mResendToken = token;
             }
         };
-
     }
-
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         firebaseAuth.signInWithCredential(credential)
@@ -146,7 +142,6 @@ public class Phoneprovider extends AppCompatActivity {
 
                             DatabaseReference currentuser_db = databaseReference.child(user_id);
                             currentuser_db.child("phone").setValue(phone_number.getText().toString());
-//                            currentuser_db.child("Password").setValue(phone_pass.getText().toString());
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));
 
@@ -165,7 +160,7 @@ public class Phoneprovider extends AppCompatActivity {
     private void startPhoneNumberVerification(String phoneNumber) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                120,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks);        // OnVerificationStateChangedCallbacks
@@ -183,7 +178,7 @@ public class Phoneprovider extends AppCompatActivity {
                                         PhoneAuthProvider.ForceResendingToken token) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 phoneNumber,        // Phone number to verify
-                120,                 // Timeout duration
+                60,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 this,               // Activity (for callback binding)
                 Callbacks,         // OnVerificationStateChangedCallbacks
@@ -204,10 +199,6 @@ public class Phoneprovider extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser != null) {
-            startActivity(new Intent(Phoneprovider.this, Timeline.class));
-            finish();
-        }
         EnterIn.setVisibility(View.VISIBLE);
         verify.setVisibility(View.INVISIBLE);
         resend.setVisibility(View.INVISIBLE);

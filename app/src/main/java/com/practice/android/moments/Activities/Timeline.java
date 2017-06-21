@@ -54,12 +54,10 @@ public class Timeline extends AppCompatActivity
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     private static final int REQUEST_WRITE_STORAGE = 1;
-    Button Sign_Out;
-
     FragmentManager fragmentManager;
     ProfileScreenFragment profFragment;
-
-    GoogleApiClient googleApiClient;
+    private Button Sign_Out;
+    private GoogleApiClient googleApiClient;
     private RecyclerView mRecyclerView;
     private PostRecyclerAdapter mPostRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -233,16 +231,11 @@ public class Timeline extends AppCompatActivity
                 isStoragePermissionGranted();
                 fn_Choose_Image();
             }
-        } else
-//
-        if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_gallery) {
             Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
             startActivity(i);
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-        } else
+        }
+
         if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
@@ -291,7 +284,7 @@ public class Timeline extends AppCompatActivity
 
                 return false;
             }
-        } 	else {
+        } else {
             Log.v("f", "Permission is granted");
             return true;
         }
@@ -324,7 +317,7 @@ public class Timeline extends AppCompatActivity
             }
 
 
-        }  else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             Uri selectedImageUri = data.getData();
             picturePath = getRealPathFromURI(selectedImageUri);
 
@@ -340,9 +333,9 @@ public class Timeline extends AppCompatActivity
         }
     }
 
-    public String getRealPathFromURI (Uri contentUri) {
+    public String getRealPathFromURI(Uri contentUri) {
         String path = null;
-        String[] proj = { MediaStore.MediaColumns.DATA };
+        String[] proj = {MediaStore.MediaColumns.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
         if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);

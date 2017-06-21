@@ -27,13 +27,13 @@ import java.util.Objects;
 public class Signup extends AppCompatActivity {
     private static final String TAG = "Sign up";
     //variables
-    EditText name, email, password, conpassword, phone;
-    Button sub, backtosign;
-    ProgressDialog mProgressDialog;
+    private EditText name, email, password, conpassword, phone;
+    private Button sub, backtosign;
+    private ProgressDialog mProgressDialog;
 
-    FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
 
     @Override
