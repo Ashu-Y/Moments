@@ -54,14 +54,10 @@ public class Timeline extends AppCompatActivity
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     private static final int REQUEST_WRITE_STORAGE = 1;
-
-    private Button Sign_Out;
-    private GoogleApiClient googleApiClient;
-
-  
     FragmentManager fragmentManager;
     ProfileScreenFragment profFragment;
-
+    private Button Sign_Out;
+    private GoogleApiClient googleApiClient;
     private RecyclerView mRecyclerView;
     private PostRecyclerAdapter mPostRecyclerAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -235,20 +231,11 @@ public class Timeline extends AppCompatActivity
                 isStoragePermissionGranted();
                 fn_Choose_Image();
             }
-        } else
+        } else if (id == R.id.nav_gallery) {
+            Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
+            startActivity(i);
+        }
 
-            if (id == R.id.nav_gallery) {
-                Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
-                startActivity(i);
-            }
-=======
-       
-//       else if (id == R.id.nav_slideshow) {
-
-//
-//        } else if (id == R.id.nav_manage) {
-//
-        } else
         if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
