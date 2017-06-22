@@ -40,5 +40,6 @@
     <string name="emailpassword_title_text">Email and Password</string>
 
     <string name="phone_title_text">Phone Number</string>
+    <string name="send_image">Send Image to Firebase</string>
 
 </resources>
