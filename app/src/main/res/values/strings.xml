@@ -41,5 +41,10 @@
 
     <string name="phone_title_text">Phone Number</string>
     <string name="send_image">Send Image to Firebase</string>
+    <string name="location">Location</string>
+    <string name="photos">Photos</string>
+    <string name="about">About</string>
+    <string name="i_love_diamonds">I Love Diamonds</string>
+    <string name="gautam">Gautam</string>
 
 </resources>

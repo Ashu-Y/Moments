@@ -7,10 +7,11 @@
     tools:context="com.practice.android.moments.Activities.PhotoVideosdatabase">
     <Button
         android:id="@+id/selectimage"
-        android:layout_width="match_parent"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:text="@string/send_image" />
+        android:text="@string/send_image"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp" />
 </android.support.constraint.ConstraintLayout>

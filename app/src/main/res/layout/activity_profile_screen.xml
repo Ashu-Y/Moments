@@ -4,15 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_layout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:id="@+id/profile_layout1">
+    android:background="@android:color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
         <ImageButton
@@ -20,12 +19,7 @@
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            />
-
-
-
-
+            android:scaleType="centerCrop" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -35,22 +29,22 @@
             android:layout_above="@+id/linearLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="96dp"
-            android:src="@drawable/c2"
             android:elevation="5dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/c2" />
 
         <!--<ImageButton-->
-            <!--android:id="@+id/user_profile_photo"-->
-            <!--android:layout_width="120dp"-->
-            <!--android:layout_height="120dp"-->
-            <!--android:layout_above="@+id/linearLayout"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_marginBottom="96dp"-->
-            <!--android:background="@drawable/img"-->
+        <!--android:id="@+id/user_profile_photo"-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="120dp"-->
+        <!--android:layout_above="@+id/linearLayout"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="96dp"-->
+        <!--android:background="@drawable/img"-->
 
-            <!--android:elevation="5dp"-->
-            <!--android:padding="20dp"-->
-            <!--android:scaleType="centerCrop" />-->
+        <!--android:elevation="5dp"-->
+        <!--android:padding="20dp"-->
+        <!--android:scaleType="centerCrop" />-->
 
 
         <android.support.design.widget.FloatingActionButton
@@ -59,28 +53,29 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
-            android:backgroundTint="@android:color/holo_blue_bright"
-            android:src="@drawable/ic_photo_camera_black_24dp" />
+            android:src="@drawable/ic_photo_camera_black_24dp"
+            app:backgroundTint="@android:color/holo_blue_bright" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/header_cover_image"
             android:background="#eb0d0a0a"
             android:elevation="4dp"
-            android:paddingBottom="24dp"
-            android:layout_below="@+id/header_cover_image"
-            android:layout_alignParentStart="true"
-            >
+            android:paddingBottom="24dp">
 
 
             <ImageView
                 android:id="@+id/add_friend"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="16dp"
                 android:layout_alignTop="@+id/drop_down_option_menu"
-                android:layout_toStartOf="@+id/drop_down_option_menu" />
+                android:layout_marginLeft="16dp"
+                android:layout_toStartOf="@+id/drop_down_option_menu"
+                android:background="@color/cardview_light_background"
+                android:src="@drawable/ic_person_add_black_24dp"/>
 
             <ImageView
                 android:id="@+id/drop_down_option_menu"
@@ -88,8 +83,9 @@
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_more_vert_black_24px"
                 android:layout_marginTop="16dp"
-                />
+                android:background="@color/cardview_light_background" />
 
             <TextView
                 android:id="@+id/user_profile_name"
@@ -97,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="76dp"
-                android:text="Gautam"
+                android:text="@string/gautam"
                 android:textColor="#fff"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -109,7 +105,7 @@
                 android:layout_below="@+id/user_profile_name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:text="I Love Diamonds"
+                android:text="@string/i_love_diamonds"
                 android:textColor="#fff"
                 android:textSize="14sp" />
 
@@ -117,22 +113,24 @@
 
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/profile_layout"
             android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:id="@+id/linearLayout">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#fff"
+                android:background="@color/cardview_dark_background"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="About" />
+                android:text="@string/about"
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -140,23 +138,27 @@
                 android:layout_margin="5dp"
                 android:layout_marginBottom="3dp"
                 android:layout_marginTop="3dp"
-                android:background="#fff"
+                android:background="@color/cardview_dark_background"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Photos" />
+                android:text="@string/photos"
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#fff"
+
+                android:background="@color/cardview_dark_background"
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Location " />
-
+                android:text="@string/location"
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold|italic" />
 
 
             <TextView
@@ -164,13 +166,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#fff"
+                android:background="@color/cardview_dark_background"
                 android:clickable="true"
-                android:backgroundTint="@color/cardview_dark_background"
                 android:elevation="4dp"
                 android:padding="20dp"
+
                 android:text="Logout"
-                android:textColor="@color/colorPrimary"/>
+
+                android:textColor="@color/cardview_light_background"
+                android:textStyle="bold|italic"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
     </RelativeLayout>
