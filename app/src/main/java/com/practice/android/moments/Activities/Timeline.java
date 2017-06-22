@@ -223,7 +223,14 @@ public class Timeline extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            startActivity(new Intent(this, Timeline.class));
+
+            if(profFragment.isAdded()){
+                FragmentTransaction fm = getFragmentManager().beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
+
+
         } else if (id == R.id.nav_camera) {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     && (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
@@ -237,9 +244,12 @@ public class Timeline extends AppCompatActivity
             Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
             startActivity(i);
         } else if (id == R.id.nav_profile) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
-            fragmentTransaction.commit();
+
+            if (!profFragment.isAdded()) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
+                fragmentTransaction.commit();
+            }
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(this, PhotoVideosdatabase.class));
         }
