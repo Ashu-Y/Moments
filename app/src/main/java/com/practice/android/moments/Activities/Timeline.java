@@ -222,18 +222,9 @@ public class Timeline extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home){
+        if (id == R.id.nav_home) {
             startActivity(new Intent(this, Timeline.class));
-
-//            if(profFragment != null){
-//                FragmentManager fm = getFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//            }
-//
-
-        } else
-
-        if (id == R.id.nav_camera) {
+        } else if (id == R.id.nav_camera) {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     && (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
 
@@ -245,15 +236,13 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
             startActivity(i);
-        }else
-            if (id == R.id.nav_profile) {
+        } else if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
             fragmentTransaction.commit();
-        }else
-            if (id == R.id.nav_slideshow){
-                startActivity(new Intent(this, PhotoVideosdatabase.class));
-            }
+        } else if (id == R.id.nav_slideshow) {
+            startActivity(new Intent(this, PhotoVideosdatabase.class));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
