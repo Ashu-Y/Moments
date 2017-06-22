@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".EditingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

@@ -24,30 +24,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity {
+public class EditingActivity extends AppCompatActivity {
 
-    /* 1) Add a member variable for our Image View */
-    private ImageView mEditedImageView;
-
-    public static final String TAG = MainActivity.class.getSimpleName();
+    public static final String TAG = EditingActivity.class.getSimpleName();
     static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
     static final int REQ_CODE_GALLERY_PICKER = 20;
-
+    ImageView content;
+    Bitmap bitmap;
+    File myDir;
+    /* 1) Add a member variable for our Image View */
+    private ImageView mEditedImageView;
     private Button mOpenGalleryButton;
     private Button mLaunchImageEditorButton;
     private Button save;
     private ImageView mSelectedImageView;
-    ImageView content;
-
-    Bitmap bitmap;
-    File myDir;
-
     private Uri mSelectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_editor);
 
         /* 2) Find the layout's ImageView by ID */
         mEditedImageView = (ImageView) findViewById(R.id.editedImageView);
@@ -86,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (mSelectedImageUri != null) {
-                    Intent imageEditorIntent = new AdobeImageIntent.Builder(MainActivity.this)
+                    Intent imageEditorIntent = new AdobeImageIntent.Builder(EditingActivity.this)
                             .setData(mSelectedImageUri)
                             .build();
 
                     startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
                 } else {
-                    Toast.makeText(MainActivity.this, "Select an image from the Gallery", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditingActivity.this, "Select an image from the Gallery", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -148,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     if(fileNames[i].equals(img_name.getText().toString() + ".jpg")){
 
 
-                        Toast.makeText(MainActivity.this, "Image with same name already exists in the Moments folder",
+                        Toast.makeText(EditingActivity.this, "Image with same name already exists in the Moments folder",
                                 Toast.LENGTH_SHORT).show();
                         imageExistsPopup();
                         return;
@@ -164,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     bitmap.compress(CompressFormat.JPEG, 100, ostream);
                     ostream.close();
 
-                    Toast.makeText(MainActivity.this, "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditingActivity.this, "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
         } else {
-            Toast.makeText(MainActivity.this, "Select an image first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditingActivity.this, "Select an image first", Toast.LENGTH_SHORT).show();
         }
 
 
