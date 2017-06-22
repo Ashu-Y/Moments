@@ -1,4 +1,4 @@
-package com.example.firebasedatabase;
+package com.practice.android.moments.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,11 +14,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.practice.android.moments.R;
 
-public class MainActivity extends AppCompatActivity {
-
+public class PhotoVideosdatabase extends AppCompatActivity {
     private static final int GALLERY_INTENT = 2;
-    private static final String TAG = "MAinActivity";
+    private static final String TAG = "PhotoVideo";
     ProgressDialog progrees;
     private Button mselectimage;
     private StorageReference mstorageReference;
@@ -26,8 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_photo_videosdatabase);
         mstorageReference = FirebaseStorage.getInstance().getReference();
         mselectimage = (Button) findViewById(R.id.selectimage);
         Uri uri;
@@ -43,11 +42,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
 
             progrees.setMessage("Please wait");
             progrees.show();
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
 
                     progrees.dismiss();
-                    Toast.makeText(MainActivity.this, "File Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PhotoVideosdatabase.this, "File Uploaded", Toast.LENGTH_SHORT).show();
 
                 }
             });
