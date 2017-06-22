@@ -60,7 +60,7 @@ public class PhotoVideosdatabase extends AppCompatActivity {
 
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
 
-            progrees.setMessage("Please wait");
+//            progrees.setMessage("Please wait");
             progrees.show();
             Uri uri = data.getData();
             Log.i(TAG, uri.toString());
