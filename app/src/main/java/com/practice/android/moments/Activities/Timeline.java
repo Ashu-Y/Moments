@@ -40,6 +40,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
@@ -252,6 +253,8 @@ public class Timeline extends AppCompatActivity
             }
         } else if (id == R.id.nav_slideshow) {
             startActivity(new Intent(this, PhotoVideosdatabase.class));
+        } else if (id == R.id.nav_editing) {
+            startActivity(new Intent(Timeline.this, EditingActivity.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

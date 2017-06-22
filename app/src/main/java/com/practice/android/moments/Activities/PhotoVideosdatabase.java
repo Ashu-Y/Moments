@@ -89,10 +89,10 @@ public class PhotoVideosdatabase extends AppCompatActivity {
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    double progress1 = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 
                     //displaying percentage in progress dialog
-                    progrees.setMessage("Uploaded " + ((int) progress) + "%...");
+                    progrees.setMessage("Uploaded " + ((int) progress1) + "%...");
 
                 }
             });
