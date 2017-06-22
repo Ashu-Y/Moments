@@ -10,8 +10,8 @@
     android:background="@android:color/white">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent" tools:ignore="RtlHardcoded"
+        android:layout_height="wrap_content">
 
 
         <ImageButton
@@ -85,7 +85,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@color/cardview_light_background"
-                android:src="@drawable/ic_more_vert_black_24dp" />
+                android:src="@drawable/ic_more_vert_black_24dp"
+                />
 
             <TextView
                 android:id="@+id/user_profile_name"
