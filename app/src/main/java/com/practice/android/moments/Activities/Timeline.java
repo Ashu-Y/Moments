@@ -69,6 +69,7 @@ public class Timeline extends AppCompatActivity
         googleApiClient.connect();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,13 +245,15 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent i = new Intent(Intent.ACTION_PICK, Uri.parse("content://media/external/images/media/"));
             startActivity(i);
-        }
-
-        if (id == R.id.nav_profile) {
+        }else
+            if (id == R.id.nav_profile) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
             fragmentTransaction.commit();
-        }
+        }else
+            if (id == R.id.nav_slideshow){
+                startActivity(new Intent(this, PhotoVideosdatabase.class));
+            }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
