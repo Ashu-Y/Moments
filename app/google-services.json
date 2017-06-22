@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "181144605993",
-    "firebase_url": "https://moments-443fc.firebaseio.com",
-    "project_id": "moments-443fc",
-    "storage_bucket": "moments-443fc.appspot.com"
+    "project_number": "524515475865",
+    "firebase_url": "https://moments-62a1f.firebaseio.com",
+    "project_id": "moments-62a1f",
+    "storage_bucket": "moments-62a1f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:181144605993:android:658a38e36e1a6258",
+        "mobilesdk_app_id": "1:524515475865:android:e15076c3ad52e312",
         "android_client_info": {
-          "package_name": "com.practice.android.moments"
+          "package_name": "com.example.firebasedatabase"
         }
       },
       "oauth_client": [
         {
-          "client_id": "181144605993-a20loo32jjh7bhcerj0967uq6cab9c3n.apps.googleusercontent.com",
+          "client_id": "524515475865-nqioj6rr0te2b8dustkn18ge5u8t66aa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.practice.android.moments",
+            "package_name": "com.example.firebasedatabase",
             "certificate_hash": "6f6e599d832be8d75608a101b69fa22af0430423"
           }
         },
         {
-          "client_id": "181144605993-201u6cq32f3152402ikhc5j7jru14v85.apps.googleusercontent.com",
+          "client_id": "524515475865-851g63ljdcgg88kr8kbp9ih2nqe0jmvt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDCpDceJU2xfd9FNDFrx1equ_9x9piHyU"
+          "current_key": "AIzaSyCXSdEFIWq9B837588zeiwopmZMWQRiLH8"
         }
       ],
       "services": {
@@ -40,7 +40,51 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "181144605993-201u6cq32f3152402ikhc5j7jru14v85.apps.googleusercontent.com",
+              "client_id": "524515475865-851g63ljdcgg88kr8kbp9ih2nqe0jmvt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524515475865:android:658a38e36e1a6258",
+        "android_client_info": {
+          "package_name": "com.practice.android.moments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "524515475865-4rcrog457seee5op28rf9qb581a7a3ha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.practice.android.moments",
+            "certificate_hash": "6f6e599d832be8d75608a101b69fa22af0430423"
+          }
+        },
+        {
+          "client_id": "524515475865-851g63ljdcgg88kr8kbp9ih2nqe0jmvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXSdEFIWq9B837588zeiwopmZMWQRiLH8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "524515475865-851g63ljdcgg88kr8kbp9ih2nqe0jmvt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
