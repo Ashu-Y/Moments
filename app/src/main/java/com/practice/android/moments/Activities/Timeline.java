@@ -29,16 +29,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
@@ -57,12 +52,11 @@ public class Timeline extends AppCompatActivity
     private static final int REQUEST_WRITE_STORAGE = 1;
     FragmentManager fragmentManager;
     ProfileScreenFragment profFragment;
-    private Button Sign_Out;
-    private GoogleApiClient googleApiClient;
-    private RecyclerView mRecyclerView;
-    private PostRecyclerAdapter mPostRecyclerAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<Post> mPostArrayList;
+    GoogleApiClient googleApiClient;
+    RecyclerView mRecyclerView;
+    PostRecyclerAdapter mPostRecyclerAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
+    ArrayList<Post> mPostArrayList;
 
     @Override
     protected void onStart() {
@@ -94,33 +88,12 @@ public class Timeline extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        Toast.makeText(Timeline.this, "Check ur connection", Toast.LENGTH_SHORT).show();
-                    }
-                }).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
-        Sign_Out = (Button) findViewById(R.id.SignOut);
-        Sign_Out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "You clicked onClick Button");
-                FirebaseAuth.getInstance().signOut();
-                LoginManager.getInstance().logOut();
-                Auth.GoogleSignInApi.signOut(googleApiClient)
-                        .setResultCallback(
-                                new ResultCallback<Status>() {
-                                    @Override
-                                    public void onResult(Status status) {
-//                                        Log.i(TAG, "log off from google sign button");
-                                        Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(Timeline.this, Login_method.class));
-                                    }
-                                });
-            }
-        });
+        // Google API CLIENT
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, connectionResult -> Toast.makeText(Timeline.this, "Check ur connection", Toast.LENGTH_SHORT).show()).addApi(Auth.GOOGLE_SIGN_IN_API).build();
+
+
 
 
         //Recycler
@@ -169,24 +142,18 @@ public class Timeline extends AppCompatActivity
 
             builder1.setPositiveButton(
                     "Yes",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            moveTaskToBack(true);
-                            android.os.Process.killProcess(android.os.Process.myPid());
-                            System.exit(1);
-                        }
-
-
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
                     });
 
             builder1.setNegativeButton(
                     "No",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            Toast.makeText(Timeline.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
-                        }
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        Toast.makeText(Timeline.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                     });
 
             AlertDialog alert11 = builder1.create();
@@ -219,13 +186,13 @@ public class Timeline extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
 
-            if(profFragment.isAdded()){
+            if (profFragment.isAdded()) {
                 FragmentTransaction fm = getFragmentManager().beginTransaction();
                 fm.remove(profFragment);
                 fm.commit();
@@ -247,7 +214,7 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
 
             if (!profFragment.isAdded()) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
                 fragmentTransaction.commit();
             }
@@ -255,6 +222,8 @@ public class Timeline extends AppCompatActivity
             startActivity(new Intent(this, PhotoVideosdatabase.class));
         } else if (id == R.id.nav_editing) {
             startActivity(new Intent(Timeline.this, EditingActivity.class));
+        } else if (id == R.id.nav_Logout) {
+            LogoutButton();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -273,11 +242,9 @@ public class Timeline extends AppCompatActivity
             }
         });
 
-        myAlertDialog.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_REQUEST);
-            }
+        myAlertDialog.setNegativeButton("Camera", (arg0, arg1) -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, CAMERA_REQUEST);
         });
 
         myAlertDialog.show();
@@ -317,6 +284,7 @@ public class Timeline extends AppCompatActivity
             Uri selectedImage = data.getData();
             String[] filePath = {MediaStore.Images.Media.DATA};
             Cursor c = getContentResolver().query(selectedImage, filePath, null, null, null);
+            assert c != null;
             c.moveToFirst();
             int columnIndex = c.getColumnIndex(filePath[0]);
             picturePath = c.getString(columnIndex);
@@ -352,6 +320,7 @@ public class Timeline extends AppCompatActivity
         String path = null;
         String[] proj = {MediaStore.MediaColumns.DATA};
         Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        assert cursor != null;
         if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
             path = cursor.getString(column_index);
@@ -361,4 +330,16 @@ public class Timeline extends AppCompatActivity
     }
 
 
+    public void LogoutButton() {
+        Log.i(TAG, "You clicked onClick Button");
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        Auth.GoogleSignInApi.signOut(googleApiClient)
+                .setResultCallback(
+                        status -> {
+                            Log.i(TAG, "log off from google sign button");
+                            Toast.makeText(Timeline.this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Timeline.this, Login_method.class));
+                        });
+    }
 }
