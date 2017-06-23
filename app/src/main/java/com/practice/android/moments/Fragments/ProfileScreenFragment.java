@@ -81,7 +81,7 @@ public class ProfileScreenFragment extends Fragment {
         myAlertDialog.setMessage("How do you want to set your picture?");
         myAlertDialog.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
-                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, GALLERY_PICTURE);
             }
         });
@@ -108,6 +108,7 @@ public class ProfileScreenFragment extends Fragment {
             String[] filePath = {MediaStore.Images.Media.DATA};
             Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
             c.moveToFirst();
+
             int columnIndex = c.getColumnIndex(filePath[0]);
             picturePath = c.getString(columnIndex);
 

@@ -247,7 +247,7 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_profile) {
 
             if (!profFragment.isAdded()) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.add(R.id.containerA, profFragment, "profile Fragment");
                 fragmentTransaction.commit();
             }
