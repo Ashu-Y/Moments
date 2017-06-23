@@ -60,7 +60,6 @@ public class PhotoVideosdatabase extends AppCompatActivity {
 
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
 
-//            progrees.setMessage("Please wait");
             progrees.show();
             Uri uri = data.getData();
             Log.i(TAG, uri.toString());
@@ -68,7 +67,7 @@ public class PhotoVideosdatabase extends AppCompatActivity {
 
             StorageReference filePath = mstorageReference.child("Photos")
                     .child(firebaseuser.getUid())
-                    .child(uri.getEncodedPath());
+                    .child(uri.getLastPathSegment());
 
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
@@ -98,6 +97,4 @@ public class PhotoVideosdatabase extends AppCompatActivity {
             });
         }
     }
-
-
 }

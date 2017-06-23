@@ -33,6 +33,7 @@ public class ProfileScreenFragment extends Fragment {
     private FloatingActionButton fabGallery;
     private TextView prof_logout;
     private CircleImageView profile_pic;
+    private Uri uri;
 
 
     @Nullable
@@ -101,12 +102,13 @@ public class ProfileScreenFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         String picturePath;
-        Uri uri;
+
         Bitmap thumbnail;
         if (requestCode == GALLERY_PICTURE && resultCode == RESULT_OK) {
             Uri selectedImage = data.getData();
             String[] filePath = {MediaStore.Images.Media.DATA};
             Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
+            assert c != null;
             c.moveToFirst();
 
             int columnIndex = c.getColumnIndex(filePath[0]);
@@ -126,7 +128,7 @@ public class ProfileScreenFragment extends Fragment {
             }
 
 
-        }  else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             Uri selectedImageUri = data.getData();
 
             profile_pic.setImageURI(selectedImageUri);
@@ -145,10 +147,11 @@ public class ProfileScreenFragment extends Fragment {
         }
     }
 
-    public String getRealPathFromURI (Uri contentUri) {
+    public String getRealPathFromURI(Uri contentUri) {
         String path = null;
-        String[] proj = { MediaStore.MediaColumns.DATA };
+        String[] proj = {MediaStore.MediaColumns.DATA};
         Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        assert cursor != null;
         if (cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
             path = cursor.getString(column_index);
