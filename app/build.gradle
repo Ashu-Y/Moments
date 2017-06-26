@@ -19,6 +19,8 @@ android {
 
         manifestPlaceholders = [appPackageName: "${applicationId}"]
         vectorDrawables.useSupportLibrary = true
+
+
     }
     buildTypes {
         release {
@@ -26,7 +28,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     dexOptions {
 
         jumboMode true
