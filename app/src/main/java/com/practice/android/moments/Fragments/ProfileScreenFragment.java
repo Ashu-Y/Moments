@@ -173,7 +173,7 @@ public class ProfileScreenFragment extends Fragment {
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
-                    .child(firebaseuser.getUid())
+                    .child(firebaseuser.getUid()).child("Profile Photo")
                     .child(filePath.getLastPathSegment());
             riversRef.putFile(filePath)
                     .addOnSuccessListener(taskSnapshot -> {
