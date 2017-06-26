@@ -166,7 +166,7 @@ public class Timeline extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.timeline, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -222,6 +222,8 @@ public class Timeline extends AppCompatActivity
             startActivity(new Intent(this, PhotoVideosdatabase.class));
         } else if (id == R.id.nav_editing) {
             startActivity(new Intent(Timeline.this, EditingActivity.class));
+        } else if (id == R.id.nav_bottomNavigation) {
+            startActivity(new Intent(Timeline.this, BottomNavigation.class));
         } else if (id == R.id.nav_Logout) {
             LogoutButton();
         }

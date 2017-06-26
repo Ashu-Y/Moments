@@ -82,7 +82,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-            />
+                android:src="@drawable/edit_prof"
+                android:tint="@android:color/white"/>
 
             <TextView
                 android:id="@+id/user_profile_name"
