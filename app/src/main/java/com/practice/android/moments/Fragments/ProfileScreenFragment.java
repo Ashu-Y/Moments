@@ -1,7 +1,7 @@
 package com.practice.android.moments.Fragments;
 
 import android.app.Fragment;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -16,13 +16,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.R;
 
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import it.sephiroth.android.library.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -30,11 +35,13 @@ public class ProfileScreenFragment extends Fragment {
 
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
+    private static final String TAG = "ProfileScreen";
+    StorageReference mstorageReference;
+    FirebaseUser firebaseuser;
+    Uri filePath;
+    Uri uri;
     private FloatingActionButton fabGallery;
-    private TextView prof_logout;
     private CircleImageView profile_pic;
-    private Uri uri;
-
 
     @Nullable
     @Override
@@ -43,35 +50,15 @@ public class ProfileScreenFragment extends Fragment {
         View v = inflater.inflate(R.layout.activity_profile_screen, container, false);
         Log.i("ProfileScreenFrag", "onCreateView");
 
+        firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
+
+        mstorageReference = FirebaseStorage.getInstance().getReference();
+
         fabGallery = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
-        prof_logout = (TextView) v.findViewById(R.id.prof_logout);
         profile_pic = (CircleImageView) v.findViewById(R.id.user_profile_photo);
 
-        fabGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fn_Choose_Image();
-            }
-        });
+        fabGallery.setOnClickListener(v1 -> fn_Choose_Image());
 
-//        prof_logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("ProfileScreenFragment", "You clicked onClick Button");
-//                FirebaseAuth.getInstance().signOut();
-//                LoginManager.getInstance().logOut();
-//                Auth.GoogleSignInApi.signOut(googleApiClient)
-//                        .setResultCallback(
-//                                new ResultCallback<Status>() {
-//                                    @Override
-//                                    public void onResult(Status status) {
-////                                        Log.i(TAG, "log off from google sign button");
-//                                        Toast.makeText(getActivity(), "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-//                                        startActivity(new Intent(getActivity(), Login_method.class));
-//                                    }
-//                                });
-//            }
-//        });
 
         return v;
     }
@@ -80,18 +67,14 @@ public class ProfileScreenFragment extends Fragment {
         AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(getActivity());
         myAlertDialog.setTitle("Upload Pictures Option");
         myAlertDialog.setMessage("How do you want to set your picture?");
-        myAlertDialog.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, GALLERY_PICTURE);
-            }
+        myAlertDialog.setPositiveButton("Gallery", (arg0, arg1) -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, GALLERY_PICTURE);
         });
 
-        myAlertDialog.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, CAMERA_REQUEST);
-            }
+        myAlertDialog.setNegativeButton("Camera", (arg0, arg1) -> {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, CAMERA_REQUEST);
         });
 
         myAlertDialog.show();
@@ -105,44 +88,56 @@ public class ProfileScreenFragment extends Fragment {
 
         Bitmap thumbnail;
         if (requestCode == GALLERY_PICTURE && resultCode == RESULT_OK) {
-            Uri selectedImage = data.getData();
-            String[] filePath = {MediaStore.Images.Media.DATA};
-            Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
-            assert c != null;
-            c.moveToFirst();
+//            Uri selectedImage = data.getData();
+//            String[] filePath = {MediaStore.Images.Media.DATA};
+//            Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
+//            assert c != null;
+//            c.moveToFirst();
+//
+//            int columnIndex = c.getColumnIndex(filePath[0]);
+//            picturePath = c.getString(columnIndex);
+//
+//            profile_pic.setImageURI(data.getData());
+//
+//            c.close();
+//
+//            try {
+//                thumbnail = (BitmapFactory.decodeFile(picturePath));
+//                Log.e("gallery.***********692." + thumbnail, picturePath);
+//                uri = Uri.fromFile(new File(picturePath));
+//            } catch (Exception e) {
+//                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
+//                e.printStackTrace();
+//            }
 
-            int columnIndex = c.getColumnIndex(filePath[0]);
-            picturePath = c.getString(columnIndex);
 
-            profile_pic.setImageURI(data.getData());
+            filePath = data.getData();
+            Log.i(TAG, filePath.toString());
 
-            c.close();
-
-            try {
-                thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.e("gallery.***********692." + thumbnail, picturePath);
-                uri = Uri.fromFile(new File(picturePath));
-            } catch (Exception e) {
-                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
-                e.printStackTrace();
-            }
+            uploadFile();
 
 
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            Uri selectedImageUri = data.getData();
+            filePath = data.getData();
 
-            profile_pic.setImageURI(selectedImageUri);
+//            profile_pic.setImageURI(filePath);
 
-            picturePath = getRealPathFromURI(selectedImageUri);
-
+            picturePath = getRealPathFromURI(filePath);
+            uploadFile();
             try {
                 thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.e("gallery.***********692." + thumbnail, picturePath);
                 uri = Uri.fromFile(new File(picturePath));
+//                profile_pic.setImageURI(filePath);
+//                uploadFile();
             } catch (Exception e) {
                 Log.e("gallery***********692.", "Exception==========Exception==============Exception");
                 e.printStackTrace();
             }
+//
+//            filePath = data.getData();
+            Log.i(TAG, filePath.toString());
+
 
         }
     }
@@ -158,5 +153,51 @@ public class ProfileScreenFragment extends Fragment {
         }
         cursor.close();
         return path;
+    }
+
+    private void uploadFile() {
+        //if there is a file to upload
+        if (filePath != null) {
+            //displaying a progress dialog while upload is going on
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+
+
+            StorageReference riversRef = mstorageReference.child("Photos")
+                    .child(firebaseuser.getUid())
+                    .child(filePath.getLastPathSegment());
+            riversRef.putFile(filePath)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        //if the upload is successfull
+                        //hiding the progress dialog
+                        progressDialog.dismiss();
+
+                        Uri download_uri = taskSnapshot.getDownloadUrl();
+                        Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
+                        //and displaying a success toast
+                        Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                    })
+                    .addOnFailureListener(exception -> {
+                        //if the upload is not successful
+                        //hiding the progress dialog
+                        progressDialog.dismiss();
+
+                        //and displaying error message
+                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                    })
+                    .addOnProgressListener(taskSnapshot -> {
+                        //calculating progress percentage
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                        //displaying percentage in progress dialog
+                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                    });
+        }
+        //if there is not any file
+        else {
+            //you can display an error toast
+            Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 }

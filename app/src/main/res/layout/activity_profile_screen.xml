@@ -10,14 +10,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <ImageButton
-
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="Cover Page"
             android:scaleType="centerCrop"
         />
 
@@ -53,8 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
-            android:src="@drawable/ic_photo_camera_black_24dp"
-            app:backgroundTint="@android:color/holo_blue_bright"/>
+            app:backgroundTint="#22ffe9"
+            app:srcCompat="@drawable/ic_photo_camera_black_24dp"/>
 
         <RelativeLayout
             android:id="@+id/profile_layout"

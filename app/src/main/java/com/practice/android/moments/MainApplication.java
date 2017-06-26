@@ -1,4 +1,4 @@
-package com.practice.android.moments.Editing;
+package com.practice.android.moments;
 
 import android.app.Application;
 

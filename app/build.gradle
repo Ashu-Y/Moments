@@ -18,6 +18,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         manifestPlaceholders = [appPackageName: "${applicationId}"]
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -60,6 +61,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+/* 4)(Creative SDK) Add the CSDK framework dependencies (Make sure these version numbers are correct) */
+
+
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
@@ -79,12 +83,10 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:multidex:1.0.1'
-
-/* 4)(Creative SDK) Add the CSDK framework dependencies (Make sure these version numbers are correct) */
     compile 'com.adobe.creativesdk.foundation:auth:0.9.1251'
     compile 'com.adobe.creativesdk:image:4.8.4'
     compile 'com.localytics.android:library:3.8.0'
-
+    compile 'com.android.support:support-vector-drawable:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 

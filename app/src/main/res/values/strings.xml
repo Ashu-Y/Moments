@@ -46,5 +46,9 @@
     <string name="about">About</string>
     <string name="i_love_diamonds">I Love Diamonds</string>
     <string name="gautam">Gautam</string>
+    <string name="title_activity_wwewew">wwewew</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>
