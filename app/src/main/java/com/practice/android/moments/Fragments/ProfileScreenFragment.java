@@ -42,6 +42,7 @@ public class ProfileScreenFragment extends Fragment {
     FirebaseUser firebaseuser;
     Uri filePath;
     Uri uri;
+    Uri download_uri;
     DatabaseReference databaseReference;
     private FloatingActionButton fabGallery;
     private CircleImageView profile_pic;
@@ -176,14 +177,9 @@ public class ProfileScreenFragment extends Fragment {
                         //hiding the progress dialog
                         progressDialog.dismiss();
 
-                        Uri download_uri = taskSnapshot.getDownloadUrl();
+                        download_uri = taskSnapshot.getDownloadUrl();
                         Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
 
-
-                        String user_id = firebaseuser.getUid();
-
-                        DatabaseReference currentuser_db = databaseReference.child(user_id);
-                        currentuser_db.child("photo").setValue(download_uri);
 
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
@@ -209,5 +205,16 @@ public class ProfileScreenFragment extends Fragment {
             //you can display an error toast
             Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        String user_id = firebaseuser.getUid();
+
+        DatabaseReference currentuser_db = databaseReference.child(user_id);
+        currentuser_db.child("photo").setValue(download_uri);
+
     }
 }
