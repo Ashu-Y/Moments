@@ -223,15 +223,14 @@ public class ProfileScreenFragment extends Fragment {
 
         String user_id = firebaseuser.getUid();
 
-        String picture = String.valueOf(download_uri);
         DatabaseReference currentuser_db = databaseReference.child(user_id);
-        currentuser_db.child("photo").setValue(picture);
 
         currentuser_db.child("photo").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                dataSnapshot
+                Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
+
             }
 
             @Override
