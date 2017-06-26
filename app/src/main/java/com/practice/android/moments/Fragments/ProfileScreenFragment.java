@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.R;
@@ -40,6 +42,7 @@ public class ProfileScreenFragment extends Fragment {
     FirebaseUser firebaseuser;
     Uri filePath;
     Uri uri;
+    DatabaseReference databaseReference;
     private FloatingActionButton fabGallery;
     private CircleImageView profile_pic;
 
@@ -51,7 +54,7 @@ public class ProfileScreenFragment extends Fragment {
         Log.i("ProfileScreenFrag", "onCreateView");
 
         firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
-
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mstorageReference = FirebaseStorage.getInstance().getReference();
 
         fabGallery = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
@@ -175,6 +178,13 @@ public class ProfileScreenFragment extends Fragment {
 
                         Uri download_uri = taskSnapshot.getDownloadUrl();
                         Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
+
+
+                        String user_id = firebaseuser.getUid();
+
+                        DatabaseReference currentuser_db = databaseReference.child(user_id);
+                        currentuser_db.child("photo").setValue(download_uri);
+
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
                     })

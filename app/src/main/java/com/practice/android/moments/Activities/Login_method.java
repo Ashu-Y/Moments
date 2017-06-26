@@ -33,6 +33,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
 import java.util.Arrays;
@@ -42,6 +44,7 @@ public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 0;
+    DatabaseReference databaseReference;
     private Button ViaEmail;
     private Button Viaphone;
     private GoogleSignInOptions googleSignInOptions;
@@ -53,7 +56,6 @@ public class Login_method extends AppCompatActivity {
     private GoogleSignInAccount account;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-
     private ProgressDialog mProgressDialog;
 
 
@@ -63,6 +65,10 @@ public class Login_method extends AppCompatActivity {
 //facebook SDK initialized
         FacebookSdk.sdkInitialize(getApplication());
         setContentView(R.layout.activity_login_method);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
 
         ViaEmail = (Button) findViewById(R.id.Emailact);
         Viaphone = (Button) findViewById(R.id.Phoneact);
@@ -198,7 +204,24 @@ public class Login_method extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(Login_method.this, "Logged in via Google", Toast.LENGTH_SHORT).show();
                             firebaseUser = firebaseAuth.getCurrentUser();
-                            updateUI(firebaseUser);
+                            String user_id = null;
+                            try {
+                                user_id = firebaseUser.getUid();
+                                assert user_id != null;
+                                DatabaseReference currentuser_db = databaseReference.child(user_id);
+                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
+
+                                currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                                currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+                                currentuser_db.child("photo").setValue("Default");
+
+                                updateUI(firebaseUser);
+                            } catch (NullPointerException e) {
+                                Log.e(TAG, e.getMessage());
+                                Log.e(TAG, null);
+                            }
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -223,9 +246,27 @@ public class Login_method extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
+
                             firebaseUser = firebaseAuth.getCurrentUser();
-                            Toast.makeText(Login_method.this, "FaceBook Sign in Sucess", Toast.LENGTH_SHORT).show();
-                            updateUI(firebaseUser);
+                            String user_id;
+                            try {
+                                assert firebaseUser != null;
+                                user_id = firebaseUser.getUid();
+
+                                DatabaseReference currentuser_db = databaseReference.child(user_id);
+                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
+
+                                currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                                currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+                                currentuser_db.child("photo").setValue("Default");
+                                Toast.makeText(Login_method.this, "FaceBook Sign in Sucess", Toast.LENGTH_SHORT).show();
+                                updateUI(firebaseUser);
+
+                            } catch (NullPointerException e) {
+                                Log.e(TAG, e.getMessage());
+                                Log.e(TAG, null);
+                            }
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
