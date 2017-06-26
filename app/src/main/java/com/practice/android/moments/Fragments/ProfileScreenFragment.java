@@ -20,8 +20,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.R;
@@ -33,6 +36,7 @@ import it.sephiroth.android.library.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 
+@SuppressWarnings("deprecation")
 public class ProfileScreenFragment extends Fragment {
 
     private static final int GALLERY_PICTURE = 1;
@@ -181,6 +185,11 @@ public class ProfileScreenFragment extends Fragment {
                         Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
 
 
+                        String user_id = firebaseuser.getUid();
+                        String picture = String.valueOf(download_uri);
+                        DatabaseReference currentuser_db = databaseReference.child(user_id);
+                        currentuser_db.child("photo").setValue(picture);
+
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
                     })
@@ -213,8 +222,22 @@ public class ProfileScreenFragment extends Fragment {
 
         String user_id = firebaseuser.getUid();
 
+        String picture = String.valueOf(download_uri);
         DatabaseReference currentuser_db = databaseReference.child(user_id);
-        currentuser_db.child("photo").setValue(download_uri);
+        currentuser_db.child("photo").setValue(picture);
+
+        currentuser_db.child("photo").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+//                dataSnapshot
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 }
