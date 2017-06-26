@@ -216,9 +216,10 @@ public class ProfileScreenFragment extends Fragment {
         }
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         String user_id = firebaseuser.getUid();
 
