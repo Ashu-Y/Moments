@@ -53,4 +53,14 @@
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="name">Name</string>
 
+
+    <string-array name="RelationshipStatus">
+        <item>Single</item>
+        <item>In a Relationship</item>
+        <item>Married</item>
+        <item>Complicated</item>
+
+    </string-array>
+
+
 </resources>
