@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
@@ -27,7 +27,14 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-
+    <style name="materialtheme2" parent="android:Theme.Material" tools:ignore="NewApi">
+        <item name="android:colorPrimary">@color/primary_material_dark_1</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="android:colorAccent">@color/accent_material_dark</item>
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:colorForeground">@color/foreground_material_dark</item>
+        <item name="android:textColorPrimary">#FFFFFF</item>
+    </style>
 
 
     <!-- Base application theme. -->

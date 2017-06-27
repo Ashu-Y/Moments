@@ -214,7 +214,7 @@ public class Phoneprovider extends AppCompatActivity {
     private boolean validatePhoneNumber() {
         String phoneNumber = newphonenumber;
         if (TextUtils.isEmpty(phoneNumber)) {
-            phone_number.setError("Invalid phone number.");
+            phone_number.setError("Phone number empty.");
             return false;
         }
         return true;
