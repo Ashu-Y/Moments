@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 import com.hbb20.CountryCodePicker.OnCountryChangeListener;
-
 import com.practice.android.moments.R;
 
 import java.util.concurrent.TimeUnit;
@@ -62,8 +61,13 @@ public class Phoneprovider extends AppCompatActivity {
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
         String locale = this.getResources().getConfiguration().locale.getDisplayCountry();
+
+
         ccp.setDefaultCountryUsingNameCode(locale);
         ccp.resetToDefaultCountry();
+
+        newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
+
         ccp.setOnCountryChangeListener(new OnCountryChangeListener() {
             @Override
             public void onCountrySelected() {

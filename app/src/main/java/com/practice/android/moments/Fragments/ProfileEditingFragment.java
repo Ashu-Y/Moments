@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class ProfileEditingFragment extends Fragment {
     private EditText About;
     private EditText Date_of_birth;
     private Button Submit;
+    private EditText gender;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,20 +81,55 @@ public class ProfileEditingFragment extends Fragment {
         });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (firebaseUser != null) {
-            String user_id = firebaseUser.getUid();
+        Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseUser != null) {
+                    String user_id = firebaseUser.getUid();
 
-            DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-            currentuser_db.child("name").setValue(name.getText().toString());
-            currentuser_db.child("email").setValue(email.getText().toString());
-            currentuser_db.child("phone").setValue(phone.getText().toString());
-            currentuser_db.child("Gender").setValue("DEFAULT");
-            currentuser_db.child("Relationship").setValue(relation);
-            currentuser_db.child("About").setValue(About.getText().toString());
-            currentuser_db.child("Date Of Birth").setValue(Date_of_birth.getText().toString());
-            currentuser_db.child("photo").setValue("Default");
+                    String code = name.getText().toString();
+                    String code1 = email.getText().toString();
+                    String code2 = phone.getText().toString();
+                    String code3 = About.getText().toString();
+                    String code4 = Date_of_birth.getText().toString();
+//                    String code5 = gender.getText().toString();
 
-        }
+                    if (TextUtils.isEmpty(code)) {
+                        name.setError("Cannot be empty.");
+                        return;
+                    } else if (TextUtils.isEmpty(code1)) {
+                        email.setError("Cannot be empty.");
+                        return;
+                    } else if (TextUtils.isEmpty(code2)) {
+                        phone.setError("Cannot be empty.");
+                        return;
+                    } else if (TextUtils.isEmpty(code3)) {
+                        About.setError("Cannot be empty.");
+                        return;
+                    } else if (TextUtils.isEmpty(code4)) {
+                        Date_of_birth.setError("Cannot be empty.");
+                        return;
+                    }
+//                    else if (TextUtils.isEmpty(code5)) {
+//                        name.setError("Cannot be empty.");
+//                        return;
+//                    }
+                    else {
+                        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                        currentuser_db.child("name").setValue(name.getText().toString());
+                        currentuser_db.child("email").setValue(email.getText().toString());
+                        currentuser_db.child("phone").setValue(phone.getText().toString());
+                        currentuser_db.child("Gender").setValue("DEFAULT");
+                        currentuser_db.child("Relationship").setValue(relation);
+                        currentuser_db.child("About").setValue(About.getText().toString());
+                        currentuser_db.child("Date Of Birth").setValue(Date_of_birth.getText().toString());
+                        currentuser_db.child("photo").setValue("Default");
+
+                    }
+                }
+            }
+        });
+
 
         return rootView;
     }
