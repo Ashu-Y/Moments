@@ -36,6 +36,7 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Editing.EditingActivity;
+import com.practice.android.moments.Fragments.ProfileEditingFragment;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
@@ -227,7 +228,7 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_Logout) {
             LogoutButton();
         } else if (id == R.id.profile_edit) {
-            ProfileScreenFragment fragment = new ProfileScreenFragment();
+            ProfileEditingFragment fragment = new ProfileEditingFragment();
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.containerA, fragment, "profile Fragment");
