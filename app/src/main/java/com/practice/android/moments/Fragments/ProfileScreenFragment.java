@@ -45,7 +45,7 @@ public class ProfileScreenFragment extends Fragment {
     Uri uri;
     Uri download_uri;
     DatabaseReference databaseReference;
-    private FloatingActionButton fabGallery;
+    FloatingActionButton fabGallery;
     private CircleImageView profile_pic;
 
     @Nullable
