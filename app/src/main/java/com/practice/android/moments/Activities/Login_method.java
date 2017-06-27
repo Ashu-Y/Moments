@@ -212,7 +212,11 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
                                 currentuser_db.child("phone").setValue("Default");
-                                currentuser_db.child("photo").setValue("Default");
+                                if (acct.getPhotoUrl() != null) {
+                                    currentuser_db.child("photo").setValue(acct.getPhotoUrl());
+                                } else {
+                                    currentuser_db.child("photo").setValue("Default");
+                                }
                                 currentuser_db.child("Gender").setValue("Default");
                                 currentuser_db.child("Relationship").setValue("Default");
                                 currentuser_db.child("About").setValue("Default");
@@ -256,6 +260,7 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
                                 currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("photo").setValue("Default");
+//                                currentuser_db.child("photo").setValue()
                                 currentuser_db.child("Gender").setValue("Default");
                                 currentuser_db.child("Relationship").setValue("Default");
                                 currentuser_db.child("About").setValue("Default");
