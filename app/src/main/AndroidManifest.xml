@@ -70,6 +70,7 @@
         <activity android:name=".Activities.ResetPassword"/>
         <activity android:name=".Activities.PhotoVideosdatabase"/>
         <activity android:name=".Editing.EditingActivity"/>
+        <activity android:name=".Activities.BottomNavigation"/>
 
     </application>
 
