@@ -204,23 +204,22 @@ public class Login_method extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(Login_method.this, "Logged in via Google", Toast.LENGTH_SHORT).show();
                             firebaseUser = firebaseAuth.getCurrentUser();
-                            String user_id = null;
-                            try {
+                            String user_id;
+                            if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
-                                assert user_id != null;
-                                DatabaseReference currentuser_db = databaseReference.child(user_id);
-                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
 
+                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
                                 currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
                                 currentuser_db.child("photo").setValue("Default");
+                                currentuser_db.child("Gender").setValue("Default");
+                                currentuser_db.child("Relationship").setValue("Default");
+                                currentuser_db.child("About").setValue("Default");
+                                currentuser_db.child("Date Of Birth").setValue("Default");
 
                                 updateUI(firebaseUser);
-                            } catch (NullPointerException e) {
-                                Log.e(TAG, e.getMessage());
-                                Log.e(TAG, null);
                             }
-
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -246,26 +245,25 @@ public class Login_method extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-
                             firebaseUser = firebaseAuth.getCurrentUser();
                             String user_id;
-                            try {
-                                assert firebaseUser != null;
+
+                            if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
 
-                                DatabaseReference currentuser_db = databaseReference.child(user_id);
+                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
-
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
                                 currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
                                 currentuser_db.child("photo").setValue("Default");
-                                Toast.makeText(Login_method.this, "FaceBook Sign in Sucess", Toast.LENGTH_SHORT).show();
-                                updateUI(firebaseUser);
+                                currentuser_db.child("Gender").setValue("Default");
+                                currentuser_db.child("Relationship").setValue("Default");
+                                currentuser_db.child("About").setValue("Default");
+                                currentuser_db.child("Date Of Birth").setValue("Default");
 
-                            } catch (NullPointerException e) {
-                                Log.e(TAG, e.getMessage());
-                                Log.e(TAG, null);
+                                updateUI(firebaseUser);
                             }
+
 
                         } else {
                             // If sign in fails, display a message to the user.

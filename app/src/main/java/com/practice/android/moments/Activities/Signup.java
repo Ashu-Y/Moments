@@ -122,14 +122,24 @@ public class Signup extends AppCompatActivity {
                                                                         Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
                                                                     }
                                                                 } else {
-                                                                    String user_id = firebaseAuth.getCurrentUser().getUid();
 
-                                                                    DatabaseReference currentuser_db = databaseReference.child(user_id);
-                                                                    currentuser_db.child("name").setValue(user_name);
 
-                                                                    currentuser_db.child("email").setValue(user_email);
-                                                                    currentuser_db.child("phone").setValue(user_phone);
-                                                                    currentuser_db.child("photo").setValue("Default");
+                                                                    String user_id;
+
+                                                                        user_id = firebaseUser.getUid();
+
+                                                                        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                                                        currentuser_db.child("name").setValue(user_name);
+                                                                        currentuser_db.child("email").setValue(user_email);
+                                                                        currentuser_db.child("phone").setValue(user_phone);
+                                                                        currentuser_db.child("photo").setValue("Default");
+                                                                        currentuser_db.child("Gender").setValue("Default");
+                                                                        currentuser_db.child("Relationship").setValue("Default");
+                                                                        currentuser_db.child("About").setValue("Default");
+                                                                        currentuser_db.child("Date Of Birth").setValue("Default");
+
+                                                                        updateUI(firebaseUser);
+
 
                                                                     startActivity(new Intent(Signup.this, Timeline.class));
                                                                     finish();
