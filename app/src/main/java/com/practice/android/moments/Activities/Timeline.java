@@ -94,8 +94,6 @@ public class Timeline extends AppCompatActivity
                 .enableAutoManage(this, connectionResult -> Toast.makeText(Timeline.this, "Check ur connection", Toast.LENGTH_SHORT).show()).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
 
-
-
         //Recycler
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -192,6 +190,8 @@ public class Timeline extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
+            startActivity(new Intent(this, Timeline.class));
+
             if (profFragment.isAdded()) {
                 FragmentTransaction fm = getFragmentManager().beginTransaction();
                 fm.remove(profFragment);
@@ -226,12 +226,20 @@ public class Timeline extends AppCompatActivity
             startActivity(new Intent(Timeline.this, BottomNavigation.class));
         } else if (id == R.id.nav_Logout) {
             LogoutButton();
+        } else if (id == R.id.profile_edit) {
+            ProfileScreenFragment fragment = new ProfileScreenFragment();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.containerA, fragment, "profile Fragment");
+            fragmentTransaction.commit();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public void fn_Choose_Image() {
         AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(Timeline.this);

@@ -40,9 +40,9 @@
             android:icon="@drawable/ic_perm_identity_black_24dp"
             android:title="Profile" />
         <item
-            android:id="@+id/nav_share"
+            android:id="@+id/profile_edit"
             android:icon="@drawable/ic_share_black_24dp"
-            android:title="Share" />
+            android:title="Edit Profile" />
         <item
             android:id="@+id/nav_Logout"
             android:icon="@drawable/ic_power_settings_new_black_24dp"

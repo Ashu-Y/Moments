@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 import com.hbb20.CountryCodePicker.OnCountryChangeListener;
+
 import com.practice.android.moments.R;
 
 import java.util.concurrent.TimeUnit;
@@ -123,7 +124,6 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 Log.d(TAG, "onVerificationCompleted:" + credential);
-//                signInWithPhoneAuthCredential(credential);
             }
 
             @Override
