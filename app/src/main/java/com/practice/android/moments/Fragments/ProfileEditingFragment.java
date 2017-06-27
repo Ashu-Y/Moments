@@ -22,6 +22,14 @@ import com.practice.android.moments.R;
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class ProfileEditingFragment extends Fragment {
 
+    /*
+    * Gender not added
+    * in xml
+    * update it with
+    * DEFAULT
+        * */
+
+
     Spinner spinner;
     String relation;
     DatabaseReference databaseReference;
@@ -72,7 +80,7 @@ public class ProfileEditingFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
-         String user_id = firebaseUser.getUid();
+            String user_id = firebaseUser.getUid();
 
             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
             currentuser_db.child("name").setValue(name.getText().toString());

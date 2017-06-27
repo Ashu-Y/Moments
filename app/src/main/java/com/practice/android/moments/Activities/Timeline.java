@@ -192,14 +192,6 @@ public class Timeline extends AppCompatActivity
         if (id == R.id.nav_home) {
 
             startActivity(new Intent(this, Timeline.class));
-
-            if (profFragment.isAdded()) {
-                FragmentTransaction fm = getFragmentManager().beginTransaction();
-                fm.remove(profFragment);
-                fm.commit();
-            }
-
-
         } else if (id == R.id.nav_camera) {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     && (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
@@ -229,10 +221,11 @@ public class Timeline extends AppCompatActivity
             LogoutButton();
         } else if (id == R.id.profile_edit) {
             ProfileEditingFragment fragment = new ProfileEditingFragment();
-
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.containerA, fragment, "profile Fragment");
-            fragmentTransaction.commit();
+            if (!fragment.isAdded()) {
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.containerA, fragment, "profile Fragment");
+                fragmentTransaction.commit();
+            }
 
         }
 
