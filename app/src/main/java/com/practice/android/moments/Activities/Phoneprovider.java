@@ -38,6 +38,7 @@ public class Phoneprovider extends AppCompatActivity {
     private String mVerificationId;
     private EditText phone_number;
     private EditText Verfiy_code;
+    private EditText mname;
     private Button EnterIn;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
@@ -51,6 +52,7 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn = (Button) findViewById(R.id.button_start_verification);
         verify = (Button) findViewById(R.id.button_verify_phone);
         resend = (Button) findViewById(R.id.button_resend);
+        mname = (EditText) findViewById(R.id.field_name);
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
@@ -140,7 +142,14 @@ public class Phoneprovider extends AppCompatActivity {
 
                             String user_id = firebaseAuth.getCurrentUser().getUid();
 
-                            DatabaseReference currentuser_db = databaseReference.child(user_id);
+                            DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                            currentuser_db.child("name").setValue(mname.getText().toString());
+                            currentuser_db.child("email").setValue("Default");
+                            currentuser_db.child("phone").setValue("Default");
+                            currentuser_db.child("Gender").setValue("Default");
+                            currentuser_db.child("Relationship").setValue("Default");
+                            currentuser_db.child("About").setValue("Default");
+                            currentuser_db.child("Date Of Birth").setValue("Default");
                             currentuser_db.child("phone").setValue(phone_number.getText().toString());
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));
