@@ -42,6 +42,7 @@ public class Phoneprovider extends AppCompatActivity {
     private Button EnterIn;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
+    String  newphonenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,8 @@ public class Phoneprovider extends AppCompatActivity {
         verify = (Button) findViewById(R.id.button_verify_phone);
         resend = (Button) findViewById(R.id.button_resend);
         mname = (EditText) findViewById(R.id.field_name);
-
+//        String  newphonenumber =  +phone_number.getText().toString();
+//add spinner in it
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
 
@@ -90,7 +92,7 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                resendVerificationCode(phone_number.getText().toString(), mResendToken);
+                resendVerificationCode(newphonenumber, mResendToken);
 
 
             }
@@ -150,7 +152,7 @@ public class Phoneprovider extends AppCompatActivity {
                             currentuser_db.child("Relationship").setValue("Default");
                             currentuser_db.child("About").setValue("Default");
                             currentuser_db.child("Date Of Birth").setValue("Default");
-                            currentuser_db.child("phone").setValue(phone_number.getText().toString());
+                            currentuser_db.child("phone").setValue(newphonenumber);
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));
 
@@ -195,7 +197,7 @@ public class Phoneprovider extends AppCompatActivity {
     }
 
     private boolean validatePhoneNumber() {
-        String phoneNumber = phone_number.getText().toString();
+        String phoneNumber = newphonenumber;
         if (TextUtils.isEmpty(phoneNumber)) {
             phone_number.setError("Invalid phone number.");
             return false;
