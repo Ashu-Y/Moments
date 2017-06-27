@@ -39,12 +39,9 @@ public class getProfiel extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         View v = inflater.inflate(R.layout.fragment_get_profiel, container, false);
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         getname = (TextView) v.findViewById(R.id.TextViewname);
         getemail = (TextView) v.findViewById(R.id.TextViewemail);

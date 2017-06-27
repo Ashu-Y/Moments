@@ -237,6 +237,7 @@ public class Timeline extends AppCompatActivity
 
 
             getProfiel fragment1 = new getProfiel();
+
             if (!fragment1.isAdded()) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.add(R.id.containerA, fragment1, "profile Fragment");
