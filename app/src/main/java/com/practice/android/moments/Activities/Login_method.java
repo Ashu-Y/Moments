@@ -211,7 +211,7 @@ public class Login_method extends AppCompatActivity {
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
-                                currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+                                currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("photo").setValue("Default");
                                 currentuser_db.child("Gender").setValue("Default");
                                 currentuser_db.child("Relationship").setValue("Default");
@@ -254,7 +254,7 @@ public class Login_method extends AppCompatActivity {
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
-                                currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+                                currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("photo").setValue("Default");
                                 currentuser_db.child("Gender").setValue("Default");
                                 currentuser_db.child("Relationship").setValue("Default");
