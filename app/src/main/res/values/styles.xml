@@ -29,10 +29,10 @@
 
     <style name="materialtheme2" parent="android:Theme.Material" tools:ignore="NewApi">
         <item name="android:colorPrimary">@color/primary_material_dark_1</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark_material_dark</item>
-        <item name="android:colorAccent">@color/accent_material_dark</item>
-        <item name="android:colorBackground">@color/background_material_dark</item>
-        <item name="android:colorForeground">@color/foreground_material_dark</item>
+        <item name="android:colorPrimaryDark" tools:ignore="PrivateResource">@color/primary_dark_material_dark</item>
+        <item name="android:colorAccent" tools:ignore="PrivateResource">@color/accent_material_dark</item>
+        <item name="android:colorBackground" tools:ignore="PrivateResource">@color/background_material_dark</item>
+        <item name="android:colorForeground" tools:ignore="PrivateResource">@color/foreground_material_dark</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
     </style>
 
