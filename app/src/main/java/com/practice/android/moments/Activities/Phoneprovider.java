@@ -24,6 +24,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hbb20.CountryCodePicker;
+import com.hbb20.CountryCodePicker.OnCountryChangeListener;
 import com.practice.android.moments.R;
 
 import java.util.concurrent.TimeUnit;
@@ -33,6 +35,8 @@ public class Phoneprovider extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    String newphonenumber;
+    CountryCodePicker ccp;
     private Button verify;
     private Button resend;
     private String mVerificationId;
@@ -42,7 +46,6 @@ public class Phoneprovider extends AppCompatActivity {
     private Button EnterIn;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
-    String  newphonenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +57,20 @@ public class Phoneprovider extends AppCompatActivity {
         verify = (Button) findViewById(R.id.button_verify_phone);
         resend = (Button) findViewById(R.id.button_resend);
         mname = (EditText) findViewById(R.id.field_name);
-//        String  newphonenumber =  +phone_number.getText().toString();
-//add spinner in it
+
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+
+        String locale = this.getResources().getConfiguration().locale.getDisplayCountry();
+        ccp.setDefaultCountryUsingNameCode(locale);
+        ccp.resetToDefaultCountry();
+        ccp.setOnCountryChangeListener(new OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
+            }
+        });
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
 

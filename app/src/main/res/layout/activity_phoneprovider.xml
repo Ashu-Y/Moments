@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#3ff2ce"
-    tools:context="com.practice.android.moments.Activities.Phoneprovider"
-    tools:ignore="HardcodedText,RtlHardcoded,ButtonStyle">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#3ff2ce"
+                tools:context="com.practice.android.moments.Activities.Phoneprovider"
+                tools:ignore="HardcodedText,RtlHardcoded,ButtonStyle">
 
     <TextView
         android:id="@+id/textView3"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="Login "
-        android:textSize="30sp" />
+        android:textSize="30sp"/>
 
 
     <Button
@@ -24,7 +24,7 @@
         android:layout_alignStart="@+id/field_verification_code"
         android:layout_marginBottom="32dp"
         android:text="@string/start_phone_auth"
-        android:theme="@style/ThemeOverlay.MyDarkButton" />
+        android:theme="@style/ThemeOverlay.MyDarkButton"/>
 
     <Button
         android:id="@+id/button_verify_phone"
@@ -36,7 +36,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toStartOf="@+id/textView3"
         android:text="@string/verify_phone_auth"
-        android:theme="@style/ThemeOverlay.MyDarkButton" />
+        android:theme="@style/ThemeOverlay.MyDarkButton"/>
 
     <Button
         android:id="@+id/button_resend"
@@ -48,7 +48,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/textView3"
         android:text="@string/resend_phone_auth"
-        android:theme="@style/ThemeOverlay.MyDarkButton" />
+        android:theme="@style/ThemeOverlay.MyDarkButton"/>
 
 
     <EditText
@@ -63,7 +63,7 @@
         android:gravity="center"
         android:hint="@string/hint_phone_number"
         android:inputType="phone"
-        android:maxLength="10" />
+        android:maxLength="10"/>
 
     <EditText
         android:id="@+id/field_name"
@@ -75,7 +75,7 @@
         android:layout_marginBottom="30sp"
         android:gravity="center"
         android:hint="@string/name"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/field_verification_code"
@@ -87,13 +87,14 @@
         android:layout_marginBottom="36dp"
         android:gravity="center"
         android:hint="@string/hint_verification_code"
-        android:inputType="number" />
+        android:inputType="number"/>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="70sp"
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
         android:layout_height="50sp"
         android:layout_alignBottom="@+id/field_phone_number"
-        android:layout_toStartOf="@+id/field_phone_number" />
+        android:layout_toStartOf="@+id/field_phone_number"/>
+
 
 </RelativeLayout>
