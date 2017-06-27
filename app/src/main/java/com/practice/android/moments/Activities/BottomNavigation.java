@@ -3,13 +3,20 @@ package com.practice.android.moments.Activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.practice.android.moments.Fragments.DashboardFragment;
+import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.R;
 
 public class BottomNavigation extends AppCompatActivity {
 
+    TimelineFragment mTimelineFragment;
+    DashboardFragment mDashboardFragment;
+    FragmentManager mFragmentManager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -19,14 +26,42 @@ public class BottomNavigation extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    mTextMessage.setText(R.string.title_home);
-
+                    if (mDashboardFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mDashboardFragment);
+                        transaction.commit();
+                    }
+                    if (!mTimelineFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.add(R.id.content, mTimelineFragment, "Timeline Fragment");
+                        transaction.commit();
+                    }
                     return true;
+
                 case R.id.navigation_dashboard:
-//                    mTextMessage.setText(R.string.title_dashboard);
+                    if (mTimelineFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mTimelineFragment);
+                        transaction.commit();
+                    }
+
+                    if (!mDashboardFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.add(R.id.content, mDashboardFragment, "Timeline Fragment");
+                        transaction.commit();
+                    }
                     return true;
                 case R.id.navigation_notifications:
-//                    mTextMessage.setText(R.string.title_notifications);
+                    if (mTimelineFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mTimelineFragment);
+                        transaction.commit();
+                    }
+                    if (mDashboardFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mDashboardFragment);
+                        transaction.commit();
+                    }
                     return true;
             }
             return false;
@@ -41,6 +76,17 @@ public class BottomNavigation extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        mTimelineFragment = new TimelineFragment();
+        mDashboardFragment = new DashboardFragment();
+        mFragmentManager = getSupportFragmentManager();
+
+
+        if (!mTimelineFragment.isAdded()) {
+            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+            transaction.add(R.id.content, mTimelineFragment, "Timeline Fragment");
+            transaction.commit();
+        }
     }
 
 }

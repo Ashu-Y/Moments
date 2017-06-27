@@ -53,6 +53,7 @@ public class Timeline extends AppCompatActivity
     private static final int REQUEST_WRITE_STORAGE = 1;
     FragmentManager fragmentManager;
     ProfileScreenFragment profFragment;
+    ProfileEditingFragment editProfFragment;
     GoogleApiClient googleApiClient;
     RecyclerView mRecyclerView;
     PostRecyclerAdapter mPostRecyclerAdapter;
@@ -75,6 +76,7 @@ public class Timeline extends AppCompatActivity
 
         fragmentManager = getFragmentManager();
         profFragment = new ProfileScreenFragment();
+        editProfFragment = new ProfileEditingFragment();
 
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -191,7 +193,14 @@ public class Timeline extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
+            if (profFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
             startActivity(new Intent(this, Timeline.class));
+
+
         } else if (id == R.id.nav_camera) {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                     && (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)) {
@@ -212,18 +221,52 @@ public class Timeline extends AppCompatActivity
                 fragmentTransaction.commit();
             }
         } else if (id == R.id.nav_slideshow) {
+            if (profFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
+            if (editProfFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(editProfFragment);
+                fm.commit();
+            }
             startActivity(new Intent(this, PhotoVideosdatabase.class));
         } else if (id == R.id.nav_editing) {
+            if (profFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
+            if (editProfFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(editProfFragment);
+                fm.commit();
+            }
             startActivity(new Intent(Timeline.this, EditingActivity.class));
         } else if (id == R.id.nav_bottomNavigation) {
+            if (profFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
+            if (editProfFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(editProfFragment);
+                fm.commit();
+            }
             startActivity(new Intent(Timeline.this, BottomNavigation.class));
         } else if (id == R.id.nav_Logout) {
             LogoutButton();
         } else if (id == R.id.profile_edit) {
-            ProfileEditingFragment fragment = new ProfileEditingFragment();
-            if (!fragment.isAdded()) {
+            if (profFragment.isAdded()) {
+                FragmentTransaction fm = fragmentManager.beginTransaction();
+                fm.remove(profFragment);
+                fm.commit();
+            }
+            if (!editProfFragment.isAdded()) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.containerA, fragment, "profile Fragment");
+                fragmentTransaction.add(R.id.containerA, editProfFragment, "profile Fragment");
                 fragmentTransaction.commit();
             }
 

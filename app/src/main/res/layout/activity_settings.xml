@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#011a27"
+    android:theme="@style/materialtheme2"
+    tools:context=".Activities.SettingsActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:theme="@android:style/Theme.Material"
+        tools:context="com.example.gmgautam5000.layout.MainActivity">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#011a27"
+            android:text="Invite Friends"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#011a27"
+
+                android:paddingRight="16dp"/>
+
+            <Button
+                android:id="@+id/InviteFacebookbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#011a27"
+                android:gravity="start|center_vertical"
+                android:text="Connect through Facebook"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:mockup_opacity="1.0"/>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/Invitebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Invite Friends"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/textViewAccount"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+
+            android:layout_marginTop="40dp"
+            android:background="#011a27"
+            android:text="Account"
+            android:textColor="@android:color/white"
+
+
+            android:textSize="18dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/photosSaved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+
+            android:paddingLeft="40dp"
+            android:text=" Saved Memories"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/ChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Change Password"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/BlockedUsers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Blocked List"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/Privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Privacy"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/AddAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Add Account"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <Button
+            android:id="@+id/RecentLIkedPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Recent LIked Photos"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/EditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Edit Profile"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/textViewSettings"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+
+            android:layout_marginTop="40dp"
+            android:background="#011a27"
+            android:text="Settings"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/AppUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="App Updates"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/Language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Language"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+        <Button
+            android:id="@+id/SilentNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Silent Notification"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+        <Button
+            android:id="@+id/SetNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Set Notifications"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
+
+        <TextView
+            android:id="@+id/textViewAbout"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+
+            android:layout_marginTop="40dp"
+            android:background="#011a27"
+            android:text="About"
+            android:textColor="@android:color/white"
+            android:textSize="18dp"/>
+
+        <Button
+            android:id="@+id/PrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Privacy Policy"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+        <Button
+            android:id="@+id/ClearSearchHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="40dp"
+            android:text="Clear Search History"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            tools:mockup_opacity="1.0"/>
+
+    </LinearLayout>
+</ScrollView>
