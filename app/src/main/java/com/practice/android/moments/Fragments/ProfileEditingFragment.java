@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.practice.android.moments.R;
 
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-public class BlankFragment extends Fragment {
+public class ProfileEditingFragment extends Fragment {
 
 //    Button Sign_Out;
 

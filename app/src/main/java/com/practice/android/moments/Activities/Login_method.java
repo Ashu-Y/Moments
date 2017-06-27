@@ -209,19 +209,14 @@ public class Login_method extends AppCompatActivity {
                                 user_id = firebaseUser.getUid();
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
-                                currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                                currentuser_db.child("name").setValue(acct.getDisplayName());
+                                currentuser_db.child("email").setValue(acct.getEmail());
                                 currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("Gender").setValue("Default");
                                 currentuser_db.child("Relationship").setValue("Default");
                                 currentuser_db.child("About").setValue("Default");
                                 currentuser_db.child("Date Of Birth").setValue("Default");
-                                try {
-                                    currentuser_db.child("photo").setValue(acct.getPhotoUrl());
-                                } catch (NullPointerException e) {
-                                    Log.e(TAG, "GOOGLE IMAGE NOT FOUND" + e.getMessage());
-                                    currentuser_db.child("photo").setValue("Default");
-                                }
+                                currentuser_db.child("photo").setValue("Default");
                                 updateUI(firebaseUser);
                             }
 
