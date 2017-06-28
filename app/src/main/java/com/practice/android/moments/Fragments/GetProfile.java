@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
 
-public class getProfiel extends Fragment {
+public class GetProfile extends Fragment {
 
     private static final String TAG =  "GET profile";
     TextView getname;
@@ -39,7 +39,7 @@ public class getProfiel extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_get_profiel, container, false);
+        View v = inflater.inflate(R.layout.fragment_get_profile, container, false);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 

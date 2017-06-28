@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:theme="@android:style/Theme.Material"
         android:weightSum="1"
-        tools:context="com.practice.android.moments.Fragments.getProfiel"
+        tools:context="com.practice.android.moments.Fragments.GetProfile"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,LabelFor"
         tools:targetApi="lollipop">
 

@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context="com.practice.android.moments.Fragments.DashboardFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dashboard_staggered"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:id="@+id/nav_home"
         android:layout_width="match_parent"

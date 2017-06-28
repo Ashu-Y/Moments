@@ -36,9 +36,9 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Editing.EditingActivity;
+import com.practice.android.moments.Fragments.GetProfile;
 import com.practice.android.moments.Fragments.ProfileEditingFragment;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
-import com.practice.android.moments.Fragments.getProfiel;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
@@ -236,7 +236,7 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_Friends) {
 
 
-            getProfiel fragment1 = new getProfiel();
+            GetProfile fragment1 = new GetProfile();
 
             if (!fragment1.isAdded()) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
