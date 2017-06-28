@@ -71,6 +71,8 @@
         <activity android:name=".Activities.BottomNavigation"/>
         <activity android:name=".Activities.SettingsActivity">
         </activity>
+        <activity android:name=".Activities.ChangePassword">
+        </activity>
     </application>
 
 </manifest>
