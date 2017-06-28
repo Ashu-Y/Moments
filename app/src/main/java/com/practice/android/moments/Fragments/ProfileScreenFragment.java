@@ -20,10 +20,14 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -206,5 +210,33 @@ public class ProfileScreenFragment extends Fragment {
             //you can display an error toast
             Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String user_id = firebaseuser.getUid();
+
+        databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
+
+                Uri pic_uri = user.Photo();
+                Picasso.with(getActivity()).load(pic_uri).fit().centerCrop().into(profile_pic);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 }
