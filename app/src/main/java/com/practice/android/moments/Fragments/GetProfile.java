@@ -73,8 +73,6 @@ public class GetProfile extends Fragment {
                         getAbout.setText(user.getAbout());
                         getDate.setText(user.getDate());
                         getrealtion_ship.setText(user.getrelationship());
-
-
                     }
 
                     @Override
@@ -82,8 +80,6 @@ public class GetProfile extends Fragment {
 
                     }
                 });
-
-
             }
         });
         return v;
@@ -107,13 +103,12 @@ public class GetProfile extends Fragment {
                 getAbout.setText(user.getAbout());
                 getDate.setText(user.getDate());
                 getrealtion_ship.setText(user.getrelationship());
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+                Log.e(TAG,databaseError.getMessage()+"ERROR a raha h ");
             }
         });
     }
