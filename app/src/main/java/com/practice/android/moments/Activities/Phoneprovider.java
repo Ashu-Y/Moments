@@ -77,7 +77,7 @@ public class Phoneprovider extends AppCompatActivity {
 
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users from phone");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         EnterIn.setOnClickListener(new View.OnClickListener() {
             @Override
