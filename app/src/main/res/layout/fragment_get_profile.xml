@@ -137,42 +137,17 @@
             android:textColor="@android:color/white" />
 
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/TextViewdate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
             android:background="@drawable/circle"
-            android:orientation="horizontal">
+            android:ems="10"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp" />
 
-            <TextView
-                android:id="@+id/TextViewdate"
-                android:layout_width="0sp"
-                android:layout_height="35sp"
-                android:layout_margin="3sp"
-                android:layout_marginLeft="15sp"
-                android:layout_marginRight="10sp"
-                android:layout_weight="9"
-                android:background="#063852"
-                android:paddingLeft="15sp"
-                android:paddingRight="15sp" />
-
-            <ImageView
-                android:id="@+id/imageView45"
-                android:layout_width="0sp"
-                android:layout_height="24sp"
-                android:layout_margin="4sp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_date_range_black_24dp"
-                android:tint="@android:color/white"
-                tools:ignore="ContentDescription,VectorDrawableCompat" />
-        </LinearLayout>
-
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="388sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.53"
-            tools:ignore="InefficientWeight" />
 
         <TextView
             android:id="@+id/textView0827"

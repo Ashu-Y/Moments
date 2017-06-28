@@ -24,7 +24,7 @@ import com.practice.android.moments.R;
 @SuppressLint("NewApi")
 public class GetProfile extends Fragment {
 
-    private static final String TAG =  "GET profile";
+    private static final String TAG = "GET profile";
     TextView getname;
     TextView getemail;
     TextView getphone;
@@ -69,6 +69,12 @@ public class GetProfile extends Fragment {
                         Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
                         getname.setText(user.getName());
                         getemail.setText(user.getEmail());
+                        getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate());
+                        getrealtion_ship.setText(user.getrelationship());
+
+
                     }
 
                     @Override
@@ -97,6 +103,12 @@ public class GetProfile extends Fragment {
                 Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
                 getname.setText(user.getName());
                 getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate());
+                getrealtion_ship.setText(user.getrelationship());
+
+
             }
 
             @Override
