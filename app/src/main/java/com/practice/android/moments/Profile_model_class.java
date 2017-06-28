@@ -12,8 +12,8 @@ public class Profile_model_class {
     public String Phone;
     public String About;
     public String Date_of_birth;
-//    public String email;
-//    public String email;
+    public String gender;
+    public String relationship;
 
 
     // Default constructor required for calls to

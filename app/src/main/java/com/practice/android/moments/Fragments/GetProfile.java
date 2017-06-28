@@ -1,6 +1,7 @@
 package com.practice.android.moments.Fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
 
+@SuppressLint("NewApi")
 public class GetProfile extends Fragment {
 
     private static final String TAG =  "GET profile";
@@ -81,27 +83,27 @@ public class GetProfile extends Fragment {
         return v;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        String user_id = firebaseUser.getUid();
-//
-//        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                assert user != null;
-//                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-//                getname.setText(user.getName());
-//                getemail.setText(user.getEmail());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        String user_id = firebaseUser.getUid();
+
+        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 }
