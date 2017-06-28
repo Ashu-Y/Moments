@@ -226,7 +226,7 @@ public class ProfileScreenFragment extends Fragment {
                 assert user != null;
                 Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
 
-                Uri pic_uri = user.Photo();
+                Uri pic_uri = user.getPhoto();
                 Picasso.with(getActivity()).load(pic_uri).fit().centerCrop().into(profile_pic);
 
             }

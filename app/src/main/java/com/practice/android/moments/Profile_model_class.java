@@ -45,7 +45,7 @@ public class Profile_model_class {
     }
 
 
-    public Uri Photo() {
+    public Uri getPhoto() {
         return Photo;
     }
 

@@ -85,32 +85,32 @@ public class GetProfile extends Fragment {
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        String user_id = firebaseUser.getUid();
-
-        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-
-                assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-                getname.setText(user.getName());
-                getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
-                getAbout.setText(user.getAbout());
-                getDate.setText(user.getDate());
-                getrealtion_ship.setText(user.getrelationship());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                Log.e(TAG,databaseError.getMessage()+"ERROR a raha h ");
-            }
-        });
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        String user_id = firebaseUser.getUid();
+//
+//        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+//
+//                assert user != null;
+//                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
+//                getname.setText(user.getName());
+//                getemail.setText(user.getEmail());
+//                getphone.setText(user.getPhone());
+//                getAbout.setText(user.getAbout());
+//                getDate.setText(user.getDate());
+//                getrealtion_ship.setText(user.getrelationship());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//                Log.e(TAG,databaseError.getMessage()+"ERROR a raha h ");
+//            }
+//        });
+//    }
 
 }
