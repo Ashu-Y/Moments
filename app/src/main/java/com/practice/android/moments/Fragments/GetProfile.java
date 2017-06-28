@@ -69,7 +69,7 @@ public class GetProfile extends Fragment {
                         Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
                         getname.setText(user.getName());
                         getemail.setText(user.getEmail());
-                        getphone.setText(user.getPhone());
+//                        getphone.setText(user.getPhone());
                         getAbout.setText(user.getAbout());
                         getDate.setText(user.getDate());
                         getrealtion_ship.setText(user.getrelationship());

@@ -49,9 +49,9 @@ public class Profile_model_class {
         return Photo;
     }
 
-    public int getPhone() {
-        return Phone;
-    }
+//    public int getPhone() {
+//        return Phone;
+//    }
 
     public String getrelationship() {
         return relationship;
