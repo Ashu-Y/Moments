@@ -14,6 +14,7 @@ public class Profile_model_class {
     public String Date_of_birth;
     public String gender;
     public String relationship;
+    public String getPhoto;
 
 
     // Default constructor required for calls to
@@ -21,9 +22,15 @@ public class Profile_model_class {
     public Profile_model_class() {
     }
 
-    public Profile_model_class(String name, String email) {
+    public Profile_model_class(String name, String phone, String about, String DOB, String Gender, String relationShip, String photo, String email) {
         this.name = name;
         this.email = email;
+        this.Phone = phone;
+        this.About = about;
+        this.Date_of_birth = DOB;
+        this.gender = Gender;
+        this.relationship = relationShip;
+        this.getPhoto = photo;
     }
 
 
