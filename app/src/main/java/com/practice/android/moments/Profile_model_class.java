@@ -1,7 +1,5 @@
 package com.practice.android.moments;
 
-import android.net.Uri;
-
 /**
  * Created by Hitesh Goel on 27-06-2017.
  * Made by Hitesh Goel
@@ -11,12 +9,12 @@ public class Profile_model_class {
 
     public String name;
     public String email;
-    public int Phone;
+    public String Phone;
     public String about;
     public String Date_of_birth;
     public String gender;
     public String relationship;
-    public Uri Photo;
+    public String Photo;
 
 
     // Default constructor required for calls to
@@ -24,7 +22,7 @@ public class Profile_model_class {
     public Profile_model_class() {
     }
 
-    public Profile_model_class(String name, int phone, String about, String DOB, String Gender, String relationShip, Uri photo, String email) {
+    public Profile_model_class(String name, String phone, String about, String DOB, String Gender, String relationShip, String photo, String email) {
         this.name = name;
         this.email = email;
         this.Phone = phone;
@@ -45,13 +43,13 @@ public class Profile_model_class {
     }
 
 
-    public Uri getPhoto() {
+    public String getPhoto() {
         return Photo;
     }
 
-//    public int getPhone() {
-//        return Phone;
-//    }
+    public String getPhone() {
+        return Phone;
+    }
 
     public String getrelationship() {
         return relationship;
