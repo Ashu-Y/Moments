@@ -55,27 +55,27 @@
         android:id="@+id/field_phone_number"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/field_verification_code"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="32dp"
         android:digits="0123456789+-"
         android:gravity="center"
         android:hint="@string/hint_phone_number"
         android:inputType="phone"
-        android:maxLength="10"/>
+        android:maxLength="10"
+        android:layout_above="@+id/field_verification_code"
+        android:layout_alignEnd="@+id/button_resend" />
 
     <EditText
         android:id="@+id/field_name"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/field_phone_number"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="42dp"
         android:gravity="center"
         android:hint="@string/name"
-        android:inputType="textPersonName"/>
+        android:inputType="textPersonName"
+        android:layout_above="@+id/field_phone_number"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/field_verification_code"
@@ -93,8 +93,9 @@
         android:id="@+id/ccp"
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        android:layout_alignBottom="@+id/field_phone_number"
-        android:layout_toStartOf="@+id/field_phone_number"/>
+        android:layout_above="@+id/field_verification_code"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="18dp" />
 
 
 </RelativeLayout>
