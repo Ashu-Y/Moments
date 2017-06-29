@@ -32,8 +32,8 @@ public class GetProfile extends Fragment {
     TextView getrealtion_ship;
     Button get;
     FirebaseUser firebaseUser;
+    String user_id;
     private DatabaseReference mDatabase;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +43,8 @@ public class GetProfile extends Fragment {
         View v = inflater.inflate(R.layout.fragment_get_profile, container, false);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        user_id = firebaseUser.getUid();
 
         getname = (TextView) v.findViewById(R.id.TextViewname);
         getemail = (TextView) v.findViewById(R.id.TextViewemail);
@@ -54,39 +56,43 @@ public class GetProfile extends Fragment {
 
         get = (Button) v.findViewById(R.id.sub);
 
-        get.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String user_id = firebaseUser.getUid();
-
-                mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-
-                        assert user != null;
-                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-                        getname.setText(user.getName());
-                        getemail.setText(user.getEmail());
-                        getphone.setText(user.getPhone());
-                        getAbout.setText(user.getAbout());
-                        getDate.setText(user.getDate());
-                        getrealtion_ship.setText(user.getrelationship());
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
+//        get.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String user_id = firebaseUser.getUid();
+//
+//                mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+//
+////                        assert user != null;
+//                        if (user != null) {
+//                            Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
+//                            getname.setText(user.getName());
+//                            getemail.setText(user.getEmail());
+//                            getphone.setText(user.getPhone());
+//                            getAbout.setText(user.getAbout());
+//                            getDate.setText(user.getDate());
+//                            getrealtion_ship.setText(user.getrelationship());
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//            }
+//        });
         return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        String user_id = firebaseUser.getUid();
+
         mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,8 +111,35 @@ public class GetProfile extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Log.e(TAG,databaseError.getMessage()+"ERROR a raha h ");
+                Log.e(TAG, databaseError.getMessage() + "ERROR a raha h ");
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        user_id = firebaseUser.getUid();
+        mDatabase.child(user_id).child("User Info").removeEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate());
+                getrealtion_ship.setText(user.getrelationship());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, databaseError.getMessage() + "ERROR a raha h ");
+            }
+        });
+
     }
 }

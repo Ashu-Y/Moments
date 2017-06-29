@@ -1,5 +1,7 @@
 package com.practice.android.moments.Fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,7 +12,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -182,6 +183,8 @@ public class ProfileScreenFragment extends Fragment {
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                         currentuser_db.child("photo").setValue(picture);
 
+
+
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
                     })
@@ -208,6 +211,7 @@ public class ProfileScreenFragment extends Fragment {
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onResume() {
         super.onResume();
@@ -226,7 +230,7 @@ public class ProfileScreenFragment extends Fragment {
 //                String pic = user.getPhoto();
 //                Uri pic_uri = Uri.parse(pic);
 //                Picasso.with(getActivity()).load(pic_uri).fit().centerCrop().into(profile_pic);
-        Picasso.with(getActivity()).load(download_uri).fit().centerCrop().into(profile_pic);
+        Picasso.with(getContext()).load(download_uri).fit().centerCrop().into(profile_pic);
 
 //            }
 
@@ -239,5 +243,8 @@ public class ProfileScreenFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 }
