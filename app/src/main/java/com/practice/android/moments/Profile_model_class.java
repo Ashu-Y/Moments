@@ -22,10 +22,17 @@ public class Profile_model_class {
     public Profile_model_class() {
     }
 
-    public Profile_model_class(String name, String phone, String about, String DOB, String Gender, String relationShip, String photo, String email) {
+    public Profile_model_class(String name,
+//                             String phone,
+                               String about,
+                               String DOB,
+                               String Gender,
+                               String relationShip,
+                               String photo,
+                               String email) {
         this.name = name;
         this.email = email;
-        this.Phone = phone;
+//        this.Phone = phone;
         this.about = about;
         this.Date_of_birth = DOB;
         this.gender = Gender;
@@ -47,9 +54,9 @@ public class Profile_model_class {
         return Photo;
     }
 
-    public String getPhone() {
-        return Phone;
-    }
+//    public String getPhone() {
+//        return Phone;
+//    }
 
     public String getrelationship() {
         return relationship;

@@ -67,10 +67,12 @@ public class GetProfile extends Fragment {
                         Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                         assert user != null;
-                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
+//                                user.getPhone()+
+                                "     " + user.getAbout() + "    " + user.getDate());
                         getname.setText(user.getName());
                         getemail.setText(user.getEmail());
-                        getphone.setText(user.getPhone());
+//                        getphone.setText(user.getPhone());
                         getAbout.setText(user.getAbout());
                         getDate.setText(user.getDate());
                         getrealtion_ship.setText(user.getrelationship());
@@ -81,10 +83,12 @@ public class GetProfile extends Fragment {
                         Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                         assert user != null;
-                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
+//                                user.getPhone()+
+                                "     " + user.getAbout() + "    " + user.getDate());
                         getname.setText(user.getName());
                         getemail.setText(user.getEmail());
-                        getphone.setText(user.getPhone());
+//                        getphone.setText(user.getPhone());
                         getAbout.setText(user.getAbout());
                         getDate.setText(user.getDate());
                         getrealtion_ship.setText(user.getrelationship());
@@ -142,51 +146,55 @@ public class GetProfile extends Fragment {
         super.onResume();
 
 
-        mDatabase.child(user_id).child("User Info").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+        mDatabase.child(user_id).child("User Info")
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-                assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
-                getname.setText(user.getName());
-                getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
-                getAbout.setText(user.getAbout());
-                getDate.setText(user.getDate());
-                getrealtion_ship.setText(user.getrelationship());
-            }
+                        assert user != null;
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
+//                        user.getPhone()+
+                                "     " + user.getAbout() + "    " + user.getDate());
+                        getname.setText(user.getName());
+                        getemail.setText(user.getEmail());
+//                getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate());
+                        getrealtion_ship.setText(user.getrelationship());
+                    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-                assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
-                getname.setText(user.getName());
-                getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
-                getAbout.setText(user.getAbout());
-                getDate.setText(user.getDate());
-                getrealtion_ship.setText(user.getrelationship());
-            }
+                        assert user != null;
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
+//                        user.getPhone()+
+                                "     " + user.getAbout() + "    " + user.getDate());
+                        getname.setText(user.getName());
+                        getemail.setText(user.getEmail());
+//                getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate());
+                        getrealtion_ship.setText(user.getrelationship());
+                    }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
+                    }
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-            }
+                    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
+                    }
+                });
 
 
 //        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -222,10 +230,12 @@ public class GetProfile extends Fragment {
                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                 assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
+//                        user.getPhone()+
+                        "     " + user.getAbout() + "    " + user.getDate());
                 getname.setText(user.getName());
                 getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
+//                getphone.setText(user.getPhone());
                 getAbout.setText(user.getAbout());
                 getDate.setText(user.getDate());
                 getrealtion_ship.setText(user.getrelationship());
