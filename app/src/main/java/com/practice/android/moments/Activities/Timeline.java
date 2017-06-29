@@ -271,14 +271,10 @@ public class Timeline extends AppCompatActivity
         } else if (id == R.id.nav_Logout) {
             LogoutButton();
         } else if (id == R.id.profile_edit) {
-            if (profFragment.isAdded()) {
-                FragmentTransaction fm = fragmentManager.beginTransaction();
-                fm.remove(profFragment);
-                fm.commit();
-            }
+
             if (!editProfFragment.isAdded()) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.containerA, editProfFragment, "profile Fragment");
+                fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
                 fragmentTransaction.commit();
             }
 

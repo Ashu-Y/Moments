@@ -1,7 +1,6 @@
 package com.practice.android.moments.Fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;

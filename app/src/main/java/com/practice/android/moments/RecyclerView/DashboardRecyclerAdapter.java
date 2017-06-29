@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.practice.android.moments.Activities.ChangePassword;
+import com.practice.android.moments.Activities.PhotoVideosdatabase;
 import com.practice.android.moments.Activities.SettingsActivity;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
@@ -35,7 +36,7 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
         this.itemList = itemList;
         mContext = context;
         this.dashFragment = dashFragment;
-//        dashFragment = new DashboardFragment();
+
     }
 
     @Override
@@ -58,6 +59,10 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
                         mContext.startActivity(new Intent(mContext, EditingActivity.class));
                         break;
 
+                    case "UPLOAD":
+                        mContext.startActivity(new Intent(mContext, PhotoVideosdatabase.class));
+                        break;
+
                     case "PROFILE":
                         dashFragment.addProfile();
                         break;
@@ -72,6 +77,10 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
 
                     case "CHANGE PASSWORD":
                         mContext.startActivity(new Intent(mContext, ChangePassword.class));
+                        break;
+
+                    case "LOG OUT":
+
                         break;
 
                 }
