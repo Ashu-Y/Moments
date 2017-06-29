@@ -11,10 +11,10 @@ public class Profile_model_class {
     public String email;
     public String Phone;
     public String about;
-    public String Date_of_birth;
-    public String gender;
     public String relationship;
-    public String Photo;
+    private String Date_of_birth;
+    private String gender;
+    private String Photo;
 
 
     // Default constructor required for calls to
@@ -43,6 +43,10 @@ public class Profile_model_class {
 
     public String getName() {
         return name;
+    }
+
+    public String getGender() {
+        return gender;
     }
 
     public String getEmail() {
