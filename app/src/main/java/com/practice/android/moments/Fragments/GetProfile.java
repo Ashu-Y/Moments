@@ -69,10 +69,10 @@ public class GetProfile extends Fragment {
                             Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
                             getname.setText(user.getName());
                             getemail.setText(user.getEmail());
-//                            getphone.setText(user.getPhone());
-//                            getAbout.setText(user.getAbout());
-//                            getDate.setText(user.getDate());
-//                            getrealtion_ship.setText(user.getrelationship());
+                            getphone.setText(user.getPhone());
+                            getAbout.setText(user.getAbout());
+                            getDate.setText(user.getDate_of_birth());
+                            getrealtion_ship.setText(user.getRelationship());
 
                     }
 
@@ -83,48 +83,6 @@ public class GetProfile extends Fragment {
                 });
             }
         });
-//                        .addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                        assert user != null;
-//                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " );
-//                        getname.setText(user.getName());
-//                        getemail.setText(user.getEmail());
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                        assert user != null;
-//                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "   " +
-////                                user.getPhone()+
-//                                "     " + user.getAbout() + "    " + user.getDate());
-//                        getname.setText(user.getName());
-//                        getemail.setText(user.getEmail());
-////                        getphone.setText(user.getPhone());
-//                        getAbout.setText(user.getAbout());
-//                        getDate.setText(user.getDate());
-//                        getrealtion_ship.setText(user.getrelationship());
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
         return v;
     }
 
