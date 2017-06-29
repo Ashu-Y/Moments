@@ -60,17 +60,34 @@ public class GetProfile extends Fragment {
         get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user_id = firebaseUser.getUid();
 
                 mDatabase.child(user_id).child("User Info").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
+                        assert user != null;
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                        getname.setText(user.getName());
+                        getemail.setText(user.getEmail());
+                        getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate());
+                        getrealtion_ship.setText(user.getrelationship());
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
+                        assert user != null;
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                        getname.setText(user.getName());
+                        getemail.setText(user.getEmail());
+                        getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate());
+                        getrealtion_ship.setText(user.getrelationship());
                     }
 
                     @Override
@@ -124,27 +141,75 @@ public class GetProfile extends Fragment {
     public void onResume() {
         super.onResume();
 
-        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        mDatabase.child(user_id).child("User Info").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                 assert user != null;
                 Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate());
+                getrealtion_ship.setText(user.getrelationship());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate());
+                getrealtion_ship.setText(user.getrelationship());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+//        mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+//
+//                assert user != null;
+//                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
 //                getname.setText(user.getName());
 //                getemail.setText(user.getEmail());
 //                getphone.setText(user.getPhone());
 //                getAbout.setText(user.getAbout());
 //                getDate.setText(user.getDate());
 //                getrealtion_ship.setText(user.getrelationship());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-                Log.e(TAG, databaseError.getMessage() + "ERROR a  ");
-            }
-        });
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//                Log.e(TAG, databaseError.getMessage() + "ERROR a  ");
+//            }
+//        });
     }
 
     @Override
@@ -158,12 +223,12 @@ public class GetProfile extends Fragment {
 
                 assert user != null;
                 Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
-//                getname.setText(user.getName());
-//                getemail.setText(user.getEmail());
-//                getphone.setText(user.getPhone());
-//                getAbout.setText(user.getAbout());
-//                getDate.setText(user.getDate());
-//                getrealtion_ship.setText(user.getrelationship());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate());
+                getrealtion_ship.setText(user.getrelationship());
             }
 
             @Override
