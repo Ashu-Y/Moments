@@ -99,19 +99,19 @@ public class GetProfile extends Fragment {
                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                 assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-                getname.setText(user.getName());
-                getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
-                getAbout.setText(user.getAbout());
-                getDate.setText(user.getDate());
-                getrealtion_ship.setText(user.getrelationship());
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+//                getname.setText(user.getName());
+//                getemail.setText(user.getEmail());
+//                getphone.setText(user.getPhone());
+//                getAbout.setText(user.getAbout());
+//                getDate.setText(user.getDate());
+//                getrealtion_ship.setText(user.getrelationship());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Log.e(TAG, databaseError.getMessage() + "ERROR a raha h ");
+                Log.e(TAG, databaseError.getMessage() + "ERROR a  ");
             }
         });
     }
@@ -126,18 +126,18 @@ public class GetProfile extends Fragment {
                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                 assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-                getname.setText(user.getName());
-                getemail.setText(user.getEmail());
-                getphone.setText(user.getPhone());
-                getAbout.setText(user.getAbout());
-                getDate.setText(user.getDate());
-                getrealtion_ship.setText(user.getrelationship());
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"   "+user.getPhone()+"     "+user.getAbout()+"    "+user.getDate());
+//                getname.setText(user.getName());
+//                getemail.setText(user.getEmail());
+//                getphone.setText(user.getPhone());
+//                getAbout.setText(user.getAbout());
+//                getDate.setText(user.getDate());
+//                getrealtion_ship.setText(user.getrelationship());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, databaseError.getMessage() + "ERROR a raha h ");
+                Log.e(TAG, databaseError.getMessage() + "ERROR a ");
             }
         });
 
