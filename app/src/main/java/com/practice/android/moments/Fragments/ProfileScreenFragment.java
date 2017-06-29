@@ -211,7 +211,7 @@ public class ProfileScreenFragment extends Fragment {
         }
     }
 
-    @SuppressLint("NewApi")
+  /*  @SuppressLint("NewApi")
     @Override
     public void onResume() {
         super.onResume();
@@ -242,7 +242,7 @@ public class ProfileScreenFragment extends Fragment {
 
 
     }
-
+*/
     @Override
     public void onPause() {
         super.onPause();
