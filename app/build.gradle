@@ -89,7 +89,11 @@ dependencies {
     compile 'com.localytics.android:library:3.8.0'
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'com.hbb20:ccp:1.8'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     testCompile 'junit:junit:4.12'
+
+
+
 }
 
 configurations.all {

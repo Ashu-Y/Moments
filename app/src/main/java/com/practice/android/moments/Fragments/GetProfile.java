@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,12 +57,40 @@ public class GetProfile extends Fragment {
 
         get = (Button) v.findViewById(R.id.sub);
 
-//        get.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String user_id = firebaseUser.getUid();
-//
-//                mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+        get.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String user_id = firebaseUser.getUid();
+
+                mDatabase.child(user_id).child("User Info").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+//                        .addListenerForSingleValueEvent(new ValueEventListener() {
 //                    @Override
 //                    public void onDataChange(DataSnapshot dataSnapshot) {
 //                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
@@ -84,8 +113,10 @@ public class GetProfile extends Fragment {
 //
 //                    }
 //                });
-//            }
-//        });
+            }
+        });
+
+
         return v;
     }
 

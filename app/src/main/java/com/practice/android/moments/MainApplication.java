@@ -1,6 +1,8 @@
 package com.practice.android.moments;
 
-import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
 import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
@@ -9,7 +11,7 @@ import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
  * Created by Ashutosh on 6/14/2017.
  */
 
-public class MainApplication extends Application implements IAdobeAuthClientCredentials {
+public class MainApplication extends MultiDexApplication implements IAdobeAuthClientCredentials {
 
     /* Be sure to fill in the two strings below. */
     private static final String CREATIVE_SDK_CLIENT_ID = "5d03e796d6c84d5fabe3015d3bc85053";
@@ -42,5 +44,11 @@ public class MainApplication extends Application implements IAdobeAuthClientCred
     @Override
     public String getRedirectURI() {
         return CREATIVE_SDK_REDIRECT_URI;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
