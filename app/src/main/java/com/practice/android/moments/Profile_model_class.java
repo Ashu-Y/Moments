@@ -5,58 +5,57 @@ public class Profile_model_class {
 
     public String name;
     public String email;
-    public String Phone;
+    public String phone;
     public String about;
-    public String relationship;
-    public String Date_of_birth;
-    public String gender;
-    public String Profile_Photo;
+//    public String relationship;
+//    public String Date_of_birth;
+//    public String gender;
+//    public String Profile_Photo;
 
-    // Default constructor required for calls to
-    // DataSnapshot.getValue(User.class)
+
     public Profile_model_class() {
-    }
+        }
 
-    public Profile_model_class(String name, String email, String phone, String photo, String about, String relationship, String date_of_birth, String gender) {
-
+    public Profile_model_class(String name, String email,String about, String phone) {
+//, String photo, String about, String relationship, String date_of_birth, String gender
         this.name = name;
         this.email = email;
-        this.Phone = phone;
+        this.phone = phone;
         this.about = about;
-        this.relationship = relationship;
-        this.Date_of_birth = date_of_birth;
-        this.gender = gender;
-        this.Profile_Photo = photo;
+//        this.relationship = relationship;
+//        this.Date_of_birth = date_of_birth;
+//        this.gender = gender;
+//        this.Profile_Photo = photo;
     }
 
     public String getPhone() {
-        return Phone;
+        return phone;
     }
 
 
     public String getAbout() {
         return about;
     }
-
-
-    public String getRelationship() {
-        return relationship;
-    }
-
-
-    public String getDate_of_birth() {
-        return Date_of_birth;
-    }
-
-
-    public String getGender() {
-        return gender;
-    }
-
-
-    public String getPhoto() {
-        return Profile_Photo;
-    }
+//
+//
+//    public String getRelationship() {
+//        return relationship;
+//    }
+//
+//
+//    public String getDate_of_birth() {
+//        return Date_of_birth;
+//    }
+//
+//
+//    public String getGender() {
+//        return gender;
+//    }
+//
+//
+//    public String getPhoto() {
+//        return Profile_Photo;
+//    }
 
 
     public String getName() {
