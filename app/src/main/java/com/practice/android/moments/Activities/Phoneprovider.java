@@ -170,7 +170,7 @@ public class Phoneprovider extends AppCompatActivity {
                             currentuser_db.child("Gender").setValue("Default");
                             currentuser_db.child("Relationship").setValue("Default");
                             currentuser_db.child("About").setValue("Default");
-                            currentuser_db.child("Date Of Birth").setValue("Default");
+                            currentuser_db.child("date_of_birth").setValue("Default");
                             currentuser_db.child("phone").setValue(newphonenumber);
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));

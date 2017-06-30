@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
 
-    android:theme="materialtheme2"
+    android:theme="@style\materialtheme2"
     tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat">
 
     <RelativeLayout
@@ -189,7 +189,8 @@
                 android:ems="10"
                 android:inputType="phone"
                 android:paddingLeft="9dp"
-                android:paddingRight="9dp" />
+                android:paddingRight="9dp"
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:layout_width="fill_parent"

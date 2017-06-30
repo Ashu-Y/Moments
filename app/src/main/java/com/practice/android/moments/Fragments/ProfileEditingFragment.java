@@ -119,9 +119,9 @@ public class ProfileEditingFragment extends Fragment {
                         currentuser_db.child("name").setValue(name.getText().toString());
                         currentuser_db.child("email").setValue(email.getText().toString());
                         currentuser_db.child("phone").setValue(phone.getText().toString());
-                        currentuser_db.child("Gender").setValue("DEFAULT");
-                        currentuser_db.child("Relationship").setValue(relation);
-                        currentuser_db.child("About").setValue(About.getText().toString());
+                        currentuser_db.child("gender").setValue("DEFAULT");
+                        currentuser_db.child("relationship").setValue(relation);
+                        currentuser_db.child("about").setValue(About.getText().toString());
                         currentuser_db.child("photo").setValue("Default");
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
 
