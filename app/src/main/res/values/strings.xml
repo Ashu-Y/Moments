@@ -52,6 +52,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="name">Name</string>
+    <string name="new_upload">New Upload</string>
+    <string name="enter_the_title">Enter the title</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="upload">Upload Image</string>
 
 
     <string-array name="RelationshipStatus">

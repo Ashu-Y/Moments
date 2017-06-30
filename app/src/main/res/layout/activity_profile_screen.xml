@@ -46,7 +46,8 @@
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
             android:src="@drawable/ic_photo_camera_black_24dp"
-            app:backgroundTint="@android:color/holo_blue_bright" />
+            app:backgroundTint="@android:color/holo_blue_bright"
+            tools:ignore="NewApi" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -152,7 +153,6 @@
                 android:layout_height="35dp"
                 android:background="@drawable/circle"
                 android:ems="10"
-                android:inputType="textShortMessage"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
                 android:textColor="#fff"
@@ -176,7 +176,6 @@
                 android:layout_height="35dp"
                 android:background="@drawable/circle"
                 android:ems="10"
-                android:inputType="phone"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
                 android:textColor="#fff"
@@ -200,8 +199,6 @@
                 android:layout_height="35dp"
                 android:background="@drawable/circle"
                 android:ems="10"
-                android:inputType="textEmailAddress"
-
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
                 android:textColor="#fff"

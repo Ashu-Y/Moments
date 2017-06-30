@@ -257,7 +257,6 @@ public class ProfileScreenFragment extends Fragment {
                 getgender.setText(user.getGender());
 
 
-//                download_uri.;
                 Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
 
                 Glide.with(getActivity()).load(user.getPhoto()).into(profile_pic);
@@ -281,5 +280,7 @@ public class ProfileScreenFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
+
     }
 }
