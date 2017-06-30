@@ -1,6 +1,5 @@
 package com.practice.android.moments.Fragments;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,14 +16,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -47,7 +51,17 @@ public class ProfileScreenFragment extends Fragment {
     Uri download_uri;
     DatabaseReference databaseReference;
     FloatingActionButton fabGallery;
+    String user_id;
     private CircleImageView profile_pic;
+
+
+    TextView getname;
+    TextView getemail;
+    TextView getphone;
+    TextView getAbout;
+    TextView getDate;
+    TextView getrealtion_ship,getgender;
+
 
     @Nullable
     @Override
@@ -60,10 +74,26 @@ public class ProfileScreenFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mstorageReference = FirebaseStorage.getInstance().getReference();
 
+        user_id = firebaseuser.getUid();
+
+
         fabGallery = (FloatingActionButton) v.findViewById(R.id.floatingActionButton);
         profile_pic = (CircleImageView) v.findViewById(R.id.user_profile_photo);
 
         fabGallery.setOnClickListener(v1 -> fn_Choose_Image());
+
+
+        getname = (TextView) v.findViewById(R.id.user_profile_name);
+        getemail = (TextView) v.findViewById(R.id.editText15);
+        getphone = (TextView) v.findViewById(R.id.TextviewPhone);
+        getAbout = (TextView) v.findViewById(R.id.user_profile_short_bio);
+        getDate = (TextView) v.findViewById(R.id.editText51);
+        getrealtion_ship = (TextView) v.findViewById(R.id.editText695);
+        getgender = (TextView) v.findViewById(R.id.gendertext);
+
+
+
+
 
 
         return v;
@@ -184,7 +214,6 @@ public class ProfileScreenFragment extends Fragment {
                         currentuser_db.child("photo").setValue(picture);
 
 
-
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
                     })
@@ -211,38 +240,45 @@ public class ProfileScreenFragment extends Fragment {
         }
     }
 
-  /*  @SuppressLint("NewApi")
     @Override
     public void onResume() {
         super.onResume();
 
-        String user_id = firebaseuser.getUid();
 
-//        databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                assert user != null;
-//                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail());
-//
-//
-//                String pic = user.getPhoto();
-//                Uri pic_uri = Uri.parse(pic);
-//                Picasso.with(getActivity()).load(pic_uri).fit().centerCrop().into(profile_pic);
-        Picasso.with(getContext()).load(download_uri).fit().centerCrop().into(profile_pic);
+        databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-//            }
+                assert user != null;
+                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                getname.setText(user.getName());
+                getemail.setText(user.getEmail());
+                getphone.setText(user.getPhone());
+                getAbout.setText(user.getAbout());
+                getDate.setText(user.getDate_of_birth());
+                getrealtion_ship.setText(user.getRelationship());
+                getgender.setText(user.getGender());
 
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
+
+
+//                download_uri.;
+                Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(profile_pic);
+
+                Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
-*/
+
     @Override
     public void onPause() {
         super.onPause();

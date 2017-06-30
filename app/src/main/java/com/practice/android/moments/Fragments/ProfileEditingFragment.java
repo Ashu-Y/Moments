@@ -1,5 +1,6 @@
 package com.practice.android.moments.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
+
+import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class ProfileEditingFragment extends Fragment {
@@ -82,10 +85,12 @@ public class ProfileEditingFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         Submit.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
                 if (firebaseUser != null) {
                     String user_id = firebaseUser.getUid();
+                    String defa = "DEFAULT";
 
                     String code = name.getText().toString();
                     String code1 = email.getText().toString();
@@ -109,31 +114,59 @@ public class ProfileEditingFragment extends Fragment {
                     } else if (TextUtils.isEmpty(code4)) {
                         Date_of_birth.setError("Cannot be empty.");
                         return;
-                    }
-//                    else if (TextUtils.isEmpty(code5)) {
-//                        name.setError("Cannot be empty.");
-//                        return;
-//                    }
-                    else {
+                    } else {
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                         currentuser_db.child("name").setValue(name.getText().toString());
-                        currentuser_db.child("email").setValue(email.getText().toString());
-                        currentuser_db.child("phone").setValue(phone.getText().toString());
+                        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+                            currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                            email.setText(firebaseUser.getEmail());
+                        } else {
+                            currentuser_db.child("email").setValue(email.getText().toString());
+                        }
+                        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+                            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+                            email.setText(firebaseUser.getPhoneNumber());
+                        } else {
+                            currentuser_db.child("phone").setValue(phone.getText().toString());
+
+                        }
+
                         currentuser_db.child("gender").setValue("DEFAULT");
                         currentuser_db.child("relationship").setValue(relation);
                         currentuser_db.child("about").setValue(About.getText().toString());
-                        currentuser_db.child("photo").setValue("Default");
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
 
 
                     }
                 }
             }
+
         });
 
 
         return rootView;
     }
 
+    @SuppressLint("NewApi")
+    @Override
+    public void onResume() {
+        super.onResume();
+        String user_id = firebaseUser.getUid();
+        String defa = "DEFAULT";
+        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+//        currentuser_db.child("name").setValue(name.getText().toString());
+        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+            currentuser_db.child("email").setValue(firebaseUser.getEmail());
+            email.setText(firebaseUser.getEmail());
+        } else {
+            currentuser_db.child("email").setValue(email.getText().toString());
+        }
+        if (!Objects.equals(firebaseUser.getPhoneNumber(), defa)) {
+            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+            email.setText(firebaseUser.getPhoneNumber());
+        } else {
+            currentuser_db.child("phone").setValue(phone.getText().toString());
 
+        }
+    }
 }

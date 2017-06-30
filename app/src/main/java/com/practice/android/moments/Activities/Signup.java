@@ -133,9 +133,9 @@ public class Signup extends AppCompatActivity {
                                                                         currentuser_db.child("email").setValue(user_email);
                                                                         currentuser_db.child("phone").setValue(user_phone);
                                                                         currentuser_db.child("photo").setValue("Default");
-                                                                        currentuser_db.child("Gender").setValue("Default");
-                                                                        currentuser_db.child("Relationship").setValue("Default");
-                                                                        currentuser_db.child("About").setValue("Default");
+                                                                        currentuser_db.child("gender").setValue("Default");
+                                                                        currentuser_db.child("relationship").setValue("Default");
+                                                                        currentuser_db.child("about").setValue("Default");
                                                                         currentuser_db.child("date_of_birth").setValue("Default");
 
                                                                         updateUI(firebaseUser);

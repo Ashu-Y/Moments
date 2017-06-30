@@ -166,12 +166,12 @@ public class Phoneprovider extends AppCompatActivity {
                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                             currentuser_db.child("name").setValue(mname.getText().toString());
                             currentuser_db.child("email").setValue("Default");
-                            currentuser_db.child("phone").setValue("Default");
-                            currentuser_db.child("Gender").setValue("Default");
-                            currentuser_db.child("Relationship").setValue("Default");
-                            currentuser_db.child("About").setValue("Default");
-                            currentuser_db.child("date_of_birth").setValue("Default");
                             currentuser_db.child("phone").setValue(newphonenumber);
+                            currentuser_db.child("photo").setValue("Default");
+                            currentuser_db.child("gender").setValue("Default");
+                            currentuser_db.child("relationship").setValue("Default");
+                            currentuser_db.child("about").setValue("Default");
+                            currentuser_db.child("date_of_birth").setValue("Default");
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
                             startActivity(new Intent(Phoneprovider.this, Timeline.class));
 

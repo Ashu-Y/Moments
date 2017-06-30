@@ -17,9 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
-
-import java.util.Map;
 
 @SuppressLint("NewApi")
 public class GetProfile extends Fragment {
@@ -54,7 +53,6 @@ public class GetProfile extends Fragment {
         getDate = (TextView) v.findViewById(R.id.TextViewdate);
         getrealtion_ship = (TextView) v.findViewById(R.id.relationship);
 
-
         get = (Button) v.findViewById(R.id.sub);
 
         get.setOnClickListener(new View.OnClickListener() {
@@ -64,28 +62,17 @@ public class GetProfile extends Fragment {
                 mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-//                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                        assert user != null;
-//                 Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail()+"    "+user.getRelationship()+"    "+user.getAbout());
-//                        getname.setText(user.getName());
-//                        getemail.setText(user.getEmail());
-//                        getphone.setText(user.getPhone());
-//                        getAbout.setText(user.getAbout());
-////                            getDate.setText(user.getDate_of_birth());
-//                        getrealtion_ship.setText(user.getRelationship());
+                        Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-
-                        Map map = dataSnapshot.getValue(Map.class);
-
-                        getname.setText((CharSequence) map.get("name"));
-                        getemail.setText((CharSequence) map.get("email"));
-                        getphone.setText((CharSequence) map.get("phone"));
-                        getAbout.setText((CharSequence) map.get("About"));
-                        getDate.setText((CharSequence) map.get("Date Of Birth"));
-                        getrealtion_ship.setText((CharSequence) map.get("Relationship"));
-
-                        Log.d(TAG,"GENDER"+"        "+map.get("Gender")+"photo"+"        "+map.get("photo"));
+                        assert user != null;
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                        getname.setText(user.getName());
+                        getemail.setText(user.getEmail());
+                        getphone.setText(user.getPhone());
+                        getAbout.setText(user.getAbout());
+                        getDate.setText(user.getDate_of_birth());
+                        getrealtion_ship.setText(user.getRelationship());
+                            Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
 
 
                     }

@@ -2,15 +2,16 @@
 <ScrollView
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_layout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
 
-    android:theme="@style\materialtheme2"
-    tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat">
 
+    tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat">
+    <!--android:theme="@style/materialtheme2"-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,29 +39,14 @@
             android:src="@drawable/c2"
             tools:ignore="UnusedAttribute" />
 
-        <!--<ImageButton-->
-        <!--android:id="@+id/user_profile_photo"-->
-        <!--android:layout_width="120dp"-->
-        <!--android:layout_height="120dp"-->
-        <!--android:layout_above="@+id/linearLayout"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginBottom="96dp"-->
-        <!--android:background="@drawable/img"-->
-
-        <!--android:elevation="5dp"-->
-        <!--android:padding="20dp"-->
-        <!--android:scaleType="centerCrop" />-->
-        <!---->
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
-            android:backgroundTint="@android:color/holo_blue_bright"
-            android:src="@drawable/ic_photo_camera_black_24dp"
-            tools:ignore="UnusedAttribute" />
+            app:backgroundTint="@android:color/holo_blue_bright"
+            android:src="@drawable/ic_photo_camera_black_24dp" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -156,10 +142,10 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="About"
+                android:text="Email"
                 tools:ignore="UnusedAttribute" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editText15"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
@@ -181,8 +167,8 @@
                 android:text="Phone"
                 tools:ignore="UnusedAttribute" />
 
-            <EditText
-                android:id="@+id/editText65"
+            <TextView
+                android:id="@+id/TextviewPhone"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:background="@drawable/circle"
@@ -200,10 +186,10 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Email"
+                android:text="Relationship"
                 tools:ignore="UnusedAttribute" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editText695"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
@@ -222,43 +208,44 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="DateofBirth"
+                android:text="Date of Birth"
                 tools:ignore="UnusedAttribute" />
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/editText51"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
+                android:layout_margin="3dp"
+                android:layout_weight="9"
                 android:background="@drawable/circle"
-                android:orientation="horizontal"
-
-                tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat">
-
-                <EditText
-                    android:id="@+id/editText51"
-                    android:layout_width="0dp"
-                    android:layout_height="35dp"
-                    android:layout_margin="3dp"
-                    android:layout_weight="9"
-                    android:background="#063852"
-                    android:inputType="textShortMessage"
-                    android:paddingLeft="9dp"
-                    android:paddingRight="9dp"
-                    tools:ignore="LabelFor" />
-
-                <ImageView
-                    android:id="@+id/imageView45"
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_date_range_black_24dp"
-                    android:tint="@android:color/white"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                tools:ignore="LabelFor" />
 
 
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Gender"
+                tools:ignore="UnusedAttribute" />
+
+
+            <TextView
+                android:id="@+id/gendertext"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="3dp"
+                android:layout_weight="9"
+                android:background="@drawable/circle"
+                android:paddingLeft="9dp"
+                android:paddingRight="9dp"
+                tools:ignore="LabelFor" />
         </LinearLayout>
-
-
     </RelativeLayout>
 </ScrollView>
