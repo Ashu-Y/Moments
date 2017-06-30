@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 
@@ -62,7 +63,12 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
         public void setData(Post post, int position){
             username.setText(post.getUsername());
-            image.setImageResource(post.getImageId());
+
+            Glide.with(mContext)
+                    .load(post.getImageId())
+                    .fitCenter()
+                    .into(image);
+
         }
     }
 }

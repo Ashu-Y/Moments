@@ -17,6 +17,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
+import com.practice.android.moments.Models.BottomNavigationViewHelper;
 import com.practice.android.moments.R;
 
 public class BottomNavigation extends AppCompatActivity {
@@ -89,6 +90,7 @@ public class BottomNavigation extends AppCompatActivity {
         setContentView(R.layout.activity_bottom_navigation);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mTimelineFragment = new TimelineFragment();

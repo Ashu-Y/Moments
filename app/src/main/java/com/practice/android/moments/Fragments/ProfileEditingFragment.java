@@ -1,6 +1,7 @@
 package com.practice.android.moments.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -8,10 +9,12 @@ import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
@@ -38,6 +43,7 @@ public class ProfileEditingFragment extends Fragment {
     String relation;
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
+    Calendar myCalendar;
     private EditText name;
     private EditText email;
     private EditText phone;
@@ -56,11 +62,37 @@ public class ProfileEditingFragment extends Fragment {
         email = (EditText) rootView.findViewById(R.id.editText9);
         phone = (EditText) rootView.findViewById(R.id.editText5);
         About = (EditText) rootView.findViewById(R.id.editText541);
-        Date_of_birth = (EditText) rootView.findViewById(R.id.editText51);
+        Date_of_birth = (EditText) rootView.findViewById(R.id.edit_date);
         Submit = (Button) rootView.findViewById(R.id.submitedit);
         spinner = (Spinner) rootView.findViewById(R.id.Relationship);
+        myCalendar = Calendar.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        Date_of_birth.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getActivity(), date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -69,7 +101,6 @@ public class ProfileEditingFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
@@ -123,13 +154,13 @@ public class ProfileEditingFragment extends Fragment {
                         } else {
                             currentuser_db.child("email").setValue(email.getText().toString());
                         }
-                        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
-                            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
-                            email.setText(firebaseUser.getPhoneNumber());
-                        } else {
+//                        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+//                            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+//                            email.setText(firebaseUser.getPhoneNumber());
+//                        } else {
                             currentuser_db.child("phone").setValue(phone.getText().toString());
 
-                        }
+//                        }
 
                         currentuser_db.child("gender").setValue("DEFAULT");
                         currentuser_db.child("relationship").setValue(relation);
@@ -147,26 +178,34 @@ public class ProfileEditingFragment extends Fragment {
         return rootView;
     }
 
-    @SuppressLint("NewApi")
-    @Override
-    public void onResume() {
-        super.onResume();
-        String user_id = firebaseUser.getUid();
-        String defa = "DEFAULT";
-        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-//        currentuser_db.child("name").setValue(name.getText().toString());
-        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
-            currentuser_db.child("email").setValue(firebaseUser.getEmail());
-            email.setText(firebaseUser.getEmail());
-        } else {
-            currentuser_db.child("email").setValue(email.getText().toString());
-        }
-        if (!Objects.equals(firebaseUser.getPhoneNumber(), defa)) {
-            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
-            email.setText(firebaseUser.getPhoneNumber());
-        } else {
-            currentuser_db.child("phone").setValue(phone.getText().toString());
+    private void updateLabel() {
 
-        }
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getActivity().getResources().getConfiguration().locale);
+
+        Date_of_birth.setText(sdf.format(myCalendar.getTime()));
     }
+
+//    @SuppressLint("NewApi")
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        String user_id = firebaseUser.getUid();
+//        String defa = "DEFAULT";
+//        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+////        currentuser_db.child("name").setValue(name.getText().toString());
+//        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+//            currentuser_db.child("email").setValue(firebaseUser.getEmail());
+//            email.setText(firebaseUser.getEmail());
+//        } else {
+//            currentuser_db.child("email").setValue(email.getText().toString());
+//        }
+//        if (!Objects.equals(firebaseUser.getPhoneNumber(), defa)) {
+//            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
+//            email.setText(firebaseUser.getPhoneNumber());
+//        } else {
+//            currentuser_db.child("phone").setValue(phone.getText().toString());
+//
+//        }
+//    }
 }

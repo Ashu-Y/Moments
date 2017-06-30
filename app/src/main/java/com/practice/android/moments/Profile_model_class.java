@@ -62,9 +62,5 @@ public class Profile_model_class {
         return about;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
 
 }
