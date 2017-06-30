@@ -22,7 +22,8 @@
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -34,7 +35,8 @@
             android:layout_marginBottom="96dp"
             android:elevation="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/c2" />
+            android:src="@drawable/c2"
+            tools:ignore="UnusedAttribute" />
 
         <!--<ImageButton-->
         <!--android:id="@+id/user_profile_photo"-->
@@ -57,7 +59,8 @@
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
             android:backgroundTint="@android:color/holo_blue_bright"
-            android:src="@drawable/ic_photo_camera_black_24dp" />
+            android:src="@drawable/ic_photo_camera_black_24dp"
+            tools:ignore="UnusedAttribute" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -67,7 +70,8 @@
             android:layout_below="@+id/header_cover_image"
             android:background="@color/primary_material_dark_1"
             android:elevation="4dp"
-            android:paddingBottom="24dp">
+            android:paddingBottom="24dp"
+            tools:ignore="UnusedAttribute">
 
 
             <TextView
@@ -80,7 +84,8 @@
                 android:text="Gautam"
                 android:textColor="#fff"
                 android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/user_profile_short_bio"
@@ -91,7 +96,8 @@
                 android:layout_marginTop="28dp"
                 android:text="I Love Diamonds"
                 android:textColor="#fff"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
 
         </RelativeLayout>
 
@@ -112,7 +118,8 @@
 
                 android:layout_toStartOf="@+id/drop_down_option_menu"
                 android:background="@color/accent_material_dark"
-                android:src="@drawable/ic_person_add_black_24dp" />
+                android:src="@drawable/ic_person_add_black_24dp"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,PrivateResource,RtlHardcoded" />
 
             <ImageView
                 android:id="@+id/drop_down_option_menu"
@@ -123,7 +130,8 @@
 
                 android:background="@color/accent_material_dark"
                 android:src="@drawable/ic_photo_camera_white_24dp"
-                android:tint="@color/cardview_light_background" />
+                android:tint="@color/cardview_light_background"
+                tools:ignore="ContentDescription,ObsoleteLayoutParam,PrivateResource,RtlHardcoded" />
 
 
         </LinearLayout>
@@ -170,7 +178,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Phone" />
+                android:text="Phone"
+                tools:ignore="UnusedAttribute" />
 
             <EditText
                 android:id="@+id/editText65"
@@ -190,7 +199,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="Email" />
+                android:text="Email"
+                tools:ignore="UnusedAttribute" />
 
             <EditText
                 android:id="@+id/editText695"
@@ -200,7 +210,8 @@
                 android:ems="10"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="9dp"
-                android:paddingRight="9dp" />
+                android:paddingRight="9dp"
+                tools:ignore="LabelFor" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -210,7 +221,8 @@
                 android:clickable="true"
                 android:elevation="4dp"
                 android:padding="20dp"
-                android:text="DateofBirth" />
+                android:text="DateofBirth"
+                tools:ignore="UnusedAttribute" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -229,7 +241,8 @@
                     android:background="#063852"
                     android:inputType="textShortMessage"
                     android:paddingLeft="9dp"
-                    android:paddingRight="9dp" />
+                    android:paddingRight="9dp"
+                    tools:ignore="LabelFor" />
 
                 <ImageView
                     android:id="@+id/imageView45"
@@ -238,7 +251,8 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_date_range_black_24dp"
-                    android:tint="@android:color/white" />
+                    android:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
             </LinearLayout>
 
 
