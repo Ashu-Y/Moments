@@ -7,7 +7,7 @@ public class Profile_model_class {
     public String email;
     public String phone;
     public String about;
-//    public String relationship;
+    public String relationship;
 //    public String Date_of_birth;
 //    public String gender;
 //    public String Profile_Photo;
@@ -16,13 +16,13 @@ public class Profile_model_class {
     public Profile_model_class() {
         }
 
-    public Profile_model_class(String name, String email,String about, String phone) {
+    public Profile_model_class(String name, String email,String relationship,String about, String phone) {
 //, String photo, String about, String relationship, String date_of_birth, String gender
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.about = about;
-//        this.relationship = relationship;
+        this.relationship = relationship;
 //        this.Date_of_birth = date_of_birth;
 //        this.gender = gender;
 //        this.Profile_Photo = photo;
@@ -36,11 +36,20 @@ public class Profile_model_class {
     public String getAbout() {
         return about;
     }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    //
 //
-//
-//    public String getRelationship() {
-//        return relationship;
-//    }
+    public String getRelationship() {
+        return relationship;
+    }
 //
 //
 //    public String getDate_of_birth() {
