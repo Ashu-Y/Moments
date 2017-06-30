@@ -16,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -52,16 +54,14 @@ public class ProfileScreenFragment extends Fragment {
     DatabaseReference databaseReference;
     FloatingActionButton fabGallery;
     String user_id;
-    private CircleImageView profile_pic;
-
-
     TextView getname;
     TextView getemail;
     TextView getphone;
     TextView getAbout;
     TextView getDate;
-    TextView getrealtion_ship,getgender;
-
+    TextView getrealtion_ship, getgender;
+    ImageButton BackPIC;
+    private CircleImageView profile_pic;
 
     @Nullable
     @Override
@@ -82,7 +82,7 @@ public class ProfileScreenFragment extends Fragment {
 
         fabGallery.setOnClickListener(v1 -> fn_Choose_Image());
 
-
+        BackPIC = (ImageButton) v.findViewById(R.id.header_cover_image);
         getname = (TextView) v.findViewById(R.id.user_profile_name);
         getemail = (TextView) v.findViewById(R.id.editText15);
         getphone = (TextView) v.findViewById(R.id.TextviewPhone);
@@ -90,10 +90,6 @@ public class ProfileScreenFragment extends Fragment {
         getDate = (TextView) v.findViewById(R.id.editText51);
         getrealtion_ship = (TextView) v.findViewById(R.id.editText695);
         getgender = (TextView) v.findViewById(R.id.gendertext);
-
-
-
-
 
 
         return v;
@@ -261,9 +257,12 @@ public class ProfileScreenFragment extends Fragment {
                 getgender.setText(user.getGender());
 
 
-
 //                download_uri.;
-                Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(profile_pic);
+                Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
+
+                Glide.with(getActivity()).load(user.getPhoto()).into(profile_pic);
+
+
 
                 Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
 

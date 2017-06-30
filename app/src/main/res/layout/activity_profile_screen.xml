@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
-            app:backgroundTint="@android:color/holo_blue_bright"
-            android:src="@drawable/ic_photo_camera_black_24dp" />
+            android:src="@drawable/ic_photo_camera_black_24dp"
+            app:backgroundTint="@android:color/holo_blue_bright" />
 
         <RelativeLayout
             android:id="@+id/profile_layout"
@@ -143,6 +143,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Email"
+                android:textColor="#fff"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -154,6 +155,7 @@
                 android:inputType="textShortMessage"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
+                android:textColor="#fff"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -165,6 +167,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Phone"
+                android:textColor="#fff"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -176,6 +179,7 @@
                 android:inputType="phone"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
+                android:textColor="#fff"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -187,6 +191,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Relationship"
+                android:textColor="#fff"
                 tools:ignore="UnusedAttribute" />
 
             <TextView
@@ -196,8 +201,10 @@
                 android:background="@drawable/circle"
                 android:ems="10"
                 android:inputType="textEmailAddress"
+
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
+                android:textColor="#fff"
                 tools:ignore="LabelFor" />
 
             <TextView
@@ -209,6 +216,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Date of Birth"
+                android:textColor="#fff"
                 tools:ignore="UnusedAttribute" />
 
 
@@ -221,6 +229,7 @@
                 android:background="@drawable/circle"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
+                android:textColor="#fff"
                 tools:ignore="LabelFor" />
 
 
@@ -233,6 +242,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Gender"
+                android:textColor="#fff"
                 tools:ignore="UnusedAttribute" />
 
 
@@ -245,6 +255,7 @@
                 android:background="@drawable/circle"
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
+                android:textColor="#fff"
                 tools:ignore="LabelFor" />
         </LinearLayout>
     </RelativeLayout>
