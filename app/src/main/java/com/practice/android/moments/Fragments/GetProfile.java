@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Profile_model_class;
 import com.practice.android.moments.R;
 
+
 @SuppressLint("NewApi")
 public class GetProfile extends Fragment {
 
@@ -59,7 +60,8 @@ public class GetProfile extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mDatabase.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                mDatabase.child(user_id).child("User Info").
+                        addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);

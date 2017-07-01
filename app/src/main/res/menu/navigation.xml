@@ -19,6 +19,6 @@
     <item
         android:id="@+id/navigation_logout"
         android:icon="@android:drawable/ic_lock_power_off"
-        android:title="@string/title_notifications"/>
+        android:title="Log Out"/>
 
 </menu>

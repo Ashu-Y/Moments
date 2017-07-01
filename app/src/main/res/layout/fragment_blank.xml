@@ -148,7 +148,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editText51"
+                android:id="@+id/edit_date"
                 android:layout_width="0sp"
                 android:layout_height="35sp"
                 android:layout_margin="3sp"
@@ -172,12 +172,6 @@
         </LinearLayout>
 
 
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="388sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.53"
-            tools:ignore="InefficientWeight" />
 
         <TextView
             android:id="@+id/textView0827"
@@ -201,11 +195,11 @@
 
 
         <Button
+            android:id="@+id/submitedit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="150sp"
             android:layout_marginTop="25sp"
-            android:id="@+id/submitedit"
             android:background="#063852"
             android:gravity="center"
             android:text="Submit" />

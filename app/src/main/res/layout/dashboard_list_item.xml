@@ -17,15 +17,19 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:padding="4dp"
+            android:scaleType="fitXY"
             android:src="@drawable/edit_prof"/>
 
         <TextView
             android:id="@+id/dash_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="dash text"
-            android:textSize="14sp"/>
+            android:background="#000"
+            android:text="Hello "
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

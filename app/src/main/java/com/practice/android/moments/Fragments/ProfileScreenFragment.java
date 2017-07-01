@@ -87,7 +87,7 @@ public class ProfileScreenFragment extends Fragment {
         getemail = (TextView) v.findViewById(R.id.editText15);
         getphone = (TextView) v.findViewById(R.id.TextviewPhone);
         getAbout = (TextView) v.findViewById(R.id.user_profile_short_bio);
-        getDate = (TextView) v.findViewById(R.id.editText51);
+        getDate = (TextView) v.findViewById(R.id.edit_date);
         getrealtion_ship = (TextView) v.findViewById(R.id.editText695);
         getgender = (TextView) v.findViewById(R.id.gendertext);
 
@@ -257,6 +257,7 @@ public class ProfileScreenFragment extends Fragment {
                 getgender.setText(user.getGender());
 
 
+//                download_uri.;
                 Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
 
                 Glide.with(getActivity()).load(user.getPhoto()).into(profile_pic);
@@ -277,10 +278,5 @@ public class ProfileScreenFragment extends Fragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
 
-
-    }
 }

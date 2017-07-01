@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -55,27 +56,27 @@
         android:id="@+id/field_phone_number"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/field_verification_code"
+        android:layout_alignEnd="@+id/button_resend"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
         android:digits="0123456789+-"
         android:gravity="center"
         android:hint="@string/hint_phone_number"
         android:inputType="phone"
-        android:maxLength="10"
-        android:layout_above="@+id/field_verification_code"
-        android:layout_alignEnd="@+id/button_resend" />
+        android:maxLength="10"/>
 
     <EditText
         android:id="@+id/field_name"
         android:layout_width="200sp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/field_phone_number"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginBottom="42dp"
         android:gravity="center"
         android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:layout_above="@+id/field_phone_number"
-        android:layout_centerHorizontal="true" />
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/field_verification_code"
@@ -95,7 +96,10 @@
         android:layout_height="50sp"
         android:layout_above="@+id/field_verification_code"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="18dp" />
+        android:layout_marginBottom="18dp"
+        app:ccpDialog_fastScroller_bubbleColor="@android:color/white"
+        app:ccpDialog_fastScroller_bubbleTextAppearance="@android:color/white"
+        app:contentColor="@android:color/white"/>
 
 
 </RelativeLayout>

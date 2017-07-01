@@ -19,6 +19,7 @@ import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -48,7 +49,21 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
 
     @Override
     public void onBindViewHolder(DashViewHolder holder, int position) {
-        holder.setData(itemList.get(position), position);
+//        holder.setData(itemList.get(position), position);
+
+        holder.dashText.setText(itemList.get(position).getUsername());
+
+//        Picasso.with(mContext)
+//                .load(itemList.get(position).getImageId())
+//                .into(holder.dashImage);
+
+        Picasso.with(mContext)
+                .load(itemList.get(position).getImageId())
+
+                .into(holder.dashImage);
+//
+//          holder.dashImage.setImageResource(itemList.get(position).getImageId());
+
         holder.dashCard.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
