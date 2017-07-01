@@ -36,9 +36,9 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Editing.EditingActivity;
-import com.practice.android.moments.Fragments.GetProfile;
 import com.practice.android.moments.Fragments.ProfileEditingFragment;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
+import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
 import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
@@ -233,52 +233,54 @@ public class Timeline extends AppCompatActivity
                 fm.commit();
             }
             startActivity(new Intent(this, PhotoVideosdatabase.class));
-        } else if (id == R.id.nav_Friends) {
+        } else {
+            if (id == R.id.nav_Friends) {
 
 
-            GetProfile fragment1 = new GetProfile();
+                Upload_picture fragment2 = new Upload_picture();
 
-            if (!fragment1.isAdded()) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.containerA, fragment1, "profile Fragment");
-                fragmentTransaction.commit();
-            }
+                if (!fragment2.isAdded()) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.containerA, fragment2, "profile Fragment");
+                    fragmentTransaction.commit();
+                }
 
-        } else if (id == R.id.nav_editing) {
-            if (profFragment.isAdded()) {
-                FragmentTransaction fm = fragmentManager.beginTransaction();
-                fm.remove(profFragment);
-                fm.commit();
-            }
-            if (editProfFragment.isAdded()) {
-                FragmentTransaction fm = fragmentManager.beginTransaction();
-                fm.remove(editProfFragment);
-                fm.commit();
-            }
-            startActivity(new Intent(Timeline.this, EditingActivity.class));
-        } else if (id == R.id.nav_bottomNavigation) {
-            if (profFragment.isAdded()) {
-                FragmentTransaction fm = fragmentManager.beginTransaction();
-                fm.remove(profFragment);
-                fm.commit();
-            }
-            if (editProfFragment.isAdded()) {
-                FragmentTransaction fm = fragmentManager.beginTransaction();
-                fm.remove(editProfFragment);
-                fm.commit();
-            }
-            startActivity(new Intent(Timeline.this, BottomNavigation.class));
-        } else if (id == R.id.nav_Logout) {
-            LogoutButton();
-        } else if (id == R.id.profile_edit) {
+            } else if (id == R.id.nav_editing) {
+                if (profFragment.isAdded()) {
+                    FragmentTransaction fm = fragmentManager.beginTransaction();
+                    fm.remove(profFragment);
+                    fm.commit();
+                }
+                if (editProfFragment.isAdded()) {
+                    FragmentTransaction fm = fragmentManager.beginTransaction();
+                    fm.remove(editProfFragment);
+                    fm.commit();
+                }
+                startActivity(new Intent(Timeline.this, EditingActivity.class));
+            } else if (id == R.id.nav_bottomNavigation) {
+                if (profFragment.isAdded()) {
+                    FragmentTransaction fm = fragmentManager.beginTransaction();
+                    fm.remove(profFragment);
+                    fm.commit();
+                }
+                if (editProfFragment.isAdded()) {
+                    FragmentTransaction fm = fragmentManager.beginTransaction();
+                    fm.remove(editProfFragment);
+                    fm.commit();
+                }
+                startActivity(new Intent(Timeline.this, BottomNavigation.class));
+            } else if (id == R.id.nav_Logout) {
+                LogoutButton();
+            } else if (id == R.id.profile_edit) {
 
-            if (!editProfFragment.isAdded()) {
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
-                fragmentTransaction.commit();
+                if (!editProfFragment.isAdded()) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
+                    fragmentTransaction.commit();
+                }
             }
-
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
