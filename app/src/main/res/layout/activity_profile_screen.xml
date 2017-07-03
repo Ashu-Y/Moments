@@ -182,6 +182,7 @@
                 tools:ignore="LabelFor" />
 
             <TextView
+                android:id="@+id/textView6"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -190,8 +191,7 @@
                 android:elevation="4dp"
                 android:padding="20dp"
                 android:text="Relationship"
-                android:textColor="#fff"
-                tools:ignore="UnusedAttribute" />
+                android:textColor="#fff" tools:ignore="UnusedAttribute"/>
 
             <TextView
                 android:id="@+id/editText695"
@@ -218,7 +218,7 @@
 
 
             <TextView
-                android:id="@+id/editText51"
+                android:id="@+id/dob"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_margin="3dp"
@@ -227,7 +227,7 @@
                 android:paddingLeft="9dp"
                 android:paddingRight="9dp"
                 android:textColor="#fff"
-                tools:ignore="LabelFor" />
+                tools:ignore="LabelFor"/>
 
 
             <TextView
