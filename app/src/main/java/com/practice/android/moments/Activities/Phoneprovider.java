@@ -86,7 +86,7 @@ public class Phoneprovider extends AppCompatActivity {
                 newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
                 String name = mname.getText().toString();
                 if (TextUtils.isEmpty(name)) {
-                    Verfiy_code.setError("Cannot be empty.");
+                    mname.setError("Cannot be empty.");
                     return;
                 }
                 else if (!validatePhoneNumber()) {
