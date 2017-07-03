@@ -87,7 +87,7 @@ public class ProfileScreenFragment extends Fragment {
         getemail = (TextView) v.findViewById(R.id.editText15);
         getphone = (TextView) v.findViewById(R.id.TextviewPhone);
         getAbout = (TextView) v.findViewById(R.id.user_profile_short_bio);
-        getDate = (TextView) v.findViewById(R.id.edit_date);
+        getDate = (TextView) v.findViewById(R.id.dob);
         getrealtion_ship = (TextView) v.findViewById(R.id.editText695);
         getgender = (TextView) v.findViewById(R.id.gendertext);
 
