@@ -83,12 +83,14 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!validatePhoneNumber()) {
-
+//                    EnterIn.setVisibility(View.VISIBLE);
+//                    verify.setVisibility(View.GONE);
+//                    resend.setVisibility(View.GONE);
 
                 } else {
-                    EnterIn.setVisibility(View.GONE);
-                    verify.setVisibility(View.VISIBLE);
-                    resend.setVisibility(View.VISIBLE);
+//                    EnterIn.setVisibility(View.GONE);
+//                    verify.setVisibility(View.VISIBLE);
+//                    resend.setVisibility(View.VISIBLE);
                     startPhoneNumberVerification(phone_number.getText().toString());
                 }
 
@@ -135,6 +137,13 @@ public class Phoneprovider extends AppCompatActivity {
                 Log.w(TAG, "onVerificationFailed", e);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     Toast.makeText(Phoneprovider.this, "Wrong Number Entered", Toast.LENGTH_SHORT).show();
+//                    EnterIn.setVisibility(View.VISIBLE);
+//                    verify.setVisibility(View.GONE);
+//                    resend.setVisibility(View.GONE);
+
+
+
+
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
                             Snackbar.LENGTH_SHORT).show();
@@ -144,9 +153,10 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-                Log.d(TAG, "onCodeSent:" + verificationId);
+                Log.d(TAG, "onCodeSent:=============" + verificationId);
                 mVerificationId = verificationId;
                 mResendToken = token;
+                Log.d("code ==========",mResendToken.toString());
             }
         };
     }

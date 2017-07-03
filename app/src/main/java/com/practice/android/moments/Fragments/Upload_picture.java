@@ -212,7 +212,7 @@ public class Upload_picture extends Fragment {
                         currentuser.child("description").setValue(description.getText().toString());
 
                         DatabaseReference current =   currentuser.child("Comments");
-                        current.child("user_id");
+                        current.child("user_id").setValue("1");
 
 
                         //and displaying a success toast
