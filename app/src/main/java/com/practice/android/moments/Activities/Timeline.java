@@ -277,6 +277,8 @@ public class Timeline extends AppCompatActivity
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
                     fragmentTransaction.commit();
+
+
                 }
             }
         }
