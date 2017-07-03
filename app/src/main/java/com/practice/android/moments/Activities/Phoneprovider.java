@@ -84,14 +84,18 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
-
-                if (!validatePhoneNumber()) {
+                String name = mname.getText().toString();
+                if (TextUtils.isEmpty(name)) {
+                    Verfiy_code.setError("Cannot be empty.");
+                    return;
+                }
+                else if (!validatePhoneNumber()) {
 //                    EnterIn.setVisibility(View.VISIBLE);
                     verify.setVisibility(View.GONE);
                     resend.setVisibility(View.GONE);
 
                 } else {
-                  verify.setVisibility(View.VISIBLE);
+                    verify.setVisibility(View.VISIBLE);
                     resend.setVisibility(View.VISIBLE);
                     startPhoneNumberVerification(newphonenumber);
                 }
@@ -144,8 +148,6 @@ public class Phoneprovider extends AppCompatActivity {
 //                    resend.setVisibility(View.GONE);
 
 
-
-
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
                             Snackbar.LENGTH_SHORT).show();
@@ -158,7 +160,7 @@ public class Phoneprovider extends AppCompatActivity {
                 Log.d(TAG, "onCodeSent:=============" + verificationId);
                 mVerificationId = verificationId;
                 mResendToken = token;
-                Log.d("code ==========",mResendToken.toString());
+                Log.d("code ==========", mResendToken.toString());
             }
         };
     }
