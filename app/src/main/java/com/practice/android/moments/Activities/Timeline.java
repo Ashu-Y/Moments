@@ -278,11 +278,9 @@ public class Timeline extends AppCompatActivity
                     fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
                     fragmentTransaction.commit();
 
-
                 }
             }
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

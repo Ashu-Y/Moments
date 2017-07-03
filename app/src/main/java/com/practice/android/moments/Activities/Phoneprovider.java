@@ -84,6 +84,8 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
+                Toast.makeText(Phoneprovider.this, newphonenumber, Toast.LENGTH_SHORT).show();
+
                 String name = mname.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     mname.setError("Cannot be empty.");

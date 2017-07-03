@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:theme="@android:style/Theme.Material"
         android:weightSum="1"
@@ -27,10 +27,11 @@
             android:gravity="center"
             android:paddingRight="16dp"
 
-            android:text="User Info "
+            android:text="@string/user_info"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <View
             android:layout_width="match_parent"
@@ -44,7 +45,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="Name"
+            android:text="@string/name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
 
@@ -69,7 +70,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="Email"
+            android:text="@string/email"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -92,7 +93,7 @@
             android:layout_height="35dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="Phone"
+            android:text="@string/hint_phone_number"
 
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
@@ -114,7 +115,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="About"
+            android:text="@string/about"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white" />
 
@@ -134,9 +135,10 @@
             android:layout_width="155dp"
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
-            android:text="Date Of Birth"
+            android:text="@string/date_of_birth"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText" />
 
 
         <EditText
@@ -149,7 +151,8 @@
             android:focusable="false"
             android:inputType="textShortMessage"
             android:paddingLeft="9dp"
-            android:paddingRight="9dp" />
+            android:paddingRight="9dp"
+            tools:ignore="TextFields" />
 
 
         <TextView
@@ -158,7 +161,7 @@
             android:layout_height="25dp"
 
             android:layout_marginTop="25dp"
-            android:text="Relationship"
+            android:text="@string/relationship"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white" />
 
@@ -167,9 +170,9 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/circle"
+            android:textColor="#FFFFFF"
             android:paddingLeft="9dp"
             android:paddingRight="9dp"
-
             android:spinnerMode="dropdown" />
 
 
@@ -180,7 +183,8 @@
             android:layout_marginTop="25dp"
             android:background="#063852"
             android:gravity="center"
-            android:text="Submit" />
+
+            android:text="@string/submit" />
 
 
     </LinearLayout>
