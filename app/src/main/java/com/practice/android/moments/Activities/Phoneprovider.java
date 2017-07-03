@@ -67,6 +67,7 @@ public class Phoneprovider extends AppCompatActivity {
         ccp.resetToDefaultCountry();
 
         newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
+        Toast.makeText(this, newphonenumber, Toast.LENGTH_SHORT).show();
 
         ccp.setOnCountryChangeListener(new OnCountryChangeListener() {
             @Override
@@ -82,16 +83,17 @@ public class Phoneprovider extends AppCompatActivity {
         EnterIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
+
                 if (!validatePhoneNumber()) {
 //                    EnterIn.setVisibility(View.VISIBLE);
-//                    verify.setVisibility(View.GONE);
-//                    resend.setVisibility(View.GONE);
+                    verify.setVisibility(View.GONE);
+                    resend.setVisibility(View.GONE);
 
                 } else {
-//                    EnterIn.setVisibility(View.GONE);
-//                    verify.setVisibility(View.VISIBLE);
-//                    resend.setVisibility(View.VISIBLE);
-                    startPhoneNumberVerification(phone_number.getText().toString());
+                  verify.setVisibility(View.VISIBLE);
+                    resend.setVisibility(View.VISIBLE);
+                    startPhoneNumberVerification(newphonenumber);
                 }
 
             }
