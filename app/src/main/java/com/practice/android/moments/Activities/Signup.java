@@ -167,7 +167,7 @@ public class Signup extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-            startActivity(new Intent(Signup.this, Timeline.class));
+            startActivity(new Intent(Signup.this, BottomNavigation.class));
         } else {
             Log.w(TAG, "No Authenticated user found");
         }

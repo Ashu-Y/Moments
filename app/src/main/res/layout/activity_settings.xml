@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_layout1"
@@ -11,13 +10,9 @@
     tools:context=".Activities.SettingsActivity">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:theme="@android:style/Theme.Material"
-        tools:context="com.example.gmgautam5000.layout.MainActivity">
+        android:orientation="vertical">
 
 
         <TextView
@@ -121,7 +116,7 @@
             android:background="@android:color/darker_gray"/>
 
         <Button
-            android:id="@+id/ChangePassword"
+            android:id="@+id/changePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#011a27"

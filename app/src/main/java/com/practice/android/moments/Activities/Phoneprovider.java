@@ -84,14 +84,11 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
-                Toast.makeText(Phoneprovider.this, newphonenumber, Toast.LENGTH_SHORT).show();
-
                 String name = mname.getText().toString();
                 if (TextUtils.isEmpty(name)) {
                     mname.setError("Cannot be empty.");
                     return;
-                }
-                else if (!validatePhoneNumber()) {
+                } else if (!validatePhoneNumber()) {
 //                    EnterIn.setVisibility(View.VISIBLE);
                     verify.setVisibility(View.GONE);
                     resend.setVisibility(View.GONE);
@@ -112,9 +109,9 @@ public class Phoneprovider extends AppCompatActivity {
                 if (TextUtils.isEmpty(code)) {
                     Verfiy_code.setError("Cannot be empty.");
                     return;
+                } else {
+                    verifyPhoneNumberWithCode(mVerificationId, code);
                 }
-
-                verifyPhoneNumberWithCode(mVerificationId, code);
             }
         });
 
@@ -214,10 +211,10 @@ public class Phoneprovider extends AppCompatActivity {
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
 
-        if (code.length() > 0) {
-            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-            signInWithPhoneAuthCredential(credential);
-        }
+
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        signInWithPhoneAuthCredential(credential);
+
     }
 
     private void resendVerificationCode(String phoneNumber,

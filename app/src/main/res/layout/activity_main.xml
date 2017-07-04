@@ -1,36 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3ff2ce"
+    android:background="#011a27"
+    app:theme="@style/materialtheme2"
     tools:context="com.practice.android.moments.Activities.MainActivity"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <EditText
         android:id="@+id/Emailogin"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/passlogin"
-        android:layout_alignStart="@+id/passlogin"
+        style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="70dp"
+        android:background="@drawable/circle"
         android:hint="Email Id"
         android:inputType="textEmailAddress"
-        android:textStyle="bold"
-        tools:ignore="HardcodedText" />
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        tools:ignore="HardcodedText"/>
 
     <EditText
         android:id="@+id/passlogin"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/Emailogin"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="25dp"
-        android:hint="password"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/Emailogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/circle"
+        android:hint="Password"
         android:inputType="textPassword"
-        android:maxLength="10"
-        tools:ignore="HardcodedText" />
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        tools:ignore="HardcodedText"/>
 
     <Button
         android:id="@+id/button"
@@ -39,9 +55,11 @@
         android:layout_below="@+id/passlogin"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:background="#76bc34"
-        android:text="Sign in"
-        tools:ignore="HardcodedText" />
+        android:background="@drawable/circle"
+        android:padding="16dp"
+        android:text="Get Started"
+        android:textColor="#e4ea8c"
+        tools:ignore="HardcodedText"/>
 
     <TextView
         android:id="@+id/textView"
@@ -51,12 +69,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10sp"
-
         android:gravity="center"
         android:text="LOGIN"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:textColor="#e8cc1b1b"
-        android:textSize="34sp" />
+        android:textColor="#e4ea8c"
+        android:textSize="34sp"
+        android:textStyle="bold"/>
 
 
     <Button
@@ -67,8 +85,9 @@
         android:layout_marginTop="25dp"
         android:layout_toEndOf="@+id/button"
         android:layout_toRightOf="@+id/button"
-        android:background="#76bc34"
-        android:text="Be one" />
+        android:background="@drawable/circle"
+        android:text="Be one"
+        android:textColor="#e4ea8c"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -80,7 +99,9 @@
         android:layout_toLeftOf="@+id/button2"
         android:gravity="center"
         android:text="Not a member"
-        android:textSize="18sp" />
+        android:textColor="#e4ea8c"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/passreset"
@@ -91,7 +112,9 @@
         android:layout_marginTop="74dp"
         android:clickable="true"
         android:text="Forgot Password!!! RESET NOW"
-        android:textSize="18sp" />
+        android:textColor="#e4ea8c"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
 
 </RelativeLayout>

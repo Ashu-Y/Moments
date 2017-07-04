@@ -12,11 +12,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:theme="@android:style/Theme.Material"
         android:weightSum="1"
-        tools:context="com.example.gmgautam5000.layout.MainActivity"
         tools:ignore="NewApi">
 
         <TextView
@@ -26,11 +25,10 @@
             android:background="#011a27"
             android:gravity="center"
             android:paddingRight="16dp"
-            android:text="@string/user_info"
+            android:text="User Info "
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            tools:ignore="RtlHardcoded,RtlSymmetry" />
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="match_parent"
@@ -44,7 +42,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="@string/name"
+            android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
 
@@ -69,7 +67,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="@string/email"
+            android:text="Email"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -92,7 +90,7 @@
             android:layout_height="35dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="@string/hint_phone_number"
+            android:text="Phone"
 
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
@@ -104,7 +102,6 @@
             android:layout_height="35dp"
             android:background="@drawable/circle"
             android:ems="10"
-            android:maxLength="10"
             android:inputType="phone"
             android:paddingLeft="9dp"
             android:paddingRight="9dp" />
@@ -115,7 +112,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
             android:paddingRight="16dp"
-            android:text="@string/about"
+            android:text="About"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white" />
 
@@ -135,10 +132,9 @@
             android:layout_width="155dp"
             android:layout_height="25dp"
             android:layout_marginTop="25dp"
-            android:text="@string/date_of_birth"
+            android:text="Date Of Birth"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText" />
+            android:textColor="@android:color/white"/>
 
 
         <EditText
@@ -151,8 +147,7 @@
             android:focusable="false"
             android:inputType="textShortMessage"
             android:paddingLeft="9dp"
-            android:paddingRight="9dp"
-            tools:ignore="TextFields" />
+            android:paddingRight="9dp"/>
 
 
         <TextView
@@ -161,7 +156,7 @@
             android:layout_height="25dp"
 
             android:layout_marginTop="25dp"
-            android:text="@string/relationship"
+            android:text="Relationship"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white" />
 
@@ -170,9 +165,9 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/circle"
-            android:textColor="#FFFFFF"
             android:paddingLeft="9dp"
             android:paddingRight="9dp"
+
             android:spinnerMode="dropdown" />
 
 
@@ -183,8 +178,7 @@
             android:layout_marginTop="25dp"
             android:background="#063852"
             android:gravity="center"
-
-            android:text="@string/submit" />
+            android:text="Submit"/>
 
 
     </LinearLayout>

@@ -47,7 +47,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Timeline extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "TimeLine";
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
@@ -277,10 +277,10 @@ public class Timeline extends AppCompatActivity
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.containerA, editProfFragment, "profile Fragment");
                     fragmentTransaction.commit();
-
                 }
             }
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -399,5 +399,4 @@ public class Timeline extends AppCompatActivity
                             startActivity(new Intent(Timeline.this, Login_method.class));
                         });
     }
-
 }

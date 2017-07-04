@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Firebasedatabase</string>
-    <string name="send_image">Send Image</string>
-    <string name="choose">Choose</string>
-    <string name="upload">Upload</string>
-</resources>

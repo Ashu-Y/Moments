@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ import com.practice.android.moments.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
+
 
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class ProfileEditingFragment extends Fragment {
@@ -49,6 +51,7 @@ public class ProfileEditingFragment extends Fragment {
     private EditText phone;
     private EditText About;
     private EditText Date_of_birth;
+    private ImageView selectCal;
     private Button Submit;
     private EditText gender;
 
@@ -63,6 +66,7 @@ public class ProfileEditingFragment extends Fragment {
         phone = (EditText) rootView.findViewById(R.id.editText5);
         About = (EditText) rootView.findViewById(R.id.editText541);
         Date_of_birth = (EditText) rootView.findViewById(R.id.edit_date);
+        selectCal = (ImageView) rootView.findViewById(R.id.select_cal);
         Submit = (Button) rootView.findViewById(R.id.submitedit);
         spinner = (Spinner) rootView.findViewById(R.id.Relationship);
         myCalendar = Calendar.getInstance();
@@ -84,7 +88,7 @@ public class ProfileEditingFragment extends Fragment {
 
         };
 
-        Date_of_birth.setOnClickListener(new OnClickListener() {
+        selectCal.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 new DatePickerDialog(getActivity(), date, myCalendar
@@ -96,7 +100,7 @@ public class ProfileEditingFragment extends Fragment {
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.RelationshipStatus, android.R.layout.simple_spinner_item);
+                R.array.RelationshipStatus, R.layout.spinner_item);
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner

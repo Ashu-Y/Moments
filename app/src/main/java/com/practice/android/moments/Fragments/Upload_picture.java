@@ -2,7 +2,6 @@ package com.practice.android.moments.Fragments;
 
 
 import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,10 +10,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,12 +40,12 @@ public class Upload_picture extends Fragment {
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     private static final String TAG = "Upload picture";
-    ImageView Uploadimage;
+    ImageView uploadImage;
     EditText tittle, description;
-    Button choose, upload;
+    Button upload;
     StorageReference mstorageReference;
     FirebaseUser firebaseuser;
-    Uri selectedImage;
+    Uri selectedImage = null;
     Uri uri;
     Uri download_uri;
     String user_id;
@@ -63,16 +64,15 @@ public class Upload_picture extends Fragment {
         user_id = firebaseuser.getUid();
 
 
-        Uploadimage = (ImageView) v.findViewById(R.id.imageView2);
+        uploadImage = (ImageView) v.findViewById(R.id.imageView2);
         tittle = (EditText) v.findViewById(R.id.image_title);
         description = (EditText) v.findViewById(R.id.image_description);
-        choose = (Button) v.findViewById(R.id.button_choose);
         upload = (Button) v.findViewById(R.id.button_upload);
 
 
-        choose.setOnClickListener(new View.OnClickListener() {
+        uploadImage.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 fn_Choose_Image();
             }
         });
@@ -81,11 +81,13 @@ public class Upload_picture extends Fragment {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (selectedImage != null) {
+                    Log.i(TAG, selectedImage.toString());
 
-                Log.i(TAG, selectedImage.toString());
-
-                uploadFile();
-
+                    uploadFile();
+                } else {
+                    Toast.makeText(getContext(), "No Image Selected", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -131,7 +133,7 @@ public class Upload_picture extends Fragment {
 
         Bitmap thumbnail;
         if (requestCode == GALLERY_PICTURE && resultCode == RESULT_OK) {
-       selectedImage = data.getData();
+            selectedImage = data.getData();
             String[] filePath = {MediaStore.Images.Media.DATA};
             Cursor c = getActivity().getContentResolver().query(selectedImage, filePath, null, null, null);
             assert c != null;
@@ -140,7 +142,7 @@ public class Upload_picture extends Fragment {
             int columnIndex = c.getColumnIndex(filePath[0]);
             picturePath = c.getString(columnIndex);
 
-            Uploadimage.setImageURI(data.getData());
+            uploadImage.setImageURI(data.getData());
 
             c.close();
 
@@ -154,21 +156,20 @@ public class Upload_picture extends Fragment {
             }
 
 
-
             Log.i(TAG, selectedImage.toString());
 //
 //            uploadFile();
 
 
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            selectedImage  = data.getData();
-            picturePath = getRealPathFromURI( selectedImage );
+            selectedImage = data.getData();
+            picturePath = getRealPathFromURI(selectedImage);
             uploadFile();
             try {
                 thumbnail = (BitmapFactory.decodeFile(picturePath));
                 Log.e("gallery.***********692." + thumbnail, picturePath);
                 uri = Uri.fromFile(new File(picturePath));
-                Uploadimage.setImageURI(selectedImage);
+                uploadImage.setImageURI(selectedImage);
 //                uploadFile();
             } catch (Exception e) {
                 Log.e("gallery***********692.", "Exception==========Exception==============Exception");
@@ -211,7 +212,7 @@ public class Upload_picture extends Fragment {
                         currentuser.child("tittle").setValue(tittle.getText().toString());
                         currentuser.child("description").setValue(description.getText().toString());
 
-                        DatabaseReference current =   currentuser.child("Comments");
+                        DatabaseReference current = currentuser.child("Comments");
                         current.child("user_id").setValue("1");
 
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3ff2ce"
+    android:background="#011a27"
+    app:theme="@style/materialtheme2"
     tools:context="com.practice.android.moments.Activities.Login_method"
     tools:ignore="HardcodedText">
 
@@ -13,9 +14,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text=" Moment Sign In "
-        android:textSize="40sp" />
+        android:elevation="8dp"
+        android:shadowColor="@android:color/white"
+        android:shadowRadius="@android:integer/config_longAnimTime"
+        android:text="Sign In "
+        android:textColor="#e4ea8c"
+        android:textSize="35sp"
+        android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,20 +36,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text=" Email" />
+            android:layout_marginTop="13dp"
+            android:background="@drawable/circle"
+            android:text=" Email"
+            android:textColor="#e4ea8c"
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/Phoneact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text=" Phone" />
+            android:background="@drawable/circle"
+            android:text=" Phone"
+            android:textColor="#e4ea8c"
+            android:textStyle="bold"/>
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/goobut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp" />
+            android:layout_marginBottom="30dp"/>
+
 
 
         <com.facebook.login.widget.LoginButton
@@ -50,6 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="20dp"/>
     </LinearLayout>
 </RelativeLayout>

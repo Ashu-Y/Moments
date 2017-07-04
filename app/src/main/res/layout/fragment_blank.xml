@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_layout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#011a27"
-    android:theme="@style/materialtheme2">
+    android:theme="@style/AppTheme">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:theme="@android:style/Theme.Material"
+        android:theme="@style/materialtheme2"
         android:weightSum="1"
-        tools:context="com.practice.android.moments.Fragments.ProfileEditingFragment"
-        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,LabelFor"
         tools:targetApi="lollipop">
 
         <TextView
@@ -27,12 +26,12 @@
             android:text="User Info "
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5sp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray"/>
 
 
         <TextView
@@ -45,7 +44,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
 
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/editText4"
@@ -59,7 +58,7 @@
             android:inputType="textPersonName"
             android:paddingLeft="15sp"
             android:paddingRight="15sp"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textView1"
@@ -70,7 +69,7 @@
             android:text="Email"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/editText9"
@@ -84,7 +83,7 @@
             android:inputType="textEmailAddress"
             android:paddingLeft="15sp"
             android:paddingRight="15sp"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textView7"
@@ -95,7 +94,7 @@
             android:text="Phone"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <EditText
             android:id="@+id/editText5"
@@ -107,7 +106,7 @@
             android:ems="10"
             android:inputType="phone"
             android:paddingLeft="15sp"
-            android:paddingRight="15sp" />
+            android:paddingRight="15sp"/>
 
         <TextView
             android:id="@+id/textView87"
@@ -117,7 +116,7 @@
             android:paddingRight="16sp"
             android:text="About Me"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <EditText
             android:id="@+id/editText541"
@@ -129,7 +128,7 @@
             android:ems="10"
             android:inputType="textShortMessage"
             android:paddingLeft="15sp"
-            android:paddingRight="15sp" />
+            android:paddingRight="15sp"/>
 
         <TextView
             android:id="@+id/textView087"
@@ -138,7 +137,7 @@
             android:layout_marginTop="25sp"
             android:text="Date Of Birth"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
 
         <LinearLayout
@@ -158,19 +157,18 @@
                 android:background="#063852"
                 android:inputType="textShortMessage"
                 android:paddingLeft="15sp"
-                android:paddingRight="15sp" />
+                android:paddingRight="15sp"/>
 
             <ImageView
-                android:id="@+id/imageView45"
+                android:id="@+id/select_cal"
                 android:layout_width="0sp"
                 android:layout_height="24sp"
                 android:layout_margin="4sp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_date_range_black_24dp"
                 android:tint="@android:color/white"
-                tools:ignore="ContentDescription,VectorDrawableCompat" />
+                tools:ignore="ContentDescription,VectorDrawableCompat"/>
         </LinearLayout>
-
 
 
         <TextView
@@ -180,7 +178,7 @@
             android:layout_marginTop="25sp"
             android:text="Relationship"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <Spinner
             android:id="@+id/Relationship"
@@ -191,7 +189,7 @@
             android:background="@drawable/circle"
             android:paddingLeft="15sp"
             android:paddingRight="15sp"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"/>
 
 
         <Button
@@ -202,7 +200,7 @@
             android:layout_marginTop="25sp"
             android:background="#063852"
             android:gravity="center"
-            android:text="Submit" />
+            android:text="Submit"/>
 
 
     </LinearLayout>

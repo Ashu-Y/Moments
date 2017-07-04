@@ -66,15 +66,13 @@ public class DashboardFragment extends Fragment {
 
     private List<Post> getListItemData() {
         List<Post> listViewItems = new ArrayList<Post>();
-        listViewItems.add(new Post("Camera", R.drawable.camera));
-        listViewItems.add(new Post("Gallery", R.drawable.gallery));
+        listViewItems.add(new Post("Choose Image", R.drawable.gallery));
         listViewItems.add(new Post("Editing", R.drawable.editing));
         listViewItems.add(new Post("Upload", R.drawable.upload));
         listViewItems.add(new Post("Friends", R.drawable.friends));
         listViewItems.add(new Post("Profile", R.drawable.profile));
         listViewItems.add(new Post("Edit Profile", R.drawable.edit_profile));
         listViewItems.add(new Post("Settings", R.drawable.settings));
-        listViewItems.add(new Post("Change" + "\n" + "Password", R.drawable.ic_launcher));
         listViewItems.add(new Post("Log Out", R.drawable.logout));
 
         return listViewItems;
@@ -91,13 +89,21 @@ public class DashboardFragment extends Fragment {
     }
 
     public void addEditProfile() {
-        Fragment profFragment = new ProfileEditingFragment();
+        Fragment editProfFragment = new ProfileEditingFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content, profFragment);
+        fragmentTransaction.replace(R.id.content, editProfFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
+    public void addUpload() {
+        Fragment uploadFragment = new Upload_picture();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content, uploadFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
 }
