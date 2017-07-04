@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +54,7 @@ public class ProfileEditingFragment extends Fragment {
     private EditText Date_of_birth;
     private ImageView selectCal;
     private Button Submit;
-    private EditText gender;
+    private RadioGroup gender;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +70,7 @@ public class ProfileEditingFragment extends Fragment {
         selectCal = (ImageView) rootView.findViewById(R.id.select_cal);
         Submit = (Button) rootView.findViewById(R.id.submitedit);
         spinner = (Spinner) rootView.findViewById(R.id.Relationship);
+        gender = (RadioGroup) rootView.findViewById(R.id.radio_gender);
         myCalendar = Calendar.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");

@@ -61,6 +61,50 @@
             android:textColor="@android:color/white"/>
 
         <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="155sp"
+            android:layout_height="25sp"
+            android:layout_marginTop="25sp"
+            android:paddingRight="16sp"
+            android:text="Gender"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+        <RadioGroup
+            android:id="@+id/radio_gender"
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:ems="10"
+            android:gravity="start|center_vertical"
+            android:inputType="textEmailAddress"
+            android:orientation="horizontal"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
+            android:textColor="@android:color/white">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="Male"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:text="Female"/>
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prefer not to tell"/>
+
+        </RadioGroup>
+
+        <TextView
             android:id="@+id/textView1"
             android:layout_width="155sp"
             android:layout_height="25sp"
