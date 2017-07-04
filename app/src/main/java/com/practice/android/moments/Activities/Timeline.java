@@ -47,7 +47,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Timeline extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "TimeLine";
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
@@ -399,4 +399,5 @@ public class Timeline extends AppCompatActivity
                             startActivity(new Intent(Timeline.this, Login_method.class));
                         });
     }
+
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.practice.android.moments.Models.Post;
+import com.practice.android.moments.PicassoClient;
 import com.practice.android.moments.R;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Post post = mPosts.get(position);
-
+        PicassoClient.downloadimages(mContext, mPosts.get(position).getImageId(),holder.image);
         holder.setData(post, position);
     }
 

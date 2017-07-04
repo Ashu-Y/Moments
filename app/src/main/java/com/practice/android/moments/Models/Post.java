@@ -19,10 +19,9 @@ public class Post {
 
     }
 
-    public Post(String username, int imageId) {
-        this.username = username;
-        this.imageId = imageId;
 
+
+    public Post(String gautam, int c1) {
     }
 
 
@@ -38,9 +37,7 @@ public class Post {
         return imageId;
     }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
+
 
 //    public int getLikeId() {
 //        return likeId;

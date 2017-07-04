@@ -1,4 +1,4 @@
-package com.practice.android.moments;
+package com.practice.android.moments.Models;
 
 
 public class Profile_model_class {

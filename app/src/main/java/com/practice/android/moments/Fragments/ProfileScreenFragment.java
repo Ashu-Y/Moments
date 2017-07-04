@@ -30,7 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.practice.android.moments.Profile_model_class;
+import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -256,13 +256,8 @@ public class ProfileScreenFragment extends Fragment {
                 getrealtion_ship.setText(user.getRelationship());
                 getgender.setText(user.getGender());
 
-
-//                download_uri.;
                 Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
-
                 Glide.with(getActivity()).load(user.getPhoto()).into(profile_pic);
-
-
 
                 Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
 

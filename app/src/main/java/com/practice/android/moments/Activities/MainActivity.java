@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null) {
-                    startActivity(new Intent(MainActivity.this, Timeline.class));
+                    startActivity(new Intent(MainActivity.this, BottomNavigation.class));
                     Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-            startActivity(new Intent(MainActivity.this, Timeline.class));
+            startActivity(new Intent(MainActivity.this, BottomNavigation.class));
 
         } else {
             Toast.makeText(MainActivity.this, "Authentication failed.",
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                             updateUI(null);
                         } else {
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, Timeline.class));
+                            startActivity(new Intent(MainActivity.this, BottomNavigation.class));
                         }
                     }
                 });

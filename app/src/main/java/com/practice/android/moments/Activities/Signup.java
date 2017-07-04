@@ -141,7 +141,7 @@ public class Signup extends AppCompatActivity {
                                                                         updateUI(firebaseUser);
 
 
-                                                                    startActivity(new Intent(Signup.this, Timeline.class));
+                                                                    startActivity(new Intent(Signup.this, BottomNavigation.class));
                                                                     finish();
                                                                 }
                                                                 hideProgressDialog();

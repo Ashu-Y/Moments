@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.practice.android.moments.Profile_model_class;
+import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
 

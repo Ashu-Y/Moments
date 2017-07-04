@@ -94,7 +94,7 @@ public class Login_method extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 firebaseUser = firebaseAuth.getCurrentUser();
-                startActivity(new Intent(Login_method.this, Timeline.class));
+                startActivity(new Intent(Login_method.this, BottomNavigation.class));
                 Toast.makeText(Login_method.this, "Logged in", Toast.LENGTH_SHORT).show();
                 finish();
             }
@@ -275,7 +275,7 @@ public class Login_method extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-            startActivity(new Intent(Login_method.this, Timeline.class));
+            startActivity(new Intent(Login_method.this, BottomNavigation.class));
         } else {
             Log.w(TAG, "No Authenticated user found");
 

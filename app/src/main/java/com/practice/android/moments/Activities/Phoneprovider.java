@@ -189,7 +189,7 @@ public class Phoneprovider extends AppCompatActivity {
                             currentuser_db.child("about").setValue("Default");
                             currentuser_db.child("date_of_birth").setValue("Default");
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
-                            startActivity(new Intent(Phoneprovider.this, Timeline.class));
+                            startActivity(new Intent(Phoneprovider.this, BottomNavigation.class));
 
                             finish();
                         } else {

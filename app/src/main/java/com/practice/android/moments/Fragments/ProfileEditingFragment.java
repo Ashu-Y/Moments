@@ -75,7 +75,7 @@ public class ProfileEditingFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
+
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -186,26 +186,4 @@ public class ProfileEditingFragment extends Fragment {
         Date_of_birth.setText(sdf.format(myCalendar.getTime()));
     }
 
-//    @SuppressLint("NewApi")
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        String user_id = firebaseUser.getUid();
-//        String defa = "DEFAULT";
-//        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-////        currentuser_db.child("name").setValue(name.getText().toString());
-//        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
-//            currentuser_db.child("email").setValue(firebaseUser.getEmail());
-//            email.setText(firebaseUser.getEmail());
-//        } else {
-//            currentuser_db.child("email").setValue(email.getText().toString());
-//        }
-//        if (!Objects.equals(firebaseUser.getPhoneNumber(), defa)) {
-//            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
-//            email.setText(firebaseUser.getPhoneNumber());
-//        } else {
-//            currentuser_db.child("phone").setValue(phone.getText().toString());
-//
-//        }
-//    }
 }
