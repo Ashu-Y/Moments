@@ -339,8 +339,10 @@ public class Login_method extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         firebaseUser = firebaseAuth.getCurrentUser();
-        updateUI(firebaseUser);
-        showProgressDialog();
+        if (firebaseUser != null) {
+            updateUI(firebaseUser);
+            showProgressDialog();
+        }
 
     }
 
