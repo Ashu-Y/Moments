@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class BottomNavigation extends AppCompatActivity {
     GoogleApiClient googleApiClient;
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
+    FrameLayout fl;
     String user_id;
     String user_name;
     FirebaseUser firebaseUser;
@@ -87,9 +89,17 @@ public class BottomNavigation extends AppCompatActivity {
 //                        transaction.addToBackStack(null);
 //                        transaction.commit();
 //                    }
+
+
+//                    fl.getLayoutParams().height = 0;
+//                    fl.requestLayout();
+
                     return true;
 
                 case R.id.navigation_upload:
+
+//                    recyclerView.getLayoutParams().height = 0;
+//                    recyclerView.requestLayout();
 
                     if (!mUpload_pictureFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -101,6 +111,10 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_dashboard:
 
+
+//                    recyclerView.getLayoutParams().height = 0;
+//                    recyclerView.requestLayout();
+
                     if (!mDashboardFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
@@ -109,6 +123,11 @@ public class BottomNavigation extends AppCompatActivity {
                     }
                     return true;
                 case R.id.navigation_notifications:
+
+
+//                    recyclerView.getLayoutParams().height = 0;
+//                    recyclerView.requestLayout();
+//
                     if (mTimelineFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.remove(mTimelineFragment);
@@ -130,6 +149,10 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_logout:
+
+
+//                    recyclerView.getLayoutParams().height = 0;
+//                    recyclerView.requestLayout();
                     if (mTimelineFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.remove(mTimelineFragment);
@@ -144,12 +167,9 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
 
                 default: {
-//                    if (!mTimelineFragment.isAdded()) {
-//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-//                        transaction.addToBackStack("Timeline");
-//                        transaction.commit();
-//                    }
+//                    fl.getLayoutParams().height = 0;
+//                    fl.requestLayout();
+
                 }
 
             }
@@ -163,6 +183,9 @@ public class BottomNavigation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_bottom_navigation);
+
+
+        fl = (FrameLayout) findViewById(R.id.content);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
