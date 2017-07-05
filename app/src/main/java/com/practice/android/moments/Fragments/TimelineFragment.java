@@ -1,6 +1,5 @@
 package com.practice.android.moments.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,19 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.R;
-import com.squareup.picasso.Picasso;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class TimelineFragment extends Fragment {
@@ -124,67 +116,67 @@ public class TimelineFragment extends Fragment {
 
 
 
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-
-                Blog.class,
-                R.layout.row_item,
-                BlogViewHolder.class,
-                databaseReference
-
-        ) {
-            @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
-
-//                viewHolder.setTitle(model.getTitle());
-                viewHolder.setDescription(model.getDescription());
-                viewHolder.setPic(getApplicationContext(), model.getPic());
-
-
-            }
-        };
-
-        firebaseRecyclerAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
+//        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+//
+//                Blog.class,
+//                R.layout.row_item,
+//                BlogViewHolder.class,
+//                databaseReference
+//
+//        ) {
+//            @Override
+//            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+//
+////                viewHolder.setTitle(model.getTitle());
+//                viewHolder.setDescription(model.getDescription());
+//                viewHolder.setPic(getApplicationContext(), model.getPic());
+//
+//
+//            }
+//        };
+//
+//        firebaseRecyclerAdapter.notifyDataSetChanged();
+//        recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class BlogViewHolder extends RecyclerView.ViewHolder {
-
-
-
-
-        View mView;
-
-
-        public BlogViewHolder(View itemView) {
-            super(itemView);
-
-
-            mView = itemView;
-        }
-
-
-        public void setTitle(String title) {
-
-            TextView Blog_title = (TextView) mView.findViewById(R.id.username);
-            Blog_title.setText(title);
-
-        }
-
-        public void setDescription(String description) {
-
-            TextView Blog_descption = (TextView) mView.findViewById(R.id._description);
-            Blog_descption.setText(description);
-
-        }
-
-
-        public void setPic(Context context, String photo) {
-
-            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-            Picasso.with(context).load(photo).into(imageView);
-
-        }
-
-
-    }
+//    public static class BlogViewHolder extends RecyclerView.ViewHolder {
+//
+//
+//
+//
+//        View mView;
+//
+//
+//        public BlogViewHolder(View itemView) {
+//            super(itemView);
+//
+//
+//            mView = itemView;
+//        }
+//
+//
+//        public void setTitle(String title) {
+//
+//            TextView Blog_title = (TextView) mView.findViewById(R.id.username);
+//            Blog_title.setText(title);
+//
+//        }
+//
+//        public void setDescription(String description) {
+//
+//            TextView Blog_descption = (TextView) mView.findViewById(R.id._description);
+//            Blog_descption.setText(description);
+//
+//        }
+//
+//
+//        public void setPic(Context context, String photo) {
+//
+//            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+//            Picasso.with(context).load(photo).into(imageView);
+//
+//        }
+//
+//
+//    }
 }

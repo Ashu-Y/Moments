@@ -1,10 +1,12 @@
 package com.practice.android.moments.Activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,19 +17,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
+import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.BottomNavigationViewHelper;
 import com.practice.android.moments.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -41,6 +55,11 @@ public class BottomNavigation extends AppCompatActivity {
     Upload_picture mUpload_pictureFragment;
     FragmentManager mFragmentManager;
     GoogleApiClient googleApiClient;
+    RecyclerView recyclerView;
+    DatabaseReference databaseReference;
+    String user_id;
+    String user_name;
+    FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     private String TAG = getClass().getSimpleName();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -49,15 +68,25 @@ public class BottomNavigation extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            Display display = getParent().getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            recyclerView.setMinimumHeight(0);
+
+            recyclerView.getLayoutParams().height = 0;
+            recyclerView.requestLayout();
+
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
-                    if (!mTimelineFragment.isAdded()) {
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
+//                    if (!mTimelineFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
+//                        transaction.addToBackStack(null);
+//                        transaction.commit();
+//                    }
                     return true;
 
                 case R.id.navigation_upload:
@@ -114,13 +143,13 @@ public class BottomNavigation extends AppCompatActivity {
                     LogoutButton();
                     return true;
 
-            default:{
-                    if (!mTimelineFragment.isAdded()) {
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-                        transaction.addToBackStack("Timeline");
-                        transaction.commit();
-                    }
+                default: {
+//                    if (!mTimelineFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
+//                        transaction.addToBackStack("Timeline");
+//                        transaction.commit();
+//                    }
                 }
 
             }
@@ -134,6 +163,30 @@ public class BottomNavigation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_bottom_navigation);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
+
+        try {
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
+                    .child("User Pictures");
+        } catch (NullPointerException e) {
+            Log.i("TimelineFrag", e.getMessage());
+        }
+        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager lm_recycle = new LinearLayoutManager(this);
+//        lm_recycle.setReverseLayout(true);
+        recyclerView.getRecycledViewPool().clear();
+        recyclerView.setLayoutManager(lm_recycle);
+
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -153,27 +206,51 @@ public class BottomNavigation extends AppCompatActivity {
                         "Check ur connection", Toast.LENGTH_SHORT).show()).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
 
-        if (!mTimelineFragment.isAdded()) {
-            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-            transaction.add(R.id.content, mTimelineFragment, "Timeline Fragment");
-            transaction.commit();
-        }
+//        if (!mTimelineFragment.isAdded()) {
+//            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//            transaction.add(R.id.content, mTimelineFragment, "Timeline Fragment");
+//            transaction.commit();
+//        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-        transaction.addToBackStack("Timeline");
-        transaction.commit();
+//        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
+//        transaction.addToBackStack("Timeline");
+//        transaction.commit();
 
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
+
+        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+
+                Blog.class,
+                R.layout.row_item,
+                BlogViewHolder.class,
+                databaseReference
+
+        ) {
+            @Override
+            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDescription(model.getDescription());
+                viewHolder.setPic(getApplicationContext(), model.getPic());
+
+
+            }
+        };
+
+        firebaseRecyclerAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+
     }
 
     @Override
@@ -277,8 +354,48 @@ public class BottomNavigation extends AppCompatActivity {
                     Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
                 });
 
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-        }
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
+
+
+    public static class BlogViewHolder extends RecyclerView.ViewHolder {
+
+
+        View mView;
+
+
+        public BlogViewHolder(View itemView) {
+            super(itemView);
+
+
+            mView = itemView;
+        }
+
+
+        public void setTitle(String title) {
+
+            TextView Blog_title = (TextView) mView.findViewById(R.id.username);
+            Blog_title.setText(title);
+
+        }
+
+        public void setDescription(String description) {
+
+            TextView Blog_descption = (TextView) mView.findViewById(R.id._description);
+            Blog_descption.setText(description);
+
+        }
+
+
+        public void setPic(Context context, String photo) {
+
+            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+            Picasso.with(context).load(photo).into(imageView);
+
+        }
+
+
+    }
+}
 
