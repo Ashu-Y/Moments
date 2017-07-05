@@ -49,9 +49,12 @@ public class TimelineFragment extends Fragment {
             Log.e(e.getMessage(), "Error");
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
-                .child("User Pictures");
-
+        try {
+            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
+                    .child("User Pictures");
+        } catch (NullPointerException e) {
+            Log.i("TimelineFrag", e.getMessage());
+        }
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(getActivity());
