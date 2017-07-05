@@ -1,33 +1,37 @@
 package com.practice.android.moments.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.practice.android.moments.Models.Post;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.R;
-import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
-
-/**
- * Created by Ashutosh on 6/27/2017.
- */
 
 public class TimelineFragment extends Fragment {
 
-    RecyclerView mRecyclerView;
-    PostRecyclerAdapter mPostRecyclerAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
-    ArrayList<Post> mPostArrayList;
-
+    RecyclerView recyclerView;
+    DatabaseReference databaseReference;
+    String user_id;
+    String user_name;
+    FirebaseUser firebaseUser;
 
     @Nullable
     @Override
@@ -35,32 +39,118 @@ public class TimelineFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_timeline, container, false);
 
-        //Recycler
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
+                .child("User Pictures");
 
-        mPostArrayList = new ArrayList<>();
-
-        mPostArrayList.add(new Post("gautam", R.drawable.c1));
-        mPostArrayList.add(new Post("hitesh", R.drawable.c2));
-        mPostArrayList.add(new Post("piyush", R.drawable.c3));
-        mPostArrayList.add(new Post("abhya", R.drawable.c4));
-        mPostArrayList.add(new Post("mansi", R.drawable.c5));
-        mPostArrayList.add(new Post("naman", R.drawable.c6));
-        mPostArrayList.add(new Post("rajat", R.drawable.c7));
-
-        mPostRecyclerAdapter = new PostRecyclerAdapter(getActivity(), mPostArrayList);
-
-        RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        mRecyclerView.addItemDecoration(itemDecoration);
-
-        mRecyclerView.setAdapter(mPostRecyclerAdapter);
-
-
+        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager lm_recycle = new LinearLayoutManager(getActivity());
+        lm_recycle.setReverseLayout(true);
+        recyclerView.setLayoutManager(lm_recycle);
         return v;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+
+                Blog.class,
+                R.layout.row_item,
+                BlogViewHolder.class,
+                databaseReference
+
+        ) {
+            @Override
+            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+
+//                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDescription(model.getDescription());
+                viewHolder.setPic(getApplicationContext(), model.getPic());
+
+
+            }
+        };
+
+
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+
+                Blog.class,
+                R.layout.row_item,
+                BlogViewHolder.class,
+                databaseReference
+
+        ) {
+            @Override
+            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+
+//                viewHolder.setTitle(model.getTitle());
+                viewHolder.setDescription(model.getDescription());
+                viewHolder.setPic(getApplicationContext(), model.getPic());
+
+
+            }
+        };
+
+
+        recyclerView.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class BlogViewHolder extends RecyclerView.ViewHolder {
+
+
+        View mView;
+
+
+        public BlogViewHolder(View itemView) {
+            super(itemView);
+
+
+            mView = itemView;
+        }
+
+
+        public void setTitle(String title) {
+
+            TextView Blog_title = (TextView) mView.findViewById(R.id.username);
+            Blog_title.setText(title);
+
+        }
+
+        public void setDescription(String description) {
+
+            TextView Blog_descption = (TextView) mView.findViewById(R.id._description);
+            Blog_descption.setText(description);
+
+        }
+
+
+        public void setPic(Context context, String photo) {
+
+            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+            Picasso.with(context).load(photo).into(imageView);
+
+        }
+
+
     }
 }

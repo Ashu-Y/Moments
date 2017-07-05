@@ -215,7 +215,7 @@ public class Upload_picture extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
-            progressDialog.setCancelable(false);
+//            progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
 
 
@@ -235,14 +235,9 @@ public class Upload_picture extends Fragment {
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Pictures");
                         currentuser_db.child(selectedImage.getLastPathSegment());
                         DatabaseReference currentuser = currentuser_db.child(selectedImage.getLastPathSegment());
-                        currentuser.child("like").setValue("0");
                         currentuser.child("pic").setValue(picture);
-                        currentuser.child("comments");
                         currentuser.child("tittle").setValue(tittle.getText().toString());
                         currentuser.child("description").setValue(description.getText().toString());
-
-                        DatabaseReference current = currentuser.child("Comments");
-                        current.child("user_id").setValue("1");
 
 
                         //and displaying a success toast

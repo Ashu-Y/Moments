@@ -256,12 +256,10 @@ public class ProfileScreenFragment extends Fragment {
                 getrealtion_ship.setText(user.getRelationship());
                 getgender.setText(user.getGender());
 
-                Picasso.with(getActivity()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
-                Glide.with(getActivity()).load(user.getPhoto()).into(profile_pic);
+                Picasso.with(getContext()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
+                Glide.with(getContext()).load(user.getPhoto()).into(profile_pic);
 
                 Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
-
-
             }
 
             @Override
