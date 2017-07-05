@@ -36,39 +36,39 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/coffee1"/>
 
-            <TextView
-                android:id="@+id/likes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:text="0 people liked your post"
-                android:textSize="14sp"/>
+            <!--<TextView-->
+                <!--android:id="@+id/likes"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingLeft="8dp"-->
+                <!--android:text="0 people liked your post"-->
+                <!--android:textSize="14sp"/>-->
 
-            <LinearLayout
-                android:id="@+id/linearlayout2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="1">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/linearlayout2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:weightSum="1">-->
 
-                <ImageView
-                    android:id="@+id/like_btn"
-                    android:layout_width="36dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:paddingLeft="8dp"
-                    android:src="@drawable/like"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/like_btn"-->
+                    <!--android:layout_width="36dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_margin="4dp"-->
+                    <!--android:paddingLeft="8dp"-->
+                    <!--android:src="@drawable/like"/>-->
 
-                <ImageView
-                    android:id="@+id/comment_btn"
-                    android:layout_width="36dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:src="@drawable/comment"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/comment_btn"-->
+                    <!--android:layout_width="36dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_margin="4dp"-->
+                    <!--android:src="@drawable/comment"/>-->
 
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <TextView
                 android:id="@+id/_description"

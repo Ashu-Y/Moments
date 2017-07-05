@@ -105,6 +105,16 @@ public class BottomNavigation extends AppCompatActivity {
                     }
                     LogoutButton();
                     return true;
+
+            default:{
+                    if (!mTimelineFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                }
+
             }
             return false;
         }
@@ -114,7 +124,7 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        googleApiClient.connect();
+
         setContentView(R.layout.activity_bottom_navigation);
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -141,12 +151,18 @@ public class BottomNavigation extends AppCompatActivity {
             transaction.commit();
         }
     }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        googleApiClient.connect();
-//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        googleApiClient.disconnect();
+    }
 
     public void LogoutButton() {
         Log.i(TAG, "You clicked onClick Button");

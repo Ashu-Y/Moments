@@ -189,6 +189,7 @@ public class ProfileScreenFragment extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
+            progressDialog.setCancelable(false);
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
