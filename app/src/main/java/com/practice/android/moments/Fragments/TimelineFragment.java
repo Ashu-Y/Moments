@@ -58,8 +58,10 @@ public class TimelineFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(getActivity());
-        lm_recycle.setReverseLayout(true);
+//        lm_recycle.setReverseLayout(true);
+        recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
+
         return v;
     }
 
@@ -127,7 +129,7 @@ public class TimelineFragment extends Fragment {
             }
         };
 
-
+        firebaseRecyclerAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 

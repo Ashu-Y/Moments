@@ -57,8 +57,8 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
             username = (TextView) itemView.findViewById(R.id.username);
             image = (ImageView) itemView.findViewById(R.id.image);
-            like = (ImageView) itemView.findViewById(R.id.like_btn);
-            comment = (ImageView) itemView.findViewById(R.id.comment_btn);
+//            like = (ImageView) itemView.findViewById(R.id.like_btn);
+//            comment = (ImageView) itemView.findViewById(R.id.comment_btn);
         }
 
         public void setData(Post post, int position){

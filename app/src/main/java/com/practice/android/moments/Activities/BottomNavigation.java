@@ -75,7 +75,7 @@ public class BottomNavigation extends AppCompatActivity {
                     if (!mDashboardFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
-                        transaction.addToBackStack(null);
+                        transaction.addToBackStack("Timeline");
                         transaction.commit();
                     }
                     return true;
@@ -90,6 +90,14 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.remove(mDashboardFragment);
                         transaction.commit();
                     }
+
+                    if (mUpload_pictureFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mUpload_pictureFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+
                     return true;
 
                 case R.id.navigation_logout:
@@ -110,7 +118,7 @@ public class BottomNavigation extends AppCompatActivity {
                     if (!mTimelineFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-                        transaction.addToBackStack(null);
+                        transaction.addToBackStack("Timeline");
                         transaction.commit();
                     }
                 }
@@ -152,10 +160,22 @@ public class BottomNavigation extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
+        transaction.addToBackStack("Timeline");
+        transaction.commit();
+
     }
 
     @Override
@@ -237,13 +257,6 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (!mTimelineFragment.isAdded()) {
-            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-            transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-        } else {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
             builder1.setMessage("You want to exit!!!!");
             builder1.setCancelable(true);
@@ -266,6 +279,6 @@ public class BottomNavigation extends AppCompatActivity {
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
-        }
+
     }
 }
