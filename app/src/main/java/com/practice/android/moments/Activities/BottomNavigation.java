@@ -160,22 +160,20 @@ public class BottomNavigation extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        googleApiClient.connect();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.content, mTimelineFragment, "Timeline Fragment");
         transaction.addToBackStack("Timeline");
         transaction.commit();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.connect();
     }
 
     @Override
@@ -257,28 +255,30 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
-            builder1.setMessage("You want to exit!!!!");
-            builder1.setCancelable(true);
 
-            builder1.setPositiveButton(
-                    "Yes",
-                    (dialog, id) -> {
-                        dialog.cancel();
-                        moveTaskToBack(true);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                    });
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
+        builder1.setMessage("You want to exit!!!!");
+        builder1.setCancelable(true);
 
-            builder1.setNegativeButton(
-                    "No",
-                    (dialog, id) -> {
-                        dialog.cancel();
-                        Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
-                    });
+
+        builder1.setPositiveButton(
+                "Yes",
+                (dialog, id) -> {
+                    dialog.cancel();
+                    moveTaskToBack(true);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                (dialog, id) -> {
+                    dialog.cancel();
+                    Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
+                });
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
-
+        }
     }
-}
+

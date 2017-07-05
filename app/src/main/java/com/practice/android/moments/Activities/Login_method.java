@@ -272,10 +272,12 @@ public class Login_method extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
+
         if (user != null) {
+            hideProgressDialog();
             startActivity(new Intent(Login_method.this, BottomNavigation.class));
         } else {
+            hideProgressDialog();
             Log.w(TAG, "No Authenticated user found");
 
 //            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
@@ -338,15 +340,16 @@ public class Login_method extends AppCompatActivity {
         super.onStart();
         firebaseUser = firebaseAuth.getCurrentUser();
         updateUI(firebaseUser);
+        showProgressDialog();
 
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        updateUI(null);
-    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        updateUI(null);
+//    }
 }
 
 

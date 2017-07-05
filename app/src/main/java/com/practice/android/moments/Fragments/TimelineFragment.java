@@ -65,19 +65,19 @@ public class TimelineFragment extends Fragment {
         return v;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        try {
-            assert firebaseUser != null;
-            user_id = firebaseUser.getUid();
-            user_name = firebaseUser.getDisplayName();
-        } catch (NullPointerException e) {
-            Log.e(e.getMessage(), "Error");
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        try {
+//            assert firebaseUser != null;
+//            user_id = firebaseUser.getUid();
+//            user_name = firebaseUser.getDisplayName();
+//        } catch (NullPointerException e) {
+//            Log.e(e.getMessage(), "Error");
+//        }
+//    }
 //    @Override
 //    public void onStart() {
 //        super.onStart();
@@ -110,6 +110,20 @@ public class TimelineFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
+
+
+
         FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
                 Blog.class,
@@ -134,6 +148,8 @@ public class TimelineFragment extends Fragment {
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
+
+
 
 
         View mView;
