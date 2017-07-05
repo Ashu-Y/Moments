@@ -2,6 +2,7 @@ package com.practice.android.moments.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -17,8 +18,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +50,7 @@ public class ProfileEditingFragment extends Fragment {
     DatabaseReference databaseReference;
     FirebaseUser firebaseUser;
     Calendar myCalendar;
+    ProgressDialog progressDialog;
     private EditText name;
     private EditText email;
     private EditText phone;
@@ -54,13 +58,18 @@ public class ProfileEditingFragment extends Fragment {
     private EditText Date_of_birth;
     private ImageView selectCal;
     private Button Submit;
-    private RadioGroup gender;
+    private RadioGroup genderGroup;
+    private RadioButton gender;
+    private RadioButton defaultGender;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
+        progressDialog = new ProgressDialog(getActivity());
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         name = (EditText) rootView.findViewById(R.id.editText4);
         email = (EditText) rootView.findViewById(R.id.editText9);
@@ -70,7 +79,9 @@ public class ProfileEditingFragment extends Fragment {
         selectCal = (ImageView) rootView.findViewById(R.id.select_cal);
         Submit = (Button) rootView.findViewById(R.id.submitedit);
         spinner = (Spinner) rootView.findViewById(R.id.Relationship);
-        gender = (RadioGroup) rootView.findViewById(R.id.radio_gender);
+        genderGroup = (RadioGroup) rootView.findViewById(R.id.radio_gender);
+        defaultGender = (RadioButton) rootView.findViewById(R.id.gender_prefer_not_to_tell);
+        defaultGender.setChecked(true);
         myCalendar = Calendar.getInstance();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -100,7 +111,6 @@ public class ProfileEditingFragment extends Fragment {
         });
 
 
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.RelationshipStatus, R.layout.spinner_item);
 // Specify the layout to use when the list of choices appears
@@ -119,41 +129,60 @@ public class ProfileEditingFragment extends Fragment {
                 relation = "Not want to tell";
             }
         });
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         Submit.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
+                progressDialog.setTitle("Uploading");
+                progressDialog.show();
+
                 if (firebaseUser != null) {
+                    progressDialog.show();
+                    progressDialog.setCancelable(false);
+                    progressDialog.setCanceledOnTouchOutside(false);
                     String user_id = firebaseUser.getUid();
                     String defa = "DEFAULT";
+
+                    int selectedId = genderGroup.getCheckedRadioButtonId();
+                    gender = (RadioButton) rootView.findViewById(selectedId);
 
                     String code = name.getText().toString();
                     String code1 = email.getText().toString();
                     String code2 = phone.getText().toString();
                     String code3 = About.getText().toString();
                     String code4 = Date_of_birth.getText().toString();
-//                    String code5 = gender.getText().toString();
+                    String code5 = gender.getText().toString();
 
                     if (TextUtils.isEmpty(code)) {
                         name.setError("Cannot be empty.");
+                        progressDialog.dismiss();
                         return;
                     } else if (TextUtils.isEmpty(code1)) {
                         email.setError("Cannot be empty.");
+                        progressDialog.dismiss();
                         return;
                     } else if (TextUtils.isEmpty(code2)) {
                         phone.setError("Cannot be empty.");
+                        progressDialog.dismiss();
                         return;
                     } else if (TextUtils.isEmpty(code3)) {
                         About.setError("Cannot be empty.");
+                        progressDialog.dismiss();
                         return;
                     } else if (TextUtils.isEmpty(code4)) {
                         Date_of_birth.setError("Cannot be empty.");
+                        progressDialog.dismiss();
+                        return;
+                    } else if (TextUtils.isEmpty(code5)) {
+                        Toast.makeText(getContext(), "Please enter the gender", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                         return;
                     } else {
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                         currentuser_db.child("name").setValue(name.getText().toString());
+
                         if (!Objects.equals(firebaseUser.getEmail(), defa)) {
                             currentuser_db.child("email").setValue(firebaseUser.getEmail());
                             email.setText(firebaseUser.getEmail());
@@ -164,16 +193,16 @@ public class ProfileEditingFragment extends Fragment {
 //                            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
 //                            email.setText(firebaseUser.getPhoneNumber());
 //                        } else {
-                            currentuser_db.child("phone").setValue(phone.getText().toString());
+                        currentuser_db.child("phone").setValue(phone.getText().toString());
 
 //                        }
 
-                        currentuser_db.child("gender").setValue("DEFAULT");
+                        currentuser_db.child("genderGroup").setValue(code5);
                         currentuser_db.child("relationship").setValue(relation);
                         currentuser_db.child("about").setValue(About.getText().toString());
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
 
-
+                        progressDialog.dismiss();
                     }
                 }
             }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.practice.android.moments.Activities.SettingsActivity;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
@@ -62,12 +65,21 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
     @Override
     public void onBindViewHolder(DashViewHolder holder, int position) {
 //        holder.setData(itemList.get(position), position);
-
+        Display display = dashFragment.getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
         holder.dashText.setText(itemList.get(position).getUsername());
+        holder.dashImage.setMinimumWidth(((size.x) / 2));
 
-//        Picasso.with(mContext)
-//                .load(itemList.get(position).getImageId())
-//                .into(holder.dashImage);
+        Log.i("Dash", String.valueOf(size.x / 2));
+
+        holder.dashImage.getLayoutParams().width = size.x / 2;
+        holder.dashImage.requestLayout();
+
+        Glide.with(mContext)
+                .load(itemList.get(position).getImageId())
+
+                .into(holder.dashImage);
 
 //        Picasso.with(mContext)
 //                .load(itemList.get(position).getImageId())
@@ -170,10 +182,6 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
         }
 
     }
-
-
-
-
 
 
     public class DashViewHolder extends RecyclerView.ViewHolder {

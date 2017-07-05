@@ -3,6 +3,7 @@ package com.practice.android.moments.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -28,10 +29,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.practice.android.moments.Activities.Timeline;
+import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,6 +54,7 @@ public class Upload_picture extends Fragment {
     Uri selectedImage = null;
     Uri uri;
     Uri download_uri;
+    Context context;
     String user_id;
     DatabaseReference databaseReference;
 
@@ -62,7 +69,7 @@ public class Upload_picture extends Fragment {
         mstorageReference = FirebaseStorage.getInstance().getReference();
 
         user_id = firebaseuser.getUid();
-
+        context = getContext();
 
         uploadImage = (ImageView) v.findViewById(R.id.imageView2);
         tittle = (EditText) v.findViewById(R.id.image_title);
@@ -154,32 +161,52 @@ public class Upload_picture extends Fragment {
                 Log.e("gallery***********692.", "Exception==========Exception==============Exception");
                 e.printStackTrace();
             }
-
-
-            Log.i(TAG, selectedImage.toString());
-//
-//            uploadFile();
-
-
-        } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            selectedImage = data.getData();
-            picturePath = getRealPathFromURI(selectedImage);
-            uploadFile();
+        }
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            thumbnail = (Bitmap) data.getExtras().get("data");
+            uri = saveImageBitmap(thumbnail);
+            selectedImage = uri;
+            uploadImage.setImageURI(uri);
+            //  picturePath = uristringpic;
             try {
-                thumbnail = (BitmapFactory.decodeFile(picturePath));
-                Log.e("gallery.***********692." + thumbnail, picturePath);
-                uri = Uri.fromFile(new File(picturePath));
-                uploadImage.setImageURI(selectedImage);
-//                uploadFile();
+                picturePath = uri.toString();
+                // thumbnail = (BitmapFactory.decodeFile(picturePath));
             } catch (Exception e) {
                 Log.e("gallery***********692.", "Exception==========Exception==============Exception");
                 e.printStackTrace();
             }
-            Log.i(TAG, selectedImage.toString());
-
 
         }
     }
+
+    public Uri saveImageBitmap(Bitmap bitmap) {
+        String strDirectoy = context.getFilesDir().getAbsolutePath();
+        Calendar c = Calendar.getInstance();
+        int seconds = c.get(Calendar.SECOND);
+        int hour = c.get(Calendar.MILLISECOND);
+        String imageName = hour + "image.JPEG";
+        OutputStream fOut = null;
+        File file = new File(strDirectoy, imageName);
+        try {
+            fOut = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        try {
+            fOut.flush();
+            fOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(file);
+    }
+
 
     private void uploadFile() {
         //if there is a file to upload
@@ -188,6 +215,8 @@ public class Upload_picture extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
+            progressDialog.setCancelable(false);
+            progressDialog.setCanceledOnTouchOutside(false);
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
@@ -219,7 +248,7 @@ public class Upload_picture extends Fragment {
                         //and displaying a success toast
                         Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
 
-                        startActivity(new Intent(getActivity(), Timeline.class));
+                        startActivity(new Intent(getActivity(), BottomNavigation.class));
                     })
                     .addOnFailureListener(exception -> {
                         //if the upload is not successful
@@ -243,4 +272,6 @@ public class Upload_picture extends Fragment {
             Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }
