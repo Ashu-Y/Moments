@@ -60,33 +60,33 @@ public class TimelineFragment extends Fragment {
         return v;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-
-                Blog.class,
-                R.layout.row_item,
-                BlogViewHolder.class,
-                databaseReference
-
-        ) {
-            @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
-
-//                viewHolder.setTitle(model.getTitle());
-                viewHolder.setDescription(model.getDescription());
-                viewHolder.setPic(getApplicationContext(), model.getPic());
-
-
-            }
-        };
-
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+//
+//                Blog.class,
+//                R.layout.row_item,
+//                BlogViewHolder.class,
+//                databaseReference
+//
+//        ) {
+//            @Override
+//            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+//
+////                viewHolder.setTitle(model.getTitle());
+//                viewHolder.setDescription(model.getDescription());
+//                viewHolder.setPic(getApplicationContext(), model.getPic());
+//
+//
+//            }
+//        };
+//
+//
+//        recyclerView.setAdapter(firebaseRecyclerAdapter);
+//
+//    }
 
 
     @Override

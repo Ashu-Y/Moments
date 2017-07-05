@@ -165,6 +165,9 @@ public class Upload_picture extends Fragment {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             thumbnail = (Bitmap) data.getExtras().get("data");
             uri = saveImageBitmap(thumbnail);
+
+            Log.i(TAG, uri.toString());
+
             selectedImage = uri;
             uploadImage.setImageURI(uri);
             //  picturePath = uristringpic;
@@ -184,7 +187,7 @@ public class Upload_picture extends Fragment {
         Calendar c = Calendar.getInstance();
         int seconds = c.get(Calendar.SECOND);
         int hour = c.get(Calendar.MILLISECOND);
-        String imageName = hour + "image.JPEG";
+        String imageName = hour + "image";
         OutputStream fOut = null;
         File file = new File(strDirectoy, imageName);
         try {
@@ -215,8 +218,8 @@ public class Upload_picture extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
-//            progressDialog.setCancelable(false);
-            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(false);
+//            progressDialog.setCanceledOnTouchOutside(false);
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
