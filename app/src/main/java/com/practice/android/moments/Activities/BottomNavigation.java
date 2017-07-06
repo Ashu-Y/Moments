@@ -61,6 +61,8 @@ public class BottomNavigation extends AppCompatActivity {
     FrameLayout fl;
     String user_id;
     String user_name;
+    Display display;
+    Point size;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     private String TAG = getClass().getSimpleName();
@@ -70,18 +72,29 @@ public class BottomNavigation extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            Display display = getParent().getWindowManager().getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            recyclerView.setMinimumHeight(0);
-
-            recyclerView.getLayoutParams().height = 0;
-            recyclerView.requestLayout();
-
-
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+
+                    fl.getLayoutParams().height = 0;
+                    fl.requestLayout();
+
+                    if (mTimelineFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mTimelineFragment);
+                        transaction.commit();
+                    }
+                    if (mDashboardFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mDashboardFragment);
+                        transaction.commit();
+                    }
+
+                    if (mUpload_pictureFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mUpload_pictureFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
 
 //                    if (!mTimelineFragment.isAdded()) {
 //                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -98,10 +111,13 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_upload:
 
-//                    recyclerView.getLayoutParams().height = 0;
-//                    recyclerView.requestLayout();
-
                     if (!mUpload_pictureFragment.isAdded()) {
+
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
+
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mUpload_pictureFragment, "Timeline Fragment");
                         transaction.addToBackStack(null);
@@ -111,11 +127,15 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_dashboard:
 
-
-//                    recyclerView.getLayoutParams().height = 0;
-//                    recyclerView.requestLayout();
+                    fl.setMinimumHeight(size.y);
+                    fl.getLayoutParams().height = size.y;
+                    fl.requestLayout();
 
                     if (!mDashboardFragment.isAdded()) {
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
                         transaction.addToBackStack("Timeline");
@@ -124,10 +144,10 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications:
 
+                    fl.setMinimumHeight(size.y);
+                    fl.getLayoutParams().height = size.y;
+                    fl.requestLayout();
 
-//                    recyclerView.getLayoutParams().height = 0;
-//                    recyclerView.requestLayout();
-//
                     if (mTimelineFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.remove(mTimelineFragment);
@@ -151,9 +171,12 @@ public class BottomNavigation extends AppCompatActivity {
                 case R.id.navigation_logout:
 
 
-//                    recyclerView.getLayoutParams().height = 0;
-//                    recyclerView.requestLayout();
+
                     if (mTimelineFragment.isAdded()) {
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.remove(mTimelineFragment);
                         transaction.commit();
@@ -186,8 +209,10 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         fl = (FrameLayout) findViewById(R.id.content);
-
+        display = getWindowManager().getDefaultDisplay();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        size = new Point();
+        display.getSize(size);
 
         try {
             assert firebaseUser != null;
@@ -276,11 +301,6 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        googleApiClient.disconnect();
-    }
 
     public void LogoutButton() {
         Log.i(TAG, "You clicked onClick Button");

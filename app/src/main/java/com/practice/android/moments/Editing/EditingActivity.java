@@ -156,6 +156,8 @@ public class EditingActivity extends AppCompatActivity {
                     File cachePath = new File(myDir + "/" + img_name.getText().toString() + ".jpg");
                     cachePath.createNewFile();
                     FileOutputStream ostream = new FileOutputStream(cachePath);
+
+
                     bitmap.compress(CompressFormat.JPEG, 100, ostream);
                     ostream.close();
 
