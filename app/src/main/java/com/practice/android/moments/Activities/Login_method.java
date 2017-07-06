@@ -16,7 +16,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -63,7 +62,7 @@ public class Login_method extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //facebook SDK initialized
-        FacebookSdk.sdkInitialize(getApplication());
+        //FacebookSdk.sdkInitialize(getApplication());
         setContentView(R.layout.activity_login_method);
 
 
@@ -187,6 +186,7 @@ public class Login_method extends AppCompatActivity {
 
 //callback to the facebook login button
         callbackManager.onActivityResult(requestCode, resultCode, data);
+        Log.e("Facebook=========", callbackManager.toString() + "==========" + requestCode);
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

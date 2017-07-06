@@ -151,6 +151,7 @@ public class Upload_picture extends Fragment {
 
             uploadImage.setImageURI(data.getData());
 
+
             c.close();
 
             try {
@@ -163,6 +164,7 @@ public class Upload_picture extends Fragment {
             }
         }
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+
             thumbnail = (Bitmap) data.getExtras().get("data");
             uri = saveImageBitmap(thumbnail);
 
