@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
@@ -42,7 +43,6 @@ import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.BottomNavigationViewHelper;
 import com.practice.android.moments.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -409,7 +409,7 @@ public class BottomNavigation extends AppCompatActivity {
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
 
 
-        View mView = null;
+        View mView;
 
 
         public BlogViewHolder(View itemView) {
@@ -425,6 +425,7 @@ public class BottomNavigation extends AppCompatActivity {
             TextView Blog_title = (TextView) mView.findViewById(R.id.username);
             Blog_title.setText(title);
 
+            Log.e("Title =======",Blog_title.getText().toString());
         }
 
         public void setDescription(String description) {
@@ -432,13 +433,17 @@ public class BottomNavigation extends AppCompatActivity {
             TextView Blog_description = (TextView) mView.findViewById(R.id._description);
             Blog_description.setText(description);
 
+            Log.e("Description =======",Blog_description.getText().toString());
         }
 
 
         public void setPic(Context context, String photo) {
 
             ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-            Picasso.with(context).load(photo).into(imageView);
+            Glide.with(context).load(photo).centerCrop().placeholder(R.drawable.c1).into(imageView);
+//            Picasso.with(context).load(photo).into(imageView);
+
+            Log.e("Image URl =======", photo);
 
         }
 

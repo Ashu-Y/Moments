@@ -225,28 +225,40 @@ public class Upload_picture extends Fragment {
             StorageReference riversRef = mstorageReference.child("Photos")
                     .child(firebaseuser.getUid()).child("User Photo")
                     .child(selectedImage.getLastPathSegment());
-            riversRef.putFile(selectedImage)
+            riversRef.child("picture").putFile(selectedImage)
                     .addOnSuccessListener(taskSnapshot -> {
                         //if the upload is successfull
                         //hiding the progress dialog
-                        progressDialog.dismiss();
-
 
                         download_uri = taskSnapshot.getDownloadUrl();
                         String user_id = firebaseuser.getUid();
                         String picture = String.valueOf(download_uri);
-                        DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Pictures");
-                        currentuser_db.child(selectedImage.getLastPathSegment());
-                        DatabaseReference currentuser = currentuser_db.child(selectedImage.getLastPathSegment());
-                        currentuser.child("pic").setValue(picture);
-                        currentuser.child("title").setValue(title.getText().toString());
-                        currentuser.child("description").setValue(description.getText().toString());
 
 
-                        //and displaying a success toast
-                        Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                        riversRef.child("thumbnail").putFile(selectedImage).addOnSuccessListener(taskSnapshot1 -> {
 
-                        startActivity(new Intent(getActivity(), BottomNavigation.class));
+                            progressDialog.dismiss();
+
+
+                            DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Pictures");
+                            currentuser_db.child(selectedImage.getLastPathSegment());
+                            DatabaseReference currentuser = currentuser_db.child(selectedImage.getLastPathSegment());
+                            currentuser.child("pic").setValue(picture);
+                            currentuser.child("thumbnail_pic").setValue(picture);
+                            currentuser.child("title").setValue(title.getText().toString());
+                            currentuser.child("description").setValue(description.getText().toString());
+
+
+                            //and displaying a success toast
+                            Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+
+                            startActivity(new Intent(getActivity(), BottomNavigation.class));
+
+
+                        });
+
+
+
                     })
                     .addOnFailureListener(exception -> {
                         //if the upload is not successful
