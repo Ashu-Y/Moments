@@ -47,7 +47,7 @@ public class Upload_picture extends Fragment {
     private static final int CAMERA_REQUEST = 0;
     private static final String TAG = "Upload picture";
     ImageView uploadImage;
-    EditText tittle, description;
+    EditText title, description;
     Button upload;
     StorageReference mstorageReference;
     FirebaseUser firebaseuser;
@@ -72,7 +72,7 @@ public class Upload_picture extends Fragment {
         context = getContext();
 
         uploadImage = (ImageView) v.findViewById(R.id.imageView2);
-        tittle = (EditText) v.findViewById(R.id.image_title);
+        title = (EditText) v.findViewById(R.id.image_title);
         description = (EditText) v.findViewById(R.id.image_description);
         upload = (Button) v.findViewById(R.id.button_upload);
 
@@ -239,7 +239,7 @@ public class Upload_picture extends Fragment {
                         currentuser_db.child(selectedImage.getLastPathSegment());
                         DatabaseReference currentuser = currentuser_db.child(selectedImage.getLastPathSegment());
                         currentuser.child("pic").setValue(picture);
-                        currentuser.child("tittle").setValue(tittle.getText().toString());
+                        currentuser.child("title").setValue(title.getText().toString());
                         currentuser.child("description").setValue(description.getText().toString());
 
 

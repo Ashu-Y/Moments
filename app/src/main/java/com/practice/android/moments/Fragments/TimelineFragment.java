@@ -3,17 +3,13 @@ package com.practice.android.moments.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
 
@@ -30,29 +26,29 @@ public class TimelineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_timeline, container, false);
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        try {
-            assert firebaseUser != null;
-            user_id = firebaseUser.getUid();
-            user_name = firebaseUser.getDisplayName();
-        } catch (NullPointerException e) {
-            Log.e(e.getMessage(), "Error");
-        }
-
-        try {
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
-                    .child("User Pictures");
-        } catch (NullPointerException e) {
-            Log.i("TimelineFrag", e.getMessage());
-        }
-        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager lm_recycle = new LinearLayoutManager(getActivity());
-//        lm_recycle.setReverseLayout(true);
-        recyclerView.getRecycledViewPool().clear();
-        recyclerView.setLayoutManager(lm_recycle);
+//
+//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        try {
+//            assert firebaseUser != null;
+//            user_id = firebaseUser.getUid();
+//            user_name = firebaseUser.getDisplayName();
+//        } catch (NullPointerException e) {
+//            Log.e(e.getMessage(), "Error");
+//        }
+//
+//        try {
+//            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
+//                    .child("User Pictures");
+//        } catch (NullPointerException e) {
+//            Log.i("TimelineFrag", e.getMessage());
+//        }
+//        recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        LinearLayoutManager lm_recycle = new LinearLayoutManager(getActivity());
+////        lm_recycle.setReverseLayout(true);
+//        recyclerView.getRecycledViewPool().clear();
+//        recyclerView.setLayoutManager(lm_recycle);
 
         return v;
     }
@@ -99,21 +95,21 @@ public class TimelineFragment extends Fragment {
 //    }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        try {
-            assert firebaseUser != null;
-            user_id = firebaseUser.getUid();
-            user_name = firebaseUser.getDisplayName();
-        } catch (NullPointerException e) {
-            Log.e(e.getMessage(), "Error");
-        }
-
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//
+//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        try {
+//            assert firebaseUser != null;
+//            user_id = firebaseUser.getUid();
+//            user_name = firebaseUser.getDisplayName();
+//        } catch (NullPointerException e) {
+//            Log.e(e.getMessage(), "Error");
+//        }
+//
 
 
 //        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
@@ -137,7 +133,7 @@ public class TimelineFragment extends Fragment {
 //
 //        firebaseRecyclerAdapter.notifyDataSetChanged();
 //        recyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
+//    }
 
 //    public static class BlogViewHolder extends RecyclerView.ViewHolder {
 //
