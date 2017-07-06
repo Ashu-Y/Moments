@@ -118,6 +118,9 @@ public class Signup extends AppCompatActivity {
                                                         } else {
                                                             String user_id;
 
+                                                            firebaseAuth = FirebaseAuth.getInstance();
+                                                            firebaseUser = firebaseAuth.getCurrentUser();
+
                                                             user_id = firebaseUser.getUid();
 
                                                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
@@ -131,8 +134,6 @@ public class Signup extends AppCompatActivity {
                                                             currentuser_db.child("date_of_birth").setValue("Default");
 
                                                             updateUI(firebaseUser);
-
-
                                                             startActivity(new Intent(Signup.this, BottomNavigation.class));
                                                             finish();
                                                         }

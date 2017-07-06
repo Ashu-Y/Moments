@@ -131,14 +131,13 @@ public class Login_method extends AppCompatActivity {
         loginButton = (LoginButton) findViewById(R.id.Face_login_button);
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton
-                .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         showProgressDialog();
-                        Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                        Log.d(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
+                        Log.e(TAG, "facebook:onSuccess:" + loginResult);
+                        Log.e(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
 
                         handleFacebookAccessToken(loginResult.getAccessToken());
                     }
@@ -241,8 +240,9 @@ public class Login_method extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            firebaseUser = firebaseAuth.getCurrentUser();
+                            Log.e(TAG, "signInWithCredential:success");
+
+                            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             String user_id;
 
                             if (firebaseUser != null) {
