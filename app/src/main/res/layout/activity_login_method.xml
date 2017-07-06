@@ -18,7 +18,6 @@
         android:layout_centerHorizontal="true"
         android:elevation="8dp"
         android:shadowColor="@android:color/white"
-        android:shadowRadius="@android:integer/config_longAnimTime"
         android:text="Sign In "
         android:textColor="#e4ea8c"
         android:textSize="35sp"

@@ -24,7 +24,7 @@
             android:textSize="34sp" />
 
         <EditText
-            android:id="@+id/nameca"
+            android:id="@+id/nameuser"
             android:layout_width="198sp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/nameca"
+            android:layout_below="@+id/nameuser"
             android:layout_marginLeft="32sp"
             android:layout_marginStart="32sp"
             android:layout_marginTop="20sp"
@@ -71,7 +71,7 @@
             android:layout_marginLeft="32sp"
             android:layout_marginStart="32sp"
             android:layout_marginTop="20sp"
-            android:hint="Confirm passwordca"
+            android:hint="Confirm password"
             android:inputType="textPassword" />
 
         <EditText
@@ -110,9 +110,6 @@
             android:background="#76bc34"
             android:text="Sign in" />
 
-
     </RelativeLayout>
-
-
 </ScrollView>
 

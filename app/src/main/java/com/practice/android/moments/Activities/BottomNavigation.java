@@ -409,7 +409,7 @@ public class BottomNavigation extends AppCompatActivity {
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
 
 
-        View mView;
+        View mView = null;
 
 
         public BlogViewHolder(View itemView) {

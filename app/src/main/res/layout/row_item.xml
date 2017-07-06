@@ -10,6 +10,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:padding="5dp"
         app:cardBackgroundColor="#FFF">
 
         <LinearLayout
@@ -22,8 +23,7 @@
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="0.60"
+                android:layout_height="46dp"
                 android:gravity="center"
                 android:text="username"
                 android:textSize="18sp"/>
@@ -73,7 +73,7 @@
             <TextView
                 android:id="@+id/_description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:maxLength="100"
                 android:maxLines="2"
                 android:paddingLeft="8dp"

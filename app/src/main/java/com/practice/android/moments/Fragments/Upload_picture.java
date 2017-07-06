@@ -218,8 +218,8 @@ public class Upload_picture extends Fragment {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
-            progressDialog.setCancelable(false);
-//            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCancelable(true);
+            progressDialog.setCanceledOnTouchOutside(false);
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
