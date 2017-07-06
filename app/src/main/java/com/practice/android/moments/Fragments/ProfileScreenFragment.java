@@ -32,11 +32,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import it.sephiroth.android.library.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
 

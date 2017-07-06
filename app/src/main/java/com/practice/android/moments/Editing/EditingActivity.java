@@ -4,11 +4,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -120,7 +122,8 @@ public class EditingActivity extends AppCompatActivity {
 
 
         content.setDrawingCacheEnabled(true);
-        bitmap = content.getDrawingCache();
+        Bitmap bmp1 = ((BitmapDrawable) content.getDrawable()).getBitmap();
+
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -157,12 +160,14 @@ public class EditingActivity extends AppCompatActivity {
                     cachePath.createNewFile();
                     FileOutputStream ostream = new FileOutputStream(cachePath);
 
+                    bmp1.compress(CompressFormat.JPEG, 100, ostream);
 
-                    bitmap.compress(CompressFormat.JPEG, 100, ostream);
                     ostream.close();
+
 
                     Toast.makeText(EditingActivity.this, "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
 
+                    Log.i("Editing: ", myDir.toString());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
