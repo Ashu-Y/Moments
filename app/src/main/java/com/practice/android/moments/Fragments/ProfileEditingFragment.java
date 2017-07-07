@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,8 +26,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.text.SimpleDateFormat;
@@ -37,13 +42,6 @@ import java.util.Objects;
 @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
 public class ProfileEditingFragment extends Fragment {
 
-    /*
-    * Gender not added
-    * in xml
-    * update it with
-    * DEFAULT
-        * */
-
 
     Spinner spinner;
     String relation;
@@ -51,6 +49,7 @@ public class ProfileEditingFragment extends Fragment {
     FirebaseUser firebaseUser;
     Calendar myCalendar;
     ProgressDialog progressDialog;
+    String user_id;
     private EditText name;
     private EditText email;
     private EditText phone;
@@ -70,6 +69,7 @@ public class ProfileEditingFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        user_id = firebaseUser.getUid();
 
         name = (EditText) rootView.findViewById(R.id.editText4);
         email = (EditText) rootView.findViewById(R.id.editText9);
@@ -142,7 +142,7 @@ public class ProfileEditingFragment extends Fragment {
                     progressDialog.show();
                     progressDialog.setCancelable(false);
                     progressDialog.setCanceledOnTouchOutside(false);
-                    String user_id = firebaseUser.getUid();
+                    user_id = firebaseUser.getUid();
                     String defa = "DEFAULT";
 
                     int selectedId = genderGroup.getCheckedRadioButtonId();
@@ -159,12 +159,9 @@ public class ProfileEditingFragment extends Fragment {
                         name.setError("Cannot be empty.");
                         progressDialog.dismiss();
                         return;
-                    } else if (TextUtils.isEmpty(code1)) {
-                        email.setError("Cannot be empty.");
-                        progressDialog.dismiss();
-                        return;
-                    } else if (TextUtils.isEmpty(code2)) {
-                        phone.setError("Cannot be empty.");
+                    } else if (TextUtils.isEmpty(code2) && code2.length() < 10) {
+                        Toast.makeText(getActivity(), code2.length(), Toast.LENGTH_SHORT).show();
+                        phone.setError("Phone length cannot exceed 10");
                         progressDialog.dismiss();
                         return;
                     } else if (TextUtils.isEmpty(code3)) {
@@ -202,6 +199,8 @@ public class ProfileEditingFragment extends Fragment {
                         currentuser_db.child("about").setValue(About.getText().toString());
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
 
+
+                        Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                 }
@@ -219,6 +218,38 @@ public class ProfileEditingFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getActivity().getResources().getConfiguration().locale);
 
         Date_of_birth.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                Log.d("Editing Activity", "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                name.setText(user.getName());
+                email.setText(user.getEmail());
+                phone.setText(user.getPhone());
+                About.setText(user.getAbout());
+                Date_of_birth.setText(user.getDate_of_birth());
+
+
+                Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
 }
