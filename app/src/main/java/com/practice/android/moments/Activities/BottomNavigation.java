@@ -227,7 +227,7 @@ public class BottomNavigation extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(this);
-//        lm_recycle.setReverseLayout(true);
+        lm_recycle.setReverseLayout(true);
         recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
 

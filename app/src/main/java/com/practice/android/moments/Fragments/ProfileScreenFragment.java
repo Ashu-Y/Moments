@@ -281,11 +281,23 @@ public class ProfileScreenFragment extends Fragment {
                     progressDialog.setTitle("Uploading");
                     progressDialog.show();
                     progressDialog.setCancelable(false);
+                    Calendar c = Calendar.getInstance();
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    int month = c.get(Calendar.MONTH) + 1;
+                    int year = c.get(Calendar.YEAR);
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minutes = c.get(Calendar.MINUTE);
+                    int seconds = c.get(Calendar.SECOND);
+                    int milliSeconds = c.get(Calendar.MILLISECOND);
 
+
+                    //Can cause error in uploading
+                    String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                    Log.i("Camera", imageName);
 
                     StorageReference riversRef = mstorageReference.child("Photos")
                             .child(firebaseuser.getUid()).child("Profile Photo")
-                            .child(filePath.getLastPathSegment());
+                            .child(imageName);
                     riversRef.putFile(filePath)
                             .addOnSuccessListener(taskSnapshot -> {
                                 //if the upload is successfull
@@ -339,10 +351,23 @@ public class ProfileScreenFragment extends Fragment {
                     progressDialog.show();
                     progressDialog.setCancelable(false);
 
+                    Calendar c = Calendar.getInstance();
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    int month = c.get(Calendar.MONTH) + 1;
+                    int year = c.get(Calendar.YEAR);
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minutes = c.get(Calendar.MINUTE);
+                    int seconds = c.get(Calendar.SECOND);
+                    int milliSeconds = c.get(Calendar.MILLISECOND);
+
+
+                    //Can cause error in uploading
+                    String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                    Log.i("Camera", imageName);
 
                     StorageReference riversRef = mstorageReference.child("Photos")
-                            .child(firebaseuser.getUid()).child("Profile Photo")
-                            .child(filePath.getLastPathSegment());
+                            .child(firebaseuser.getUid()).child("Cover Photo")
+                            .child(imageName);
                     riversRef.putFile(filePath)
                             .addOnSuccessListener(taskSnapshot -> {
                                 //if the upload is successfull
@@ -431,11 +456,17 @@ public class ProfileScreenFragment extends Fragment {
 
 
         Calendar c = Calendar.getInstance();
-        int seconds = c.get(Calendar.SECOND);
-        int day = c.get(Calendar.DAY_OF_YEAR);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
         int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        int seconds = c.get(Calendar.SECOND);
+        int milliSeconds = c.get(Calendar.MILLISECOND);
 
-        String imageName = hour + day + seconds + "";
+
+        //Can cause error in uploading
+        String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
         Log.i("Camera", imageName);
         OutputStream fOut = null;
         File file = new File(strDirectoy, imageName);
