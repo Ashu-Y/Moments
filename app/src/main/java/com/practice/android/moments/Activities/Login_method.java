@@ -33,6 +33,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
@@ -133,29 +134,29 @@ public class Login_method extends AppCompatActivity {
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        showProgressDialog();
-                        Log.e(TAG, "facebook:onSuccess:" + loginResult);
-                        Log.e(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                showProgressDialog();
+                Log.e(TAG, "facebook:onSuccess:" + loginResult);
+                Log.e(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
 
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-                    }
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
 
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
-                        updateUI(null);
-                    }
+            @Override
+            public void onCancel() {
+                Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
+                updateUI(null);
+            }
 
-                    @Override
-                    public void onError(FacebookException error) {
-                        Log.e(TAG, error.getMessage());
+            @Override
+            public void onError(FacebookException error) {
+                Log.e(TAG, error.getMessage());
 
-                        Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
-                        updateUI(null);
-                    }
-                });
+                Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
+                updateUI(null);
+            }
+        });
         //Facebook Button Ends
     }
 
@@ -206,6 +207,29 @@ public class Login_method extends AppCompatActivity {
                             String user_id;
                             if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                        .setDisplayName(name.getText().toString())
+                                        .build();
+
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d("Editing", "User profile updated.");
+                                                }
+                                            }
+                                        });
+
+                                firebaseUser.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Email sent.");
+                                                }
+                                            }
+                                        });
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
@@ -216,6 +240,7 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("relationship").setValue("Default");
                                 currentuser_db.child("about").setValue("Default");
                                 currentuser_db.child("date_of_birth").setValue("Default");
+                                currentuser_db.child("coverPhoto").setValue("default");
                                 updateUI(firebaseUser);
                             }
                         } else {
@@ -248,6 +273,31 @@ public class Login_method extends AppCompatActivity {
 
                             if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+//                                        .setDisplayName(name.getText().toString())
+                                        .build();
+
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d("Editing", "User profile updated.");
+                                                }
+                                            }
+                                        });
+
+                                firebaseUser.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Email sent.");
+                                                }
+                                            }
+                                        });
+
+
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
@@ -258,6 +308,7 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("relationship").setValue("Default");
                                 currentuser_db.child("about").setValue("Default");
                                 currentuser_db.child("date_of_birth").setValue("Default");
+                                currentuser_db.child("coverPhoto").setValue("default");
                                 updateUI(firebaseUser);
                             }
                         } else {
@@ -276,6 +327,7 @@ public class Login_method extends AppCompatActivity {
 
         if (user != null) {
             hideProgressDialog();
+            Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Login_method.this, BottomNavigation.class));
         } else {
             hideProgressDialog();
@@ -341,18 +393,11 @@ public class Login_method extends AppCompatActivity {
         super.onStart();
         firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
+
             updateUI(firebaseUser);
             showProgressDialog();
         }
-
     }
-
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//
-//        updateUI(null);
-//    }
 }
 
 

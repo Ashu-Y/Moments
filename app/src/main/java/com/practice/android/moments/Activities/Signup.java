@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
@@ -121,6 +122,30 @@ public class Signup extends AppCompatActivity {
                                                             firebaseAuth = FirebaseAuth.getInstance();
                                                             firebaseUser = firebaseAuth.getCurrentUser();
 
+                                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                                    .setDisplayName(user_name)
+                                                                    .build();
+
+                                                            firebaseUser.updateProfile(profileUpdates)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Log.d("Editing", "User profile updated.");
+                                                                            }
+                                                                        }
+                                                                    });
+
+                                                            firebaseUser.sendEmailVerification()
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Log.d(TAG, "Email sent.");
+                                                                            }
+                                                                        }
+                                                                    });
+
                                                             user_id = firebaseUser.getUid();
 
                                                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
@@ -132,6 +157,7 @@ public class Signup extends AppCompatActivity {
                                                             currentuser_db.child("relationship").setValue("Default");
                                                             currentuser_db.child("about").setValue("Default");
                                                             currentuser_db.child("date_of_birth").setValue("Default");
+                                                            currentuser_db.child("coverPhoto").setValue("default");
 
                                                             updateUI(firebaseUser);
                                                             startActivity(new Intent(Signup.this, BottomNavigation.class));
@@ -160,6 +186,8 @@ public class Signup extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
+            Toast.makeText(Signup.this, "Logged in", Toast.LENGTH_SHORT).show();
+
             startActivity(new Intent(Signup.this, BottomNavigation.class));
         } else {
             Log.w(TAG, "No Authenticated user found");

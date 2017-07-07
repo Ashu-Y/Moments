@@ -251,38 +251,18 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-//
-//                Blog.class,
-//                R.layout.row_item,
-//                BlogViewHolder.class,
-//                databaseReference
-//
-//        ) {
-//            @Override
-//            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
-//
-//                viewHolder.setTitle(model.getTitle());
-//                viewHolder.setDescription(model.getDescription());
-//                viewHolder.setPic(getApplicationContext(), model.getPic());
-//
-//
-//            }
-//        };
-//
-//        firebaseRecyclerAdapter.notifyDataSetChanged();
-//        recyclerView.setAdapter(firebaseRecyclerAdapter);
-
-    }
-
-
-    @Override
+      @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
+
+          try {
+              assert firebaseUser != null;
+              user_id = firebaseUser.getUid();
+              user_name = firebaseUser.getDisplayName();
+          } catch (NullPointerException e) {
+              Log.e(e.getMessage(), "Error");
+          }
 
         FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
@@ -295,7 +275,7 @@ public class BottomNavigation extends AppCompatActivity {
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
-                viewHolder.setTitle(model.getTitle());
+                viewHolder.setTitle(user_name);
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setPic(getApplicationContext(), model.getPic());
 

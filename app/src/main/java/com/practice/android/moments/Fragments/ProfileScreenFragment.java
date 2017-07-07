@@ -436,8 +436,8 @@ public class ProfileScreenFragment extends Fragment {
                 getgender.setText(user.getGender());
 
 //                Picasso.with(getContext()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
-                Glide.with(getContext()).load(user.getPhoto()).into(profile_pic);
-                Glide.with(getContext()).load(user.getCoverPhoto()).into(BackPIC);
+                Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile_pic);
+                Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(BackPIC);
 
                 Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
             }

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.text.InputFilter;
@@ -25,8 +26,11 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -92,7 +96,6 @@ public class ProfileEditingFragment extends Fragment {
         InputFilter[] filterArray = new InputFilter[1];
         filterArray[0] = new InputFilter.LengthFilter(10);
         phone.setFilters(filterArray);
-
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -200,6 +203,21 @@ public class ProfileEditingFragment extends Fragment {
                     }
 
                     if (flag != -1) {
+
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(name.getText().toString())
+                                .build();
+
+                        firebaseUser.updateProfile(profileUpdates)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d("Editing", "User profile updated.");
+                                        }
+                                    }
+                                });
+
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                         currentuser_db.child("name").setValue(name.getText().toString());
 
