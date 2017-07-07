@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +29,8 @@ public class Signup extends AppCompatActivity {
     private static final String TAG = "Sign up";
     //variables
     private EditText name, email, password, conpassword, phone;
-    private Button sub, backtosign;
+    private Button sub;
+    private TextView backtosign;
     private ProgressDialog mProgressDialog;
 
     private FirebaseUser firebaseUser;
@@ -53,7 +55,7 @@ public class Signup extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.phoneuser);
 
         sub = (Button) findViewById(R.id.newaccount);
-        backtosign = (Button) findViewById(R.id.loginuser);
+        backtosign = (TextView) findViewById(R.id.loginuser);
 
 
         sub.setOnClickListener(new View.OnClickListener() {

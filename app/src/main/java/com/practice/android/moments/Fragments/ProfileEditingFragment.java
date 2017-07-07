@@ -281,12 +281,24 @@ public class ProfileEditingFragment extends Fragment {
                 Date_of_birth.setText(user.getDate_of_birth());
 
                 String userGender = user.getGender();
+                String userRelationshipStatus = user.getRelationship();
 
                 if (userGender.equals("Male")) {
                     male.setChecked(true);
                 } else if (userGender.equals("Female")) {
                     female.setChecked(true);
                 }
+
+
+                ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter(); //cast to an ArrayAdapter
+
+                int spinnerPosition = myAdap.getPosition(userRelationshipStatus);
+
+//set the default according to value
+                spinner.setSelection(spinnerPosition);
+
+
+
 
                 Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
             }
