@@ -446,22 +446,21 @@ public class BottomNavigation extends AppCompatActivity {
 
         public void setLike(Context context) {
             ToggleButton Like = (ToggleButton) mView.findViewById(R.id.like_btn);
-
+            Like.setText("");
             Like.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     if (Like.isChecked()) {
+                        Like.setText("");
                         Toast.makeText(context, "YOU like the post", Toast.LENGTH_SHORT).show();
                         Log.e("Like ", "   YOU like the post ");
-                    }
-                    else
-                    {
+                    } else {
+                        Like.setText("");
                         Toast.makeText(context, "YOU dislike the post", Toast.LENGTH_SHORT).show();
                         Log.e("Like ", "   YOU dislike the post  ");
 
                     }
-
 
 
                 }

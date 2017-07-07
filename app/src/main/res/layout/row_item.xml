@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#a5c7d1"
+
     android:layout_marginTop="10dp"
     android:orientation="vertical">
 
@@ -42,7 +42,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-
                 android:src="@drawable/coffee1" />
 
             <TextView
@@ -64,12 +63,13 @@
 
                 <ToggleButton
                     android:id="@+id/like_btn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="45sp"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:contentDescription="@string/like"
                     android:paddingLeft="12dp"
                     android:background="@null"
+                    android:text="@null"
                     android:button="@drawable/likecheck" />
 
                 <ImageButton
