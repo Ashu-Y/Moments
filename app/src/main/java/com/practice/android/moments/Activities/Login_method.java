@@ -208,7 +208,7 @@ public class Login_method extends AppCompatActivity {
                             if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                                        .setDisplayName(name.getText().toString())
+                                        .setDisplayName(acct.getDisplayName())
                                         .build();
 
                                 firebaseUser.updateProfile(profileUpdates)
@@ -274,7 +274,7 @@ public class Login_method extends AppCompatActivity {
                             if (firebaseUser != null) {
                                 user_id = firebaseUser.getUid();
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-//                                        .setDisplayName(name.getText().toString())
+                                        .setDisplayName(firebaseUser.getDisplayName())
                                         .build();
 
                                 firebaseUser.updateProfile(profileUpdates)

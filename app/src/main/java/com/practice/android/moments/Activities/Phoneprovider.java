@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
@@ -175,6 +176,21 @@ public class Phoneprovider extends AppCompatActivity {
                             firebaseUser = task.getResult().getUser();
 
                             String user_id = firebaseAuth.getCurrentUser().getUid();
+
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(mname.getText().toString())
+                                    .build();
+
+                            firebaseUser.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("Editing", "User profile updated.");
+                                            }
+                                        }
+                                    });
+
 
                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                             currentuser_db.child("name").setValue(mname.getText().toString());
