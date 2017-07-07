@@ -206,42 +206,47 @@ public class Login_method extends AppCompatActivity {
                             firebaseUser = firebaseAuth.getCurrentUser();
                             String user_id;
                             if (firebaseUser != null) {
-                                user_id = firebaseUser.getUid();
-                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(acct.getDisplayName())
-                                        .build();
+                                if (!firebaseUser.isEmailVerified()) {
 
-                                firebaseUser.updateProfile(profileUpdates)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.d("Editing", "User profile updated.");
+
+                                    firebaseUser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(Login_method.this, "Please Verify Your Account ", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG, "Email sent.");
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                } else {
+                                    user_id = firebaseUser.getUid();
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(acct.getDisplayName())
+                                            .build();
 
-                                firebaseUser.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.d(TAG, "Email sent.");
+
+                                    firebaseUser.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.d("Editing", "User profile updated.");
+                                                    }
                                                 }
-                                            }
-                                        });
-
-                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                currentuser_db.child("name").setValue(acct.getDisplayName());
-                                currentuser_db.child("email").setValue(acct.getEmail());
-                                currentuser_db.child("phone").setValue("Default");
-                                currentuser_db.child("photo").setValue("Default");
-                                currentuser_db.child("gender").setValue("Default");
-                                currentuser_db.child("relationship").setValue("Default");
-                                currentuser_db.child("about").setValue("Default");
-                                currentuser_db.child("date_of_birth").setValue("Default");
-                                currentuser_db.child("coverPhoto").setValue("default");
-                                updateUI(firebaseUser);
+                                            });
+                                    DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                    currentuser_db.child("name").setValue(acct.getDisplayName());
+                                    currentuser_db.child("email").setValue(acct.getEmail());
+                                    currentuser_db.child("phone").setValue("Default");
+                                    currentuser_db.child("photo").setValue("Default");
+                                    currentuser_db.child("gender").setValue("Default");
+                                    currentuser_db.child("relationship").setValue("Default");
+                                    currentuser_db.child("about").setValue("Default");
+                                    currentuser_db.child("date_of_birth").setValue("Default");
+                                    currentuser_db.child("coverPhoto").setValue("default");
+                                    updateUI(firebaseUser);
+                                }
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -272,44 +277,51 @@ public class Login_method extends AppCompatActivity {
                             String user_id;
 
                             if (firebaseUser != null) {
-                                user_id = firebaseUser.getUid();
-                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName(firebaseUser.getDisplayName())
-                                        .build();
 
-                                firebaseUser.updateProfile(profileUpdates)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.d("Editing", "User profile updated.");
+                                if (!firebaseUser.isEmailVerified()) {
+
+
+                                    firebaseUser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(Login_method.this, "Please Verify Your Account ", Toast.LENGTH_SHORT).show();
+                                                        Log.d(TAG, "Email sent.");
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
-                                firebaseUser.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.d(TAG, "Email sent.");
+
+                                } else {
+                                    user_id = firebaseUser.getUid();
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(firebaseUser.getDisplayName())
+                                            .build();
+
+                                    firebaseUser.updateProfile(profileUpdates)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.d("Editing", "User profile updated.");
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
 
-
-                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
-                                currentuser_db.child("email").setValue(firebaseUser.getEmail());
-                                currentuser_db.child("phone").setValue("Default");
-                                currentuser_db.child("photo").setValue("Default");
-                                currentuser_db.child("gender").setValue("Default");
-                                currentuser_db.child("relationship").setValue("Default");
-                                currentuser_db.child("about").setValue("Default");
-                                currentuser_db.child("date_of_birth").setValue("Default");
-                                currentuser_db.child("coverPhoto").setValue("default");
-                                updateUI(firebaseUser);
+                                    DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                    currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
+                                    currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                                    currentuser_db.child("phone").setValue("Default");
+                                    currentuser_db.child("photo").setValue("Default");
+                                    currentuser_db.child("gender").setValue("Default");
+                                    currentuser_db.child("relationship").setValue("Default");
+                                    currentuser_db.child("about").setValue("Default");
+                                    currentuser_db.child("date_of_birth").setValue("Default");
+                                    currentuser_db.child("coverPhoto").setValue("default");
+                                    updateUI(firebaseUser);
+                                }
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -397,8 +409,8 @@ public class Login_method extends AppCompatActivity {
         if (firebaseUser != null) {
 
 //            if(firebaseUser.isEmailVerified()){
-                updateUI(firebaseUser);
-                showProgressDialog();
+            updateUI(firebaseUser);
+            showProgressDialog();
 //            }else
 //            {
 //                updateUI(null);
