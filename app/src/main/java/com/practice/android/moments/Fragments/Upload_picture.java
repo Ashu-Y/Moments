@@ -269,7 +269,7 @@ public class Upload_picture extends Fragment {
 
 
                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Pictures");
-                            currentuser_db.child(imageName).orderByChild("date").orderByChild("time");
+                            currentuser_db.child(imageName).orderByPriority();
                             DatabaseReference currentuser = currentuser_db.child(imageName);
                             currentuser.child("pic").setValue(picture);
                             currentuser.child("thumbnail_pic").setValue(picture);

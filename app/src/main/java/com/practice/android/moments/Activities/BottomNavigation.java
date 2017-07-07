@@ -24,9 +24,11 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
@@ -63,6 +65,7 @@ public class BottomNavigation extends AppCompatActivity {
     String user_id;
     String user_name;
     Display display;
+    Context context;
     Point size;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
@@ -223,11 +226,13 @@ public class BottomNavigation extends AppCompatActivity {
             Log.i("TimelineFrag", e.getMessage());
         }
 
+        context = getApplicationContext();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(this);
         lm_recycle.setReverseLayout(true);
+        lm_recycle.setStackFromEnd(true);
         recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
 
@@ -251,31 +256,35 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
-      @Override
+    @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
 
-          try {
-              assert firebaseUser != null;
-              user_id = firebaseUser.getUid();
-              user_name = firebaseUser.getDisplayName();
-          } catch (NullPointerException e) {
-              Log.e(e.getMessage(), "Error");
-          }
+        context = getApplicationContext();
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
 
         FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
                 Blog.class,
                 R.layout.row_item,
                 BlogViewHolder.class,
-                databaseReference
+                databaseReference.orderByPriority()
 
         ) {
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
-                viewHolder.setTitle(user_name);
+                viewHolder.setUsername(user_name);
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setComment(context);
+                viewHolder.setLike(context);
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setPic(getApplicationContext(), model.getPic());
 
@@ -393,22 +402,88 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         View mView;
+//        FragmentManager mFragmentManager;
+//        FrameLayout fl;
 
 
         public BlogViewHolder(View itemView) {
             super(itemView);
 
-
+//            fl = (FrameLayout) findViewById(R.id.content);
+//            mFragmentManager = getSupportFragmentManager();
             mView = itemView;
+//            display = getWindowManager().getDefaultDisplay();
+//            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//            size = new Point();
+//            display.getSize(size);
+        }
+
+        public void setComment(Context context) {
+            ImageButton comment = (ImageButton) mView.findViewById(R.id.comment_btn);
+
+            comment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "Comment Fragment to open", Toast.LENGTH_SHORT).show();
+                    Log.e("Comment part", "   Comment ");
+
+
+//                    CommentFragment fragment2 = new CommentFragment();
+//
+//
+//                    fl.setMinimumHeight(size.y);
+//                    fl.getLayoutParams().height = size.y;
+//                    fl.requestLayout();
+//
+//                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                    transaction.replace(R.id.content, fragment2, "Comment Fragment");
+//                    transaction.addToBackStack("Comment");
+//                    transaction.commit();
+                }
+
+            });
+        }
+
+        public void setLike(Context context) {
+            ToggleButton Like = (ToggleButton) mView.findViewById(R.id.like_btn);
+
+            Like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (Like.isChecked()) {
+                        Toast.makeText(context, "YOU like the post", Toast.LENGTH_SHORT).show();
+                        Log.e("Like ", "   YOU like the post ");
+                    }
+                    else
+                    {
+                        Toast.makeText(context, "YOU dislike the post", Toast.LENGTH_SHORT).show();
+                        Log.e("Like ", "   YOU dislike the post  ");
+
+                    }
+
+
+
+                }
+
+            });
         }
 
 
-        public void setTitle(String title) {
+        public void setUsername(String username) {
 
             TextView Blog_title = (TextView) mView.findViewById(R.id.username);
+            Blog_title.setText(username);
+
+            Log.e("Username =======", Blog_title.getText().toString());
+        }
+
+        public void setTitle(String title) {
+
+            TextView Blog_title = (TextView) mView.findViewById(R.id._title);
             Blog_title.setText(title);
 
-            Log.e("Title =======",Blog_title.getText().toString());
+            Log.e("Title =======", Blog_title.getText().toString());
         }
 
         public void setDescription(String description) {
@@ -416,7 +491,7 @@ public class BottomNavigation extends AppCompatActivity {
             TextView Blog_description = (TextView) mView.findViewById(R.id._description);
             Blog_description.setText(description);
 
-            Log.e("Description =======",Blog_description.getText().toString());
+            Log.e("Description =======", Blog_description.getText().toString());
         }
 
 

@@ -6,18 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.practice.android.moments.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class CommentFragment extends Fragment {
 
-
-    public CommentFragment() {
-        // Required empty public constructor
-    }
 
 
     @Override
@@ -25,6 +20,13 @@ public class CommentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
+
+        EditText user_comment = (EditText)v.findViewById(R.id.comment);
+
+
+
+
+
 
         return v;
     }

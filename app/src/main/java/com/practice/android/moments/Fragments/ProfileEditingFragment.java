@@ -204,6 +204,19 @@ public class ProfileEditingFragment extends Fragment {
 
                     if (flag != -1) {
 
+                        if(!firebaseUser.isEmailVerified()){
+                            firebaseUser.sendEmailVerification()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.e("ProfileEditingFragment", "Email sent.");
+                                            }
+                                        }
+                                    });
+
+                        }
+
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(name.getText().toString())
                                 .build();

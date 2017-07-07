@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
+    android:background="#a5c7d1"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:padding="5dp"
-        app:cardBackgroundColor="#FFF">
+        app:cardBackgroundColor="#a5c7d1">
 
         <LinearLayout
             android:id="@+id/linearlayout1"
@@ -26,8 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="46dp"
                 android:gravity="center"
-                android:text="Title"
                 android:textColor="#000"
+                android:text="Title"
                 android:textSize="18sp"/>
 
 
@@ -42,58 +42,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="4"
-                android:src="@drawable/coffee1"/>
 
-            <View
+                android:src="@drawable/coffee1" />
+
+            <TextView
+                android:id="@+id/likes"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="4dp"
-                android:background="@android:color/darker_gray"/>
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="0 people liked your post"
+                android:textColor="#000"
+                android:textSize="14sp" />
 
-            <!--<TextView-->
-            <!--android:id="@+id/likes"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingLeft="8dp"-->
-            <!--android:text="0 people liked your post"-->
-            <!--android:textSize="14sp"/>-->
+            <LinearLayout
+                android:id="@+id/linearlayout2"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/linearlayout2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:weightSum="1">-->
+                <ToggleButton
+                    android:id="@+id/like_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:contentDescription="@string/like"
+                    android:paddingLeft="12dp"
+                    android:background="@null"
+                    android:button="@drawable/likecheck" />
 
-            <!--<ImageView-->
-            <!--android:id="@+id/like_btn"-->
-            <!--android:layout_width="36dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="4dp"-->
-            <!--android:paddingLeft="8dp"-->
-            <!--android:src="@drawable/like"/>-->
-
-            <!--<ImageView-->
-            <!--android:id="@+id/comment_btn"-->
-            <!--android:layout_width="36dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_margin="4dp"-->
-            <!--android:src="@drawable/comment"/>-->
+                <ImageButton
+                    android:id="@+id/comment_btn"
+                    android:layout_width="36dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:background="#a5c7d1"
+                    android:contentDescription="@string/add_comments"
+                    android:src="@drawable/ic_action_comment" />
 
 
-            <!--</LinearLayout>-->
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="100"
+                android:maxLines="2"
+                android:paddingLeft="8dp"
+                android:text="title"
+                android:textColor="#000"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/_description"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:maxLength="100"
                 android:maxLines="2"
                 android:paddingLeft="8dp"
                 android:text="Hey There"
                 android:textColor="#000"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
 
         </LinearLayout>

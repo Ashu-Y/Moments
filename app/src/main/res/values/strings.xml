@@ -62,6 +62,8 @@
     <string name="date_of_birth">Date Of Birth</string>
     <string name="email">Email</string>
     <string name="user_info">User Info</string>
+    <string name="add_comments">add comments</string>
+    <string name="like">Like</string>
 
 
     <string-array name="RelationshipStatus">
