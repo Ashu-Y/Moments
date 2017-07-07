@@ -333,7 +333,9 @@ public class Login_method extends AppCompatActivity {
             hideProgressDialog();
             Log.w(TAG, "No Authenticated user found");
 
-//            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
+
+//            Toast.makeText(this, "Please verify Email", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -394,8 +396,16 @@ public class Login_method extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
 
-            updateUI(firebaseUser);
-            showProgressDialog();
+//            if(firebaseUser.isEmailVerified()){
+                updateUI(firebaseUser);
+                showProgressDialog();
+//            }else
+//            {
+//                updateUI(null);
+//                showProgressDialog();
+//
+//            }
+
         }
     }
 }
