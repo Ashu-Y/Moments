@@ -18,7 +18,7 @@
         android:background="@color/primary_material_dark_1">
 
 
-        <ImageButton
+        <ImageView
 
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
@@ -45,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
+            android:clickable="true"
             android:src="@drawable/ic_photo_camera_black_24dp"
             app:backgroundTint="@android:color/holo_blue_bright"
             tools:ignore="NewApi" />

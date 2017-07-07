@@ -186,10 +186,14 @@ public class Upload_picture extends Fragment {
 
     public Uri saveImageBitmap(Bitmap bitmap) {
         String strDirectoy = context.getFilesDir().getAbsolutePath();
+
+
         Calendar c = Calendar.getInstance();
         int seconds = c.get(Calendar.SECOND);
-        int hour = c.get(Calendar.MILLISECOND);
-        String imageName = hour + "image";
+        int day = c.get(Calendar.DAY_OF_YEAR);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+
+        String imageName = hour + day + seconds + "";
         OutputStream fOut = null;
         File file = new File(strDirectoy, imageName);
         try {
@@ -197,7 +201,8 @@ public class Upload_picture extends Fragment {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+
         try {
             fOut.flush();
             fOut.close();

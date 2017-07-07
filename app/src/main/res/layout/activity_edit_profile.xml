@@ -101,9 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="@drawable/circle"
-            android:ems="10"
-            android:maxLength="10"
             android:inputType="phone"
+            android:maxLength="10"
             android:paddingLeft="9dp"
             android:paddingRight="9dp" />
 

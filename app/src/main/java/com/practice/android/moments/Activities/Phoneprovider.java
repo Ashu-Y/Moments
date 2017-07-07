@@ -67,7 +67,7 @@ public class Phoneprovider extends AppCompatActivity {
         ccp.resetToDefaultCountry();
 
         newphonenumber = ccp.getSelectedCountryCodeWithPlus() + phone_number.getText().toString();
-        Toast.makeText(this, newphonenumber, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, newphonenumber, Toast.LENGTH_SHORT).show();
 
         ccp.setOnCountryChangeListener(new OnCountryChangeListener() {
             @Override

@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
@@ -134,7 +135,7 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
                     }
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_editing:
 
                     fl.setMinimumHeight(size.y);
                     fl.getLayoutParams().height = size.y;
@@ -157,6 +158,8 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
+
+                    startActivity(new Intent(BottomNavigation.this, EditingActivity.class));
 
                     return true;
 

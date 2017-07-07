@@ -66,14 +66,14 @@ public class DashboardFragment extends Fragment {
 
     private List<Post> getListItemData() {
         List<Post> listViewItems = new ArrayList<Post>();
-        listViewItems.add(new Post("Choose Image", R.drawable.gallery));
+//        listViewItems.add(new Post("Choose Image", R.drawable.gallery));
         listViewItems.add(new Post("Editing", R.drawable.editing));
-        listViewItems.add(new Post("Upload", R.drawable.upload));
-        listViewItems.add(new Post("Friends", R.drawable.friends));
+//        listViewItems.add(new Post("Upload", R.drawable.upload));
+//        listViewItems.add(new Post("Friends", R.drawable.friends));
         listViewItems.add(new Post("Profile", R.drawable.profile));
         listViewItems.add(new Post("Edit Profile", R.drawable.edit_profile));
         listViewItems.add(new Post("Settings", R.drawable.settings));
-        listViewItems.add(new Post("Log Out", R.drawable.logout));
+//        listViewItems.add(new Post("Log Out", R.drawable.logout));
 
         return listViewItems;
 

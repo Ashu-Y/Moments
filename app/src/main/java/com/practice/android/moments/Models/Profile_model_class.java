@@ -4,6 +4,8 @@ package com.practice.android.moments.Models;
 public class Profile_model_class {
 
     public String name;
+
+
     public String email;
     public String phone;
     public String about;
@@ -11,13 +13,25 @@ public class Profile_model_class {
     public String date_of_birth;
     public String photo;
     public String gender;
+    public String coverPhoto;
 
+    public Profile_model_class(String name, String email, String phone, String about, String relationship, String date_of_birth, String photo, String gender, String coverPhoto) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.about = about;
+        this.relationship = relationship;
+        this.date_of_birth = date_of_birth;
+        this.photo = photo;
+        this.gender = gender;
+        this.coverPhoto = coverPhoto;
+    }
 
 
     public Profile_model_class() {
     }
 
-    public Profile_model_class(String name, String email, String relationship, String about, String phone,String gender,String photo, String date_of_birth) {
+    public Profile_model_class(String name, String email, String relationship, String about, String phone, String gender, String photo, String date_of_birth) {
 
         this.name = name;
         this.email = email;
@@ -60,6 +74,14 @@ public class Profile_model_class {
 
     public String getAbout() {
         return about;
+    }
+
+    public String getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(String coverPhoto) {
+        this.coverPhoto = coverPhoto;
     }
 
 

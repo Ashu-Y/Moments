@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +60,8 @@ public class ProfileEditingFragment extends Fragment {
     private Button Submit;
     private RadioGroup genderGroup;
     private RadioButton gender;
+    private RadioButton male;
+    private RadioButton female;
     private RadioButton defaultGender;
 
     @Override
@@ -81,8 +84,16 @@ public class ProfileEditingFragment extends Fragment {
         spinner = (Spinner) rootView.findViewById(R.id.Relationship);
         genderGroup = (RadioGroup) rootView.findViewById(R.id.radio_gender);
         defaultGender = (RadioButton) rootView.findViewById(R.id.gender_prefer_not_to_tell);
+        male = (RadioButton) rootView.findViewById(R.id.gender_male);
+        female = (RadioButton) rootView.findViewById(R.id.gender_female);
         defaultGender.setChecked(true);
         myCalendar = Calendar.getInstance();
+
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(10);
+        phone.setFilters(filterArray);
+
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -137,13 +148,14 @@ public class ProfileEditingFragment extends Fragment {
             public void onClick(View v) {
                 progressDialog.setTitle("Uploading");
                 progressDialog.show();
-
+                int flag = 1;
                 if (firebaseUser != null) {
                     progressDialog.show();
                     progressDialog.setCancelable(false);
                     progressDialog.setCanceledOnTouchOutside(false);
                     user_id = firebaseUser.getUid();
                     String defa = "DEFAULT";
+
 
                     int selectedId = genderGroup.getCheckedRadioButtonId();
                     gender = (RadioButton) rootView.findViewById(selectedId);
@@ -157,26 +169,37 @@ public class ProfileEditingFragment extends Fragment {
 
                     if (TextUtils.isEmpty(code)) {
                         name.setError("Cannot be empty.");
+                        flag = -1;
                         progressDialog.dismiss();
                         return;
-                    } else if (TextUtils.isEmpty(code2) && code2.length() < 10) {
-                        Toast.makeText(getActivity(), code2.length(), Toast.LENGTH_SHORT).show();
-                        phone.setError("Phone length cannot exceed 10");
+                    }
+                    if (TextUtils.isEmpty(code2) || code2.length() != 10) {
+//                        Toast.makeText(getContext(), String.valueOf(code2.length()), Toast.LENGTH_SHORT).show();
+                        phone.setError("Phone length cannot be less than 10");
+                        flag = -1;
                         progressDialog.dismiss();
                         return;
-                    } else if (TextUtils.isEmpty(code3)) {
+                    }
+                    if (TextUtils.isEmpty(code3)) {
                         About.setError("Cannot be empty.");
+                        flag = -1;
                         progressDialog.dismiss();
                         return;
-                    } else if (TextUtils.isEmpty(code4)) {
+                    }
+                    if (TextUtils.isEmpty(code4)) {
                         Date_of_birth.setError("Cannot be empty.");
+                        flag = -1;
                         progressDialog.dismiss();
                         return;
-                    } else if (TextUtils.isEmpty(code5)) {
+                    }
+                    if (TextUtils.isEmpty(code5)) {
                         Toast.makeText(getContext(), "Please enter the gender", Toast.LENGTH_SHORT).show();
+                        flag = -1;
                         progressDialog.dismiss();
                         return;
-                    } else {
+                    }
+
+                    if (flag != -1) {
                         DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                         currentuser_db.child("name").setValue(name.getText().toString());
 
@@ -194,7 +217,7 @@ public class ProfileEditingFragment extends Fragment {
 
 //                        }
 
-                        currentuser_db.child("genderGroup").setValue(code5);
+                        currentuser_db.child("gender").setValue(code5);
                         currentuser_db.child("relationship").setValue(relation);
                         currentuser_db.child("about").setValue(About.getText().toString());
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
@@ -239,6 +262,13 @@ public class ProfileEditingFragment extends Fragment {
                 About.setText(user.getAbout());
                 Date_of_birth.setText(user.getDate_of_birth());
 
+                String userGender = user.getGender();
+
+                if (userGender.equals("Male")) {
+                    male.setChecked(true);
+                } else if (userGender.equals("Female")) {
+                    female.setChecked(true);
+                }
 
                 Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
             }
