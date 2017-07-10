@@ -95,6 +95,7 @@ public class Phoneprovider extends AppCompatActivity {
                     resend.setVisibility(View.GONE);
 
                 } else {
+                    EnterIn.setVisibility(View.INVISIBLE);
                     verify.setVisibility(View.VISIBLE);
                     resend.setVisibility(View.VISIBLE);
                     startPhoneNumberVerification(newphonenumber);
