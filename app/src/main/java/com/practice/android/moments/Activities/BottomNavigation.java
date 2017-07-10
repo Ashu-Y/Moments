@@ -28,7 +28,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.facebook.login.LoginManager;
@@ -37,8 +36,11 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
@@ -67,6 +69,8 @@ public class BottomNavigation extends AppCompatActivity {
     Display display;
     Context context;
     Point size;
+    FirebaseAuth firebaseAuth;
+    Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
 
@@ -204,9 +208,10 @@ public class BottomNavigation extends AppCompatActivity {
 
         setContentView(R.layout.activity_bottom_navigation);
 
-
+        picLike = false;
         fl = (FrameLayout) findViewById(R.id.content);
         display = getWindowManager().getDefaultDisplay();
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         size = new Point();
         display.getSize(size);
@@ -283,12 +288,77 @@ public class BottomNavigation extends AppCompatActivity {
 
                 viewHolder.setUsername(model.getUserName());
                 viewHolder.setTitle(model.getTitle());
-                viewHolder.setComment(context);
-                viewHolder.setLike(context);
+//                viewHolder.setComment(context);
+                viewHolder.setLike(model.getPicName());
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setPic(getApplicationContext(), model.getPic());
 
+                viewHolder.comment.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
+                    }
+                });
+
+                viewHolder.Like.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        picLike = true;
+
+                        DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
+
+                        currentuser_db.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                if (picLike) {
+
+                                    if (dataSnapshot.child(model.getPicName()).hasChild(firebaseUser.getUid())) {
+
+                                        currentuser_db.child(model.getPicName()).child(firebaseUser.getUid()).removeValue();
+
+                                        picLike = false;
+                                    } else {
+                                        currentuser_db.child(model.getPicName()).child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
+
+                                        picLike = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+//                        if (viewHolder.Like.isChecked()) {
+//                            viewHolder.Like.setText("");
+//                            Toast.makeText(context, "YOU like the post", Toast.LENGTH_SHORT).show();
+//                            Log.e("Like ", "   YOU like the post ");
+//
+//                            DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
+//                            currentuser_db.child(model.getPicName()).orderByPriority();
+//                            DatabaseReference currentuser = currentuser_db.child(model.getPicName());
+//                            viewHolder.i++;
+//                            currentuser.child("Likes").setValue(viewHolder.i);
+//                            currentuser.child("User Name").setValue(firebaseUser.getDisplayName());
+//
+//                        } else {
+//                            viewHolder.Like.setText("");
+//
+//                            Log.e("Like ", "   YOU dislike the post  ");
+//                            DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
+//                            currentuser_db.child(model.getPicName()).orderByPriority();
+//                            DatabaseReference currentuser = currentuser_db.child(model.getPicName());
+//                            viewHolder.i--;
+//                            currentuser.child("Likes").setValue(viewHolder.i);
+//                            currentuser.child("User Name").setValue(null);
+//                        }
+                    }
+                });
             }
         };
 
@@ -406,9 +476,13 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         View mView;
-//        FragmentManager mFragmentManager;
+        //        FragmentManager mFragmentManager;
 //        FrameLayout fl;
-
+        DatabaseReference mdatabaseReference;
+        ImageButton comment;
+        int i = 0;
+        ImageButton Like;
+        FirebaseUser firebaseUser;
 
         public BlogViewHolder(View itemView) {
             super(itemView);
@@ -420,59 +494,68 @@ public class BottomNavigation extends AppCompatActivity {
 //            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //            size = new Point();
 //            display.getSize(size);
+            mdatabaseReference = FirebaseDatabase.getInstance().getReference()
+                    .child("Likes");
+            Like = (ImageButton) mView.findViewById(R.id.like_btn);
+            comment = (ImageButton) mView.findViewById(R.id.comment_btn);
+
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         }
 
-        public void setComment(Context context) {
-            ImageButton comment = (ImageButton) mView.findViewById(R.id.comment_btn);
+//        public void setComment(Context context) {
+//            ImageButton comment = (ImageButton) mView.findViewById(R.id.comment_btn);
+//
+//            comment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context, "Comment Fragment to open", Toast.LENGTH_SHORT).show();
+//                    Log.e("Comment part", "   Comment ");
+//
+//
+////                    CommentFragment fragment2 = new CommentFragment();
+////
+////
+////                    fl.setMinimumHeight(size.y);
+////                    fl.getLayoutParams().height = size.y;
+////                    fl.requestLayout();
+////
+////                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
+////                    transaction.replace(R.id.content, fragment2, "Comment Fragment");
+////                    transaction.addToBackStack("Comment");
+////                    transaction.commit();
+//                }
+//
+//            });
+//        }
 
-            comment.setOnClickListener(new View.OnClickListener() {
+        public void setLike(String ImageName) {
+
+
+            DatabaseReference currentuser_db = mdatabaseReference;
+
+            currentuser_db.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Comment Fragment to open", Toast.LENGTH_SHORT).show();
-                    Log.e("Comment part", "   Comment ");
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
+                    if(dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())){
 
-//                    CommentFragment fragment2 = new CommentFragment();
-//
-//
-//                    fl.setMinimumHeight(size.y);
-//                    fl.getLayoutParams().height = size.y;
-//                    fl.requestLayout();
-//
-//                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//                    transaction.replace(R.id.content, fragment2, "Comment Fragment");
-//                    transaction.addToBackStack("Comment");
-//                    transaction.commit();
-                }
+                        Like.setImageResource(R.drawable.ic_action_like_state_true);
 
-            });
-        }
-
-        public void setLike(Context context) {
-            ToggleButton Like = (ToggleButton) mView.findViewById(R.id.like_btn);
-            Like.setText("");
-            Like.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (Like.isChecked()) {
-                        Like.setText("");
-                        Toast.makeText(context, "YOU like the post", Toast.LENGTH_SHORT).show();
-                        Log.e("Like ", "   YOU like the post ");
-
-
-
-                    } else {
-                        Like.setText("");
-                        Toast.makeText(context, "YOU dislike the post", Toast.LENGTH_SHORT).show();
-                        Log.e("Like ", "   YOU dislike the post  ");
-
+                    }else
+                    {
+                        Like.setImageResource(R.drawable.ic_action_like_state_false);
                     }
 
-
                 }
 
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
             });
+
         }
 
 

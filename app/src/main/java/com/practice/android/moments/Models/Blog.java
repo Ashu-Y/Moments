@@ -12,15 +12,29 @@ public class Blog {
     private String pic;
     private String thumbnail_pic;
     private String userName;
+    private String picName;
     private String user_id;
 
-    public Blog(String title, String description, String pic, String thumbnail_pic, String userName, String user_id) {
+    public Blog() {
+
+    }
+
+    public Blog(String title, String description, String pic, String thumbnail_pic, String userName, String user_id, String picName) {
         this.title = title;
         this.description = description;
         this.pic = pic;
         this.thumbnail_pic = thumbnail_pic;
         this.userName = userName;
         this.user_id = user_id;
+        this.picName = picName;
+    }
+
+    public String getPicName() {
+        return picName;
+    }
+
+    public void setPicName(String picName) {
+        this.picName = picName;
     }
 
     public String getThumbnail_pic() {
@@ -48,16 +62,6 @@ public class Blog {
         this.user_id = user_id;
     }
 
-    public Blog() {
-
-    }
-
-
-    public Blog(String title, String description, String pic) {
-        this.title = title;
-        this.description = description;
-        this.pic = pic;
-    }
 
     public String getTitle() {
         return title;
