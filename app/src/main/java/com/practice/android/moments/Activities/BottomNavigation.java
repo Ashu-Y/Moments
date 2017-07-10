@@ -371,30 +371,34 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        if (navigation.getSelectedItemId() != R.id.navigation_home) {
+            navigation.setSelectedItemId(R.id.navigation_home);
+        } else {
 
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
-        builder1.setMessage("You want to exit!!!!");
-        builder1.setCancelable(true);
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
+            builder1.setMessage("You want to exit!!!!");
+            builder1.setCancelable(true);
 
 
-        builder1.setPositiveButton(
-                "Yes",
-                (dialog, id) -> {
-                    dialog.cancel();
-                    moveTaskToBack(true);
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(1);
-                });
+            builder1.setPositiveButton(
+                    "Yes",
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    });
 
-        builder1.setNegativeButton(
-                "No",
-                (dialog, id) -> {
-                    dialog.cancel();
-                    Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
-                });
+            builder1.setNegativeButton(
+                    "No",
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
+                    });
 
-        AlertDialog alert11 = builder1.create();
-        alert11.show();
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
     }
 
 
