@@ -268,10 +268,12 @@ public class Upload_picture extends Fragment {
                             Log.i("Camera", imageName);
 
 
-                            DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Pictures");
+                            DatabaseReference currentuser_db = databaseReference.child("User Pictures");
                             currentuser_db.child(imageName).orderByPriority();
                             DatabaseReference currentuser = currentuser_db.child(imageName);
                             currentuser.child("pic").setValue(picture);
+                            currentuser.child("userName").setValue(firebaseuser.getDisplayName());
+                            currentuser.child("user_id").setValue(user_id);
                             currentuser.child("thumbnail_pic").setValue(picture);
                             currentuser.child("title").setValue(title.getText().toString());
                             currentuser.child("description").setValue(description.getText().toString());
@@ -284,7 +286,6 @@ public class Upload_picture extends Fragment {
 
 
                         });
-
 
 
                     })
