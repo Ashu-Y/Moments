@@ -73,6 +73,7 @@ public class BottomNavigation extends AppCompatActivity {
     Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
+//    String ;
 
 
     private String TAG = getClass().getSimpleName();
@@ -530,32 +531,30 @@ public class BottomNavigation extends AppCompatActivity {
 //        }
 
         public void setLike(String ImageName) {
-
-
             DatabaseReference currentuser_db = mdatabaseReference;
 
-            currentuser_db.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+            if (ImageName != null) {
+                currentuser_db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if(dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())){
+                        if (dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())) {
 
-                        Like.setImageResource(R.drawable.ic_action_like_state_true);
+                            Like.setImageResource(R.drawable.ic_action_like_state_true);
 
-                    }else
-                    {
-                        Like.setImageResource(R.drawable.ic_action_like_state_false);
+                        } else {
+                            Like.setImageResource(R.drawable.ic_action_like_state_false);
+                        }
+
                     }
 
-                }
 
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
+                    }
+                });
+            }
         }
 
 
