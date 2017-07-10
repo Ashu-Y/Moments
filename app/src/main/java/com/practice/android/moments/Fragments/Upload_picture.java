@@ -65,7 +65,7 @@ public class Upload_picture extends Fragment {
         View v = inflater.inflate(R.layout.fragment_upload_picture, container, false);
 
         firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         mstorageReference = FirebaseStorage.getInstance().getReference();
 
         user_id = firebaseuser.getUid();
