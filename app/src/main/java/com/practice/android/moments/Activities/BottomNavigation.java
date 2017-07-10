@@ -509,7 +509,6 @@ public class BottomNavigation extends AppCompatActivity {
         Long i;
         ImageButton Like;
         FirebaseUser firebaseUser;
-
         TextView Numberlike;
 
         public BlogViewHolder(View itemView) {
