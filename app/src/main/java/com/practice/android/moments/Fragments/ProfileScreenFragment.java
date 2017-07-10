@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -22,8 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -251,8 +255,6 @@ public class ProfileScreenFragment extends Fragment {
             uploadFile(requestCode, uri);
 
 
-
-
         }
     }
 
@@ -313,6 +315,20 @@ public class ProfileScreenFragment extends Fragment {
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("photo").setValue(picture);
 
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(firebaseuser.getDisplayName())
+                                        .setPhotoUri(download_uri)
+                                        .build();
+
+                                firebaseuser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d("Editing", "User profile updated.");
+                                                }
+                                            }
+                                        });
 
                                 //and displaying a success toast
                                 Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();

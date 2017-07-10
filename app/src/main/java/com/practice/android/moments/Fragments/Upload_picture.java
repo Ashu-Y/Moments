@@ -56,7 +56,7 @@ public class Upload_picture extends Fragment {
     Uri download_uri;
     Context context;
     String user_id;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,mdatabaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +66,7 @@ public class Upload_picture extends Fragment {
 
         firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mstorageReference = FirebaseStorage.getInstance().getReference();
 
         user_id = firebaseuser.getUid();
@@ -216,6 +217,9 @@ public class Upload_picture extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        catch (NullPointerException e) {
+            e.getMessage();
+        }
         try {
             MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
         } catch (FileNotFoundException e) {
@@ -272,11 +276,25 @@ public class Upload_picture extends Fragment {
                             currentuser_db.child(imageName).orderByPriority();
                             DatabaseReference currentuser = currentuser_db.child(imageName);
                             currentuser.child("pic").setValue(picture);
+                            currentuser.child("picName").setValue(imageName);
                             currentuser.child("userName").setValue(firebaseuser.getDisplayName());
                             currentuser.child("user_id").setValue(user_id);
                             currentuser.child("thumbnail_pic").setValue(picture);
                             currentuser.child("title").setValue(title.getText().toString());
                             currentuser.child("description").setValue(description.getText().toString());
+
+
+
+                            DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
+                            user_db.child(imageName).orderByPriority();
+                            DatabaseReference user = user_db.child(imageName);
+                            user.child("pic").setValue(picture);
+                            user.child("picName").setValue(imageName);
+                            user.child("userName").setValue(firebaseuser.getDisplayName());
+                            user.child("user_id").setValue(user_id);
+                            user.child("thumbnail_pic").setValue(picture);
+                            user.child("title").setValue(title.getText().toString());
+                            user.child("description").setValue(description.getText().toString());
 
 
                             //and displaying a success toast

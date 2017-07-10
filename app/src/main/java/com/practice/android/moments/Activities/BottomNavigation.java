@@ -281,7 +281,7 @@ public class BottomNavigation extends AppCompatActivity {
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
-                viewHolder.setUsername(user_name);
+                viewHolder.setUsername(model.getUserName());
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setComment(context);
                 viewHolder.setLike(context);
@@ -459,6 +459,9 @@ public class BottomNavigation extends AppCompatActivity {
                         Like.setText("");
                         Toast.makeText(context, "YOU like the post", Toast.LENGTH_SHORT).show();
                         Log.e("Like ", "   YOU like the post ");
+
+
+
                     } else {
                         Like.setText("");
                         Toast.makeText(context, "YOU dislike the post", Toast.LENGTH_SHORT).show();
@@ -501,8 +504,10 @@ public class BottomNavigation extends AppCompatActivity {
         public void setPic(Context context, String photo) {
 
             ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-            Glide.with(context).load(photo).centerCrop().placeholder(R.drawable.c1).into(imageView);
-//            Picasso.with(context).load(photo).into(imageView);
+            Glide.with(context).load(photo)
+                    .skipMemoryCache(false)
+                    .placeholder(R.drawable.c1).into(imageView);
+//            Picasso.with(context).load(photo).placeholder(R.drawable.c1).into(imageView);
 
             Log.e("Image URl =======", photo);
 
