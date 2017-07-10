@@ -1,6 +1,7 @@
 package com.practice.android.moments.Activities;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -73,7 +74,7 @@ public class BottomNavigation extends AppCompatActivity {
     Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
-//    String ;
+    String PicName;
 
 
     private String TAG = getClass().getSimpleName();
@@ -287,12 +288,20 @@ public class BottomNavigation extends AppCompatActivity {
             @Override
             protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
+                PicName = getRef(position).getKey();
+
+                String picname = PicName;
+
                 viewHolder.setUsername(model.getUserName());
                 viewHolder.setTitle(model.getTitle());
 //                viewHolder.setComment(context);
-                viewHolder.setLike(model.getPicName());
+
+                viewHolder.setNumberLike(picname);
+                viewHolder.setLike(picname);
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setPic(getApplicationContext(), model.getPic());
+
+                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
 
                 viewHolder.comment.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -300,6 +309,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                     }
                 });
+
 
                 viewHolder.Like.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -313,16 +323,30 @@ public class BottomNavigation extends AppCompatActivity {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
                                 if (picLike) {
 
-                                    if (dataSnapshot.child(model.getPicName()).hasChild(firebaseUser.getUid())) {
-
-                                        currentuser_db.child(model.getPicName()).child(firebaseUser.getUid()).removeValue();
-
+                                    if (dataSnapshot.child(picname).hasChild(firebaseUser.getUid())) {
+                                        viewHolder.i = dataSnapshot.child(picname).getChildrenCount() - 1;
+                                        Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                        currentuser_db.child(picname).child(firebaseUser.getUid()).removeValue();
                                         picLike = false;
+                                        if (viewHolder.i > 0) {
+                                            viewHolder.i--;
+                                            String like = String.valueOf(viewHolder.i);
+                                            currentuser_db.child(picname).child("Likes").setValue(like);
+                                        } else {
+                                            String like = String.valueOf(viewHolder.i);
+                                            currentuser_db.child(picname).child("Likes").setValue(like);
+                                        }
                                     } else {
-                                        currentuser_db.child(model.getPicName()).child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
-
+                                        viewHolder.i = dataSnapshot.child(picname).getChildrenCount() - 1;
+                                        Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                        viewHolder.i++;
+                                        String like = String.valueOf(viewHolder.i);
+                                        currentuser_db.child(picname).child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
+                                        currentuser_db.child(picname).child("Likes").setValue(like);
+                                        Log.e("Likes=====", like);
                                         picLike = false;
                                     }
                                 }
@@ -360,6 +384,7 @@ public class BottomNavigation extends AppCompatActivity {
 //                        }
                     }
                 });
+
             }
         };
 
@@ -481,9 +506,11 @@ public class BottomNavigation extends AppCompatActivity {
 //        FrameLayout fl;
         DatabaseReference mdatabaseReference;
         ImageButton comment;
-        int i = 0;
+        Long i;
         ImageButton Like;
         FirebaseUser firebaseUser;
+
+        TextView Numberlike;
 
         public BlogViewHolder(View itemView) {
             super(itemView);
@@ -501,6 +528,7 @@ public class BottomNavigation extends AppCompatActivity {
             comment = (ImageButton) mView.findViewById(R.id.comment_btn);
 
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            Numberlike = (TextView) mView.findViewById(R.id.likes);
 
         }
 
@@ -533,28 +561,50 @@ public class BottomNavigation extends AppCompatActivity {
         public void setLike(String ImageName) {
             DatabaseReference currentuser_db = mdatabaseReference;
 
-            if (ImageName != null) {
-                currentuser_db.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+            currentuser_db.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())) {
+                    if (dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())) {
 
-                            Like.setImageResource(R.drawable.ic_action_like_state_true);
+                        Like.setImageResource(R.drawable.ic_action_like_state_true);
 
-                        } else {
-                            Like.setImageResource(R.drawable.ic_action_like_state_false);
-                        }
-
+                    } else {
+                        Like.setImageResource(R.drawable.ic_action_like_state_false);
                     }
 
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        public void setNumberLike(String ImageName) {
+            DatabaseReference currentuser_db = mdatabaseReference;
+
+            currentuser_db.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                  Long i =  dataSnapshot.child(ImageName).getChildrenCount() -1;
+
+                    Numberlike.setText(i+"  people liked your post");
+
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
 
