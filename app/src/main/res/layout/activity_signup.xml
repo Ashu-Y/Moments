@@ -14,8 +14,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#011a27"
-        android:isScrollContainer="false"
+        android:background="#011a27" android:isScrollContainer="false"
         android:theme="@style/materialtheme2">
 
         <RelativeLayout

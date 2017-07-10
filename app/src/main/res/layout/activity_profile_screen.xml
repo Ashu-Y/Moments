@@ -140,13 +140,12 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="#011a27"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:paddingTop="15dp"
                 android:text="Email"
                 android:textColor="#fff"
                 tools:ignore="UnusedAttribute"/>
@@ -168,13 +167,13 @@
                 tools:ignore="LabelFor"/>
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:background="#011a27"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:paddingTop="15dp"
                 android:text="Phone"
                 android:textColor="#fff"
                 tools:ignore="UnusedAttribute"/>
@@ -197,13 +196,13 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:background="#011a27"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:paddingTop="15dp"
                 android:text="Relationship"
                 android:textColor="#fff" tools:ignore="UnusedAttribute"/>
 
@@ -225,13 +224,13 @@
 
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:background="#011a27"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:paddingTop="15dp"
                 android:text="Date of Birth"
                 android:textColor="#fff" tools:ignore="UnusedAttribute"/>
 
@@ -254,13 +253,13 @@
 
 
             <TextView
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:background="#011a27"
                 android:clickable="true"
                 android:elevation="4dp"
-                android:paddingTop="15dp"
                 android:text="Gender"
                 android:textColor="#fff"/>
 
