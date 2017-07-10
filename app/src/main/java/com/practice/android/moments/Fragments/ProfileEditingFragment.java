@@ -72,7 +72,7 @@ public class ProfileEditingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         progressDialog = new ProgressDialog(getActivity());
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
