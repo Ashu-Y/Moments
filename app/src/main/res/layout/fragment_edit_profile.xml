@@ -47,7 +47,7 @@
         <EditText
             android:id="@+id/editText4"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/circle"
@@ -120,7 +120,7 @@
         <EditText
             android:id="@+id/editText9"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/circle"
@@ -147,7 +147,7 @@
         <EditText
             android:id="@+id/editText5"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/circle"
@@ -172,12 +172,12 @@
         <EditText
             android:id="@+id/editText541"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/circle"
             android:ems="10"
-            android:inputType="textShortMessage"
+            android:inputType="textMultiLine"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -205,16 +205,14 @@
             <EditText
                 android:id="@+id/edit_date"
                 android:layout_width="0sp"
-                android:layout_height="35sp"
-                android:layout_margin="3sp"
-                android:layout_marginLeft="15dp"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_weight="9"
                 android:background="@android:color/transparent"
                 android:inputType="textShortMessage"
                 android:paddingBottom="5dp"
-                android:paddingLeft="10sp"
-                android:paddingRight="10sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:paddingTop="5dp"/>
 
             <ImageView
