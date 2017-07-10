@@ -220,7 +220,7 @@ public class BottomNavigation extends AppCompatActivity {
         }
 
         try {
-            databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id)
+            databaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("User Pictures");
         } catch (NullPointerException e) {
             Log.i("TimelineFrag", e.getMessage());

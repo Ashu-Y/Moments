@@ -17,6 +17,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -152,7 +153,9 @@ public class Login_method extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.e(TAG, error.getMessage());
-
+//                Log.e(TAG, "Account already registered with us other option");
+                Toast.makeText(Login_method.this, "Account already registered with us other option", Toast.LENGTH_SHORT).show();
+                LoginManager.getInstance().logOut();
                 Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
             }
@@ -192,7 +195,7 @@ public class Login_method extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        Log.e(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
@@ -201,56 +204,51 @@ public class Login_method extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.e(TAG, "signInWithCredential:success");
                             Toast.makeText(Login_method.this, "Logged in via Google", Toast.LENGTH_SHORT).show();
                             firebaseUser = firebaseAuth.getCurrentUser();
                             String user_id;
                             if (firebaseUser != null) {
-                                if (!firebaseUser.isEmailVerified()) {
+                                user_id = firebaseUser.getUid();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(acct.getDisplayName())
+                                        .build();
 
-
-                                    firebaseUser.sendEmailVerification()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(Login_method.this, "Please Verify Your Account ", Toast.LENGTH_SHORT).show();
-                                                        Log.d(TAG, "Email sent.");
-                                                    }
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.e("Editing", "User profile updated.");
                                                 }
-                                            });
-                                } else {
-                                    user_id = firebaseUser.getUid();
-                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(acct.getDisplayName())
-                                            .build();
+                                            }
+                                        });
 
-
-                                    firebaseUser.updateProfile(profileUpdates)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.d("Editing", "User profile updated.");
-                                                    }
+                                firebaseUser.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.e(TAG, "Email sent.");
                                                 }
-                                            });
-                                    DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                    currentuser_db.child("name").setValue(acct.getDisplayName());
-                                    currentuser_db.child("email").setValue(acct.getEmail());
-                                    currentuser_db.child("phone").setValue("Default");
-                                    currentuser_db.child("photo").setValue("Default");
-                                    currentuser_db.child("gender").setValue("Default");
-                                    currentuser_db.child("relationship").setValue("Default");
-                                    currentuser_db.child("about").setValue("Default");
-                                    currentuser_db.child("date_of_birth").setValue("Default");
-                                    currentuser_db.child("coverPhoto").setValue("default");
-                                    updateUI(firebaseUser);
-                                }
+                                            }
+                                        });
+
+                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                currentuser_db.child("name").setValue(acct.getDisplayName());
+                                currentuser_db.child("email").setValue(acct.getEmail());
+                                currentuser_db.child("phone").setValue("Default");
+                                currentuser_db.child("photo").setValue("Default");
+                                currentuser_db.child("gender").setValue("Default");
+                                currentuser_db.child("relationship").setValue("Default");
+                                currentuser_db.child("about").setValue("Default");
+                                currentuser_db.child("date_of_birth").setValue("Default");
+                                currentuser_db.child("coverPhoto").setValue("default");
+                                updateUI(firebaseUser);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login_method.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
@@ -261,10 +259,10 @@ public class Login_method extends AppCompatActivity {
 
 
     private void handleFacebookAccessToken(AccessToken token) {
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
+        Log.e(TAG, "handleFacebookAccessToken:" + token);
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        Log.i(TAG, "Credential:" + "\n" + credential);
+        Log.e(TAG, "Credential:" + "\n" + credential);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -277,55 +275,47 @@ public class Login_method extends AppCompatActivity {
                             String user_id;
 
                             if (firebaseUser != null) {
+                                user_id = firebaseUser.getUid();
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(firebaseUser.getDisplayName())
+                                        .build();
 
-                                if (!firebaseUser.isEmailVerified()) {
-
-
-                                    firebaseUser.sendEmailVerification()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(Login_method.this, "Please Verify Your Account ", Toast.LENGTH_SHORT).show();
-                                                        Log.d(TAG, "Email sent.");
-                                                    }
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.e("Editing", "User profile updated.");
                                                 }
-                                            });
+                                            }
+                                        });
 
-
-                                } else {
-                                    user_id = firebaseUser.getUid();
-                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(firebaseUser.getDisplayName())
-                                            .build();
-
-                                    firebaseUser.updateProfile(profileUpdates)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.d("Editing", "User profile updated.");
-                                                    }
+                                firebaseUser.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.e(TAG, "Email sent.");
                                                 }
-                                            });
+                                            }
+                                        });
 
 
-                                    DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                    currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
-                                    currentuser_db.child("email").setValue(firebaseUser.getEmail());
-                                    currentuser_db.child("phone").setValue("Default");
-                                    currentuser_db.child("photo").setValue("Default");
-                                    currentuser_db.child("gender").setValue("Default");
-                                    currentuser_db.child("relationship").setValue("Default");
-                                    currentuser_db.child("about").setValue("Default");
-                                    currentuser_db.child("date_of_birth").setValue("Default");
-                                    currentuser_db.child("coverPhoto").setValue("default");
-                                    updateUI(firebaseUser);
-                                }
+                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
+                                currentuser_db.child("email").setValue(firebaseUser.getEmail());
+                                currentuser_db.child("phone").setValue("Default");
+                                currentuser_db.child("photo").setValue("Default");
+                                currentuser_db.child("gender").setValue("Default");
+                                currentuser_db.child("relationship").setValue("Default");
+                                currentuser_db.child("about").setValue("Default");
+                                currentuser_db.child("date_of_birth").setValue("Default");
+                                currentuser_db.child("coverPhoto").setValue("default");
+                                updateUI(firebaseUser);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login_method.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
@@ -338,12 +328,13 @@ public class Login_method extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
 
         if (user != null) {
-            hideProgressDialog();
+
             Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(Login_method.this, BottomNavigation.class));
+            hideProgressDialog();
         } else {
             hideProgressDialog();
-            Log.w(TAG, "No Authenticated user found");
+            Log.e(TAG, "No Authenticated user found");
 
             Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
 
@@ -356,6 +347,9 @@ public class Login_method extends AppCompatActivity {
             mProgressDialog = new ProgressDialog(this);
             mProgressDialog.setMessage("PLease wait");
             mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setCancelable(true);
+            mProgressDialog.setCanceledOnTouchOutside(false);
+
         }
         mProgressDialog.show();
     }
@@ -421,5 +415,3 @@ public class Login_method extends AppCompatActivity {
         }
     }
 }
-
-
