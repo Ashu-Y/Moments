@@ -23,7 +23,7 @@ import com.practice.android.moments.R;
 public class SettingsFragment extends Fragment {
 
     private String TAG = getClass().getSimpleName();
-    private Button profile, editProfile, changePassword;
+    private Button profile, editProfile, changePassword, privacyPolicy;
 
     @Nullable
     @Override
@@ -34,6 +34,7 @@ public class SettingsFragment extends Fragment {
         profile = (Button) v.findViewById(R.id.profile);
         editProfile = (Button) v.findViewById(R.id.EditProfile);
         changePassword = (Button) v.findViewById(R.id.changePassword);
+        privacyPolicy = (Button) v.findViewById(R.id.privacyPolicy);
 
         profile.setOnClickListener(new OnClickListener() {
             @Override
@@ -62,6 +63,17 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ChangePassword.class));
+            }
+        });
+
+        privacyPolicy.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                PrivacyPolicyFragment privacyPolicyFragment = new PrivacyPolicyFragment();
+                transaction.replace(R.id.content, privacyPolicyFragment, "Edit Profile Fragment");
+                transaction.commit();
             }
         });
 

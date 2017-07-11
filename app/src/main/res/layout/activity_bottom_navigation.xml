@@ -11,24 +11,37 @@
     app:theme="@style/materialtheme2"
     tools:context="com.practice.android.moments.Activities.BottomNavigation">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/navigation"
-        android:background="@android:color/white">
-    </android.support.v7.widget.RecyclerView>
-
     <FrameLayout
-        android:id="@+id/content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/containerB"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@+id/navigation"
-        android:background="#011a27">
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/navigation"
+            android:background="@android:color/white">
+        </android.support.v7.widget.RecyclerView>
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@+id/navigation"
+            android:background="#011a27">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:contentDescription="Expand Image" />
 
     </FrameLayout>
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
