@@ -627,7 +627,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                     Long i = dataSnapshot.child(ImageName).child("Users").getChildrenCount();
 
-                    if (i == 1) {
+                    if (i == 1 || i == 0) {
                         Numberlike.setText(i + " friend liked your post");
                     } else if (i > 1) {
                         Numberlike.setText(i + " friends liked your post");
