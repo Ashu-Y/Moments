@@ -314,6 +314,7 @@ public class ProfileScreenFragment extends Fragment {
                                 String picture = String.valueOf(download_uri);
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("photo").setValue(picture);
+                                currentuser_db.child("thumbnailProfilephoto").setValue(picture);
 
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                         .setDisplayName(firebaseuser.getDisplayName())
@@ -398,7 +399,7 @@ public class ProfileScreenFragment extends Fragment {
                                 String picture = String.valueOf(download_uri);
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("coverPhoto").setValue(picture);
-
+                                currentuser_db.child("thumbnailCoverPhoto").setValue(picture);
 
                                 //and displaying a success toast
                                 Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();

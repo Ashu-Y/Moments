@@ -1,48 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
     android:orientation="vertical">
 
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+
         android:padding="5dp"
-        app:cardBackgroundColor="#a5c7d1">
+        app:cardBackgroundColor="#F7EFE2">
 
         <LinearLayout
             android:id="@+id/linearlayout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <TextView
-                android:id="@+id/username"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:gravity="center"
-                android:text="@string/user_name"
-                android:textColor="#000"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_profile_photo"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_marginEnd="4dp"
+                    android:elevation="5dp"
+                    android:paddingBottom="4dp"
+                    android:paddingTop="4dp"
+                    android:src="@drawable/c2"
+                    app:civ_border_color="#fff"
+                    app:civ_border_width="1dp"/>
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:gravity="center"
+                    android:text="@string/user_name"
+                    android:textColor="#000"
+                    android:textSize="18sp"/>
 
 
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginBottom="4dp"
-                android:background="@android:color/darker_gray" />
+                android:background="@android:color/darker_gray"/>
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/coffee1" />
+                android:src="@drawable/coffee1"/>
 
             <TextView
                 android:id="@+id/likes"
@@ -51,7 +69,7 @@
                 android:paddingLeft="8dp"
                 android:text="@string/_0_people_liked_your_post"
                 android:textColor="#000"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:id="@+id/linearlayout2"
@@ -60,25 +78,22 @@
                 android:orientation="horizontal"
                 android:weightSum="1">
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/like_btn"
-                    android:layout_width="43dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:background="@null"
                     android:contentDescription="@string/like"
-                    android:paddingLeft="12dp"
-                    android:src="@drawable/ic_action_like_state_false"
-                    android:text="@null" />
+                    android:src="@drawable/like"
+                    android:text="@null"/>
 
-                <ImageButton
+                <ImageView
                     android:id="@+id/comment_btn"
-                    android:layout_width="36dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:background="#a5c7d1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:contentDescription="@string/add_comments"
-                    android:src="@drawable/ic_action_comment" />
+                    android:src="@drawable/ic_action_comment"
+                    android:tint="#000"/>
 
 
             </LinearLayout>
@@ -92,7 +107,7 @@
                 android:paddingLeft="8dp"
                 android:text="@string/title"
                 android:textColor="#000"
-                android:textSize="20sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/_description"
@@ -103,7 +118,7 @@
                 android:paddingLeft="8dp"
                 android:text="@string/hey_there"
                 android:textColor="#000"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
 
         </LinearLayout>

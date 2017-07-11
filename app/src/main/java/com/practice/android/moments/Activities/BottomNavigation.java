@@ -25,7 +25,6 @@ import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,13 +43,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.DashboardFragment;
+import com.practice.android.moments.Fragments.ProfileFragment;
+import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.BottomNavigationViewHelper;
+import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.io.File;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BottomNavigation extends AppCompatActivity {
 
@@ -59,6 +63,8 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 0;
     TimelineFragment mTimelineFragment;
     DashboardFragment mDashboardFragment;
+    SearchFragment mSearchFragment;
+    ProfileFragment mProfileFragment;
     Upload_picture mUpload_pictureFragment;
     FragmentManager mFragmentManager;
     GoogleApiClient googleApiClient;
@@ -95,9 +101,15 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.remove(mTimelineFragment);
                         transaction.commit();
                     }
-                    if (mDashboardFragment.isAdded()) {
+                    if (mProfileFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mDashboardFragment);
+                        transaction.remove(mProfileFragment);
+                        transaction.commit();
+                    }
+
+                    if (mSearchFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mSearchFragment);
                         transaction.commit();
                     }
 
@@ -121,28 +133,42 @@ public class BottomNavigation extends AppCompatActivity {
 
 
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mUpload_pictureFragment, "Timeline Fragment");
+                        transaction.replace(R.id.content, mUpload_pictureFragment, "Upload Picture Fragment");
                         transaction.addToBackStack(null);
                         transaction.commit();
                     }
                     return true;
 
-                case R.id.navigation_dashboard:
+                case R.id.navigation_search:
 
                     fl.setMinimumHeight(size.y);
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
 
-                    if (!mDashboardFragment.isAdded()) {
+//                    if (!mDashboardFragment.isAdded()) {
+//                        fl.setMinimumHeight(size.y);
+//                        fl.getLayoutParams().height = size.y;
+//                        fl.requestLayout();
+//
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
+//                        transaction.addToBackStack("Timeline");
+//                        transaction.commit();
+//                    }
+
+                    if (!mSearchFragment.isAdded()) {
                         fl.setMinimumHeight(size.y);
                         fl.getLayoutParams().height = size.y;
                         fl.requestLayout();
 
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
-                        transaction.addToBackStack("Timeline");
+                        transaction.replace(R.id.content, mSearchFragment, "Search Fragment");
                         transaction.commit();
+
                     }
+                    LogoutButton();
+
+
                     return true;
                 case R.id.navigation_editing:
 
@@ -172,31 +198,22 @@ public class BottomNavigation extends AppCompatActivity {
 
                     return true;
 
-                case R.id.navigation_logout:
+                case R.id.navigation_profile:
 
+                    if (!mProfileFragment.isAdded()) {
 
-                    if (mTimelineFragment.isAdded()) {
                         fl.setMinimumHeight(size.y);
                         fl.getLayoutParams().height = size.y;
                         fl.requestLayout();
 
+
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mTimelineFragment);
+                        transaction.replace(R.id.content, mProfileFragment, "Profile Fragment");
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
-                    if (mDashboardFragment.isAdded()) {
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mDashboardFragment);
-                        transaction.commit();
-                    }
-                    LogoutButton();
                     return true;
 
-                default: {
-//                    fl.getLayoutParams().height = 0;
-//                    fl.requestLayout();
-
-                }
 
             }
             return false;
@@ -253,6 +270,8 @@ public class BottomNavigation extends AppCompatActivity {
 
         mTimelineFragment = new TimelineFragment();
         mDashboardFragment = new DashboardFragment();
+        mSearchFragment = new SearchFragment();
+        mProfileFragment = new ProfileFragment();
         mUpload_pictureFragment = new Upload_picture();
         mFragmentManager = getSupportFragmentManager();
 
@@ -295,7 +314,7 @@ public class BottomNavigation extends AppCompatActivity {
                 viewHolder.setUsername(model.getUserName());
                 viewHolder.setTitle(model.getTitle());
 //                viewHolder.setComment(context);
-
+                viewHolder.setProfilepic(context, model.getUser_id());
                 viewHolder.setNumberLike(picname);
                 viewHolder.setLike(picname);
                 viewHolder.setDescription(model.getDescription());
@@ -504,10 +523,11 @@ public class BottomNavigation extends AppCompatActivity {
         View mView;
         //        FragmentManager mFragmentManager;
 //        FrameLayout fl;
-        DatabaseReference mdatabaseReference;
-        ImageButton comment;
+        DatabaseReference mdatabaseReference, database;
+        CircleImageView profile;
+        ImageView comment;
         Long i;
-        ImageButton Like;
+        ImageView Like;
         FirebaseUser firebaseUser;
         TextView Numberlike;
 
@@ -523,8 +543,13 @@ public class BottomNavigation extends AppCompatActivity {
 //            display.getSize(size);
             mdatabaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("Likes");
-            Like = (ImageButton) mView.findViewById(R.id.like_btn);
-            comment = (ImageButton) mView.findViewById(R.id.comment_btn);
+            database = FirebaseDatabase.getInstance().getReference()
+                    .child("Users");
+            profile = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
+
+
+            Like = (ImageView) mView.findViewById(R.id.like_btn);
+            comment = (ImageView) mView.findViewById(R.id.comment_btn);
 
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             Numberlike = (TextView) mView.findViewById(R.id.likes);
@@ -566,10 +591,10 @@ public class BottomNavigation extends AppCompatActivity {
 
                     if (dataSnapshot.child(ImageName).hasChild(firebaseUser.getUid())) {
 
-                        Like.setImageResource(R.drawable.ic_action_like_state_true);
+                        Like.setImageResource(R.drawable.like2);
 
                     } else {
-                        Like.setImageResource(R.drawable.ic_action_like_state_false);
+                        Like.setImageResource(R.drawable.like);
                     }
 
                 }
@@ -591,9 +616,14 @@ public class BottomNavigation extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                  Long i =  dataSnapshot.child(ImageName).getChildrenCount() -1;
+                    Long i = dataSnapshot.child(ImageName).getChildrenCount() - 1;
 
-                    Numberlike.setText(i+"  people liked your post");
+                    if (i == 1) {
+                        Numberlike.setText(i + " friend liked your post");
+                    } else if (i > 1) {
+                        Numberlike.setText(i + " friends liked your post");
+                    }
+
 
                 }
 
@@ -645,6 +675,34 @@ public class BottomNavigation extends AppCompatActivity {
         }
 
 
+        public void setProfilepic(Context context, String user_id) {
+
+            Log.e("USER ID", user_id);
+
+            database.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                    assert user != null;
+
+                    Glide.with(context).load(user.getThumbnailProfilephoto()).placeholder(R.drawable.c1).into(profile);
+
+                    Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+//            Glide.with(context).load(photo)
+//                    .skipMemoryCache(false)
+//                    .placeholder(R.drawable.c1).into(profile);
+
+        }
     }
 }
 

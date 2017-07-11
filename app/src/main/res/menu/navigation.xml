@@ -17,13 +17,13 @@
         android:title="Editing"/>
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard"/>
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/search3"
+        android:title="Search"/>
 
     <item
-        android:id="@+id/navigation_logout"
-        android:icon="@android:drawable/ic_lock_power_off"
-        android:title="Log Out"/>
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/prof"
+        android:title="Profile"/>
 
 </menu>

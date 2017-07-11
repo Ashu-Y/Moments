@@ -3,9 +3,10 @@
 
 
     <!-- When selected, use grey -->
-    <item android:drawable="@drawable/ic_action_like_state_true"
+    <item
+        android:drawable="@drawable/like2"
         android:state_checked="true" />
     <!-- When not selected, use white-->
-    <item android:drawable="@drawable/ic_action_like_state_false"
-        android:state_checked="false"/>
+    <item android:drawable="@drawable/like"
+          android:state_checked="false"/>
 </selector>

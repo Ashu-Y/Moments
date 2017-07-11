@@ -51,6 +51,7 @@
             android:clickable="true"
             android:src="@drawable/ic_photo_camera_black_24dp"
             app:backgroundTint="@android:color/holo_blue_bright"
+            app:fabSize="mini"
             tools:ignore="NewApi"/>
 
         <RelativeLayout
