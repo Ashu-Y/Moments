@@ -42,7 +42,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Editing.EditingActivity;
+import com.practice.android.moments.Fragments.CommentFragment;
 import com.practice.android.moments.Fragments.DashboardFragment;
+import com.practice.android.moments.Fragments.LikeFragment;
 import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
@@ -67,6 +69,8 @@ public class BottomNavigation extends AppCompatActivity {
     ProfileFragment mProfileFragment;
     Upload_picture mUpload_pictureFragment;
     FragmentManager mFragmentManager;
+    CommentFragment mCommentFragment;
+    LikeFragment mLikeFragment;
     GoogleApiClient googleApiClient;
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
@@ -271,6 +275,8 @@ public class BottomNavigation extends AppCompatActivity {
         mTimelineFragment = new TimelineFragment();
         mDashboardFragment = new DashboardFragment();
         mSearchFragment = new SearchFragment();
+        mCommentFragment = new CommentFragment();
+        mLikeFragment = new LikeFragment();
         mProfileFragment = new ProfileFragment();
         mUpload_pictureFragment = new Upload_picture();
         mFragmentManager = getSupportFragmentManager();
@@ -358,7 +364,7 @@ public class BottomNavigation extends AppCompatActivity {
                                             currentuser_db.child(picname).child("Likes").setValue(like);
                                         }
                                     } else {
-                                        viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount() ;
+                                        viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
                                         Log.e("No. of likes", String.valueOf(viewHolder.i));
                                         viewHolder.i++;
                                         String like = String.valueOf(viewHolder.i);
@@ -383,6 +389,16 @@ public class BottomNavigation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
+
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.replace(R.id.content, mCommentFragment, "Comment Fragment");
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
                     }
                 });
 
@@ -390,6 +406,17 @@ public class BottomNavigation extends AppCompatActivity {
                 viewHolder.Numberlike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
+
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.replace(R.id.content, mLikeFragment, "Like Fragment");
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
 
                     }
                 });
@@ -511,31 +538,28 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         View mView;
-        //        FragmentManager mFragmentManager;
-//        FrameLayout fl;
         DatabaseReference mdatabaseReference, database;
         CircleImageView profile;
         ImageView comment;
         Long i;
         ImageView Like;
+        ImageView imageView;
         FirebaseUser firebaseUser;
         TextView Numberlike;
 
         public BlogViewHolder(View itemView) {
             super(itemView);
 
-           mView = itemView;
-//
+            mView = itemView;
             mdatabaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("Likes");
             database = FirebaseDatabase.getInstance().getReference()
                     .child("Users");
+
             profile = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
-
-
+            imageView = (ImageView) mView.findViewById(R.id.image);
             Like = (ImageView) mView.findViewById(R.id.like_btn);
             comment = (ImageView) mView.findViewById(R.id.comment_btn);
-
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             Numberlike = (TextView) mView.findViewById(R.id.likes);
 
@@ -601,7 +625,7 @@ public class BottomNavigation extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                  Long i =  dataSnapshot.child(ImageName).child("Users").getChildrenCount();
+                    Long i = dataSnapshot.child(ImageName).child("Users").getChildrenCount();
 
                     if (i == 1) {
                         Numberlike.setText(i + " friend liked your post");
@@ -649,7 +673,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         public void setPic(Context context, String photo) {
 
-            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
             Glide.with(context).load(photo)
                     .skipMemoryCache(false)
                     .placeholder(R.drawable.c1).into(imageView);
