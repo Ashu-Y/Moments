@@ -21,20 +21,33 @@
         android:id="@+id/recycler_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/comment"
+        android:layout_above="@+id/commentLayout"
         android:layout_below="@+id/tv"
         android:padding="4dp"/>
 
-    <EditText
-        android:id="@+id/comment"
+    <LinearLayout
+        android:id="@+id/commentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
-        android:background="@drawable/input"
-        android:drawableRight="@drawable/send2"
-        android:hint="Comment"
-        android:padding="4dp"/>
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/input"
+            android:hint="Comment"
+            android:padding="4dp"/>
+
+        <ImageView
+            android:id="@+id/post_comment"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/send"/>
+    </LinearLayout>
 
 </RelativeLayout>

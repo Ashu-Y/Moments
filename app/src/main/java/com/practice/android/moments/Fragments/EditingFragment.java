@@ -40,7 +40,7 @@ public class EditingFragment extends Fragment {
     File myDir;
 
     private ImageView mEditedImageView;
-    private Button mOpenGalleryButton;
+    private ImageView mOpenGalleryButton;
     private Button mLaunchImageEditorButton;
     private Button save;
     private ImageView mSelectedImageView;
@@ -57,7 +57,7 @@ public class EditingFragment extends Fragment {
         mEditedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
 
-        mOpenGalleryButton = (Button) v.findViewById(R.id.openGalleryButton);
+        mOpenGalleryButton = (ImageView) v.findViewById(R.id.editedImageView);
         mLaunchImageEditorButton = (Button) v.findViewById(R.id.launchImageEditorButton);
         save = (Button) v.findViewById(R.id.save);
 

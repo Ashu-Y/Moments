@@ -30,14 +30,15 @@
             android:id="@+id/image_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/image_description"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/imageView2"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/input"
             android:gravity="center"
-            android:hint="@string/enter_the_title" android:maxLines="1"
+            android:hint="@string/enter_the_title"
+            android:maxLines="1"
             android:padding="15dp"/>
 
 
@@ -69,6 +70,7 @@
         android:layout_below="@+id/upload_rel"
         android:backgroundTint="#b2dfdb"
         android:ellipsize="marquee"
-        android:text="@string/upload"/>
+        android:text="@string/upload"
+        android:textColor="#000"/>
 
 </RelativeLayout>

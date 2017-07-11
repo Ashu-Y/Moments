@@ -675,7 +675,9 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (navigation.getSelectedItemId() != R.id.navigation_home) {
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        } else if (navigation.getSelectedItemId() != R.id.navigation_home) {
             navigation.setSelectedItemId(R.id.navigation_home);
         } else {
 
