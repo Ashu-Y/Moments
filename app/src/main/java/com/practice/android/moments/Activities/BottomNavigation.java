@@ -1,6 +1,10 @@
 package com.practice.android.moments.Activities;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +29,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,8 +48,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.practice.android.moments.Editing.EditingActivity;
+import com.practice.android.moments.Fragments.CommentFragment;
 import com.practice.android.moments.Fragments.DashboardFragment;
+import com.practice.android.moments.Fragments.EditingFragment;
+import com.practice.android.moments.Fragments.LikeFragment;
 import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
@@ -56,6 +65,7 @@ import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
 public class BottomNavigation extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_STORAGE = 1;
@@ -66,6 +76,7 @@ public class BottomNavigation extends AppCompatActivity {
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
     Upload_picture mUpload_pictureFragment;
+    EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
@@ -198,7 +209,14 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
                     }
 
-                    startActivity(new Intent(BottomNavigation.this, EditingActivity.class));
+                    if (!mEditingFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.replace(R.id.content, mEditingFragment, "Editing Fragment");
+                        transaction.commit();
+                    }
+
+
+//                    startActivity(new Intent(BottomNavigation.this, EditingActivity.class));
 
                     return true;
 
@@ -279,6 +297,7 @@ public class BottomNavigation extends AppCompatActivity {
         mLikeFragment = new LikeFragment();
         mProfileFragment = new ProfileFragment();
         mUpload_pictureFragment = new Upload_picture();
+        mEditingFragment = new EditingFragment();
         mFragmentManager = getSupportFragmentManager();
 
         // Google API CLIENT
@@ -327,13 +346,6 @@ public class BottomNavigation extends AppCompatActivity {
                 viewHolder.setPic(getApplicationContext(), model.getPic());
 //                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
                 Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
-
-                viewHolder.comment.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
 
 
                 viewHolder.Like.setOnClickListener(new OnClickListener() {
@@ -425,7 +437,7 @@ public class BottomNavigation extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String Image = model.getPic();
-                        zoomImageFromThumb(viewHolder.imageView, Image );
+                        zoomImageFromThumb(viewHolder.imageView, Image);
                     }
                 });
 
@@ -706,7 +718,6 @@ public class BottomNavigation extends AppCompatActivity {
         ImageView imageView, expandImage;
 
         ImageView Like;
-        ImageView imageView;
         FirebaseUser firebaseUser;
         TextView Numberlike;
 

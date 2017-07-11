@@ -1,4 +1,4 @@
-package com.practice.android.moments.Editing;
+package com.practice.android.moments.Fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,12 +8,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,8 +27,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static android.app.Activity.RESULT_OK;
 
-public class EditingActivity extends AppCompatActivity {
+
+public class EditingFragment extends Fragment {
 
     static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
     static final int REQ_CODE_GALLERY_PICKER = 20;
@@ -35,7 +38,7 @@ public class EditingActivity extends AppCompatActivity {
     ImageView content;
     Bitmap bitmap;
     File myDir;
-    /* 1) Add a member variable for our Image View */
+
     private ImageView mEditedImageView;
     private Button mOpenGalleryButton;
     private Button mLaunchImageEditorButton;
@@ -43,20 +46,22 @@ public class EditingActivity extends AppCompatActivity {
     private ImageView mSelectedImageView;
     private Uri mSelectedImageUri;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editor);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        View v = inflater.inflate(R.layout.fragment_editing, container, false);
 
         /* 2) Find the layout's ImageView by ID */
-        mEditedImageView = (ImageView) findViewById(R.id.editedImageView);
+        mEditedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
 
-        mOpenGalleryButton = (Button) findViewById(R.id.openGalleryButton);
-        mLaunchImageEditorButton = (Button) findViewById(R.id.launchImageEditorButton);
-        save = (Button) findViewById(R.id.save);
+        mOpenGalleryButton = (Button) v.findViewById(R.id.openGalleryButton);
+        mLaunchImageEditorButton = (Button) v.findViewById(R.id.launchImageEditorButton);
+        save = (Button) v.findViewById(R.id.save);
 
-        mSelectedImageView = (ImageView) findViewById(R.id.editedImageView);
+        mSelectedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
 
 //        /* 1) Make a new Uri object (Replace this with a real image on your device) */
@@ -84,13 +89,13 @@ public class EditingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (mSelectedImageUri != null) {
-                    Intent imageEditorIntent = new AdobeImageIntent.Builder(EditingActivity.this)
+                    Intent imageEditorIntent = new AdobeImageIntent.Builder(getActivity())
                             .setData(mSelectedImageUri)
                             .build();
 
                     startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
                 } else {
-                    Toast.makeText(EditingActivity.this, "Select an image from the Gallery", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Select an image from the Gallery", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -108,7 +113,7 @@ public class EditingActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                content = (ImageView) findViewById(R.id.editedImageView);
+                content = (ImageView) v.findViewById(R.id.editedImageView);
 //                content.destroyDrawingCache();
                 saveImage();
                 content.destroyDrawingCache();
@@ -116,7 +121,10 @@ public class EditingActivity extends AppCompatActivity {
             }
         });
 
+
+        return v;
     }
+
 
     public void saveImage() {
 
@@ -125,8 +133,8 @@ public class EditingActivity extends AppCompatActivity {
         Bitmap bmp1 = ((BitmapDrawable) content.getDrawable()).getBitmap();
 
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = this.getLayoutInflater(getArguments());
         final View dialogView = inflater.inflate(R.layout.save_as_dialog, null);
         dialogBuilder.setView(dialogView);
 
@@ -146,7 +154,7 @@ public class EditingActivity extends AppCompatActivity {
                     if (fileNames[i].equals(img_name.getText().toString() + ".jpg")) {
 
 
-                        Toast.makeText(EditingActivity.this, "Image with same name already exists in the Moments folder",
+                        Toast.makeText(getActivity(), "Image with same name already exists in the Moments folder",
                                 Toast.LENGTH_SHORT).show();
                         imageExistsPopup();
                         return;
@@ -165,7 +173,7 @@ public class EditingActivity extends AppCompatActivity {
                     ostream.close();
 
 
-                    Toast.makeText(EditingActivity.this, "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Image saved with name: " + img_name.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     Log.i("Editing: ", myDir.toString());
                 } catch (IOException e) {
@@ -184,7 +192,7 @@ public class EditingActivity extends AppCompatActivity {
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
         } else {
-            Toast.makeText(EditingActivity.this, "Select an image first", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -192,7 +200,7 @@ public class EditingActivity extends AppCompatActivity {
 
 
     public void imageExistsPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         builder.setTitle("Error");
         builder.setMessage("Image with same name Exists");
@@ -210,7 +218,7 @@ public class EditingActivity extends AppCompatActivity {
 
     /* 3) Handle the results */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
 
@@ -231,5 +239,4 @@ public class EditingActivity extends AppCompatActivity {
             }
         }
     }
-
 }
