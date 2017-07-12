@@ -71,6 +71,7 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
+    public static String Name;
     public static GoogleApiClient googleApiClient;
     public static Context context;
     TimelineFragment mTimelineFragment;
@@ -311,9 +312,6 @@ public class BottomNavigation extends AppCompatActivity {
         googleApiClient.connect();
 
         context = getApplicationContext();
-//        mContext = getApplicationContext();
-
-
         try {
             assert firebaseUser != null;
             user_id = firebaseUser.getUid();
@@ -339,15 +337,14 @@ public class BottomNavigation extends AppCompatActivity {
 
                 viewHolder.setUsername(model.getUserName());
                 viewHolder.setTitle(model.getTitle());
-//                viewHolder.setComment(context);
                 viewHolder.setProfilepic(context, model.getUser_id());
                 viewHolder.setNumberLike(picname);
                 viewHolder.setLike(picname);
                 viewHolder.setDescription(model.getDescription());
                 viewHolder.setPic(getApplicationContext(), model.getPic());
 //                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
-                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
 
+//                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
 
                 viewHolder.Like.setOnClickListener(new OnClickListener() {
                     @Override
@@ -406,11 +403,23 @@ public class BottomNavigation extends AppCompatActivity {
                         fl.getLayoutParams().height = size.y;
                         fl.requestLayout();
 
+                        Log.e("Name", "Comment Fragment Called");
+
+
+                        Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+
+                        mCommentFragment.setImageResourceName(Name);
+
+
+                        Log.e("Bottom Navigation Name", Name);
 
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mCommentFragment, "Comment Fragment");
+                        transaction.remove(mCommentFragment);
+                        transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
                         transaction.addToBackStack(null);
                         transaction.commit();
+
 
                     }
                 });
@@ -420,13 +429,19 @@ public class BottomNavigation extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+
                         fl.setMinimumHeight(size.y);
                         fl.getLayoutParams().height = size.y;
                         fl.requestLayout();
 
+                        Name = getRef(viewHolder.getAdapterPosition()).getKey();
 
+                        mLikeFragment.setImageResourceName(Name);
+
+                        Log.e("Pic Name", Name);
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mLikeFragment, "Like Fragment");
+                        transaction.remove(mLikeFragment);
+                        transaction.add(R.id.content, mLikeFragment, "Like Fragment");
                         transaction.addToBackStack(null);
                         transaction.commit();
 
@@ -718,6 +733,7 @@ public class BottomNavigation extends AppCompatActivity {
         ImageView comment;
         Long i;
 
+
         ImageView imageView, expandImage;
 
         ImageView Like;
@@ -746,31 +762,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         }
 
-//        public void setComment(Context context) {
-//            ImageButton comment = (ImageButton) mView.findViewById(R.id.comment_btn);
-//
-//            comment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, "Comment Fragment to open", Toast.LENGTH_SHORT).show();
-//                    Log.e("Comment part", "   Comment ");
-//
-//
-////                    CommentFragment fragment2 = new CommentFragment();
-////
-////
-////                    fl.setMinimumHeight(size.y);
-////                    fl.getLayoutParams().height = size.y;
-////                    fl.requestLayout();
-////
-////                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
-////                    transaction.replace(R.id.content, fragment2, "Comment Fragment");
-////                    transaction.addToBackStack("Comment");
-////                    transaction.commit();
-//                }
-//
-//            });
-//        }
 
         public void setLike(String ImageName) {
             DatabaseReference currentuser_db = mdatabaseReference;
@@ -857,7 +848,6 @@ public class BottomNavigation extends AppCompatActivity {
             Glide.with(context).load(photo)
                     .skipMemoryCache(false)
                     .placeholder(R.drawable.c1).into(imageView);
-//            Picasso.with(context).load(photo).placeholder(R.drawable.c1).into(imageView);
 
             Log.e("Image URl =======", photo);
 
@@ -893,5 +883,7 @@ public class BottomNavigation extends AppCompatActivity {
 
         }
     }
+
+
 }
 

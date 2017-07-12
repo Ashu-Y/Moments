@@ -251,7 +251,7 @@ public class Upload_picture extends Fragment {
                         download_uri = taskSnapshot.getDownloadUrl();
                         String user_id = firebaseuser.getUid();
                         String picture = String.valueOf(download_uri);
-
+String thumbpic = picture;
 
                         riversRef.child("thumbnail").putFile(selectedImage).addOnSuccessListener(taskSnapshot1 -> {
 
@@ -279,7 +279,7 @@ public class Upload_picture extends Fragment {
                             currentuser.child("picName").setValue(imageName);
                             currentuser.child("userName").setValue(firebaseuser.getDisplayName());
                             currentuser.child("user_id").setValue(user_id);
-                            currentuser.child("thumbnail_pic").setValue(picture);
+                            currentuser.child("thumbnail_pic").setValue(thumbpic);
                             currentuser.child("title").setValue(title.getText().toString());
                             currentuser.child("description").setValue(description.getText().toString());
 
@@ -292,7 +292,7 @@ public class Upload_picture extends Fragment {
                             user.child("picName").setValue(imageName);
                             user.child("userName").setValue(firebaseuser.getDisplayName());
                             user.child("user_id").setValue(user_id);
-                            user.child("thumbnail_pic").setValue(picture);
+                            user.child("thumbnail_pic").setValue(thumbpic);
                             user.child("title").setValue(title.getText().toString());
                             user.child("description").setValue(description.getText().toString());
 

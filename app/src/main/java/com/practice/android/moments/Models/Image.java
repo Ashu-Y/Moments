@@ -8,11 +8,10 @@ import java.io.Serializable;
 
 public class Image implements Serializable {
 
-    private String title;
-    private String description;
-    private String name;
-    private String small, medium, large;
-    private String timestamp;
+    String picName;
+    String title;
+    String description;
+    String thumbnail_pic, medium, pic;
 
     public Image() {
     }
@@ -21,14 +20,20 @@ public class Image implements Serializable {
 //                 String timestamp
                  String title,
                  String description) {
-        this.name = picName;
-        this.small = thumbnail_pic;
-//        this.medium = medium;
-        this.large = pic;
+        this.picName = picName;
+        this.thumbnail_pic = thumbnail_pic;
+        this.pic = pic;
         this.title = title;
         this.description = description;
 
-//        this.timestamp = timestamp;
+    }
+
+    public String getPicName() {
+        return picName;
+    }
+
+    public void setPicName(String picName) {
+        this.picName = picName;
     }
 
     public String getTitle() {
@@ -47,20 +52,12 @@ public class Image implements Serializable {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public String getThumbnail_pic() {
+        return thumbnail_pic;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSmall() {
-        return small;
-    }
-
-    public void setSmall(String small) {
-        this.small = small;
+    public void setThumbnail_pic(String thumbnail_pic) {
+        this.thumbnail_pic = thumbnail_pic;
     }
 
     public String getMedium() {
@@ -71,19 +68,13 @@ public class Image implements Serializable {
         this.medium = medium;
     }
 
-    public String getLarge() {
-        return large;
+    public String getPic() {
+        return pic;
     }
 
-    public void setLarge(String large) {
-        this.large = large;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 }
