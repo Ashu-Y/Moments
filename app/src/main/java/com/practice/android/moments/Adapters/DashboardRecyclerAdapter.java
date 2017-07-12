@@ -1,4 +1,4 @@
-package com.practice.android.moments.RecyclerView;
+package com.practice.android.moments.Adapters;
 
 import android.Manifest;
 import android.content.Context;

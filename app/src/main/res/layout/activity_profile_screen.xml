@@ -140,7 +140,7 @@
             tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat,HardcodedText">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/editProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"

@@ -35,13 +35,13 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
+import com.practice.android.moments.Adapters.PostRecyclerAdapter;
 import com.practice.android.moments.Editing.EditingActivity;
 import com.practice.android.moments.Fragments.ProfileEditingFragment;
 import com.practice.android.moments.Fragments.ProfileScreenFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
-import com.practice.android.moments.RecyclerView.PostRecyclerAdapter;
 
 import java.io.File;
 import java.util.ArrayList;

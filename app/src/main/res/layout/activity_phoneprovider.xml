@@ -10,7 +10,7 @@
     tools:ignore="HardcodedText,RtlHardcoded,ButtonStyle">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/editProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -52,7 +52,7 @@
         android:layout_alignBottom="@+id/button_verify_phone"
         android:layout_alignEnd="@+id/button_start_verification"
         android:layout_gravity="end"
-        android:layout_toEndOf="@+id/textView3"
+        android:layout_toEndOf="@+id/editProfile"
         android:background="@drawable/circle"
         android:text="@string/resend_phone_auth"
         android:textColor="#e4ea8c"/>

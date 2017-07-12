@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.practice.android.moments.Adapters.DashboardRecyclerAdapter;
 import com.practice.android.moments.Models.Post;
 import com.practice.android.moments.R;
-import com.practice.android.moments.RecyclerView.DashboardRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

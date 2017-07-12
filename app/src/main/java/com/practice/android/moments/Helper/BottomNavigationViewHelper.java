@@ -1,4 +1,4 @@
-package com.practice.android.moments.Models;
+package com.practice.android.moments.Helper;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

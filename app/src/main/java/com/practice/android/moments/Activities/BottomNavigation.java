@@ -56,8 +56,8 @@ import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
+import com.practice.android.moments.Helper.BottomNavigationViewHelper;
 import com.practice.android.moments.Models.Blog;
-import com.practice.android.moments.Models.BottomNavigationViewHelper;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
