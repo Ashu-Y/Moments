@@ -130,7 +130,7 @@ public class CommentFragment extends Fragment {
                 Comment.class,
                 R.layout.comment_recycler,
                 CommentViewHolder.class,
-                data.orderByValue()
+                data
         ) {
             @Override
             protected void populateViewHolder(CommentViewHolder viewHolder, Comment model, int position) {
