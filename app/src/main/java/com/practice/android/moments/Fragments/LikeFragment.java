@@ -68,31 +68,6 @@ public class LikeFragment extends Fragment {
         return v;
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        context = getContext();
-//        FirebaseRecyclerAdapter<String, LikeViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<String, LikeViewHolder>(
-//                String.class,
-//                R.layout.likeuserrow,
-//                LikeViewHolder.class,
-//                mdatabaseReference
-//        ) {
-//            @Override
-//            protected void populateViewHolder(LikeViewHolder viewHolder, String model, int position) {
-//
-//                String pos = getRef(position).getKey();
-//                Log.e("POSITION++++++", pos);
-//
-//                viewHolder.setpic(context, pos);
-//            }
-//        };
-//
-//        firebaseRecyclerAdapter.notifyDataSetChanged();
-//        recyclerView.setAdapter(firebaseRecyclerAdapter);
-//
-//
-//    }
 
     @Override
     public void onResume() {
