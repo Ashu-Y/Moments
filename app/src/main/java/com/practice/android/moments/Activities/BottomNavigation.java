@@ -71,6 +71,8 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
+    public static GoogleApiClient googleApiClient;
+    public static Context context;
     TimelineFragment mTimelineFragment;
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
@@ -80,14 +82,12 @@ public class BottomNavigation extends AppCompatActivity {
     FragmentManager mFragmentManager;
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
-    GoogleApiClient googleApiClient;
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
     FrameLayout fl;
     String user_id;
     String user_name;
     Display display;
-    Context context;
     Point size;
     FirebaseAuth firebaseAuth;
     Boolean picLike;
@@ -181,8 +181,6 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
 
                     }
-                    LogoutButton();
-
 
                     return true;
                 case R.id.navigation_editing:
@@ -313,6 +311,9 @@ public class BottomNavigation extends AppCompatActivity {
         googleApiClient.connect();
 
         context = getApplicationContext();
+//        mContext = getApplicationContext();
+
+
         try {
             assert firebaseUser != null;
             user_id = firebaseUser.getUid();

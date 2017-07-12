@@ -1,19 +1,29 @@
 package com.practice.android.moments.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.firebase.auth.FirebaseAuth;
 import com.practice.android.moments.Activities.ChangePassword;
+import com.practice.android.moments.Activities.Login_method;
 import com.practice.android.moments.R;
+
+import static com.practice.android.moments.Activities.BottomNavigation.context;
+import static com.practice.android.moments.Activities.BottomNavigation.googleApiClient;
 
 
 /**
@@ -22,8 +32,17 @@ import com.practice.android.moments.R;
 
 public class SettingsFragment extends Fragment {
 
+    //    GoogleApiClient googleApiClient;
+    public static Context mContext;
     private String TAG = getClass().getSimpleName();
-    private Button profile, editProfile, changePassword, privacyPolicy;
+    private Button profile, editProfile, changePassword, privacyPolicy, Logout_button;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+    }
 
     @Nullable
     @Override
@@ -31,10 +50,14 @@ public class SettingsFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.activity_settings, container, false);
 
+        mContext = getContext();
+
         profile = (Button) v.findViewById(R.id.profile);
         editProfile = (Button) v.findViewById(R.id.EditProfile);
         changePassword = (Button) v.findViewById(R.id.changePassword);
         privacyPolicy = (Button) v.findViewById(R.id.privacyPolicy);
+
+        Logout_button = (Button) v.findViewById(R.id.Logout);
 
         profile.setOnClickListener(new OnClickListener() {
             @Override
@@ -76,6 +99,27 @@ public class SettingsFragment extends Fragment {
                 transaction.commit();
             }
         });
+
+        Logout_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.i(TAG, "You clicked onClick Button");
+                FirebaseAuth.getInstance().signOut();
+                LoginManager.getInstance().logOut();
+                Auth.GoogleSignInApi.signOut(googleApiClient)
+                        .setResultCallback(
+                                status -> {
+                                    Log.i(TAG, "log off from google sign button");
+                                    Toast.makeText(context, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(context, Login_method.class));
+                                });
+            }
+        });
+
+//        googleApiClient = new GoogleApiClient.Builder(context)
+//                .enableAutoManage(getActivity(), connectionResult -> Toast.makeText(context,
+//                        "Check ur connection", Toast.LENGTH_SHORT).show()).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
         return v;
     }

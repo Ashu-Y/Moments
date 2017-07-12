@@ -12,8 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -35,25 +35,27 @@ public class ProfileFragment extends Fragment {
 
     private final String TAG = getClass().getSimpleName();
     ImageView settings, coverpic;
-    TextView photosNum;
+    LinearLayout photosNum;
     RecyclerView recyclerView;
     ScrollView scrollProfile;
-    Button editProfile;
     CircleImageView profile;
     Context context;
+    TextView profilename;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.profile, container, false);
 
         settings = (ImageView) v.findViewById(R.id.settings);
         coverpic = (ImageView) v.findViewById(R.id.header_cover_image);
-        photosNum = (TextView) v.findViewById(R.id.photosNum);
+        photosNum = (LinearLayout) v.findViewById(R.id.photosNum);
         recyclerView = (RecyclerView) v.findViewById(R.id.grid_recycler);
         scrollProfile = (ScrollView) v.findViewById(R.id.scrollProfile);
-        editProfile = (Button) v.findViewById(R.id.editProfile);
+//        editProfile = (Button) v.findViewById(R.id.editProfile);
         profile = (CircleImageView) v.findViewById(R.id.user_profile_photo);
+        profilename = (TextView) v.findViewById(R.id.user_profile_name);
+
 
         context = getContext();
 
@@ -75,18 +77,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        editProfile.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                ProfileEditingFragment editProfFragment = new ProfileEditingFragment();
-
-                transaction.replace(R.id.content, editProfFragment, "Edit Profile Fragment");
-                transaction.commit();
-
-            }
-        });
+//        editProfile.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentManager fm = getFragmentManager();
+//                FragmentTransaction transaction = fm.beginTransaction();
+//                ProfileEditingFragment editProfFragment = new ProfileEditingFragment();
+//
+//                transaction.replace(R.id.content, editProfFragment, "Edit Profile Fragment");
+//                transaction.commit();
+//
+//            }
+//        });
 
         profile.setOnClickListener(new OnClickListener() {
             @Override
@@ -201,7 +203,9 @@ public class ProfileFragment extends Fragment {
                 Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile);
                 Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(coverpic);
 
-                Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+                profilename.setText(user.getName());
+
+                Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship());
             }
 
             @Override
