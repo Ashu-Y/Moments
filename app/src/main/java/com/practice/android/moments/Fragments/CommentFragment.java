@@ -169,7 +169,6 @@ public class CommentFragment extends Fragment {
             getname = (TextView) mView.findViewById(R.id.comment_user_name);
             user_comment = (TextView) mView.findViewById(R.id.user_comment);
 
-
         }
 
         public void setuser(Context context, String ImageName, String pos) {
