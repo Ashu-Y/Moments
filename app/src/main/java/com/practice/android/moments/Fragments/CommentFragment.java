@@ -111,5 +111,9 @@ public class CommentFragment extends Fragment {
     public void onResume() {
         super.onResume();
         user_comment.setText("");
+
+
+
+
     }
 }
