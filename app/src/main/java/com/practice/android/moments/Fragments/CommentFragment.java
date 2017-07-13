@@ -69,7 +69,7 @@ public class CommentFragment extends Fragment {
         recyclerView.setLayoutManager(lm_recycle);
 
 
-        user_comment.setText("");
+        user_comment.setText(null);
         send = (ImageView) v.findViewById(R.id.post_comment);
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Comments");
@@ -82,30 +82,34 @@ public class CommentFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if (!user_comment.getText().toString().equals("")) {
 
-                Calendar c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH) + 1;
-                int year = c.get(Calendar.YEAR);
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minutes = c.get(Calendar.MINUTE);
-                int seconds = c.get(Calendar.SECOND);
-                int milliSeconds = c.get(Calendar.MILLISECOND);
-
-
-                //Can cause error in uploading
-                String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
-                Log.e("Camera", imageName);
+                    Calendar c = Calendar.getInstance();
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    int month = c.get(Calendar.MONTH) + 1;
+                    int year = c.get(Calendar.YEAR);
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minutes = c.get(Calendar.MINUTE);
+                    int seconds = c.get(Calendar.SECOND);
+                    int milliSeconds = c.get(Calendar.MILLISECOND);
 
 
-                DatabaseReference database = data.child(imageName);
-                database.child("user_id").setValue(user_id);
+                    //Can cause error in uploading
+                    String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                    Log.e("Camera", imageName);
 
-                database.child("comment").setValue(user_comment.getText().toString());
-                Log.e("usercomments", user_comment.getText().toString());
 
-                Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                    DatabaseReference database = data.child(imageName);
+                    database.child("user_id").setValue(user_id);
 
+                    database.child("comment").setValue(user_comment.getText().toString());
+                    Log.e("usercomments", user_comment.getText().toString());
+
+                    Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                } else {
+                    user_comment.setError("Empty Comment");
+                    Toast.makeText(getContext(), "Empty Comment", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -126,6 +130,26 @@ public class CommentFragment extends Fragment {
         user_comment.setText("");
 
         context = getContext();
+        data.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String key = dataSnapshot.getValue(String.class);
+
+
+                if (key == null) {
+                    Log.e("dataSnapshotKey", key + "Hello");
+                    Toast.makeText(context, "NO comments", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         FirebaseRecyclerAdapter<Comment, CommentViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Comment, CommentViewHolder>(
                 Comment.class,
                 R.layout.comment_recycler,
@@ -138,17 +162,20 @@ public class CommentFragment extends Fragment {
                 String pos = getRef(position).getKey();
                 Log.e("POSITION++++++", pos);
 
-                viewHolder.setuser(context, name, pos);
+                if (pos.equals("")) {
+                    Log.e("NO Comment", pos);
+                    Toast.makeText(context, "NO Comment yet", Toast.LENGTH_SHORT).show();
 
+                } else {
+                    viewHolder.setuser(context, name, pos);
+                }
             }
         };
 
         firebaseRecyclerAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
-
     }
-
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
 
