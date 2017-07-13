@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,20 +45,21 @@ public class SearchFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            int i = 0;
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int number = (int) dataSnapshot.getChildrenCount();
 
 
                 Log.e("number of users", String.valueOf(number));
-                Toast.makeText(context, String.valueOf(number), Toast.LENGTH_LONG).show();
-
 
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    Log.e("Key NodES", "" + childDataSnapshot.getKey()); //displays the key for the nodee
 
                     String nodeKey = childDataSnapshot.getKey();
                     Log.e("Key Node", "" + nodeKey);
+
 
                     assert nodeKey != null;
                     databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Users").child(nodeKey).child("User Info");
@@ -78,9 +78,11 @@ public class SearchFragment extends Fragment {
 
                             userList.add(item);
 
-                            HashMap<String, String> useritem = userList.get(number);
+                            HashMap<String, String> useritem = userList.get(i);
 
-                            Log.e("Key ", "" + useritem.get(1));
+                            i++;
+
+                            Log.e("Key ", "" + useritem.get(nodeKey));
 
                         }
 

@@ -442,6 +442,9 @@ public class BottomNavigation extends AppCompatActivity {
                                         viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
                                         Log.e("No. of likes", String.valueOf(viewHolder.i));
                                         viewHolder.i++;
+                                        //Post method
+
+
                                         String like = String.valueOf(viewHolder.i);
                                         currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
                                         currentuser_db.child(picname).child("Likes").setValue(like);

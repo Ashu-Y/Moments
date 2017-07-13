@@ -105,6 +105,8 @@ public class CommentFragment extends Fragment {
                     database.child("comment").setValue(user_comment.getText().toString());
                     Log.e("usercomments", user_comment.getText().toString());
 
+                    user_comment.setText("");
+
                     Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
                 } else {
                     user_comment.setError("Empty Comment");

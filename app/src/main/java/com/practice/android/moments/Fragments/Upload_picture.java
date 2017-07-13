@@ -56,7 +56,7 @@ public class Upload_picture extends Fragment {
     Uri download_uri;
     Context context;
     String user_id;
-    DatabaseReference databaseReference,mdatabaseReference;
+    DatabaseReference databaseReference, mdatabaseReference;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -216,8 +216,7 @@ public class Upload_picture extends Fragment {
             fOut.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             e.getMessage();
         }
         try {
@@ -227,6 +226,10 @@ public class Upload_picture extends Fragment {
         }
         return Uri.fromFile(file);
     }
+
+
+    //receive token
+
 
 
     private void uploadFile() {
@@ -251,7 +254,7 @@ public class Upload_picture extends Fragment {
                         download_uri = taskSnapshot.getDownloadUrl();
                         String user_id = firebaseuser.getUid();
                         String picture = String.valueOf(download_uri);
-String thumbpic = picture;
+                        String thumbpic = picture;
 
                         riversRef.child("thumbnail").putFile(selectedImage).addOnSuccessListener(taskSnapshot1 -> {
 
@@ -280,9 +283,9 @@ String thumbpic = picture;
                             currentuser.child("userName").setValue(firebaseuser.getDisplayName());
                             currentuser.child("user_id").setValue(user_id);
                             currentuser.child("thumbnail_pic").setValue(thumbpic);
+                            currentuser.child("userToken").setValue("Token");
                             currentuser.child("title").setValue(title.getText().toString());
                             currentuser.child("description").setValue(description.getText().toString());
-
 
 
                             DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
@@ -292,6 +295,7 @@ String thumbpic = picture;
                             user.child("picName").setValue(imageName);
                             user.child("userName").setValue(firebaseuser.getDisplayName());
                             user.child("user_id").setValue(user_id);
+                            user.child("userToken").setValue("Token");
                             user.child("thumbnail_pic").setValue(thumbpic);
                             user.child("title").setValue(title.getText().toString());
                             user.child("description").setValue(description.getText().toString());

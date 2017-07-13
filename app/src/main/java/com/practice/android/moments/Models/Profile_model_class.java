@@ -4,8 +4,6 @@ package com.practice.android.moments.Models;
 public class Profile_model_class {
 
     public String name;
-
-
     public String email;
     public String phone;
     public String about;

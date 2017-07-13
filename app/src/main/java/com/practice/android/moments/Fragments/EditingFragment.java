@@ -21,6 +21,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.adobe.creativesdk.aviary.AdobeImageIntent;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -38,13 +44,18 @@ public class EditingFragment extends Fragment {
     ImageView content;
     Bitmap bitmap;
     File myDir;
+    Uri download_uri;
+    DatabaseReference databaseReference, mdatabaseReference;
+    StorageReference mstorageReference;
 
-    private ImageView mEditedImageView;
-    private ImageView mOpenGalleryButton;
-    private Button mLaunchImageEditorButton;
-    private Button save;
-    private ImageView mSelectedImageView;
-    private Uri mSelectedImageUri;
+    FirebaseUser firebaseuser;
+
+    ImageView mEditedImageView;
+    ImageView mOpenGalleryButton;
+    Button mLaunchImageEditorButton;
+    Button save, Uploadimage;
+    ImageView mSelectedImageView;
+    Uri mSelectedImageUri;
 
 
     @Override
@@ -56,11 +67,19 @@ public class EditingFragment extends Fragment {
         /* 2) Find the layout's ImageView by ID */
         mEditedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        mstorageReference = FirebaseStorage.getInstance().getReference();
+
+        firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
+
+
 
         mOpenGalleryButton = (ImageView) v.findViewById(R.id.editedImageView);
         mLaunchImageEditorButton = (Button) v.findViewById(R.id.launchImageEditorButton);
         save = (Button) v.findViewById(R.id.save);
 
+        Uploadimage =(Button)v.findViewById(R.id.upload);
         mSelectedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
 
@@ -239,4 +258,107 @@ public class EditingFragment extends Fragment {
             }
         }
     }
+
+//    private void uploadFile() {
+//        //if there is a file to upload
+//        if (selectedImage != null) {
+//            //displaying a progress dialog while upload is going on
+//            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+//            progressDialog.setTitle("Uploading");
+//            progressDialog.show();
+//            progressDialog.setCancelable(true);
+//            progressDialog.setCanceledOnTouchOutside(false);
+//
+//
+//            StorageReference riversRef = mstorageReference.child("Photos")
+//                    .child(firebaseuser.getUid()).child("User Photo")
+//                    .child(selectedImage.getLastPathSegment());
+//            riversRef.child("picture").putFile(selectedImage)
+//                    .addOnSuccessListener(taskSnapshot -> {
+//                        //if the upload is successfull
+//                        //hiding the progress dialog
+//
+//                        download_uri = taskSnapshot.getDownloadUrl();
+//                        String user_id = firebaseuser.getUid();
+//                        String picture = String.valueOf(download_uri);
+//                        String thumbpic = picture;
+//
+//                        riversRef.child("thumbnail").putFile(selectedImage).addOnSuccessListener(taskSnapshot1 -> {
+//
+//                            progressDialog.dismiss();
+//
+//                            Calendar c = Calendar.getInstance();
+//                            int day = c.get(Calendar.DAY_OF_MONTH);
+//                            int month = c.get(Calendar.MONTH) + 1;
+//                            int year = c.get(Calendar.YEAR);
+//                            int hour = c.get(Calendar.HOUR_OF_DAY);
+//                            int minutes = c.get(Calendar.MINUTE);
+//                            int seconds = c.get(Calendar.SECOND);
+//                            int milliSeconds = c.get(Calendar.MILLISECOND);
+//
+//
+//                            //Can cause error in uploading
+//                            String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+//                            Log.i("Camera", imageName);
+//
+//
+//                            DatabaseReference currentuser_db = databaseReference.child("User Pictures");
+//                            currentuser_db.child(imageName).orderByPriority();
+//                            DatabaseReference currentuser = currentuser_db.child(imageName);
+//                            currentuser.child("pic").setValue(picture);
+//                            currentuser.child("picName").setValue(imageName);
+//                            currentuser.child("userName").setValue(firebaseuser.getDisplayName());
+//                            currentuser.child("user_id").setValue(user_id);
+//                            currentuser.child("thumbnail_pic").setValue(thumbpic);
+//                            currentuser.child("userToken").setValue("Token");
+//                            currentuser.child("title").setValue(title.getText().toString());
+//                            currentuser.child("description").setValue(description.getText().toString());
+//
+//
+//                            DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
+//                            user_db.child(imageName).orderByPriority();
+//                            DatabaseReference user = user_db.child(imageName);
+//                            user.child("pic").setValue(picture);
+//                            user.child("picName").setValue(imageName);
+//                            user.child("userName").setValue(firebaseuser.getDisplayName());
+//                            user.child("user_id").setValue(user_id);
+//                            user.child("userToken").setValue("Token");
+//                            user.child("thumbnail_pic").setValue(thumbpic);
+//                            user.child("title").setValue(title.getText().toString());
+//                            user.child("description").setValue(description.getText().toString());
+//
+//
+//                            //and displaying a success toast
+//                            Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+//
+//                            startActivity(new Intent(getActivity(), BottomNavigation.class));
+//
+//
+//                        });
+//
+//
+//                    })
+//                    .addOnFailureListener(exception -> {
+//                        //if the upload is not successful
+//                        //hiding the progress dialog
+//                        progressDialog.dismiss();
+//
+//                        //and displaying error message
+//                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+//                    })
+//                    .addOnProgressListener(taskSnapshot -> {
+//                        //calculating progress percentage
+//                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+//
+//                        //displaying percentage in progress dialog
+//                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+//                    });
+//        }
+//        //if there is not any file
+//        else {
+//            //you can display an error toast
+//            Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
 }
