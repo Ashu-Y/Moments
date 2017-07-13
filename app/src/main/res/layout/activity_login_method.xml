@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:elevation="8dp"
+        android:elevation="@dimen/_8sdp"
         android:shadowColor="@android:color/white"
         android:text="Sign In "
         android:textColor="#e4ea8c"
@@ -34,8 +34,8 @@
             android:id="@+id/Emailact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_13sdp"
             android:background="@drawable/circle"
             android:text=" Email"
             android:textColor="#e4ea8c"
@@ -45,7 +45,7 @@
             android:id="@+id/Phoneact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/_30sdp"
             android:background="@drawable/circle"
             android:text=" Phone"
             android:textColor="#e4ea8c"
@@ -55,7 +55,7 @@
             android:id="@+id/goobut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="@dimen/_30sdp"/>
 
 
 
@@ -64,6 +64,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="@dimen/_20sdp"/>
     </LinearLayout>
 </RelativeLayout>

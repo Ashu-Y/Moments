@@ -112,14 +112,19 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.getLayoutParams().height = 0;
                     fl.requestLayout();
 
-                    if (mTimelineFragment.isAdded()) {
+                    if(recyclerView.getVisibility() != View.VISIBLE){
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+
+                    if (mUpload_pictureFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mTimelineFragment);
+                        transaction.remove(mUpload_pictureFragment);
                         transaction.commit();
                     }
-                    if (mProfileFragment.isAdded()) {
+
+                    if (mEditingFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mProfileFragment);
+                        transaction.remove(mEditingFragment);
                         transaction.commit();
                     }
 
@@ -129,17 +134,38 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
                     }
 
-                    if (mUpload_pictureFragment.isAdded()) {
+                    if (mProfileFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mUpload_pictureFragment);
-                        transaction.addToBackStack(null);
+                        transaction.remove(mProfileFragment);
                         transaction.commit();
                     }
 
-//
                     return true;
 
                 case R.id.navigation_upload:
+
+                    if(recyclerView.getVisibility() == View.VISIBLE){
+                        recyclerView.setVisibility(View.GONE);
+                    }
+
+
+                    if (mEditingFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mEditingFragment);
+                        transaction.commit();
+                    }
+
+                    if (mSearchFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mSearchFragment);
+                        transaction.commit();
+                    }
+
+                    if (mProfileFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mProfileFragment);
+                        transaction.commit();
+                    }
 
                     if (!mUpload_pictureFragment.isAdded()) {
 
@@ -157,20 +183,32 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_search:
 
+                    if(recyclerView.getVisibility() == View.VISIBLE){
+                        recyclerView.setVisibility(View.GONE);
+                    }
+
                     fl.setMinimumHeight(size.y);
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
 
-//                    if (!mDashboardFragment.isAdded()) {
-//                        fl.setMinimumHeight(size.y);
-//                        fl.getLayoutParams().height = size.y;
-//                        fl.requestLayout();
-//
-//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//                        transaction.replace(R.id.content, mDashboardFragment, "Timeline Fragment");
-//                        transaction.addToBackStack("Timeline");
-//                        transaction.commit();
-//                    }
+                    if (mUpload_pictureFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mUpload_pictureFragment);
+                        transaction.commit();
+                    }
+
+                    if (mEditingFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mEditingFragment);
+                        transaction.commit();
+                    }
+
+
+                    if (mProfileFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mProfileFragment);
+                        transaction.commit();
+                    }
 
                     if (!mSearchFragment.isAdded()) {
                         fl.setMinimumHeight(size.y);
@@ -186,25 +224,30 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
                 case R.id.navigation_editing:
 
+                    if(recyclerView.getVisibility() == View.VISIBLE){
+                        recyclerView.setVisibility(View.GONE);
+                    }
+
                     fl.setMinimumHeight(size.y);
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
 
-                    if (mTimelineFragment.isAdded()) {
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mTimelineFragment);
-                        transaction.commit();
-                    }
-                    if (mDashboardFragment.isAdded()) {
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mDashboardFragment);
-                        transaction.commit();
-                    }
-
                     if (mUpload_pictureFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.remove(mUpload_pictureFragment);
-                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+
+
+                    if (mSearchFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mSearchFragment);
+                        transaction.commit();
+                    }
+
+                    if (mProfileFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mProfileFragment);
                         transaction.commit();
                     }
 
@@ -220,6 +263,28 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_profile:
+
+                    if(recyclerView.getVisibility() == View.VISIBLE){
+                        recyclerView.setVisibility(View.GONE);
+                    }
+
+                    if (mUpload_pictureFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mUpload_pictureFragment);
+                        transaction.commit();
+                    }
+
+                    if (mEditingFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mEditingFragment);
+                        transaction.commit();
+                    }
+
+                    if (mSearchFragment.isAdded()) {
+                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                        transaction.remove(mSearchFragment);
+                        transaction.commit();
+                    }
 
                     if (!mProfileFragment.isAdded()) {
 

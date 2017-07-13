@@ -27,10 +27,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup">
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value"/>
+
+
 
         <activity
             android:name=".Activities.MainActivity"
@@ -96,8 +99,7 @@
         <activity
             android:name=".Activities.ChangePassword"
             tools:ignore="InnerclassSeparator"/>
-        <activity android:name=".ProfileFragment">
-        </activity>
+
     </application>
 
 </manifest>
