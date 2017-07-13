@@ -63,7 +63,7 @@ public class CommentFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_comment);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(context);
-        lm_recycle.setReverseLayout(true);
+//        lm_recycle.setReverseLayout(true);
         lm_recycle.setStackFromEnd(true);
         recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
@@ -130,7 +130,7 @@ public class CommentFragment extends Fragment {
                 Comment.class,
                 R.layout.comment_recycler,
                 CommentViewHolder.class,
-                data
+                data.orderByValue()
         ) {
             @Override
             protected void populateViewHolder(CommentViewHolder viewHolder, Comment model, int position) {
