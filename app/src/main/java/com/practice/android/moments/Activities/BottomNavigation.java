@@ -95,7 +95,7 @@ public class BottomNavigation extends AppCompatActivity {
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
     RecyclerView recyclerView;
-    DatabaseReference databaseReference, databaseReference1;
+    DatabaseReference databaseReference, databaseReference1, mdatabaseReference;
     FrameLayout fl;
     String user_id;
     String user_name;
@@ -347,6 +347,8 @@ public class BottomNavigation extends AppCompatActivity {
         display = getWindowManager().getDefaultDisplay();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
         size = new Point();
         display.getSize(size);
 
@@ -361,9 +363,15 @@ public class BottomNavigation extends AppCompatActivity {
         try {
             databaseReference = FirebaseDatabase.getInstance().getReference()
                     .child("User Pictures");
+            mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users")
+                    .child(user_id).child("User Info");
+
         } catch (NullPointerException e) {
             Log.i("TimelineFrag", e.getMessage());
         }
+
+        mdatabaseReference.child("userToken").setValue(usertoken);
+
 
         context = getApplicationContext();
 
@@ -428,156 +436,333 @@ public class BottomNavigation extends AppCompatActivity {
             Log.e(e.getMessage(), "Error");
         }
 
-        FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+        try {
+            FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
-                Blog.class,
-                R.layout.row_item,
-                BlogViewHolder.class,
-                databaseReference.orderByPriority()
+                    Blog.class,
+                    R.layout.row_item,
+                    BlogViewHolder.class,
+                    databaseReference.orderByPriority()
 
-        ) {
-            @Override
-            protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+            ) {
+                @Override
+                protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
 
-                PicName = getRef(position).getKey();
+                    PicName = getRef(position).getKey();
 
-                String picname = PicName;
+                    String picname = PicName;
 
-                viewHolder.setUsername(model.getUserName());
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setProfilepic(context, model.getUser_id());
-                viewHolder.setNumberLike(picname);
-                viewHolder.setLike(picname);
-                viewHolder.setDescription(model.getDescription());
-                viewHolder.setPic(getApplicationContext(), model.getPic());
+                    viewHolder.setUsername(model.getUserName());
+                    viewHolder.setTitle(model.getTitle());
+                    viewHolder.setProfilepic(context, model.getUser_id());
+                    viewHolder.setNumberLike(picname);
+                    viewHolder.setLike(picname);
+                    viewHolder.setDescription(model.getDescription());
+                    viewHolder.setPic(getApplicationContext(), model.getPic());
 //                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
 
 //                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
 
-                viewHolder.Like.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    viewHolder.Like.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                        picLike = true;
+                            picLike = true;
 
-                        DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
+                            DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
 
-                        currentuser_db.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
+                            currentuser_db.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                if (picLike) {
+                                    if (picLike) {
 
-                                    if (dataSnapshot.child(picname).child("Users").hasChild(firebaseUser.getUid())) {
-                                        viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
-                                        Log.e("No. of likes", String.valueOf(viewHolder.i));
-                                        currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).removeValue();
-                                        picLike = false;
-                                        if (viewHolder.i > 0) {
-                                            viewHolder.i--;
-                                            String like = String.valueOf(viewHolder.i);
-                                            currentuser_db.child(picname).child("Likes").setValue(like);
+                                        if (dataSnapshot.child(picname).child("Users").hasChild(firebaseUser.getUid())) {
+                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
+                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).removeValue();
+                                            picLike = false;
+                                            if (viewHolder.i > 0) {
+                                                viewHolder.i--;
+                                                String like = String.valueOf(viewHolder.i);
+                                                currentuser_db.child(picname).child("Likes").setValue(like);
+                                            } else {
+                                                String like = String.valueOf(viewHolder.i);
+                                                currentuser_db.child(picname).child("Likes").setValue(like);
+                                            }
                                         } else {
+                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
+                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                            viewHolder.i++;
+                                            //Post method
+
+                                            setValues(picname);
+                                            new SendAsync().execute();
+
                                             String like = String.valueOf(viewHolder.i);
+                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
                                             currentuser_db.child(picname).child("Likes").setValue(like);
+                                            Log.e("Likes=====", like);
+                                            picLike = false;
                                         }
-                                    } else {
-                                        viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
-                                        Log.e("No. of likes", String.valueOf(viewHolder.i));
-                                        viewHolder.i++;
-                                        //Post method
-
-                                        setValues(picname);
-                                        new SendAsync().execute();
-
-                                        String like = String.valueOf(viewHolder.i);
-                                        currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
-                                        currentuser_db.child(picname).child("Likes").setValue(like);
-                                        Log.e("Likes=====", like);
-                                        picLike = false;
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                            }
-                        });
-                    }
-                });
-
-
-                viewHolder.comment.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        fl.setMinimumHeight(size.y);
-                        fl.getLayoutParams().height = size.y;
-                        fl.requestLayout();
-
-                        Log.e("Name", "Comment Fragment Called");
+                                }
+                            });
+                        }
+                    });
 
 
-                        Name = getRef(viewHolder.getAdapterPosition()).getKey();
+                    viewHolder.comment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            fl.setMinimumHeight(size.y);
+                            fl.getLayoutParams().height = size.y;
+                            fl.requestLayout();
+
+                            Log.e("Name", "Comment Fragment Called");
 
 
-                        mCommentFragment.setImageResourceName(Name);
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
 
 
-                        Log.e("Bottom Navigation Name", Name);
-
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mCommentFragment);
-                        transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                            mCommentFragment.setImageResourceName(Name);
 
 
-                    }
-                });
+                            Log.e("Bottom Navigation Name", Name);
+
+                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                            transaction.remove(mCommentFragment);
+                            transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
 
 
-                viewHolder.Numberlike.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        }
+                    });
 
 
-                        fl.setMinimumHeight(size.y);
-                        fl.getLayoutParams().height = size.y;
-                        fl.requestLayout();
-
-                        Name = getRef(viewHolder.getAdapterPosition()).getKey();
-
-                        mLikeFragment.setImageResourceName(Name);
-
-                        Log.e("Pic Name", Name);
-                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mLikeFragment);
-                        transaction.add(R.id.content, mLikeFragment, "Like Fragment");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
+                    viewHolder.Numberlike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
 
-                    }
-                });
+                            fl.setMinimumHeight(size.y);
+                            fl.getLayoutParams().height = size.y;
+                            fl.requestLayout();
 
-                viewHolder.imageView.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String Image = model.getPic();
-                        zoomImageFromThumb(viewHolder.imageView, Image);
-                    }
-                });
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
 
-                mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+                            mLikeFragment.setImageResourceName(Name);
 
-            }
-        };
+                            Log.e("Pic Name", Name);
+                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                            transaction.remove(mLikeFragment);
+                            transaction.add(R.id.content, mLikeFragment, "Like Fragment");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
 
-        firebaseRecyclerAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
 
+                        }
+                    });
+
+                    viewHolder.imageView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String Image = model.getPic();
+                            zoomImageFromThumb(viewHolder.imageView, Image);
+                        }
+                    });
+
+                    mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+                }
+            };
+
+            firebaseRecyclerAdapter.notifyDataSetChanged();
+//            firebaseRecyclerAdapter.cleanup();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        } catch (IndexOutOfBoundsException e) {
+            e.getMessage();
+        }
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+
+        googleApiClient.connect();
+
+        context = getApplicationContext();
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
+
+        try {
+            FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+
+                    Blog.class,
+                    R.layout.row_item,
+                    BlogViewHolder.class,
+                    databaseReference.orderByPriority()
+
+            ) {
+                @Override
+                protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
+
+                    PicName = getRef(position).getKey();
+
+                    String picname = PicName;
+
+                    viewHolder.setUsername(model.getUserName());
+                    viewHolder.setTitle(model.getTitle());
+                    viewHolder.setProfilepic(context, model.getUser_id());
+                    viewHolder.setNumberLike(picname);
+                    viewHolder.setLike(picname);
+                    viewHolder.setDescription(model.getDescription());
+                    viewHolder.setPic(getApplicationContext(), model.getPic());
+//                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
+
+//                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
+
+                    viewHolder.Like.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            picLike = true;
+
+                            DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
+
+                            currentuser_db.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    if (picLike) {
+
+                                        if (dataSnapshot.child(picname).child("Users").hasChild(firebaseUser.getUid())) {
+                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
+                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).removeValue();
+                                            picLike = false;
+                                            if (viewHolder.i > 0) {
+                                                viewHolder.i--;
+                                                String like = String.valueOf(viewHolder.i);
+                                                currentuser_db.child(picname).child("Likes").setValue(like);
+                                            } else {
+                                                String like = String.valueOf(viewHolder.i);
+                                                currentuser_db.child(picname).child("Likes").setValue(like);
+                                            }
+                                        } else {
+                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
+                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
+                                            viewHolder.i++;
+                                            //Post method
+
+                                            setValues(picname);
+                                            new SendAsync().execute();
+
+                                            String like = String.valueOf(viewHolder.i);
+                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
+                                            currentuser_db.child(picname).child("Likes").setValue(like);
+                                            Log.e("Likes=====", like);
+                                            picLike = false;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                    });
+
+
+                    viewHolder.comment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            fl.setMinimumHeight(size.y);
+                            fl.getLayoutParams().height = size.y;
+                            fl.requestLayout();
+
+                            Log.e("Name", "Comment Fragment Called");
+
+
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+
+                            mCommentFragment.setImageResourceName(Name);
+
+
+                            Log.e("Bottom Navigation Name", Name);
+
+                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                            transaction.remove(mCommentFragment);
+                            transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+
+
+                        }
+                    });
+
+
+                    viewHolder.Numberlike.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            fl.setMinimumHeight(size.y);
+                            fl.getLayoutParams().height = size.y;
+                            fl.requestLayout();
+
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+                            mLikeFragment.setImageResourceName(Name);
+
+                            Log.e("Pic Name", Name);
+                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                            transaction.remove(mLikeFragment);
+                            transaction.add(R.id.content, mLikeFragment, "Like Fragment");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+
+
+                        }
+                    });
+
+                    viewHolder.imageView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String Image = model.getPic();
+                            zoomImageFromThumb(viewHolder.imageView, Image);
+                        }
+                    });
+
+                    mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+                }
+            };
+
+            firebaseRecyclerAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        } catch (IndexOutOfBoundsException e) {
+            e.getMessage();
+        }
     }
 
     private void zoomImageFromThumb(View thumbView, String imageResId) {
@@ -823,7 +1008,7 @@ public class BottomNavigation extends AppCompatActivity {
     public void setValues(String imagename) {
 
         databaseReference1 = FirebaseDatabase.getInstance().getReference()
-                .child("Likes").child(imagename).child("Users");
+                .child("User Pictures").child(imagename);
 
         databaseReference1.addValueEventListener(new ValueEventListener() {
 
@@ -831,7 +1016,8 @@ public class BottomNavigation extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Image user_image = dataSnapshot.getValue(Image.class);
 
-//                imageusertoken = user_image.getUserToken();
+                assert user_image != null;
+                imageusertoken = user_image.getUserToken();
                 imageurl = user_image.getPic();
             }
 
@@ -1003,10 +1189,6 @@ public class BottomNavigation extends AppCompatActivity {
                 }
             });
 
-
-//            Glide.with(context).load(photo)
-//                    .skipMemoryCache(false)
-//                    .placeholder(R.drawable.c1).into(profile);
 
         }
     }

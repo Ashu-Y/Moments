@@ -11,12 +11,16 @@ public class Image implements Serializable {
     String picName;
     String title;
     String description;
-    String thumbnail_pic, user_id, pic, userToken;
+    String thumbnail_pic;
+    String user_id;
+    String pic;
+    String userToken;
+    String userName;
 
     public Image() {
     }
 
-    public Image(String picName, String title, String description, String thumbnail_pic, String user_id, String pic, String userToken) {
+    public Image(String picName, String title, String description, String thumbnail_pic, String user_id, String pic, String userToken, String userName) {
         this.picName = picName;
         this.title = title;
         this.description = description;
@@ -24,29 +28,9 @@ public class Image implements Serializable {
         this.user_id = user_id;
         this.pic = pic;
         this.userToken = userToken;
+        this.userName = userName;
     }
 
-    public Image(String picName, String thumbnail_pic, String pic,
-                 String userToken,
-                 String title,
-                 String description) {
-        this.userToken = userToken;
-
-        this.picName = picName;
-        this.thumbnail_pic = thumbnail_pic;
-        this.pic = pic;
-        this.title = title;
-        this.description = description;
-
-    }
-
-    public String getUserToken() {
-        return userToken;
-    }
-
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
-    }
 
     public String getPicName() {
         return picName;
@@ -95,6 +79,23 @@ public class Image implements Serializable {
     public void setPic(String pic) {
         this.pic = pic;
     }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
 
 
 }

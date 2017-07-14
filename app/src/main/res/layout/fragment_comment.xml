@@ -10,8 +10,8 @@
         android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:padding="4dp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:padding="@dimen/_4sdp"
         android:text="Comments"
         android:textAlignment="center"
         android:textSize="32sp" />
@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/commentLayout"
         android:layout_below="@+id/tv"
-        android:padding="4dp" />
+        android:padding="@dimen/_4sdp" />
     <!--<TextView-->
     <!--android:id="@+id/name"-->
     <!--android:layout_width="match_parent"-->
@@ -47,16 +47,16 @@
             android:id="@+id/comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/_8sdp"
             android:layout_weight="1"
             android:background="@drawable/input"
             android:hint="Comment"
-            android:padding="4dp" />
+            android:padding="@dimen/_4sdp" />
 
         <ImageView
             android:id="@+id/post_comment"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:src="@drawable/send" />
     </LinearLayout>
 

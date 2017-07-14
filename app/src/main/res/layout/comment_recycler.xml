@@ -24,7 +24,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="3dp"
+                android:layout_height="@dimen/_3sdp"
                 android:layout_below="@+id/comment_user_name" />
 
             <TextView

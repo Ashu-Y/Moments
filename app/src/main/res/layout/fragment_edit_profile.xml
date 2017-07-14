@@ -37,9 +37,9 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -48,25 +48,25 @@
             android:id="@+id/editText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
             android:ems="10"
             android:gravity="start|center_vertical"
             android:inputType="textPersonName"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/tv_gender"
             android:layout_width="wrap_content"
-            android:layout_height="25sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:paddingRight="16sp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:text="Gender"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -75,27 +75,27 @@
             android:id="@+id/radio_gender"
             android:layout_width="match_parent"
             android:layout_height="35sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:ems="10"
             android:gravity="start|center_vertical"
             android:inputType="textEmailAddress"
             android:orientation="horizontal"
-            android:paddingRight="10dp"
+            android:paddingRight="@dimen/_10sdp"
             android:textColor="@android:color/white">
 
             <RadioButton
                 android:id="@+id/gender_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:text="Male"/>
 
             <RadioButton
                 android:id="@+id/gender_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="@dimen/_8sdp"
                 android:text="Female"/>
 
             <RadioButton
@@ -109,10 +109,10 @@
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:paddingRight="16dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:text="Email"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -121,25 +121,25 @@
             android:id="@+id/editText9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
             android:ems="10"
             android:gravity="start|center_vertical"
             android:inputType="textEmailAddress"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:paddingRight="16dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:text="Phone"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -148,23 +148,23 @@
             android:id="@+id/editText5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
             android:inputType="phone"
             android:maxLength="10"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"/>
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"/>
 
         <TextView
             android:id="@+id/textView87"
             android:layout_width="wrap_content"
-            android:layout_height="23dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:paddingRight="16dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:paddingRight="@dimen/_16sdp"
             android:text="About"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -173,22 +173,22 @@
             android:id="@+id/editText541"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"/>
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"/>
 
         <TextView
             android:id="@+id/textView087"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="Date Of Birth"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -196,9 +196,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
             android:orientation="horizontal">
 
@@ -206,20 +206,20 @@
                 android:id="@+id/edit_date"
                 android:layout_width="0sp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:layout_weight="9"
                 android:background="@android:color/transparent"
                 android:inputType="textShortMessage"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"/>
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"/>
 
             <ImageView
                 android:id="@+id/select_cal"
                 android:layout_width="0sp"
-                android:layout_height="24sp"
-                android:layout_margin="4sp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_margin="@dimen/_4sdp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_date_range_black_24dp"
                 android:tint="@android:color/white"
@@ -230,9 +230,9 @@
         <TextView
             android:id="@+id/textView0827"
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="Relationship"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white"/>
@@ -240,14 +240,14 @@
         <Spinner
             android:id="@+id/Relationship"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:paddingLeft="@dimen/_10sdp"
+            android:paddingRight="@dimen/_10sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:spinnerMode="dropdown"/>
 
 
@@ -255,8 +255,8 @@
             android:id="@+id/submitedit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="150sp"
-            android:layout_marginTop="25sp"
+            android:layout_marginLeft="@dimen/_123sdp"
+            android:layout_marginTop="@dimen/_25sdp"
             android:background="#063852"
             android:gravity="center"
             android:text="Submit"/>

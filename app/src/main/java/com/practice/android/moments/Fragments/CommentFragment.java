@@ -135,12 +135,15 @@ public class CommentFragment extends Fragment {
         data.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String key = dataSnapshot.getValue(String.class);
+                // String key = dataSnapshot.getValue(String.class);
 
-
-                if (key == null) {
-                    Log.e("dataSnapshotKey", key + "Hello");
-                    Toast.makeText(context, "NO comments", Toast.LENGTH_LONG).show();
+                try {
+                    if (null == dataSnapshot.getValue(String.class)) {
+                        Log.e("dataSnapshotKey", dataSnapshot.getValue() + "Hello");
+                        Toast.makeText(context, "NO comments", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    e.getMessage();
                 }
 
             }
@@ -163,6 +166,9 @@ public class CommentFragment extends Fragment {
 
                 String pos = getRef(position).getKey();
                 Log.e("POSITION++++++", pos);
+                String posvalu = String.valueOf(getRef(position).getDatabase());
+
+                Log.e("Database Values will be", posvalu);
 
                 if (pos.equals("")) {
                     Log.e("NO Comment", pos);

@@ -204,7 +204,7 @@ public class ProfileEditingFragment extends Fragment {
 
                     if (flag != -1) {
 
-                        if(!firebaseUser.isEmailVerified()){
+                        if (!firebaseUser.isEmailVerified()) {
                             firebaseUser.sendEmailVerification()
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -252,7 +252,6 @@ public class ProfileEditingFragment extends Fragment {
                         currentuser_db.child("relationship").setValue(relation);
                         currentuser_db.child("about").setValue(About.getText().toString());
                         currentuser_db.child("date_of_birth").setValue(Date_of_birth.getText().toString());
-
 
                         Toast.makeText(getActivity(), "Uploaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
@@ -309,8 +308,6 @@ public class ProfileEditingFragment extends Fragment {
 
 //set the default according to value
                 spinner.setSelection(spinnerPosition);
-
-
 
 
                 Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());

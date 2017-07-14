@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
-import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -127,13 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             updateUI(null);
                         } else {
-                            startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
-                            String token = MyFirebaseInstanceIDService.refreshedToken;
-
-                            DatabaseReference currentuser_db = databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("User Info");
-
-                            currentuser_db.child("userToken").setValue(token);
-
+                            hideProgressDialog();
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, BottomNavigation.class));
                         }
