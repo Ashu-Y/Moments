@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -37,7 +39,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -48,6 +49,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.practice.android.moments.Fragments.CommentFragment;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.EditingFragment;
@@ -57,11 +59,17 @@ import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Helper.BottomNavigationViewHelper;
+import com.practice.android.moments.Helper.ServiceHandler;
 import com.practice.android.moments.Models.Blog;
+import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
+import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
+
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -74,6 +82,9 @@ public class BottomNavigation extends AppCompatActivity {
     public static String Name;
     public static GoogleApiClient googleApiClient;
     public static Context context;
+    public static String usertoken;
+    ProgressDialog pDialog;
+    ServiceHandler mServiceHandler;
     TimelineFragment mTimelineFragment;
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
@@ -84,21 +95,27 @@ public class BottomNavigation extends AppCompatActivity {
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
     RecyclerView recyclerView;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, databaseReference1;
     FrameLayout fl;
     String user_id;
     String user_name;
     Display display;
+
+
+    String google_key, deviceToken, heading, description, image;
+    String jsonStr;
+
+
     Point size;
     FirebaseAuth firebaseAuth;
     Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
-
+    String imageusertoken;
+    String imageurl;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
-
     private String TAG = getClass().getSimpleName();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -112,7 +129,7 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.getLayoutParams().height = 0;
                     fl.requestLayout();
 
-                    if(recyclerView.getVisibility() != View.VISIBLE){
+                    if (recyclerView.getVisibility() != View.VISIBLE) {
                         recyclerView.setVisibility(View.VISIBLE);
                     }
 
@@ -144,7 +161,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_upload:
 
-                    if(recyclerView.getVisibility() == View.VISIBLE){
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
@@ -183,7 +200,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_search:
 
-                    if(recyclerView.getVisibility() == View.VISIBLE){
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
@@ -224,7 +241,7 @@ public class BottomNavigation extends AppCompatActivity {
                     return true;
                 case R.id.navigation_editing:
 
-                    if(recyclerView.getVisibility() == View.VISIBLE){
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
@@ -264,7 +281,7 @@ public class BottomNavigation extends AppCompatActivity {
 
                 case R.id.navigation_profile:
 
-                    if(recyclerView.getVisibility() == View.VISIBLE){
+                    if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
@@ -312,6 +329,18 @@ public class BottomNavigation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_bottom_navigation);
+
+        pDialog = new ProgressDialog(this);
+
+
+        usertoken = FirebaseInstanceId.getInstance().getToken();
+
+        Toast.makeText(this, usertoken, Toast.LENGTH_SHORT).show();
+        Log.i("Token", usertoken);
+
+
+        startService(new Intent(this, MyFirebaseInstanceIDService.class));
+
 
         picLike = false;
         fl = (FrameLayout) findViewById(R.id.content);
@@ -370,6 +399,20 @@ public class BottomNavigation extends AppCompatActivity {
                         "Check ur connection", Toast.LENGTH_SHORT).show()).addApi(Auth.GOOGLE_SIGN_IN_API).build();
 
     }
+
+//
+//    public void LogoutButton() {
+//        Log.i(TAG, "You clicked onClick Button");
+//        FirebaseAuth.getInstance().signOut();
+//        LoginManager.getInstance().logOut();
+//        Auth.GoogleSignInApi.signOut(googleApiClient)
+//                .setResultCallback(
+//                        status -> {
+//                            Log.i(TAG, "log off from google sign button");
+//                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(this, Login_method.class));
+//                        });
+//    }
 
     @Override
     protected void onStart() {
@@ -444,6 +487,8 @@ public class BottomNavigation extends AppCompatActivity {
                                         viewHolder.i++;
                                         //Post method
 
+                                        setValues(picname);
+                                        new SendAsync().execute();
 
                                         String like = String.valueOf(viewHolder.i);
                                         currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
@@ -534,7 +579,6 @@ public class BottomNavigation extends AppCompatActivity {
         recyclerView.setAdapter(firebaseRecyclerAdapter);
 
     }
-
 
     private void zoomImageFromThumb(View thumbView, String imageResId) {
         // If there's an animation in progress, cancel it
@@ -685,20 +729,6 @@ public class BottomNavigation extends AppCompatActivity {
         });
     }
 
-
-    public void LogoutButton() {
-        Log.i(TAG, "You clicked onClick Button");
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        Auth.GoogleSignInApi.signOut(googleApiClient)
-                .setResultCallback(
-                        status -> {
-                            Log.i(TAG, "log off from google sign button");
-                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(this, Login_method.class));
-                        });
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -755,7 +785,6 @@ public class BottomNavigation extends AppCompatActivity {
         return path;
     }
 
-
     @Override
     public void onBackPressed() {
 
@@ -791,6 +820,36 @@ public class BottomNavigation extends AppCompatActivity {
         }
     }
 
+    public void setValues(String imagename) {
+
+        databaseReference1 = FirebaseDatabase.getInstance().getReference()
+                .child("Likes").child(imagename).child("Users");
+
+        databaseReference1.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Image user_image = dataSnapshot.getValue(Image.class);
+
+//                imageusertoken = user_image.getUserToken();
+                imageurl = user_image.getPic();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        String userid = firebaseUser.getUid();
+        String user_name = firebaseUser.getDisplayName();
+        google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
+        deviceToken = usertoken;
+        heading = "hello";
+        description = "Photo Liked By";
+        image = "https://firebasestorage.googleapis.com/v0/b/moments-62a1f.appspot.com/o/Photos%2FqYOWSIuWYscqTXGgXyb92GRzEPu2%2FUser%20Photo%2F13-7-2017-19%3A5%3A49%3A388%2Fpicture?alt=media&token=14f73843-3669-4057-ab30-1fab1cd64fbf";
+    }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
 
@@ -952,6 +1011,50 @@ public class BottomNavigation extends AppCompatActivity {
         }
     }
 
+    private class SendAsync extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(BottomNavigation.this);
+            pDialog.setTitle("Saving Data");
+            pDialog.setMessage("Please Wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            mServiceHandler = new ServiceHandler(BottomNavigation.this);
+
+            ArrayList<BasicNameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("google_key", google_key));
+            nameValuePairs.add(new BasicNameValuePair("deviceToken", deviceToken));
+            nameValuePairs.add(new BasicNameValuePair("heading", heading));
+            nameValuePairs.add(new BasicNameValuePair("description", description));
+            nameValuePairs.add(new BasicNameValuePair("image", image));
+
+            jsonStr = mServiceHandler.makeServiceCall("http://appzynga.com/projects/trainee/and_notifications/notification.php/",
+                    ServiceHandler.POST,
+                    nameValuePairs);
+
+            Log.e("Notifyyyy", jsonStr);
+
+
+            return null;
+        }
+
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+
+        }
+
+    }
 
 }
 

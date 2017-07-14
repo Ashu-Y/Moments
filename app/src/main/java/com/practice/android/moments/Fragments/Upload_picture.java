@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.practice.android.moments.Activities.BottomNavigation.usertoken;
 
 @SuppressLint("NewApi")
 public class Upload_picture extends Fragment {
@@ -56,6 +57,8 @@ public class Upload_picture extends Fragment {
     Uri download_uri;
     Context context;
     String user_id;
+
+
     DatabaseReference databaseReference, mdatabaseReference;
 
     @Override
@@ -231,7 +234,6 @@ public class Upload_picture extends Fragment {
     //receive token
 
 
-
     private void uploadFile() {
         //if there is a file to upload
         if (selectedImage != null) {
@@ -283,7 +285,7 @@ public class Upload_picture extends Fragment {
                             currentuser.child("userName").setValue(firebaseuser.getDisplayName());
                             currentuser.child("user_id").setValue(user_id);
                             currentuser.child("thumbnail_pic").setValue(thumbpic);
-                            currentuser.child("userToken").setValue("Token");
+                            currentuser.child("userToken").setValue(usertoken);
                             currentuser.child("title").setValue(title.getText().toString());
                             currentuser.child("description").setValue(description.getText().toString());
 
@@ -295,7 +297,7 @@ public class Upload_picture extends Fragment {
                             user.child("picName").setValue(imageName);
                             user.child("userName").setValue(firebaseuser.getDisplayName());
                             user.child("user_id").setValue(user_id);
-                            user.child("userToken").setValue("Token");
+                            user.child("userToken").setValue(usertoken);
                             user.child("thumbnail_pic").setValue(thumbpic);
                             user.child("title").setValue(title.getText().toString());
                             user.child("description").setValue(description.getText().toString());

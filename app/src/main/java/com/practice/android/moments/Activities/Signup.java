@@ -22,6 +22,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
+import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 import java.util.Objects;
 
@@ -149,12 +150,14 @@ public class Signup extends AppCompatActivity {
                                                                     });
 
                                                             user_id = firebaseUser.getUid();
-
+                                                            startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
+                                                            String token = MyFirebaseInstanceIDService.refreshedToken;
                                                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                                             currentuser_db.child("name").setValue(user_name);
                                                             currentuser_db.child("email").setValue(user_email);
                                                             currentuser_db.child("phone").setValue(user_phone);
                                                             currentuser_db.child("photo").setValue("Default");
+                                                            currentuser_db.child("userToken").setValue(token);
                                                             currentuser_db.child("gender").setValue("Default");
                                                             currentuser_db.child("relationship").setValue("Default");
                                                             currentuser_db.child("about").setValue("Default");

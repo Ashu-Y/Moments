@@ -14,6 +14,7 @@ public class Splash extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,7 @@ public class Splash extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(1500);
+
                     Intent intent = new Intent(getApplicationContext(), Login_method.class);
                     startActivity(intent);
                     finish();

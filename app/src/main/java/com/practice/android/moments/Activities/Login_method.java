@@ -38,6 +38,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
+import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 import java.util.Arrays;
 
@@ -46,6 +47,7 @@ public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 0;
+    public static String token;
     DatabaseReference databaseReference;
     private Button ViaEmail;
     private Button Viaphone;
@@ -59,7 +61,6 @@ public class Login_method extends AppCompatActivity {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProgressDialog mProgressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,13 +234,15 @@ public class Login_method extends AppCompatActivity {
                                                 }
                                             }
                                         });
-
+                                startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
+                                token = MyFirebaseInstanceIDService.refreshedToken;
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
                                 currentuser_db.child("email").setValue(acct.getEmail());
                                 currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("photo").setValue("Default");
                                 currentuser_db.child("gender").setValue("Default");
+                                currentuser_db.child("userToken").setValue(token);
                                 currentuser_db.child("relationship").setValue("Default");
                                 currentuser_db.child("about").setValue("Default");
                                 currentuser_db.child("date_of_birth").setValue("Default");
@@ -300,6 +303,8 @@ public class Login_method extends AppCompatActivity {
                                             }
                                         });
 
+                                startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
+                                String token1 = MyFirebaseInstanceIDService.refreshedToken;
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
@@ -307,6 +312,7 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("phone").setValue("Default");
                                 currentuser_db.child("photo").setValue("Default");
                                 currentuser_db.child("gender").setValue("Default");
+                                currentuser_db.child("userToken").setValue(token1);
                                 currentuser_db.child("relationship").setValue("Default");
                                 currentuser_db.child("about").setValue("Default");
                                 currentuser_db.child("date_of_birth").setValue("Default");

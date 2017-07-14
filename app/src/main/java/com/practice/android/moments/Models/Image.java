@@ -11,21 +11,41 @@ public class Image implements Serializable {
     String picName;
     String title;
     String description;
-    String thumbnail_pic, medium, pic;
+    String thumbnail_pic, user_id, pic, userToken;
 
     public Image() {
     }
 
+    public Image(String picName, String title, String description, String thumbnail_pic, String user_id, String pic, String userToken) {
+        this.picName = picName;
+        this.title = title;
+        this.description = description;
+        this.thumbnail_pic = thumbnail_pic;
+        this.user_id = user_id;
+        this.pic = pic;
+        this.userToken = userToken;
+    }
+
     public Image(String picName, String thumbnail_pic, String pic,
-//                 String timestamp
+                 String userToken,
                  String title,
                  String description) {
+        this.userToken = userToken;
+
         this.picName = picName;
         this.thumbnail_pic = thumbnail_pic;
         this.pic = pic;
         this.title = title;
         this.description = description;
 
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 
     public String getPicName() {
@@ -60,12 +80,12 @@ public class Image implements Serializable {
         this.thumbnail_pic = thumbnail_pic;
     }
 
-    public String getMedium() {
-        return medium;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setMedium(String medium) {
-        this.medium = medium;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getPic() {

@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 import com.hbb20.CountryCodePicker.OnCountryChangeListener;
 import com.practice.android.moments.R;
+import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -191,13 +192,15 @@ public class Phoneprovider extends AppCompatActivity {
                                             }
                                         }
                                     });
-
+                            startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
+                            String token = MyFirebaseInstanceIDService.refreshedToken;
 
                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                             currentuser_db.child("name").setValue(mname.getText().toString());
                             currentuser_db.child("email").setValue("Default");
                             currentuser_db.child("phone").setValue(newphonenumber);
                             currentuser_db.child("photo").setValue("Default");
+                            currentuser_db.child("userToken").setValue(token);
                             currentuser_db.child("gender").setValue("Default");
                             currentuser_db.child("relationship").setValue("Default");
                             currentuser_db.child("about").setValue("Default");

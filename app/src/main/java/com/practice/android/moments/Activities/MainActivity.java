@@ -18,11 +18,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
+import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth.AuthStateListener authStateListener;
+    DatabaseReference databaseReference;
     //variables
     private EditText login, pass; // login and password edittext
     private Button signin, signup; // sign in  and sign up button
@@ -44,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         signup = (Button) findViewById(R.id.button2);
 
         Reset = (TextView) findViewById(R.id.passreset);
-
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -123,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             updateUI(null);
                         } else {
+                            startService(new Intent(getApplicationContext(), MyFirebaseInstanceIDService.class));
+                            String token = MyFirebaseInstanceIDService.refreshedToken;
+
+                            DatabaseReference currentuser_db = databaseReference.child(firebaseAuth.getCurrentUser().getUid()).child("User Info");
+
+                            currentuser_db.child("userToken").setValue(token);
+
                             Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(MainActivity.this, BottomNavigation.class));
                         }
