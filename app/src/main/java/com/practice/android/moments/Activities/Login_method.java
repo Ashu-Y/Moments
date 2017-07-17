@@ -3,10 +3,14 @@ package com.practice.android.moments.Activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +20,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -39,6 +42,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 
@@ -64,9 +69,32 @@ public class Login_method extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //facebook SDK initialized
-        FacebookSdk.sdkInitialize(getApplication());
+//        try {
+//            FacebookSdk.sdkInitialize(getApplicationContext());
+//        }catch (Exception e){
+//            e.getMessage();
+//        }
+
+
+
         setContentView(R.layout.activity_login_method);
 
+
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.facebook.samples.hellofacebook",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -237,6 +265,12 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
                                 currentuser_db.child("email").setValue(acct.getEmail());
 
+//                                try {
+//                                    currentuser_db.child("photo").setValue(acct.getPhotoUrl());
+//                                    Log.e("Photo URL", acct.getPhotoUrl() + "\t" + acct.getDisplayName() + "\t" + acct.getEmail());
+//                                } catch (Exception e) {
+//                                    e.getMessage();
+//                                }
                                 updateUI(firebaseUser);
                             }
                         } else {

@@ -196,12 +196,6 @@ public class Phoneprovider extends AppCompatActivity {
                             currentuser_db.child("name").setValue(mname.getText().toString());
                             currentuser_db.child("email").setValue("Default");
                             currentuser_db.child("phone").setValue(newphonenumber);
-                            currentuser_db.child("photo").setValue("Default");
-                            currentuser_db.child("gender").setValue("Default");
-                            currentuser_db.child("relationship").setValue("Default");
-                            currentuser_db.child("about").setValue("Default");
-                            currentuser_db.child("coverPhoto").setValue("default");
-                            currentuser_db.child("date_of_birth").setValue("Default");
                             currentuser_db.child("Verification code").setValue(Verfiy_code.getText().toString());
 
                             Toast.makeText(Phoneprovider.this, "Logged in", Toast.LENGTH_SHORT).show();

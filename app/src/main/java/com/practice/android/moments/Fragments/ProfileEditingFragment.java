@@ -219,7 +219,9 @@ public class ProfileEditingFragment extends Fragment {
 
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(name.getText().toString())
+
                                 .build();
+
 
                         firebaseUser.updateProfile(profileUpdates)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -240,11 +242,12 @@ public class ProfileEditingFragment extends Fragment {
                         } else {
                             currentuser_db.child("email").setValue(email.getText().toString());
                         }
-//                        if (!Objects.equals(firebaseUser.getEmail(), defa)) {
+//                        if (!Objects.equals(firebaseUser.getPhoneNumber(), defa)) {
 //                            currentuser_db.child("phone").setValue(firebaseUser.getPhoneNumber());
-//                            email.setText(firebaseUser.getPhoneNumber());
+//                            phone.setText(firebaseUser.getPhoneNumber());
 //                        } else {
                         currentuser_db.child("phone").setValue(phone.getText().toString());
+
 
 //                        }
 
@@ -278,47 +281,53 @@ public class ProfileEditingFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        try {
+            databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-        databaseReference.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                    assert user != null;
+                    Log.e("Editing Activity", "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                    name.setText(user.getName());
+                    email.setText(user.getEmail());
+                    phone.setText(user.getPhone());
+                    About.setText(user.getAbout());
+                    Date_of_birth.setText(user.getDate_of_birth());
 
-                assert user != null;
-                Log.d("Editing Activity", "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
-                name.setText(user.getName());
-                email.setText(user.getEmail());
-                phone.setText(user.getPhone());
-                About.setText(user.getAbout());
-                Date_of_birth.setText(user.getDate_of_birth());
+                    String userGender = user.getGender();
+                    String userRelationshipStatus = user.getRelationship();
 
-                String userGender = user.getGender();
-                String userRelationshipStatus = user.getRelationship();
-
-                if (userGender.equals("Male")) {
-                    male.setChecked(true);
-                } else if (userGender.equals("Female")) {
-                    female.setChecked(true);
-                }
+                    try {
+                        if (userGender.equals("Male")) {
+                            male.setChecked(true);
+                        } else if (userGender.equals("Female")) {
+                            female.setChecked(true);
+                        }
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
 
 
-                ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter(); //cast to an ArrayAdapter
+                    ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter(); //cast to an ArrayAdapter
 
-                int spinnerPosition = myAdap.getPosition(userRelationshipStatus);
+                    int spinnerPosition = myAdap.getPosition(userRelationshipStatus);
 
 //set the default according to value
-                spinner.setSelection(spinnerPosition);
+                    spinner.setSelection(spinnerPosition);
 
 
-                Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
-            }
+                    Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
+                }
+            });
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
     }
 

@@ -49,6 +49,7 @@
             android:layout_alignBottom="@id/user_profile_photo"
             android:layout_alignEnd="@id/user_profile_photo"
             android:clickable="true"
+            android:elevation="@dimen/_5sdp"
             android:src="@drawable/ic_photo_camera_black_24dp"
             app:backgroundTint="@android:color/holo_blue_bright"
             app:fabSize="mini"

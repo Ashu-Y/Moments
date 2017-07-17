@@ -335,7 +335,7 @@ public class BottomNavigation extends AppCompatActivity {
 
         usertoken = FirebaseInstanceId.getInstance().getToken();
 
-        Toast.makeText(this, usertoken, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, usertoken, Toast.LENGTH_SHORT).show();
         Log.i("Token", usertoken);
 
 
@@ -1010,23 +1010,26 @@ public class BottomNavigation extends AppCompatActivity {
         databaseReference1 = FirebaseDatabase.getInstance().getReference()
                 .child("User Pictures").child(imagename);
 
-        databaseReference1.addValueEventListener(new ValueEventListener() {
+        try {
+            databaseReference1.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Image user_image = dataSnapshot.getValue(Image.class);
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Image user_image = dataSnapshot.getValue(Image.class);
 
-                assert user_image != null;
-                imageusertoken = user_image.getUserToken();
-                imageurl = user_image.getPic();
-            }
+                    assert user_image != null;
+                    imageusertoken = user_image.getUserToken();
+                    imageurl = user_image.getPic();
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
+                }
+            });
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
         String userid = firebaseUser.getUid();
         String user_name = firebaseUser.getDisplayName();

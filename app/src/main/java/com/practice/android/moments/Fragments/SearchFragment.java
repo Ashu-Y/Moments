@@ -17,22 +17,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class SearchFragment extends Fragment {
 
     Context context;
     DatabaseReference databaseReference1, databaseReference;
 
-    ArrayList<HashMap<String, String>> userList;
+//    ArrayList<HashMap<String, String>> userList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
 
-        userList = new ArrayList<>();
+//        userList = new ArrayList<>();
 
         return v;
     }
@@ -46,7 +43,7 @@ public class SearchFragment extends Fragment {
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
 
-            int i = 0;
+//            int i = 0;
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -73,16 +70,16 @@ public class SearchFragment extends Fragment {
                             Log.e("Key Node", "" + nodeKey);
                             Log.e("number of OBJECTS", String.valueOf(number1) + "\t" + user.getName());
 
-                            HashMap<String, String> item = new HashMap<String, String>();
-                            item.put(nodeKey, user.getName());
-
-                            userList.add(item);
-
-                            HashMap<String, String> useritem = userList.get(i);
-
-                            i++;
-
-                            Log.e("Key ", "" + useritem.get(nodeKey));
+//                            HashMap<String, String> item = new HashMap<String, String>();
+//                            item.put(nodeKey, user.getName());
+//
+//                            userList.add(item);
+//
+//                            HashMap<String, String> useritem = userList.get(i);
+//
+//                            i++;
+//
+//                            Log.e("Key ", "" + useritem.get(nodeKey));
 
                         }
 
