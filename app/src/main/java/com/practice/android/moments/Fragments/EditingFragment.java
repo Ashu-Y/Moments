@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -15,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -35,7 +35,6 @@ import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 
-
 public class EditingFragment extends Fragment {
 
     static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;
@@ -52,8 +51,8 @@ public class EditingFragment extends Fragment {
 
     ImageView mEditedImageView;
     ImageView mOpenGalleryButton;
-    Button mLaunchImageEditorButton;
-    Button save, Uploadimage;
+    FloatingActionButton mLaunchImageEditorButton;
+    FloatingActionButton save, Uploadimage;
     ImageView mSelectedImageView;
     Uri mSelectedImageUri;
 
@@ -74,12 +73,11 @@ public class EditingFragment extends Fragment {
         firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
 
 
-
         mOpenGalleryButton = (ImageView) v.findViewById(R.id.editedImageView);
-        mLaunchImageEditorButton = (Button) v.findViewById(R.id.launchImageEditorButton);
-        save = (Button) v.findViewById(R.id.save);
+        mLaunchImageEditorButton = (FloatingActionButton) v.findViewById(R.id.launchImageEditorButton);
 
-        Uploadimage =(Button)v.findViewById(R.id.upload);
+        save = (FloatingActionButton) v.findViewById(R.id.saveButton);
+        Uploadimage = (FloatingActionButton) v.findViewById(R.id.button_upload);
         mSelectedImageView = (ImageView) v.findViewById(R.id.editedImageView);
 
 

@@ -19,10 +19,12 @@ public class Profile_model_class {
     public Profile_model_class() {
     }
 
-    public Profile_model_class(String name, String email, String phone, String about, String relationship,
-                               String date_of_birth, String photo, String gender,
-                               String thumbnailProfilephoto, String thumbnailCoverPhoto,
-                               String coverPhoto, String userToken) {
+    public Profile_model_class(String name, String email, String phone,
+                               String about, String relationship,
+                               String date_of_birth, String photo,
+                               String gender, String thumbnailProfilephoto,
+                               String thumbnailCoverPhoto, String coverPhoto,
+                               String userToken) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -35,47 +37,6 @@ public class Profile_model_class {
         this.thumbnailCoverPhoto = thumbnailCoverPhoto;
         this.coverPhoto = coverPhoto;
         this.userToken = userToken;
-    }
-
-    public Profile_model_class(String name, String email, String phone,
-                               String about, String relationship, String date_of_birth,
-                               String photo, String gender, String thumbnailProfilephoto,
-                               String thumbnailCoverPhoto, String coverPhoto) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.about = about;
-        this.relationship = relationship;
-        this.date_of_birth = date_of_birth;
-        this.photo = photo;
-        this.gender = gender;
-        this.thumbnailProfilephoto = thumbnailProfilephoto;
-        this.thumbnailCoverPhoto = thumbnailCoverPhoto;
-        this.coverPhoto = coverPhoto;
-    }
-
-    public Profile_model_class(String name, String email, String phone, String about, String relationship, String date_of_birth, String photo, String gender, String coverPhoto) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.about = about;
-        this.relationship = relationship;
-        this.date_of_birth = date_of_birth;
-        this.photo = photo;
-        this.gender = gender;
-        this.coverPhoto = coverPhoto;
-    }
-
-    public Profile_model_class(String name, String email, String relationship, String about, String phone, String gender, String photo, String date_of_birth) {
-
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.about = about;
-        this.relationship = relationship;
-        this.date_of_birth = date_of_birth;
-        this.gender = gender;
-        this.photo = photo;
     }
 
     public String getName() {
@@ -173,4 +134,6 @@ public class Profile_model_class {
     public void setUserToken(String userToken) {
         this.userToken = userToken;
     }
+
+
 }

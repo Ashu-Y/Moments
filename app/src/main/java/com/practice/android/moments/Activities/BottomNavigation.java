@@ -70,12 +70,17 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class BottomNavigation extends AppCompatActivity {
 
+    public static final String USER_ID = "User_Id";
+    public static final String USER_NAME = "User_Name";
+    public static final String USER_PHOTO = "User_Photo";
+    public static final String USER_TOKEN = "User_Token";
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
@@ -83,6 +88,7 @@ public class BottomNavigation extends AppCompatActivity {
     public static GoogleApiClient googleApiClient;
     public static Context context;
     public static String usertoken;
+    public static ArrayList<HashMap<String, String>> al_appsearch;
     ProgressDialog pDialog;
     ServiceHandler mServiceHandler;
     TimelineFragment mTimelineFragment;
@@ -100,18 +106,15 @@ public class BottomNavigation extends AppCompatActivity {
     String user_id;
     String user_name;
     Display display;
-
-
     String google_key, deviceToken, heading, description, image;
     String jsonStr;
-
-
     Point size;
     FirebaseAuth firebaseAuth;
     Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
+    DatabaseReference databaseReference2;
     String imageusertoken;
     String imageurl;
     private Animator mCurrentAnimator;
@@ -342,6 +345,8 @@ public class BottomNavigation extends AppCompatActivity {
         startService(new Intent(this, MyFirebaseInstanceIDService.class));
 
 
+        al_appsearch = new ArrayList<>();
+        al_appsearch.clear();
         picLike = false;
         fl = (FrameLayout) findViewById(R.id.content);
         display = getWindowManager().getDefaultDisplay();
@@ -408,26 +413,15 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
-//
-//    public void LogoutButton() {
-//        Log.i(TAG, "You clicked onClick Button");
-//        FirebaseAuth.getInstance().signOut();
-//        LoginManager.getInstance().logOut();
-//        Auth.GoogleSignInApi.signOut(googleApiClient)
-//                .setResultCallback(
-//                        status -> {
-//                            Log.i(TAG, "log off from google sign button");
-//                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(this, Login_method.class));
-//                        });
-//    }
-
     @Override
     protected void onStart() {
         super.onStart();
         googleApiClient.connect();
 
         context = getApplicationContext();
+
+        al_appsearch.clear();
+
         try {
             assert firebaseUser != null;
             user_id = firebaseUser.getUid();
@@ -588,6 +582,74 @@ public class BottomNavigation extends AppCompatActivity {
 //            firebaseRecyclerAdapter.cleanup();
             recyclerView.setAdapter(firebaseRecyclerAdapter);
         } catch (IndexOutOfBoundsException e) {
+            e.getMessage();
+        }
+
+
+        databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Users");
+        try {
+            databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                int i = 0;
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    int number = (int) dataSnapshot.getChildrenCount();
+
+
+                    Log.e("number of users", String.valueOf(number));
+
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
+                        String nodeKey = childDataSnapshot.getKey();
+                        Log.e("Key Node", "" + nodeKey);
+
+
+                        assert nodeKey != null;
+                        databaseReference1 = FirebaseDatabase.getInstance().getReference().child("Users").child(nodeKey).child("User Info");
+
+                        databaseReference1.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int number1 = (int) dataSnapshot.getChildrenCount();
+                                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                                assert user != null;
+                                Log.e("Key Node", "" + nodeKey);
+                                Log.e("number of OBJECTS", String.valueOf(number1) + "\t" + user.getName() + "\t" + user.getThumbnailProfilephoto() + "\t" + user.getUserToken());
+
+                                HashMap<String, String> item = new HashMap<String, String>();
+                                item.put(USER_ID, nodeKey);
+                                item.put(USER_NAME, user.getName());
+                                item.put(USER_PHOTO, user.getThumbnailProfilephoto());
+                                item.put(USER_TOKEN, user.getUserToken());
+
+                                al_appsearch.add(item);
+
+                                HashMap<String, String> useritem = al_appsearch.get(i);
+
+                                i++;
+
+                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
             e.getMessage();
         }
 
@@ -913,6 +975,20 @@ public class BottomNavigation extends AppCompatActivity {
 
         });
     }
+
+
+//    public void LogoutButton() {
+//        Log.i(TAG, "You clicked onClick Button");
+//        FirebaseAuth.getInstance().signOut();
+//        LoginManager.getInstance().logOut();
+//        Auth.GoogleSignInApi.signOut(googleApiClient)
+//                .setResultCallback(
+//                        status -> {
+//                            Log.i(TAG, "log off from google sign button");
+//                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(this, Login_method.class));
+//                        });
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

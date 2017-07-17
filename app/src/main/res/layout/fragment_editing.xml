@@ -1,56 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_material_dark_1"
-    android:isScrollContainer="false"
-    android:orientation="vertical"
-    tools:context="com.practice.android.moments.Fragments.EditingFragment">
+    android:background="@color/primary_material_dark_1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="70dp"-->
+    <!--android:layout_marginLeft="180dp"-->
+    <!--android:layout_marginTop="500dp"-->
+    <!--android:background="@color/colorAccent">-->
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+
         android:gravity="center"
-        android:orientation="vertical">
+        android:text="Open"
+        android:textColor="@color/colorAccent"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
 
-        <ImageView
-            android:id="@+id/editedImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/input"
-            android:padding="8dp"
-            android:src="@drawable/add_btn"/>
+    <ImageView
+        android:id="@+id/openGalleryButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/saveButton"
+        android:text="OPEN"/>
 
-    </LinearLayout>
-
-    <Button
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/launchImageEditorButton"
+        android:layout_width="64dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="23dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/circle1"
+        android:src="@drawable/ic_edit_black_24dp"
+
+        app:backgroundTint="@color/colorAccent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/button_upload"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+
+        android:layout_marginRight="150dp"
+        android:src="@drawable/ic_file_upload_black_24dp"
+        app:backgroundTint="@color/colorAccent"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/saveButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/download_network"
+        app:backgroundTint="@color/colorAccent"/>
+
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@color/primary_material_dark_1"-->
+    <!--android:orientation="horizontal">-->
+
+
+    <ImageView
+        android:id="@+id/editedImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#b2dfdb"
-        android:text="Open Image Editor"/>
-
-    <Button
-        android:id="@+id/save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#b2dfdb"
-        android:text="Save to device"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/launchImageEditorButton"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_upload"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"/>
 
 
-    <Button
-        android:id="@+id/upload"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#b2dfdb"
-        android:text="Upload"/>
+    <!---->
+
+    <!--</LinearLayout>-->
 
 
-</LinearLayout>
+</RelativeLayout>
