@@ -61,7 +61,6 @@ import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Helper.BottomNavigationViewHelper;
 import com.practice.android.moments.Helper.ServiceHandler;
 import com.practice.android.moments.Models.Blog;
-import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
@@ -101,7 +100,7 @@ public class BottomNavigation extends AppCompatActivity {
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
     RecyclerView recyclerView;
-    DatabaseReference databaseReference, databaseReference1, mdatabaseReference;
+    DatabaseReference databaseReference, databaseReference3, databaseReference1, mdatabaseReference;
     FrameLayout fl;
     String user_id;
     String user_name;
@@ -339,7 +338,7 @@ public class BottomNavigation extends AppCompatActivity {
         usertoken = FirebaseInstanceId.getInstance().getToken();
 
 //        Toast.makeText(this, usertoken, Toast.LENGTH_SHORT).show();
-        Log.i("Token", usertoken);
+//        Log.i("Token", usertoken);
 
 
         startService(new Intent(this, MyFirebaseInstanceIDService.class));
@@ -488,16 +487,17 @@ public class BottomNavigation extends AppCompatActivity {
                                             viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
                                             Log.e("No. of likes", String.valueOf(viewHolder.i));
                                             viewHolder.i++;
-                                            //Post method
-
-                                            setValues(picname);
-                                            new SendAsync().execute();
-
                                             String like = String.valueOf(viewHolder.i);
                                             currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
                                             currentuser_db.child(picname).child("Likes").setValue(like);
                                             Log.e("Likes=====", like);
                                             picLike = false;
+                                            //Post method
+//
+//                                            setValues(picname);
+//                                            new SendAsync().execute();
+
+
                                         }
                                     }
                                 }
@@ -730,16 +730,48 @@ public class BottomNavigation extends AppCompatActivity {
                                             viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
                                             Log.e("No. of likes", String.valueOf(viewHolder.i));
                                             viewHolder.i++;
-                                            //Post method
-
-                                            setValues(picname);
-                                            new SendAsync().execute();
-
                                             String like = String.valueOf(viewHolder.i);
                                             currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
                                             currentuser_db.child(picname).child("Likes").setValue(like);
                                             Log.e("Likes=====", like);
                                             picLike = false;
+                                            //Post method
+
+
+                                            databaseReference3 = FirebaseDatabase.getInstance().getReference()
+                                                    .child("User Pictures").child(picname);
+
+
+                                            databaseReference3.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    Log.e("numberof elements", String.valueOf(dataSnapshot.getChildrenCount()));
+                                                    Blog user = dataSnapshot.getValue(Blog.class);
+
+                                                    assert user != null;
+                                                    Log.e("User name: ", user.getPicName() + "\n" + user.getUserToken() + "\n" + user.getThumbnail_pic());
+                                                    imageusertoken = user.getUserToken();
+                                                    imageurl = user.getPic();
+
+                                                    setValues(user.getUserToken(), user.getPic());
+
+                                                    Log.e("image details", imageusertoken + "\t" + imageurl);
+
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+
+//                                            setValues(picname);
+//                                            new SendAsync().execute();
+
+
                                         }
                                     }
                                 }
@@ -818,6 +850,7 @@ public class BottomNavigation extends AppCompatActivity {
                     mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
                 }
+
             };
 
             firebaseRecyclerAdapter.notifyDataSetChanged();
@@ -1081,39 +1114,49 @@ public class BottomNavigation extends AppCompatActivity {
         }
     }
 
-    public void setValues(String imagename) {
+    public void setValues(String token, String name) {
 
-        databaseReference1 = FirebaseDatabase.getInstance().getReference()
-                .child("User Pictures").child(imagename);
 
-        try {
-            databaseReference1.addValueEventListener(new ValueEventListener() {
+        Log.e("Image ", token + "\n  Details" + name);
 
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Image user_image = dataSnapshot.getValue(Image.class);
+        Log.e("image details 222222", imageusertoken + "\t" + imageurl);
 
-                    assert user_image != null;
-                    imageusertoken = user_image.getUserToken();
-                    imageurl = user_image.getPic();
-                }
+//
+//        databaseReference3 = FirebaseDatabase.getInstance().getReference()
+//                .child("User Pictures").child(name);
+//
+//
+//        databaseReference3.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Blog user_image = dataSnapshot.getValue(Blog.class);
+//
+//                assert user_image != null;
+//                imageusertoken = user_image.getUserToken();
+//                imageurl = user_image.getPic();
+//
+//                Log.e("image details", imageusertoken + "\t" + imageurl);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        } catch (Exception e) {
-            e.getMessage();
-        }
 
         String userid = firebaseUser.getUid();
         String user_name = firebaseUser.getDisplayName();
         google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
-        deviceToken = usertoken;
+        deviceToken = imageusertoken;
         heading = "hello";
         description = "Photo Liked By";
-        image = "https://firebasestorage.googleapis.com/v0/b/moments-62a1f.appspot.com/o/Photos%2FqYOWSIuWYscqTXGgXyb92GRzEPu2%2FUser%20Photo%2F13-7-2017-19%3A5%3A49%3A388%2Fpicture?alt=media&token=14f73843-3669-4057-ab30-1fab1cd64fbf";
+        image = imageurl;
+
+        Log.e("Image ", token + "\n  Details" + name);
+
+        Log.e("uploaded image details", deviceToken + "\t" + image);
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder {

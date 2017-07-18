@@ -10,6 +10,8 @@ public class Image implements Serializable {
 
     String picName;
     String title;
+    String medium;
+
     String description;
     String thumbnail_pic;
     String user_id;

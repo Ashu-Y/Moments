@@ -1,9 +1,13 @@
 package com.practice.android.moments.Editing;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.adobe.creativesdk.foundation.AdobeCSDKFoundation;
 import com.adobe.creativesdk.foundation.auth.IAdobeAuthClientCredentials;
+
+import io.realm.Realm;
 
 /**
  * Created by Ashutosh on 6/14/2017.
@@ -20,6 +24,7 @@ public class MainApplication extends MultiDexApplication implements IAdobeAuthCl
     @Override
     public void onCreate() {
         super.onCreate();
+        Realm.init(getApplicationContext());
 
         AdobeCSDKFoundation.initializeCSDKFoundation(getApplicationContext());
     }
@@ -44,9 +49,9 @@ public class MainApplication extends MultiDexApplication implements IAdobeAuthCl
         return CREATIVE_SDK_REDIRECT_URI;
     }
 
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//        MultiDex.install(this);
-//    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

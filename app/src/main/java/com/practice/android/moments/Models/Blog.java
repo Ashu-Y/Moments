@@ -7,17 +7,35 @@ package com.practice.android.moments.Models;
 
 public class Blog {
 
-    private String title;
-    private String description;
-    private String pic;
-    private String thumbnail_pic;
-    private String userName;
-    private String picName;
-    private String user_id;
+    String title;
+    String description;
+    String picName;
+    String medium;
+    String thumbnail_pic;
+    String user_id;
+    String pic;
+    String userToken;
+    String userName;
 
     public Blog() {
 
     }
+
+    public Blog(String title, String description,
+                String picName, String medium,
+                String thumbnail_pic, String user_id,
+                String pic, String userToken, String userName) {
+        this.title = title;
+        this.description = description;
+        this.picName = picName;
+        this.medium = medium;
+        this.thumbnail_pic = thumbnail_pic;
+        this.user_id = user_id;
+        this.pic = pic;
+        this.userToken = userToken;
+        this.userName = userName;
+    }
+
 
     public Blog(String title, String description, String pic, String thumbnail_pic, String userName, String user_id, String picName) {
         this.title = title;
@@ -27,6 +45,22 @@ public class Blog {
         this.userName = userName;
         this.user_id = user_id;
         this.picName = picName;
+    }
+
+    public String getMedium() {
+        return medium;
+    }
+
+    public void setMedium(String medium) {
+        this.medium = medium;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 
     public String getPicName() {

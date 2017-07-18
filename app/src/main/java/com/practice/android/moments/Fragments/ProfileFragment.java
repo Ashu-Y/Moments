@@ -1,5 +1,6 @@
 package com.practice.android.moments.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,7 @@ public class ProfileFragment extends Fragment {
     Context context;
     TextView profilename;
     String PicName;
+    TextView userfriends, userimages;
 
     FirebaseUser firebaseUser;
     String user_id, user_name;
@@ -63,6 +65,8 @@ public class ProfileFragment extends Fragment {
         profile = (CircleImageView) v.findViewById(R.id.user_profile_photo);
         profilename = (TextView) v.findViewById(R.id.user_profile_name);
 
+        userfriends = (TextView) v.findViewById(R.id.friendnumber);
+        userimages = (TextView) v.findViewById(R.id.imagenumber);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         context = getContext();
@@ -71,6 +75,16 @@ public class ProfileFragment extends Fragment {
         RecyclerView.LayoutManager lm_recycle = new GridLayoutManager(getContext(), 2);
         recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
+
+        try {
+            assert firebaseUser != null;
+            user_id = firebaseUser.getUid();
+            user_name = firebaseUser.getDisplayName();
+        } catch (NullPointerException e) {
+            Log.e(e.getMessage(), "Error");
+        }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
 
         settings.setOnClickListener(new OnClickListener() {
@@ -129,62 +143,116 @@ public class ProfileFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(user_id);
 
+        try {
 
 
-        databaseReference.child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+            databaseReference.child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
-                assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
-                profilename.setText(user.getName());
+                    assert user != null;
+                    Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                    profilename.setText(user.getName());
 
-                Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile);
-                Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(coverpic);
+                    Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile);
+                    Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(coverpic);
 
-                Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
-            }
+                    Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        //Friend count
+        try {
+            databaseReference.child("Friends").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Long numberoffriends = dataSnapshot.getChildrenCount();
 
-
-
-
-
-        FirebaseRecyclerAdapter<Image, ProfileViewHelper> firebaseRecyclerAdapter = new
-                FirebaseRecyclerAdapter<Image, ProfileViewHelper>(
-
-                        Image.class,
-                        R.layout.res_thumbnail,
-                        ProfileViewHelper.class,
-                        databaseReference.child("User Pictures").orderByPriority()
-
-
-                ) {
-                    @Override
-                    protected void populateViewHolder(ProfileViewHelper viewHolder, Image model, int position) {
-
-                        PicName = getRef(position).getKey();
-
-                        String picname = PicName;
-
-                        Log.e("Images ", picname);
-                        viewHolder.setpic(context, user_id, picname);
-
+                    if (numberoffriends > 0) {
+                        userfriends.setText(numberoffriends.toString());
+                    } else {
+                        userfriends.setText("0");
 
                     }
-                };
-
-        firebaseRecyclerAdapter.notifyDataSetChanged();
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
 
 
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+
+        //Image count
+        try {
+            databaseReference.child("User Pictures").addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Long numberofimages = dataSnapshot.getChildrenCount();
+
+                    if (numberofimages > 0) {
+                        userimages.setText(numberofimages.toString());
+                    } else {
+                        userimages.setText("0");
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        try {
+            FirebaseRecyclerAdapter<Image, ProfileViewHelper> firebaseRecyclerAdapter = new
+                    FirebaseRecyclerAdapter<Image, ProfileViewHelper>(
+
+                            Image.class,
+                            R.layout.res_thumbnail,
+                            ProfileViewHelper.class,
+                            databaseReference.child("User Pictures").orderByPriority()
+
+
+                    ) {
+                        @Override
+                        protected void populateViewHolder(ProfileViewHelper viewHolder, Image model, int position) {
+
+                            PicName = getRef(position).getKey();
+
+                            String picname = PicName;
+
+                            Log.e("Images ", picname);
+                            viewHolder.setpic(context, user_id, picname);
+
+
+                        }
+                    };
+
+            firebaseRecyclerAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
 
