@@ -1118,31 +1118,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         Log.e("image details 222222", imageusertoken + "\t" + imageurl);
 
-//
-//        databaseReference3 = FirebaseDatabase.getInstance().getReference()
-//                .child("User Pictures").child(name);
-//
-//
-//        databaseReference3.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Blog user_image = dataSnapshot.getValue(Blog.class);
-//
-//                assert user_image != null;
-//                imageusertoken = user_image.getUserToken();
-//                imageurl = user_image.getPic();
-//
-//                Log.e("image details", imageusertoken + "\t" + imageurl);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
         String userid = firebaseUser.getUid();
         String user_name = firebaseUser.getDisplayName();
         google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
