@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_material_dark_1"
-    tools:context="com.practice.android.moments.Fragments.ProfileFragment">
+    tools:context="com.practice.android.moments.Activities.AddFriendProfileActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/primary_material_dark_1"
         android:orientation="vertical">
 
@@ -24,7 +25,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/c1" />
+            android:src="@drawable/c1"/>
 
 
         <LinearLayout
@@ -40,7 +41,7 @@
                 android:layout_height="120dp"
                 android:elevation="5dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/c2" />
+                android:src="@drawable/c2"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -65,13 +66,12 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/imagenumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text=""
+                            android:text="2400"
                             android:textColor="#fff"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/photos"
@@ -81,7 +81,7 @@
                             android:textAlignment="center"
                             android:textColor="#fff"
                             android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -93,13 +93,12 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/friendnumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text=""
+                            android:text="2400"
                             android:textColor="#fff"
-                            android:textSize="20sp" />
+                            android:textSize="20sp"/>
 
                         <TextView
                             android:id="@+id/friends"
@@ -110,21 +109,46 @@
                             android:textAlignment="center"
                             android:textColor="#fff"
                             android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/settings"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/check"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
-                    android:foregroundTint="#fff"
-                    android:src="@drawable/settings2"
-                    android:tint="#fff" />
+                    android:background="#a685e2"
+                    android:orientation="horizontal"
+                    android:paddingRight="8dp">
+
+                    <ImageView
+                        android:id="@+id/settings"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:foregroundTint="#fff"
+                        android:src="@android:drawable/ic_input_add"
+                        android:tint="#fff"/>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="#fff"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Add Friend"
+                        android:textColor="#fff"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
             </RelativeLayout>
 
         </LinearLayout>
@@ -138,15 +162,16 @@
             android:text="User Name"
             android:textAlignment="center"
             android:textColor="#fff"
-            android:textSize="22sp" />
+            android:textSize="22sp"/>
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/grid_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/user_profile_short_bio"
+            android:layout_weight="1"
             android:background="@color/primary_material_dark_1">
 
         </android.support.v7.widget.RecyclerView>
