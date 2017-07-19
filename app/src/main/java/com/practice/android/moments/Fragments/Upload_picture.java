@@ -41,7 +41,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
@@ -51,10 +50,8 @@ import static com.practice.android.moments.Activities.BottomNavigation.usertoken
 public class Upload_picture extends Fragment {
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
-    private static final String EXTRA_FILENAME =
-            "com.commonsware.android.camcon.EXTRA_FILENAME";
-    private static final String FILENAME = "CameraContentDemo.jpeg";
     private static final String TAG = "Upload picture";
+    File mImageFile;
     ImageView uploadImage;
     EditText title, description;
     Button upload;
@@ -134,28 +131,11 @@ public class Upload_picture extends Fragment {
         });
 
         myAlertDialog.setNegativeButton("Camera", (arg0, arg1) -> {
+
+            mImageFile = new File(Environment.getExternalStorageDirectory() + File.separator + "DCIM" + File.separator + "temp.png");
+            Uri tempURI = Uri.fromFile(mImageFile);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
-            if (savedInstanceState == null) {
-                root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-                file = new File(root.toString() + "/Moments");
-
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
-                Log.e("name location ", uriSting);
-
-                output = new File(file, uriSting);
-            }
-
-            if (output.exists()) {
-                output.delete();
-            }
-
-            i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+            i.putExtra(MediaStore.EXTRA_OUTPUT, tempURI);
 
             startActivityForResult(i, CAMERA_REQUEST);
         });
@@ -176,13 +156,7 @@ public class Upload_picture extends Fragment {
         return path;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
 
-
-        outState.putSerializable(EXTRA_FILENAME, output);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -201,12 +175,9 @@ public class Upload_picture extends Fragment {
             picturePath = c.getString(columnIndex);
 
             uploadImage.setImageURI(data.getData());
-//            Toast.makeText(context, "Before Compress", Toast.LENGTH_SHORT).show();
 
             String file = compressImage(String.valueOf(data.getData()));
 
-//            Toast.makeText(context, "After Compress", Toast.LENGTH_SHORT).show();
-//            Log.e(TAG, selectedImage.toString());
 
 
             thumbnailpic = Uri.fromFile(new File(file));
@@ -215,87 +186,63 @@ public class Upload_picture extends Fragment {
 
             Log.e(TAG, "Uploaded on image view");
             Log.e(TAG, selectedImage.toString());
-//            c.close();
-//
-//            try {
-//                thumbnail = (BitmapFactory.decodeFile(picturePath));
-//                Log.e("gallery.***********692." + thumbnail, picturePath);
-//                uri = Uri.fromFile(new File(picturePath));
-//            } catch (Exception e) {
-//                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
-//                e.printStackTrace();
-//            }
+
         }
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
-            Intent i=new Intent(Intent.ACTION_VIEW);
+            selectedImage = Uri.fromFile(mImageFile);
+            thumbnailpic = Uri.fromFile(mImageFile);
+            mediumpic = Uri.fromFile(mImageFile);
 
-            i.setDataAndType(Uri.fromFile(output), "image/jpeg");
-            startActivity(i);
+            Log.d("ImagePath", "Image saved to path : " + mImageFile.getAbsolutePath());
 
+            Toast.makeText(getActivity(), "Path: " + mImageFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            uploadImage.setImageURI(Uri.parse(mImageFile.getAbsolutePath()));
 
-//            thumbnail = (Bitmap) data.getExtras().get("data");
-//            uri = saveImageBitmap(thumbnail);
+        }
+    }
 
-//            Log.e(TAG, thumbnail.toString());
-
-//            selectedImage = uri;
-//            uploadImage.setImageBitmap(thumbnail);
-//            //  picturePath = uristringpic;
-//            try {
-//                picturePath = uri.toString();
-//                // thumbnail = (BitmapFactory.decodeFile(picturePath));
-//            } catch (Exception e) {
-//                Log.e("gallery***********692.", "Exception==========Exception==============Exception");
-//                e.printStackTrace();
-//            }
+//    public Uri saveImageBitmap(Bitmap bitmap) {
+//        String strDirectoy = context.getFilesDir().getAbsolutePath();
 //
-//            compressImage(String.valueOf(uri));
-
-        }
-    }
-
-    public Uri saveImageBitmap(Bitmap bitmap) {
-        String strDirectoy = context.getFilesDir().getAbsolutePath();
-
-
-        Calendar c = Calendar.getInstance();
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int month = c.get(Calendar.MONTH) + 1;
-        int year = c.get(Calendar.YEAR);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minutes = c.get(Calendar.MINUTE);
-        int seconds = c.get(Calendar.SECOND);
-        int milliSeconds = c.get(Calendar.MILLISECOND);
-
-
-        //Can cause error in uploading
-        String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
-        Log.i("Camera", imageName);
-        OutputStream fOut = null;
-        File file = new File(strDirectoy, imageName);
-        try {
-            fOut = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-
-        try {
-            fOut.flush();
-            fOut.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            e.getMessage();
-        }
-        try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return Uri.fromFile(file);
-    }
+//
+//        Calendar c = Calendar.getInstance();
+//        int day = c.get(Calendar.DAY_OF_MONTH);
+//        int month = c.get(Calendar.MONTH) + 1;
+//        int year = c.get(Calendar.YEAR);
+//        int hour = c.get(Calendar.HOUR_OF_DAY);
+//        int minutes = c.get(Calendar.MINUTE);
+//        int seconds = c.get(Calendar.SECOND);
+//        int milliSeconds = c.get(Calendar.MILLISECOND);
+//
+//
+//        //Can cause error in uploading
+//        String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+//        Log.i("Camera", imageName);
+//        OutputStream fOut = null;
+//        File file = new File(strDirectoy, imageName);
+//        try {
+//            fOut = new FileOutputStream(file);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+//
+//        try {
+//            fOut.flush();
+//            fOut.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NullPointerException e) {
+//            e.getMessage();
+//        }
+//        try {
+//            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return Uri.fromFile(file);
+//    }
 
 
     //receive token
