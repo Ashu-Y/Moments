@@ -44,7 +44,6 @@
         android:layout_marginLeft="10dp"
         android:background="@drawable/circle1"
         android:src="@drawable/ic_edit_black_24dp"
-
         app:backgroundTint="@color/colorAccent"/>
 
     <android.support.design.widget.FloatingActionButton

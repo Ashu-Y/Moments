@@ -1,14 +1,18 @@
 package com.practice.android.moments.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.practice.android.moments.Activities.AddFriendProfileActivity;
 import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.R;
 
@@ -18,6 +22,7 @@ import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.practice.android.moments.Activities.BottomNavigation.USER_ID;
 import static com.practice.android.moments.Activities.BottomNavigation.USER_NAME;
 import static com.practice.android.moments.Activities.BottomNavigation.USER_PHOTO;
 
@@ -53,6 +58,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         holder.setData(searchModel, position);
 
+        holder.search_row.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String user_id = mDataArray.get(position).get(USER_ID);
+                mContext.startActivity(new Intent(mContext, AddFriendProfileActivity.class));
+            }
+        });
+
+
     }
 
     @Override
@@ -84,12 +98,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
         TextView username;
         CircleImageView profilePic;
+        LinearLayout search_row;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             username = (TextView) itemView.findViewById(R.id.name);
             profilePic = (CircleImageView) itemView.findViewById(R.id.profile_pic);
+            search_row = (LinearLayout) itemView.findViewById(R.id.search_row);
 
         }
 
