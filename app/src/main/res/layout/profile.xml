@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_material_dark_1"
-    tools:context="com.practice.android.moments.Fragments.ProfileFragment">
+    tools:context="com.practice.android.moments.Fragments.ProfileFragment"
+    tools:ignore="ContentDescription,ObsoleteLayoutParam,RtlHardcoded">
 
 
     <LinearLayout
@@ -69,7 +70,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="2400"
+                            android:text="@string/_0"
                             android:textColor="#fff"
                             android:textSize="20sp" />
 
@@ -77,7 +78,7 @@
                             android:id="@+id/photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Photos"
+                            android:text="@string/photos"
                             android:textAlignment="center"
                             android:textColor="#fff"
                             android:textSize="20sp"
@@ -90,14 +91,15 @@
                         android:layout_alignBottom="@+id/photos"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/photos"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="ObsoleteLayoutParam,RtlHardcoded">
 
                         <TextView
                             android:id="@+id/friendnumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="2400"
+                            android:text="@string/_0"
                             android:textColor="#fff"
                             android:textSize="20sp" />
 
@@ -105,7 +107,7 @@
                             android:id="@+id/friends"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Friends"
+                            android:text="@string/friends"
 
                             android:textAlignment="center"
                             android:textColor="#fff"
@@ -135,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="4dp"
-            android:text="User Name"
+            android:text="@string/user_name"
             android:textAlignment="center"
             android:textColor="#fff"
             android:textSize="22sp" />
