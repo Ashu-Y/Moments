@@ -114,7 +114,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
             Glide.with(mContext)
                     .load(searchModel.get(USER_PHOTO))
-                    .placeholder(R.drawable.c6)
+                    .thumbnail(Glide.with(mContext).load(R.drawable.loader))
                     .fitCenter()
                     .into(profilePic);
 

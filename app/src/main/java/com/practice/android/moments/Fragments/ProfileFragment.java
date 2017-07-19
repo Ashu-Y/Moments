@@ -90,6 +90,7 @@ public class ProfileFragment extends Fragment {
         settings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 SettingsFragment settingsFragment = new SettingsFragment();
@@ -152,13 +153,29 @@ public class ProfileFragment extends Fragment {
                     Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                     assert user != null;
-                    Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
-                    profilename.setText(user.getName());
+                    try {
 
-                    Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile);
-                    Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(coverpic);
+                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
 
-                    Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
+                        try {
+                            profilename.setText(user.getName());
+                        } catch (Exception e) {
+                            e.getMessage();
+                        }
+
+
+                        Glide.with(getContext()).load(user.getPhoto())
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                                .into(profile);
+
+                        Glide.with(getContext()).load(user.getCoverPhoto())
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                                .into(coverpic);
+
+                        Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
                 }
 
                 @Override
