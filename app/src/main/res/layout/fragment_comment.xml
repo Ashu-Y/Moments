@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +15,7 @@
         android:padding="@dimen/_4sdp"
         android:text="Comments"
         android:textAlignment="center"
-        android:textSize="32sp" />
+        android:textSize="32sp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_comment"
@@ -22,7 +23,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/commentLayout"
         android:layout_below="@+id/tv"
-        android:padding="@dimen/_4sdp" />
+        android:padding="@dimen/_4sdp"/>
     <!--<TextView-->
     <!--android:id="@+id/name"-->
     <!--android:layout_width="match_parent"-->
@@ -51,13 +52,13 @@
             android:layout_weight="1"
             android:background="@drawable/input"
             android:hint="Comment"
-            android:padding="@dimen/_4sdp" />
+            android:padding="@dimen/_4sdp"/>
 
         <ImageView
             android:id="@+id/post_comment"
             android:layout_width="@dimen/_48sdp"
             android:layout_height="@dimen/_48sdp"
-            android:src="@drawable/send" />
+            android:src="@drawable/send"/>
     </LinearLayout>
 
 </RelativeLayout>
