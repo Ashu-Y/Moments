@@ -164,8 +164,13 @@ public class ProfileFragment extends Fragment {
                         }
 
 
-                        Glide.with(getContext()).load(user.getPhoto()).placeholder(R.drawable.c1).into(profile);
-                        Glide.with(getContext()).load(user.getCoverPhoto()).placeholder(R.drawable.c1).into(coverpic);
+                        Glide.with(getContext()).load(user.getPhoto())
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                                .into(profile);
+
+                        Glide.with(getContext()).load(user.getCoverPhoto())
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                                .into(coverpic);
 
                         Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
                     } catch (Exception e) {

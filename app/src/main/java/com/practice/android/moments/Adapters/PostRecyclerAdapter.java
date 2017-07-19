@@ -46,7 +46,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
         return mPosts.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView username;
         ImageView image;
@@ -61,11 +61,12 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 //            comment = (ImageView) itemView.findViewById(R.id.comment_btn);
         }
 
-        public void setData(Post post, int position){
+        public void setData(Post post, int position) {
             username.setText(post.getUsername());
 
             Glide.with(mContext)
                     .load(post.getImageId())
+                    .thumbnail(Glide.with(mContext).load(R.drawable.loader))
                     .fitCenter()
                     .into(image);
 

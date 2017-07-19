@@ -872,7 +872,8 @@ public class BottomNavigation extends AppCompatActivity {
 
         Glide.with(context).load(imageResId)
                 .skipMemoryCache(false)
-                .placeholder(R.drawable.c1).into(expandedImageView);
+                .thumbnail(Glide.with(context).load(R.drawable.loader))
+                .into(expandedImageView);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
         // This step involves lots of math.
@@ -1131,6 +1132,12 @@ public class BottomNavigation extends AppCompatActivity {
         Log.e("uploaded image details", deviceToken + "\t" + image);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        onResume();
+    }
+
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -1254,7 +1261,8 @@ public class BottomNavigation extends AppCompatActivity {
 
             Glide.with(context).load(photo)
                     .skipMemoryCache(false)
-                    .placeholder(R.drawable.c1).into(imageView);
+                    .thumbnail(Glide.with(context).load(R.drawable.loader))
+                    .into(imageView);
 
             Log.e("Image URl =======", photo);
 
@@ -1272,7 +1280,9 @@ public class BottomNavigation extends AppCompatActivity {
 
                     assert user != null;
 
-                    Glide.with(context).load(user.getThumbnailProfilephoto()).placeholder(R.drawable.c1).into(profile);
+                    Glide.with(context).load(user.getThumbnailProfilephoto())
+                            .thumbnail(Glide.with(context).load(R.drawable.loader))
+                            .into(profile);
 
                     Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
                 }
@@ -1292,11 +1302,7 @@ public class BottomNavigation extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(BottomNavigation.this);
-            pDialog.setTitle("Saving Data");
-            pDialog.setMessage("Please Wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
+
         }
 
         @Override
@@ -1324,9 +1330,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-
-            if (pDialog.isShowing())
-                pDialog.dismiss();
 
         }
 
