@@ -1382,6 +1382,7 @@ public class BottomNavigation extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("description", description));
             nameValuePairs.add(new BasicNameValuePair("image", image));
 
+
             jsonStr = mServiceHandler.makeServiceCall("http://appzynga.com/projects/trainee/and_notifications/notification.php/",
                     ServiceHandler.POST,
                     nameValuePairs);
