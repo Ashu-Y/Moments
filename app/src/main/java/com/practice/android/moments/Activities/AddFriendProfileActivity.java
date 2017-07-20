@@ -98,7 +98,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                 assert user != null;
                 try {
 
-                    Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                    Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getThumbnailProfilephoto());
 
                     try {
                         profilename.setText(user.getName());

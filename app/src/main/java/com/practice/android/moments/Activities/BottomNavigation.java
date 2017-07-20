@@ -793,8 +793,6 @@ public class BottomNavigation extends AppCompatActivity {
                                                         }
                                                     });
 
-                                                    setValues(user.getUserToken(), user.getPic());
-                                                    new SendAsync().execute();
 
                                                     Log.e("image details", imageusertoken + "\n" + imageurl);
 
@@ -1191,9 +1189,10 @@ public class BottomNavigation extends AppCompatActivity {
 
         Log.e("image details 222222\n", imageusertoken + "\n" + imageurl);
 
+//        google_key = "AIzaSyCKGEx1mIpaCKqB-LxRECQKDmA8Yv9BB30";
 
         google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
-        deviceToken = imageusertoken;
+        deviceToken = usertoken;
         heading = "hello";
         description = "Photo Liked By";
         image = imageurl;
@@ -1381,7 +1380,6 @@ public class BottomNavigation extends AppCompatActivity {
             nameValuePairs.add(new BasicNameValuePair("heading", heading));
             nameValuePairs.add(new BasicNameValuePair("description", description));
             nameValuePairs.add(new BasicNameValuePair("image", image));
-
 
             jsonStr = mServiceHandler.makeServiceCall("http://appzynga.com/projects/trainee/and_notifications/notification.php/",
                     ServiceHandler.POST,

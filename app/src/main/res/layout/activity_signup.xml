@@ -30,8 +30,8 @@
             <TextView
                 android:id="@+id/create"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="center"
                 android:text="Create Account"
                 android:textColor="#e4ea8c"
@@ -44,7 +44,7 @@
                 android:layout_below="@+id/create"
                 android:layout_marginLeft="@dimen/_10sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:layout_marginTop="39dp"
+                android:layout_marginTop="@dimen/_55sdp"
                 android:background="@drawable/input"
                 android:hint="Enter your name"
                 android:paddingBottom="@dimen/_5sdp"
@@ -134,9 +134,9 @@
     <Button
         android:id="@+id/newaccount"
         android:layout_width="match_parent"
-        android:layout_height="45sp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_above="@+id/loginuser"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/_20sdp"
         android:background="@drawable/circle"
         android:text="Submit"
         android:textColor="#e4ea8c"/>
@@ -144,7 +144,7 @@
     <TextView
         android:id="@+id/loginuser"
         android:layout_width="match_parent"
-        android:layout_height="45sp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:clickable="true"

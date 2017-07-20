@@ -199,7 +199,7 @@ public class Signup extends AppCompatActivity {
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();
