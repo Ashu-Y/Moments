@@ -136,12 +136,12 @@ public class Phoneprovider extends AppCompatActivity {
         Callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
-                Log.d(TAG, "onVerificationCompleted:" + credential);
+                Log.e(TAG, "onVerificationCompleted:" + credential);
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Log.w(TAG, "onVerificationFailed", e);
+                Log.e(TAG, "onVerificationFailed", e);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     Toast.makeText(Phoneprovider.this, "Wrong Number Entered", Toast.LENGTH_SHORT).show();
 //                    EnterIn.setVisibility(View.VISIBLE);
@@ -158,10 +158,10 @@ public class Phoneprovider extends AppCompatActivity {
             @Override
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
-                Log.d(TAG, "onCodeSent:=============" + verificationId);
+                Log.e(TAG, "onCodeSent:=============" + verificationId);
                 mVerificationId = verificationId;
                 mResendToken = token;
-                Log.d("code ==========", mResendToken.toString());
+                Log.e("code ==========", mResendToken.toString());
             }
         };
     }
@@ -173,7 +173,7 @@ public class Phoneprovider extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.e(TAG, "signInWithCredential:success");
                             firebaseUser = task.getResult().getUser();
 
                             String user_id = firebaseAuth.getCurrentUser().getUid();
@@ -187,7 +187,7 @@ public class Phoneprovider extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                Log.d("Editing", "User profile updated.");
+                                                Log.e("Editing", "User profile updated.");
                                             }
                                         }
                                     });
@@ -204,7 +204,7 @@ public class Phoneprovider extends AppCompatActivity {
 
                             finish();
                         } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.e(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Verfiy_code.setError("Invalid code.");
                             }

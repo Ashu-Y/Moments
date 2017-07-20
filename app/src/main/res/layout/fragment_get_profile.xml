@@ -176,7 +176,7 @@
             android:id="@+id/sub"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_150sdp"
+            android:layout_marginLeft="@dimen/_123sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:background="#063852"
             android:gravity="center"

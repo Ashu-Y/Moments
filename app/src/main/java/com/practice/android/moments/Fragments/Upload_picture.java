@@ -134,30 +134,30 @@ public class Upload_picture extends Fragment {
         });
 
         myAlertDialog.setNegativeButton("Camera", (arg0, arg1) -> {
-            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//            if (savedInstanceState == null) {
+//                root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//
+//                file = new File(root.toString() + "/Moments");
+//
+//                if (!file.exists()) {
+//                    file.mkdirs();
+//                }
+//                uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
+//                Log.e("name location ", uriSting);
+//
+//                output = new File(file, uriSting);
+//            }
+//
+//            if (output.exists()) {
+//                output.delete();
+//            }
+//
+//            i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+//
+//            startActivityForResult(i, CAMERA_REQUEST);
 
-
-            if (savedInstanceState == null) {
-                root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-                file = new File(root.toString() + "/Moments");
-
-                if (!file.exists()) {
-                    file.mkdirs();
-                }
-                uriSting = (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg");
-                Log.e("name location ", uriSting);
-
-                output = new File(file, uriSting);
-            }
-
-            if (output.exists()) {
-                output.delete();
-            }
-
-            i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-
-            startActivityForResult(i, CAMERA_REQUEST);
         });
 
         myAlertDialog.show();
@@ -271,7 +271,7 @@ public class Upload_picture extends Fragment {
 
         //Can cause error in uploading
         String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
-        Log.i("Camera", imageName);
+        Log.e("Camera", imageName);
         OutputStream fOut = null;
         File file = new File(strDirectoy, imageName);
         try {
@@ -348,7 +348,7 @@ public class Upload_picture extends Fragment {
 
                                 //Can cause error in uploading
                                 imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
-                                Log.i("Camera", imageName);
+                                Log.e("Camera", imageName);
 
 
                                 DatabaseReference currentuser_db = databaseReference.child("User Pictures");
@@ -517,17 +517,17 @@ public class Upload_picture extends Fragment {
 
             int orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION, 0);
-            Log.d("EXIF", "Exif: " + orientation);
+            Log.e("EXIF", "Exif: " + orientation);
             Matrix matrix = new Matrix();
             if (orientation == 6) {
                 matrix.postRotate(90);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             } else if (orientation == 3) {
                 matrix.postRotate(180);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             } else if (orientation == 8) {
                 matrix.postRotate(270);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             }
             scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,

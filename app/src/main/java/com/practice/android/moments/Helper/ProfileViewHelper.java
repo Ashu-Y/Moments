@@ -46,11 +46,11 @@ public class ProfileViewHelper extends RecyclerView.ViewHolder {
 
                 assert user != null;
 
-                Glide.with(context).load(user.getPic())
+                Glide.with(context).load(user.getMedium())
                         .thumbnail(Glide.with(context).load(R.drawable.loader))
                         .into(profile);
 
-                Log.e("PROFILE PIC", "\n" + user.getPic());
+                Log.e("PROFILE PIC", "\n" + user.getMedium());
             }
 
             @Override

@@ -330,7 +330,7 @@ public class ProfileScreenFragment extends Fragment {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    Log.d("Editing", "User profile updated.");
+                                                    Log.e("Editing", "User profile updated.");
                                                 }
                                             }
                                         });
@@ -449,7 +449,7 @@ public class ProfileScreenFragment extends Fragment {
                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                 assert user != null;
-                Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
                 getname.setText(user.getName());
                 getemail.setText(user.getEmail());
                 getphone.setText(user.getPhone());
@@ -468,7 +468,7 @@ public class ProfileScreenFragment extends Fragment {
                         .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
                         .into(BackPIC);
 
-                Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+                Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
             }
 
             @Override

@@ -265,12 +265,6 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
                                 currentuser_db.child("email").setValue(acct.getEmail());
 
-//                                try {
-//                                    currentuser_db.child("photo").setValue(acct.getPhotoUrl());
-//                                    Log.e("Photo URL", acct.getPhotoUrl() + "\t" + acct.getDisplayName() + "\t" + acct.getEmail());
-//                                } catch (Exception e) {
-//                                    e.getMessage();
-//                                }
                                 updateUI(firebaseUser);
                             }
                         } else {

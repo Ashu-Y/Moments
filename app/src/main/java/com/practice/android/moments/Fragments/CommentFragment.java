@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +29,8 @@ import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
 import java.util.Calendar;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class CommentFragment extends Fragment {
@@ -176,6 +179,7 @@ public class CommentFragment extends Fragment {
 
                 } else {
                     viewHolder.setuser(context, name, pos);
+
                 }
             }
         };
@@ -192,6 +196,7 @@ public class CommentFragment extends Fragment {
         View mView;
         String userid;
         DatabaseReference databaseReference, database, data;
+        CircleImageView user_image;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
@@ -203,6 +208,8 @@ public class CommentFragment extends Fragment {
             databaseReference = FirebaseDatabase.getInstance().getReference().child("Comments");
             getname = (TextView) mView.findViewById(R.id.comment_user_name);
             user_comment = (TextView) mView.findViewById(R.id.user_comment);
+            user_image = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
+
 
         }
 
@@ -226,8 +233,13 @@ public class CommentFragment extends Fragment {
                             Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                             assert user != null;
-                            Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                            Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
                             getname.setText(user.getName());
+
+                            Glide.with(context).load(user.getThumbnailProfilephoto())
+                                    .thumbnail(Glide.with(context).load(R.drawable.loader))
+                                    .into(user_image);
+
 
                             Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
                         }
@@ -250,6 +262,9 @@ public class CommentFragment extends Fragment {
 
         }
     }
+
+
+
 
 
 }

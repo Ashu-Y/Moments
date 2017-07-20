@@ -80,6 +80,8 @@ public class BottomNavigation extends AppCompatActivity {
     public static final String USER_NAME = "User_Name";
     public static final String USER_PHOTO = "User_Photo";
     public static final String USER_TOKEN = "User_Token";
+    public static final String Profile_pic = "https://firebasestorage.googleapis.com/v0/b/moments-62a1f.appspot.com/o/Photos%2FDEFAULT%2Fdefault_profile_pic.png?alt=media&token=dc433087-f708-4bf4-867f-ff8bed8c1e0b";
+    public static final String Cover_pic = "https://firebasestorage.googleapis.com/v0/b/moments-62a1f.appspot.com/o/Photos%2FDEFAULT%2Fdefault_cover_pic.jpg?alt=media&token=97bf5cf5-3a38-4541-9603-831aab7a5cfd";
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
@@ -100,7 +102,7 @@ public class BottomNavigation extends AppCompatActivity {
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
     RecyclerView recyclerView;
-    DatabaseReference databaseReference, databaseReference3, databaseReference1, mdatabaseReference;
+    DatabaseReference databaseReference, databaseReference1, databaseReference2, databaseReference3, databaseReference4, mdatabaseReference;
     FrameLayout fl;
     String user_id;
     String user_name;
@@ -113,9 +115,11 @@ public class BottomNavigation extends AppCompatActivity {
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
-    DatabaseReference databaseReference2;
+    FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
     String imageusertoken;
     String imageurl;
+
+
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private String TAG = getClass().getSimpleName();
@@ -337,9 +341,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         usertoken = FirebaseInstanceId.getInstance().getToken();
 
-//        Toast.makeText(this, usertoken, Toast.LENGTH_SHORT).show();
-//        Log.i("Token", usertoken);
-
 
         startService(new Intent(this, MyFirebaseInstanceIDService.class));
 
@@ -370,11 +371,42 @@ public class BottomNavigation extends AppCompatActivity {
             mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users")
                     .child(user_id).child("User Info");
 
+
         } catch (NullPointerException e) {
-            Log.i("TimelineFrag", e.getMessage());
+            Log.e("TimelineFrag", e.getMessage());
         }
 
         mdatabaseReference.child("userToken").setValue(usertoken);
+
+        mdatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                if (user.getThumbnailProfilephoto() == null && user.getPhoto() == null) {
+
+                    Log.e(TAG, "Check condition " + "\n" + user.getThumbnailProfilephoto() + "\n" + user.getPhoto());
+
+                    mdatabaseReference.child("photo").setValue(Profile_pic);
+                    mdatabaseReference.child("thumbnailProfilephoto").setValue(Profile_pic);
+
+                }
+                if (user.getThumbnailCoverPhoto() == null && user.getCoverPhoto() == null) {
+
+                    mdatabaseReference.child("coverPhoto").setValue(Cover_pic);
+                    mdatabaseReference.child("thumbnailCoverPhoto").setValue(Cover_pic);
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         context = getApplicationContext();
@@ -420,14 +452,6 @@ public class BottomNavigation extends AppCompatActivity {
         context = getApplicationContext();
 
         al_appsearch.clear();
-
-        try {
-            assert firebaseUser != null;
-            user_id = firebaseUser.getUid();
-            user_name = firebaseUser.getDisplayName();
-        } catch (NullPointerException e) {
-            Log.e(e.getMessage(), "Error");
-        }
 
 //        try {
 //            FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
@@ -568,7 +592,7 @@ public class BottomNavigation extends AppCompatActivity {
 //                    viewHolder.imageView.setOnClickListener(new OnClickListener() {
 //                        @Override
 //                        public void onClick(View view) {
-//                            String Image = model.getPic();
+//                            String Image = model.getMedium();
 //                            zoomImageFromThumb(viewHolder.imageView, Image);
 //                        }
 //                    });
@@ -585,9 +609,10 @@ public class BottomNavigation extends AppCompatActivity {
 //            e.getMessage();
 //        }
 
-
+        // Adding data in search adapter
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Users");
         try {
+            al_appsearch.clear();
             databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
 
                 int i = 0;
@@ -615,7 +640,7 @@ public class BottomNavigation extends AppCompatActivity {
                                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
                                 assert user != null;
                                 Log.e("Key Node", "" + nodeKey);
-                                Log.e("number of OBJECTS", String.valueOf(number1) + "\t" + user.getName() + "\t" + user.getThumbnailProfilephoto() + "\t" + user.getUserToken());
+                                Log.e("number of OBJECTS", String.valueOf(number1) + "\n" + user.getName() + "\n" + user.getThumbnailProfilephoto() + "\n" + user.getUserToken());
 
                                 HashMap<String, String> item = new HashMap<String, String>();
                                 item.put(USER_ID, nodeKey);
@@ -624,11 +649,8 @@ public class BottomNavigation extends AppCompatActivity {
                                 item.put(USER_TOKEN, user.getUserToken());
 
                                 al_appsearch.add(item);
-
                                 HashMap<String, String> useritem = al_appsearch.get(i);
-
                                 i++;
-
                                 Log.e("Key ", "" + useritem.get(USER_PHOTO));
 
                             }
@@ -660,20 +682,13 @@ public class BottomNavigation extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-
-        googleApiClient.connect();
+        recyclerView.getRecycledViewPool().clear();
 
         context = getApplicationContext();
-        try {
-            assert firebaseUser != null;
-            user_id = firebaseUser.getUid();
-            user_name = firebaseUser.getDisplayName();
-        } catch (NullPointerException e) {
-            Log.e(e.getMessage(), "Error");
-        }
 
         try {
-            FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
+
+            firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
 
                     Blog.class,
                     R.layout.row_item,
@@ -688,16 +703,14 @@ public class BottomNavigation extends AppCompatActivity {
 
                     String picname = PicName;
 
+                    Log.e(TAG, picname + "\n" + position);
                     viewHolder.setUsername(model.getUserName());
                     viewHolder.setTitle(model.getTitle());
                     viewHolder.setProfilepic(context, model.getUser_id());
                     viewHolder.setNumberLike(picname);
                     viewHolder.setLike(picname);
                     viewHolder.setDescription(model.getDescription());
-                    viewHolder.setPic(getApplicationContext(), model.getPic());
-//                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
-
-//                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
+                    viewHolder.setPic(getApplicationContext(), model.getMedium());
 
                     viewHolder.Like.setOnClickListener(new OnClickListener() {
                         @Override
@@ -750,14 +763,40 @@ public class BottomNavigation extends AppCompatActivity {
                                                     Blog user = dataSnapshot.getValue(Blog.class);
 
                                                     assert user != null;
-                                                    Log.e("User name: ", user.getPicName() + "\n" + user.getUserToken() + "\n" + user.getThumbnail_pic());
-                                                    imageusertoken = user.getUserToken();
+                                                    Log.e("User name: ", user.getPicName() + "\n" + user.getThumbnail_pic());
+
                                                     imageurl = user.getPic();
+
+                                                    String userid = user.getUser_id();
+
+                                                    databaseReference4 = FirebaseDatabase.getInstance().getReference()
+                                                            .child("Users").child(userid).child("User Info");
+
+                                                    databaseReference4.addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            Profile_model_class userinfo = dataSnapshot.getValue(Profile_model_class.class);
+
+                                                            assert userinfo != null;
+                                                            imageusertoken = userinfo.getUserToken();
+
+                                                            Log.e(TAG, "User Token        \n" + imageusertoken);
+
+                                                            setValues(userinfo.getUserToken(), user.getPic());
+                                                            new SendAsync().execute();
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
 
                                                     setValues(user.getUserToken(), user.getPic());
                                                     new SendAsync().execute();
 
-                                                    Log.e("image details", imageusertoken + "\t" + imageurl);
+                                                    Log.e("image details", imageusertoken + "\n" + imageurl);
 
 
                                                 }
@@ -846,6 +885,24 @@ public class BottomNavigation extends AppCompatActivity {
 
                     mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
+
+                    //On click on user name activity will open
+
+                    viewHolder.Blog_user_name.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+                            Intent i = new Intent(BottomNavigation.this, AddFriendProfileActivity.class);
+                            i.putExtra("imageName", Name);
+                            startActivity(i);
+
+
+                        }
+                    });
+
+
                 }
 
             };
@@ -856,6 +913,21 @@ public class BottomNavigation extends AppCompatActivity {
             e.getMessage();
         }
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        recyclerView.getRecycledViewPool().clear();
+
+        try {
+            firebaseRecyclerAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(firebaseRecyclerAdapter);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        Log.e(TAG, "ON post resume called");
+    }
+
 
     private void zoomImageFromThumb(View thumbView, String imageResId) {
         // If there's an animation in progress, cancel it
@@ -1009,13 +1081,13 @@ public class BottomNavigation extends AppCompatActivity {
 
 
 //    public void LogoutButton() {
-//        Log.i(TAG, "You clicked onClick Button");
+//        Log.e(TAG, "You clicked onClick Button");
 //        FirebaseAuth.getInstance().signOut();
 //        LoginManager.getInstance().logOut();
 //        Auth.GoogleSignInApi.signOut(googleApiClient)
 //                .setResultCallback(
 //                        status -> {
-//                            Log.i(TAG, "log off from google sign button");
+//                            Log.e(TAG, "log off from google sign button");
 //                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
 //                            startActivity(new Intent(this, Login_method.class));
 //                        });
@@ -1115,27 +1187,18 @@ public class BottomNavigation extends AppCompatActivity {
     public void setValues(String token, String name) {
 
 
-        Log.e("Image ", token + "\n  Details" + name);
+        Log.e("Image ", token + "\n  Details   \n" + name);
 
-        Log.e("image details 222222", imageusertoken + "\t" + imageurl);
+        Log.e("image details 222222\n", imageusertoken + "\n" + imageurl);
 
-        String userid = firebaseUser.getUid();
-        String user_name = firebaseUser.getDisplayName();
+
         google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
         deviceToken = imageusertoken;
         heading = "hello";
         description = "Photo Liked By";
         image = imageurl;
 
-        Log.e("Image ", token + "\n  Details" + name);
 
-        Log.e("uploaded image details", deviceToken + "\t" + image);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        onResume();
     }
 
     public static class BlogViewHolder extends RecyclerView.ViewHolder {
@@ -1147,12 +1210,12 @@ public class BottomNavigation extends AppCompatActivity {
         ImageView comment;
         Long i;
 
-
         ImageView imageView, expandImage;
 
         ImageView Like;
         FirebaseUser firebaseUser;
         TextView Numberlike;
+        TextView Blog_user_name, Blog_title, Blog_description;
 
         public BlogViewHolder(View itemView) {
             super(itemView);
@@ -1164,7 +1227,7 @@ public class BottomNavigation extends AppCompatActivity {
                     .child("Users");
 
             profile = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
-            imageView = (ImageView) mView.findViewById(R.id.image);
+
 
             imageView = (ImageView) mView.findViewById(R.id.image);
             expandImage = (ImageView) mView.findViewById(R.id.expanded_image);
@@ -1174,6 +1237,10 @@ public class BottomNavigation extends AppCompatActivity {
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             Numberlike = (TextView) mView.findViewById(R.id.likes);
 
+            Blog_user_name = (TextView) mView.findViewById(R.id.username);
+            Blog_title = (TextView) mView.findViewById(R.id._title);
+
+            Blog_description = (TextView) mView.findViewById(R.id._description);
         }
 
 
@@ -1234,15 +1301,13 @@ public class BottomNavigation extends AppCompatActivity {
 
         public void setUsername(String username) {
 
-            TextView Blog_title = (TextView) mView.findViewById(R.id.username);
-            Blog_title.setText(username);
+            Blog_user_name.setText(username);
 
-            Log.e("Username =======", Blog_title.getText().toString());
+            Log.e("Username =======", Blog_user_name.getText().toString());
         }
 
         public void setTitle(String title) {
 
-            TextView Blog_title = (TextView) mView.findViewById(R.id._title);
             Blog_title.setText(title);
 
             Log.e("Title =======", Blog_title.getText().toString());
@@ -1250,7 +1315,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         public void setDescription(String description) {
 
-            TextView Blog_description = (TextView) mView.findViewById(R.id._description);
             Blog_description.setText(description);
 
             Log.e("Description =======", Blog_description.getText().toString());
@@ -1336,4 +1400,3 @@ public class BottomNavigation extends AppCompatActivity {
     }
 
 }
-
