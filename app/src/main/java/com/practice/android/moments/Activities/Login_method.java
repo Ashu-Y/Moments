@@ -76,9 +76,7 @@ public class Login_method extends AppCompatActivity {
 //        }
 
 
-
         setContentView(R.layout.activity_login_method);
-
 
 
         try {
@@ -265,18 +263,12 @@ public class Login_method extends AppCompatActivity {
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
                                 currentuser_db.child("email").setValue(acct.getEmail());
 
-//                                try {
-//                                    currentuser_db.child("photo").setValue(acct.getPhotoUrl());
-//                                    Log.e("Photo URL", acct.getPhotoUrl() + "\t" + acct.getDisplayName() + "\t" + acct.getEmail());
-//                                } catch (Exception e) {
-//                                    e.getMessage();
-//                                }
                                 updateUI(firebaseUser);
                             }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(Login_method.this, "Authentication failed.",
+                            Toast.makeText(Login_method.this, "Authentication with Google failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -337,7 +329,7 @@ public class Login_method extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(Login_method.this, "Authentication failed.",
+                            Toast.makeText(Login_method.this, "Authentication with Facebook failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -366,7 +358,7 @@ public class Login_method extends AppCompatActivity {
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setCancelable(true);
             mProgressDialog.setCanceledOnTouchOutside(false);

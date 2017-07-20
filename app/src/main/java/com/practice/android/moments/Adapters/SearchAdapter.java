@@ -62,7 +62,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 String user_id = mDataArray.get(position).get(USER_ID);
-                mContext.startActivity(new Intent(mContext, AddFriendProfileActivity.class));
+
+                Intent i = new Intent(mContext, AddFriendProfileActivity.class);
+                i.putExtra("User id", user_id);
+                mContext.startActivity(i);
             }
         });
 

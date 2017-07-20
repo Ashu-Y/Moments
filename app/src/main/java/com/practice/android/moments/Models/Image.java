@@ -8,21 +8,41 @@ import java.io.Serializable;
 
 public class Image implements Serializable {
 
-    String picName;
     String title;
-    String medium;
-
     String description;
+    String picName;
+    String medium;
     String thumbnail_pic;
     String user_id;
     String pic;
     String userToken;
     String userName;
 
+
     public Image() {
     }
 
-    public Image(String picName, String title, String description, String thumbnail_pic, String user_id, String pic, String userToken, String userName) {
+    public Image(String title, String description,
+                 String picName, String medium,
+                 String thumbnail_pic, String user_id,
+                 String pic, String userToken, String userName) {
+
+        this.title = title;
+        this.description = description;
+        this.picName = picName;
+        this.medium = medium;
+        this.thumbnail_pic = thumbnail_pic;
+        this.user_id = user_id;
+        this.pic = pic;
+        this.userToken = userToken;
+        this.userName = userName;
+    }
+
+
+    public Image(String picName, String title,
+                 String description, String thumbnail_pic,
+                 String user_id, String pic,
+                 String userToken, String userName) {
         this.picName = picName;
         this.title = title;
         this.description = description;
@@ -33,6 +53,13 @@ public class Image implements Serializable {
         this.userName = userName;
     }
 
+    public String getMedium() {
+        return medium;
+    }
+
+    public void setMedium(String medium) {
+        this.medium = medium;
+    }
 
     public String getPicName() {
         return picName;
@@ -97,7 +124,6 @@ public class Image implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
 
 
 }

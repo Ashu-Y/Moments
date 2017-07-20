@@ -142,9 +142,8 @@ public class LikeFragment extends Fragment {
 
 
                     Glide.with(context).load(user.getThumbnailProfilephoto())
-                            .thumbnail(Glide.with(context).load(R.drawable.loader))
                             .skipMemoryCache(false)
-                            .placeholder(R.drawable.c1).into(profile);
+                            .thumbnail(Glide.with(context).load(R.drawable.loader)).into(profile);
 
                     Log.e("PROFILE PIC", "\n" + user.getPhoto());
                     Log.e("PROFILE Name", "\n" + user.getName());

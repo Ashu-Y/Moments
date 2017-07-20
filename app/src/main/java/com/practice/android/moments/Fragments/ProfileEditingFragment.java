@@ -228,7 +228,7 @@ public class ProfileEditingFragment extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Log.d("Editing", "User profile updated.");
+                                            Log.e("Editing", "User profile updated.");
                                         }
                                     }
                                 });
@@ -317,7 +317,7 @@ public class ProfileEditingFragment extends Fragment {
                     spinner.setSelection(spinnerPosition);
 
 
-                    Log.d("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+                    Log.e("Editing Activity", "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
                 }
 
                 @Override

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,7 +28,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="16sp"
-        tools:ignore="HardcodedText"/>
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/passlogin"
@@ -50,7 +49,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textSize="16sp"
-        tools:ignore="HardcodedText"/>
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button"
@@ -63,7 +62,7 @@
         android:padding="@dimen/_16sdp"
         android:text="Get Started"
         android:textColor="#e4ea8c"
-        tools:ignore="HardcodedText"/>
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView"
@@ -72,13 +71,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:gravity="center"
         android:text="LOGIN"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#e4ea8c"
         android:textSize="34sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
     <Button
@@ -91,21 +90,20 @@
         android:layout_toRightOf="@+id/button"
         android:background="@drawable/circle"
         android:text="Be one"
-        android:textColor="#e4ea8c"/>
+        android:textColor="#e4ea8c" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_35sdp"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignLeft="@+id/passlogin"
-        android:layout_alignStart="@+id/passlogin"
-        android:layout_toLeftOf="@+id/button2"
+        android:layout_above="@+id/passreset"
+        android:layout_marginEnd="@dimen/_25sdp"
+        android:layout_toStartOf="@+id/button2"
         android:gravity="center"
         android:text="Not a member"
         android:textColor="#e4ea8c"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/passreset"
@@ -113,12 +111,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_74sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:clickable="true"
         android:text="Forgot Password!!! RESET NOW"
         android:textColor="#e4ea8c"
         android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

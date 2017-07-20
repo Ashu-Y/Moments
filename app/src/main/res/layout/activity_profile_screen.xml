@@ -24,7 +24,7 @@
             android:background="#fff"
             android:padding="@dimen/_2sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/coffee1"
+
             tools:ignore="ContentDescription"/>
 
 
@@ -37,7 +37,7 @@
             android:layout_marginBottom="@dimen/_65sdp"
             android:elevation="@dimen/_5sdp"
             android:scaleType="centerCrop"
-            android:src="@drawable/c2"
+
             app:civ_border_color="#fff"
             app:civ_border_width="@dimen/_2sdp"
             tools:ignore="UnusedAttribute"/>

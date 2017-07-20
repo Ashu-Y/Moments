@@ -312,11 +312,11 @@ public class Timeline extends AppCompatActivity
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
 
-                Log.v("dsf", "Permission is granted");
+                Log.e("dsf", "Permission is granted");
                 return true;
 
             } else {
-                Log.v("wef", "Permission is revoked");
+                Log.e("wef", "Permission is revoked");
 
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.CAMERA}, REQUEST_WRITE_STORAGE);
@@ -324,7 +324,7 @@ public class Timeline extends AppCompatActivity
                 return false;
             }
         } else {
-            Log.v("f", "Permission is granted");
+            Log.e("f", "Permission is granted");
             return true;
         }
 

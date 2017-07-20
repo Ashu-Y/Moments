@@ -13,7 +13,6 @@
         android:layout_height="@dimen/_270sdp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_25sdp"
-        android:background="@drawable/input"
         android:contentDescription="@string/new_upload"
         android:padding="@dimen/_4sdp"
         android:src="@drawable/add_btn" />

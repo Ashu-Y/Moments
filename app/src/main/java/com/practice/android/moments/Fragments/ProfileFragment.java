@@ -141,9 +141,6 @@ public class ProfileFragment extends Fragment {
         }
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(user_id);
-
         try {
 
 
@@ -155,7 +152,7 @@ public class ProfileFragment extends Fragment {
                     assert user != null;
                     try {
 
-                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                        Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
 
                         try {
                             profilename.setText(user.getName());
@@ -172,7 +169,7 @@ public class ProfileFragment extends Fragment {
                                 .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
                                 .into(coverpic);
 
-                        Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
+                        Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
                     } catch (Exception e) {
                         e.getMessage();
                     }
@@ -194,7 +191,7 @@ public class ProfileFragment extends Fragment {
                     Long numberoffriends = dataSnapshot.getChildrenCount();
 
                     if (numberoffriends > 0) {
-                        userfriends.setText(numberoffriends.toString());
+                        userfriends.setText(String.valueOf(numberoffriends));
                     } else {
                         userfriends.setText("0");
 
@@ -222,7 +219,7 @@ public class ProfileFragment extends Fragment {
                     Long numberofimages = dataSnapshot.getChildrenCount();
 
                     if (numberofimages > 0) {
-                        userimages.setText(numberofimages.toString());
+                        userimages.setText(String.valueOf(numberofimages));
                     } else {
                         userimages.setText("0");
 

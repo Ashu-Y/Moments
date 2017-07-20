@@ -1,13 +1,11 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.practice.android.moments.Fragments.SearchFragment">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,19 +13,16 @@
 
         <EditText
             android:id="@+id/editText_search"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:background="@android:color/darker_gray"
-            android:padding="4dp"
-            android:textColor="#fff"/>
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_6sdp"
+            android:background="@drawable/input"
+            android:drawableLeft="@drawable/search"
+            android:gravity="center"
+            android:hint="Search"
 
-        <ImageButton
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-4dp"
-            android:layout_weight="1"
-            android:src="@drawable/search"/>
+            android:textColor="#fff" />
+
 
     </LinearLayout>
 
@@ -35,7 +30,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_30sdp">
 
     </android.support.v7.widget.RecyclerView>
 

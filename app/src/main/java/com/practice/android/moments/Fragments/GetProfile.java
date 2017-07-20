@@ -67,14 +67,14 @@ public class GetProfile extends Fragment {
                         Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                         assert user != null;
-                        Log.d(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
+                        Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getRelationship() + "    " + user.getAbout());
                         getname.setText(user.getName());
                         getemail.setText(user.getEmail());
                         getphone.setText(user.getPhone());
                         getAbout.setText(user.getAbout());
                         getDate.setText(user.getDate_of_birth());
                         getrealtion_ship.setText(user.getRelationship());
-                            Log.d(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
+                            Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
 
 
                     }

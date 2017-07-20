@@ -102,7 +102,7 @@ public class Signup extends AppCompatActivity {
                                     if (user_password.length() < 6) {
                                         Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                                     } else if (!Objects.equals(user_confirmpassword, user_password)) {
-                                        Log.d(TAG, user_confirmpassword + "   " + user_password);
+                                        Log.e(TAG, user_confirmpassword + "   " + user_password);
                                         Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
                                     } else {
                                         firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
@@ -133,7 +133,7 @@ public class Signup extends AppCompatActivity {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                             if (task.isSuccessful()) {
-                                                                                Log.d("Editing", "User profile updated.");
+                                                                                Log.e("Editing", "User profile updated.");
                                                                             }
                                                                         }
                                                                     });
@@ -143,7 +143,7 @@ public class Signup extends AppCompatActivity {
                                                                         @Override
                                                                         public void onComplete(@NonNull Task<Void> task) {
                                                                             if (task.isSuccessful()) {
-                                                                                Log.d(TAG, "Email sent.");
+                                                                                Log.e(TAG, "Email sent.");
                                                                             }
                                                                         }
                                                                     });
@@ -192,14 +192,14 @@ public class Signup extends AppCompatActivity {
 
             startActivity(new Intent(Signup.this, BottomNavigation.class));
         } else {
-            Log.w(TAG, "No Authenticated user found");
+            Log.e(TAG, "No Authenticated user found");
         }
     }
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();
