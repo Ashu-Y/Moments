@@ -6,10 +6,6 @@
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home"/>
 
-    <item
-        android:id="@+id/navigation_upload"
-        android:icon="@drawable/upload"
-        android:title="Upload"/>
 
     <item
         android:id="@+id/navigation_editing"
@@ -20,6 +16,11 @@
         android:id="@+id/navigation_search"
         android:icon="@drawable/search3"
         android:title="Search"/>
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Notifications"/>
 
     <item
         android:id="@+id/navigation_profile"

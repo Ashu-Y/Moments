@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.Activities.BottomNavigation;
+import com.practice.android.moments.BuildConfig;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -59,6 +61,7 @@ public class Upload_picture extends Fragment {
     FirebaseUser firebaseuser;
     Uri selectedImage = null;
     Uri uri, thumbnailpic = null;
+    Uri tempURI;
     String imageName;
     Uri download_uri;
     String uriSting;
@@ -132,8 +135,34 @@ public class Upload_picture extends Fragment {
 
         myAlertDialog.setNegativeButton("Camera", (arg0, arg1) -> {
 
-            mImageFile = new File(Environment.getExternalStorageDirectory() + File.separator + "DCIM" + File.separator + "temp.png");
-            Uri tempURI = Uri.fromFile(mImageFile);
+            Calendar c = Calendar.getInstance();
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            int month = c.get(Calendar.MONTH) + 1;
+            int year = c.get(Calendar.YEAR);
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minutes = c.get(Calendar.MINUTE);
+            int seconds = c.get(Calendar.SECOND);
+            int milliSeconds = c.get(Calendar.MILLISECOND);
+
+
+            //Can cause error in uploading
+            String temp = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + ".png";
+
+
+            mImageFile = new File(Environment.getExternalStorageDirectory() + File.separator + "DCIM" + File.separator + temp);
+
+
+
+
+//            Uri tempURI = Uri.parse(mImageFile.getAbsolutePath());
+
+            tempURI = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",
+                    mImageFile);
+
+            Log.e("tempURI: ", tempURI.toString());
+
+            Toast.makeText(getActivity(), tempURI.toString(), Toast.LENGTH_SHORT).show();
+
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, tempURI);
 
@@ -191,13 +220,18 @@ public class Upload_picture extends Fragment {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
 
             selectedImage = Uri.fromFile(mImageFile);
-            thumbnailpic = Uri.fromFile(mImageFile);
-            mediumpic = Uri.fromFile(mImageFile);
+
+            String file = compressImage(String.valueOf(data.getData()));
+            thumbnailpic = Uri.fromFile(new File(file));
+
+            mediumpic = Uri.fromFile(new File(file));
+
 
             Log.d("ImagePath", "Image saved to path : " + mImageFile.getAbsolutePath());
 
             Toast.makeText(getActivity(), "Path: " + mImageFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-            uploadImage.setImageURI(Uri.parse(mImageFile.getAbsolutePath()));
+            uploadImage.setImageURI(tempURI);
+            tempURI = null;
 
         }
     }

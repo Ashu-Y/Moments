@@ -54,10 +54,10 @@ import com.practice.android.moments.Fragments.CommentFragment;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.EditingFragment;
 import com.practice.android.moments.Fragments.LikeFragment;
+import com.practice.android.moments.Fragments.NotificationFragment;
 import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
-import com.practice.android.moments.Fragments.Upload_picture;
 import com.practice.android.moments.Helper.BottomNavigationViewHelper;
 import com.practice.android.moments.Helper.ServiceHandler;
 import com.practice.android.moments.Models.Blog;
@@ -96,7 +96,8 @@ public class BottomNavigation extends AppCompatActivity {
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
-    Upload_picture mUpload_pictureFragment;
+//    Upload_picture mUpload_pictureFragment;
+    NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
     CommentFragment mCommentFragment;
@@ -139,9 +140,15 @@ public class BottomNavigation extends AppCompatActivity {
                         recyclerView.setVisibility(View.VISIBLE);
                     }
 
-                    if (mUpload_pictureFragment.isAdded()) {
+//                    if (mUpload_pictureFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.remove(mUpload_pictureFragment);
+//                        transaction.commit();
+//                    }
+
+                    if (mNotificationFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mUpload_pictureFragment);
+                        transaction.remove(mNotificationFragment);
                         transaction.commit();
                     }
 
@@ -165,16 +172,25 @@ public class BottomNavigation extends AppCompatActivity {
 
                     return true;
 
-                case R.id.navigation_upload:
+                case R.id.navigation_editing:
 
                     if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
+                    fl.setMinimumHeight(size.y);
+                    fl.getLayoutParams().height = size.y;
+                    fl.requestLayout();
 
-                    if (mEditingFragment.isAdded()) {
+//                    if (mUpload_pictureFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.remove(mUpload_pictureFragment);
+//                        transaction.commit();
+//                    }
+
+                    if (mNotificationFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mEditingFragment);
+                        transaction.remove(mNotificationFragment);
                         transaction.commit();
                     }
 
@@ -190,18 +206,15 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
                     }
 
-                    if (!mUpload_pictureFragment.isAdded()) {
-
-                        fl.setMinimumHeight(size.y);
-                        fl.getLayoutParams().height = size.y;
-                        fl.requestLayout();
-
-
+                    if (!mEditingFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mUpload_pictureFragment, "Upload Picture Fragment");
-                        transaction.addToBackStack(null);
+                        transaction.replace(R.id.content, mEditingFragment, "Editing Fragment");
                         transaction.commit();
                     }
+
+
+//                    startActivity(new Intent(BottomNavigation.this, EditingActivity.class));
+
                     return true;
 
                 case R.id.navigation_search:
@@ -214,9 +227,15 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
 
-                    if (mUpload_pictureFragment.isAdded()) {
+//                    if (mUpload_pictureFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.remove(mUpload_pictureFragment);
+//                        transaction.commit();
+//                    }
+
+                    if (mNotificationFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mUpload_pictureFragment);
+                        transaction.remove(mNotificationFragment);
                         transaction.commit();
                     }
 
@@ -245,22 +264,19 @@ public class BottomNavigation extends AppCompatActivity {
                     }
 
                     return true;
-                case R.id.navigation_editing:
+
+                case R.id.navigation_notifications:
 
                     if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
 
-                    fl.setMinimumHeight(size.y);
-                    fl.getLayoutParams().height = size.y;
-                    fl.requestLayout();
 
-                    if (mUpload_pictureFragment.isAdded()) {
+                    if (mEditingFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mUpload_pictureFragment);
+                        transaction.remove(mEditingFragment);
                         transaction.commit();
                     }
-
 
                     if (mSearchFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -274,14 +290,31 @@ public class BottomNavigation extends AppCompatActivity {
                         transaction.commit();
                     }
 
-                    if (!mEditingFragment.isAdded()) {
+//                    if (!mUpload_pictureFragment.isAdded()) {
+//
+//                        fl.setMinimumHeight(size.y);
+//                        fl.getLayoutParams().height = size.y;
+//                        fl.requestLayout();
+//
+//
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.replace(R.id.content, mUpload_pictureFragment, "Upload Picture Fragment");
+//                        transaction.addToBackStack(null);
+//                        transaction.commit();
+//                    }
+
+                    if (!mNotificationFragment.isAdded()) {
+
+                        fl.setMinimumHeight(size.y);
+                        fl.getLayoutParams().height = size.y;
+                        fl.requestLayout();
+
+
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.replace(R.id.content, mEditingFragment, "Editing Fragment");
+                        transaction.replace(R.id.content, mNotificationFragment, "Notification Fragment");
+                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
-
-
-//                    startActivity(new Intent(BottomNavigation.this, EditingActivity.class));
 
                     return true;
 
@@ -291,9 +324,15 @@ public class BottomNavigation extends AppCompatActivity {
                         recyclerView.setVisibility(View.GONE);
                     }
 
-                    if (mUpload_pictureFragment.isAdded()) {
+//                    if (mUpload_pictureFragment.isAdded()) {
+//                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                        transaction.remove(mUpload_pictureFragment);
+//                        transaction.commit();
+//                    }
+
+                    if (mNotificationFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                        transaction.remove(mUpload_pictureFragment);
+                        transaction.remove(mNotificationFragment);
                         transaction.commit();
                     }
 
@@ -433,7 +472,8 @@ public class BottomNavigation extends AppCompatActivity {
         mCommentFragment = new CommentFragment();
         mLikeFragment = new LikeFragment();
         mProfileFragment = new ProfileFragment();
-        mUpload_pictureFragment = new Upload_picture();
+//        mUpload_pictureFragment = new Upload_picture();
+        mNotificationFragment = new NotificationFragment();
         mEditingFragment = new EditingFragment();
         mFragmentManager = getSupportFragmentManager();
 

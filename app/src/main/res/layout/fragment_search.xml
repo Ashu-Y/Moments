@@ -18,9 +18,9 @@
             android:layout_margin="@dimen/_6sdp"
             android:background="@drawable/input"
             android:drawableLeft="@drawable/search"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:hint="Search"
-
+            android:textColorHint="#fff"
             android:textColor="#fff" />
 
 
@@ -31,7 +31,7 @@
         android:id="@+id/recycler_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/_30sdp">
+        android:layout_marginTop="16dp">
 
     </android.support.v7.widget.RecyclerView>
 
