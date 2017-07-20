@@ -240,7 +240,7 @@
         <Spinner
             android:id="@+id/Relationship"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="@dimen/_30sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/circle"
@@ -258,6 +258,7 @@
             android:layout_marginLeft="@dimen/_123sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:background="#063852"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="center"
             android:text="Submit"/>
 

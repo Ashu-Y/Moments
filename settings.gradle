@@ -1,1 +1,1 @@
-include ':app', ':editing', ':firebasedatabase'
+include ':app', ':editing', ':firebasedatabase', ':ACProgressModule'
