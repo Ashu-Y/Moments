@@ -19,7 +19,7 @@ import com.practice.android.moments.R;
 public class ResetPassword extends AppCompatActivity {
     private static final String TAG = "Reset Password";
     private Button emailVerfified, passwordreset;
-    private EditText emailverify, newpassword, newconfirmpassword;
+    private EditText emailReset, newpassword, newconfirmpassword;
     private TextView passw;
 
     private FirebaseAuth firebaseAuth;
@@ -31,8 +31,8 @@ public class ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        passw = (TextView) findViewById(R.id.textView5);
-        passwordreset = (Button) findViewById(R.id.button5);
+        emailReset = (EditText) findViewById(R.id.emailreset);
+        passwordreset = (Button) findViewById(R.id.reset_button);
 
 
 
@@ -42,7 +42,7 @@ public class ResetPassword extends AppCompatActivity {
             public void onClick(View v) {
 
                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                String emailAddress = passw.getText().toString();
+                String emailAddress = emailReset.getText().toString();
 
                 auth.sendPasswordResetEmail(emailAddress)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {

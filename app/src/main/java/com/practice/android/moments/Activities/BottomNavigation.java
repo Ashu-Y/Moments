@@ -453,163 +453,6 @@ public class BottomNavigation extends AppCompatActivity {
 
         al_appsearch.clear();
 
-//        try {
-//            FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Blog, BlogViewHolder>(
-//
-//                    Blog.class,
-//                    R.layout.row_item,
-//                    BlogViewHolder.class,
-//                    databaseReference.orderByPriority()
-//
-//            ) {
-//                @Override
-//                protected void populateViewHolder(BlogViewHolder viewHolder, Blog model, int position) {
-//
-//                    PicName = getRef(position).getKey();
-//
-//                    String picname = PicName;
-//
-//                    viewHolder.setUsername(model.getUserName());
-//                    viewHolder.setTitle(model.getTitle());
-//                    viewHolder.setProfilepic(context, model.getUser_id());
-//                    viewHolder.setNumberLike(picname);
-//                    viewHolder.setLike(picname);
-//                    viewHolder.setDescription(model.getDescription());
-//                    viewHolder.setPic(getApplicationContext(), model.getPic());
-////                viewHolder.setPic(getApplicationContext(), model.getThumbnail_pic());
-//
-////                Log.e("PIC KEY AND NAME", PicName + "    Position:" + position);
-//
-//                    viewHolder.Like.setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                            picLike = true;
-//
-//                            DatabaseReference currentuser_db = viewHolder.mdatabaseReference;
-//
-//                            currentuser_db.addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                    if (picLike) {
-//
-//                                        if (dataSnapshot.child(picname).child("Users").hasChild(firebaseUser.getUid())) {
-//                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
-//                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
-//                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).removeValue();
-//                                            picLike = false;
-//                                            if (viewHolder.i > 0) {
-//                                                viewHolder.i--;
-//                                                String like = String.valueOf(viewHolder.i);
-//                                                currentuser_db.child(picname).child("Likes").setValue(like);
-//                                            } else {
-//                                                String like = String.valueOf(viewHolder.i);
-//                                                currentuser_db.child(picname).child("Likes").setValue(like);
-//                                            }
-//                                        } else {
-//                                            viewHolder.i = dataSnapshot.child(picname).child("Users").getChildrenCount();
-//                                            Log.e("No. of likes", String.valueOf(viewHolder.i));
-//                                            viewHolder.i++;
-//                                            String like = String.valueOf(viewHolder.i);
-//                                            currentuser_db.child(picname).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
-//                                            currentuser_db.child(picname).child("Likes").setValue(like);
-//                                            Log.e("Likes=====", like);
-//                                            picLike = false;
-//                                            //Post method
-////
-////                                            setValues(picname);
-////                                            new SendAsync().execute();
-//
-//
-//                                        }
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//                        }
-//                    });
-//
-//
-//                    viewHolder.comment.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                            fl.setMinimumHeight(size.y);
-//                            fl.getLayoutParams().height = size.y;
-//                            fl.requestLayout();
-//
-//                            Log.e("Name", "Comment Fragment Called");
-//
-//
-//                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
-//
-//
-//                            mCommentFragment.setImageResourceName(Name);
-//
-//
-//                            Log.e("Bottom Navigation Name", Name);
-//
-//                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//                            transaction.remove(mCommentFragment);
-//                            transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
-//                            transaction.addToBackStack(null);
-//                            transaction.commit();
-//
-//
-//                        }
-//                    });
-//
-//
-//                    viewHolder.Numberlike.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//
-//                            fl.setMinimumHeight(size.y);
-//                            fl.getLayoutParams().height = size.y;
-//                            fl.requestLayout();
-//
-//                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
-//
-//                            mLikeFragment.setImageResourceName(Name);
-//
-//                            Log.e("Pic Name", Name);
-//                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-//                            transaction.remove(mLikeFragment);
-//                            transaction.add(R.id.content, mLikeFragment, "Like Fragment");
-//                            transaction.addToBackStack(null);
-//                            transaction.commit();
-//
-//
-//                        }
-//                    });
-//
-//                    viewHolder.imageView.setOnClickListener(new OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            String Image = model.getMedium();
-//                            zoomImageFromThumb(viewHolder.imageView, Image);
-//                        }
-//                    });
-//
-//                    mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
-//
-//                }
-//            };
-//
-//            firebaseRecyclerAdapter.notifyDataSetChanged();
-////            firebaseRecyclerAdapter.cleanup();
-//            recyclerView.setAdapter(firebaseRecyclerAdapter);
-//        } catch (IndexOutOfBoundsException e) {
-//            e.getMessage();
-//        }
-
-        // Adding data in search adapter
         databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Users");
         try {
             al_appsearch.clear();
@@ -683,7 +526,7 @@ public class BottomNavigation extends AppCompatActivity {
         super.onResume();
 
         recyclerView.getRecycledViewPool().clear();
-
+        al_appsearch.clear();
         context = getApplicationContext();
 
         try {
@@ -915,6 +758,7 @@ public class BottomNavigation extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
+
         recyclerView.getRecycledViewPool().clear();
 
         try {
@@ -1196,6 +1040,7 @@ public class BottomNavigation extends AppCompatActivity {
         heading = "hello";
         description = "Photo Liked By";
         image = imageurl;
+        Log.e("Image ", usertoken + "\n  Details   \n" + name);
 
 
     }
