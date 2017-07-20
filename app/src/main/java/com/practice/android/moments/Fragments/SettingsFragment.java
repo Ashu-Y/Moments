@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment {
     //    GoogleApiClient googleApiClient;
     public static Context mContext;
     private String TAG = getClass().getSimpleName();
-    private Button profile, editProfile, changePassword, privacyPolicy, Logout_button;
+    private Button profile, editProfile, changePassword, privacyPolicy, Logout_button, invitebutton;
 
     @Override
     public void onResume() {
@@ -56,6 +56,7 @@ public class SettingsFragment extends Fragment {
         editProfile = (Button) v.findViewById(R.id.EditProfile);
         changePassword = (Button) v.findViewById(R.id.changePassword);
         privacyPolicy = (Button) v.findViewById(R.id.privacyPolicy);
+        invitebutton = (Button) v.findViewById(R.id.Invitebutton);
 
         Logout_button = (Button) v.findViewById(R.id.Logout);
 
@@ -81,6 +82,12 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        invitebutton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Coming Soon", Toast.LENGTH_LONG).show();
+            }
+        });
 
         changePassword.setOnClickListener(new OnClickListener() {
             @Override
@@ -92,6 +99,8 @@ public class SettingsFragment extends Fragment {
         privacyPolicy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Toast.makeText(context, "Coming Soon", Toast.LENGTH_LONG).show();
+//
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 PrivacyPolicyFragment privacyPolicyFragment = new PrivacyPolicyFragment();
