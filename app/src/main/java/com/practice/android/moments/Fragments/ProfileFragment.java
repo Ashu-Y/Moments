@@ -161,11 +161,11 @@ public class ProfileFragment extends Fragment {
                         }
 
 
-                        Glide.with(getContext()).load(user.getPhoto())
-                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                        Glide.with(getContext()).load(user.getThumbnailProfilephoto())
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.giphy))
                                 .into(profile);
 
-                        Glide.with(getContext()).load(user.getCoverPhoto())
+                        Glide.with(getContext()).load(user.getThumbnailCoverPhoto())
                                 .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
                                 .into(coverpic);
 

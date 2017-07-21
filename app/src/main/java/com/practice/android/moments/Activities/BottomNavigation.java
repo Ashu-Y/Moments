@@ -1236,7 +1236,7 @@ public class BottomNavigation extends AppCompatActivity {
                     assert user != null;
 
                     Glide.with(context).load(user.getThumbnailProfilephoto())
-                            .thumbnail(Glide.with(context).load(R.drawable.loader))
+                            .thumbnail(Glide.with(context).load(R.drawable.giphy))
                             .into(profile);
 
                     Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
