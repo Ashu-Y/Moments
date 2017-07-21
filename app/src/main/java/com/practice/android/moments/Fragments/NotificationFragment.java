@@ -39,7 +39,7 @@ public class NotificationFragment extends Fragment {
         likecomment = (Button) v.findViewById(R.id.notify);
         frameLayout = (FrameLayout) v.findViewById(R.id.notif_frame);
 
-
+        mFragmentManager = getFragmentManager();
         friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

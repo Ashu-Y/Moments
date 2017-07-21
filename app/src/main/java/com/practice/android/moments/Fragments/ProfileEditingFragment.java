@@ -176,13 +176,13 @@ public class ProfileEditingFragment extends Fragment {
                         progressDialog.dismiss();
                         return;
                     }
-                    if (TextUtils.isEmpty(code2) || code2.length() != 10) {
-//                        Toast.makeText(getContext(), String.valueOf(code2.length()), Toast.LENGTH_SHORT).show();
-                        phone.setError("Phone length cannot be less than 10");
-                        flag = -1;
-                        progressDialog.dismiss();
-                        return;
-                    }
+//                    if (TextUtils.isEmpty(code2) || code2.length() != 10) {
+////                        Toast.makeText(getContext(), String.valueOf(code2.length()), Toast.LENGTH_SHORT).show();
+//                        phone.setError("Phone length cannot be less than 10");
+//                        flag = -1;
+//                        progressDialog.dismiss();
+//                        return;
+//                    }
                     if (TextUtils.isEmpty(code3)) {
                         About.setError("Cannot be empty.");
                         flag = -1;

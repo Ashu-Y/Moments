@@ -106,11 +106,7 @@ public class Signup extends AppCompatActivity {
                                         Log.e(TAG, user_confirmpassword + "   " + user_password);
                                         Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        try {
-                                            firebaseUser.reload();
-                                        } catch (Exception e) {
-                                            e.getMessage();
-                                        }
+
                                         if (!firebaseUser.isEmailVerified()) {
 
                                             firebaseUser.sendEmailVerification()
