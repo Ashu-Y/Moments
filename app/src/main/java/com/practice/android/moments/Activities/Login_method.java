@@ -419,15 +419,9 @@ public class Login_method extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
 
-            if (firebaseUser.isEmailVerified()) {
-                updateUI(firebaseUser);
-                showProgressDialog();
-            } else {
-                Toast.makeText(this, "Please verify email....", Toast.LENGTH_SHORT).show();
-                updateUI(null);
-                showProgressDialog();
+            updateUI(firebaseUser);
+            showProgressDialog();
 
-            }
 
         }
     }

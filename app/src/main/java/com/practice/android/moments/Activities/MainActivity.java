@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -120,35 +119,25 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-        firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            updateUI(null);
-                        } else {
-                            if (!currentUser.isEmailVerified()) {
-                                currentUser.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.e(TAG, "Email sent.");
-                                                    Toast.makeText(MainActivity.this, "Please verify your email....", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-
+        if (currentUser.isEmailVerified()) {
+            firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                updateUI(null);
                             } else {
+
                                 hideProgressDialog();
                                 Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(MainActivity.this, BottomNavigation.class));
 
                             }
                         }
-                    }
-                });
+                    });
+        }else{
+            Toast.makeText(this, "Please verify email first.....", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showProgressDialog() {
@@ -170,4 +159,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(MainActivity.this, Login_method.class));
     }
+
+
 }

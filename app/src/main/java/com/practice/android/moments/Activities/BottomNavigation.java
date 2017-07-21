@@ -417,8 +417,11 @@ public class BottomNavigation extends AppCompatActivity {
             Log.e("TimelineFrag", e.getMessage());
         }
 
-        mdatabaseReference.child("userToken").setValue(usertoken);
-
+        try {
+            mdatabaseReference.child("userToken").setValue(usertoken);
+        } catch (Exception e) {
+            e.getMessage();
+        }
         mdatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

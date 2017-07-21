@@ -1,25 +1,37 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:context="com.practice.android.moments.Fragments.NotificationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="#fff"
-        android:text="Coming Soon"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_notification"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/notif_friends"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="wrap_content"
+            android:text="Friends" />
+
+        <Button
+            android:id="@+id/notify"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="wrap_content"
+            android:text="Follows" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/notif_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+
+    </FrameLayout>
 
 </LinearLayout>
