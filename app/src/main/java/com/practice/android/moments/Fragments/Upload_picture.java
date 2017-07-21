@@ -329,7 +329,7 @@ public class Upload_picture extends Fragment {
 
                                 //Can cause error in uploading
                                 imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
-                                Log.i("Camera", imageName);
+                                Log.e("Camera", imageName);
 
 
                                 DatabaseReference currentuser_db = databaseReference.child("User Pictures");
@@ -498,17 +498,17 @@ public class Upload_picture extends Fragment {
 
             int orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION, 0);
-            Log.d("EXIF", "Exif: " + orientation);
+            Log.e("EXIF", "Exif: " + orientation);
             Matrix matrix = new Matrix();
             if (orientation == 6) {
                 matrix.postRotate(90);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             } else if (orientation == 3) {
                 matrix.postRotate(180);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             } else if (orientation == 8) {
                 matrix.postRotate(270);
-                Log.d("EXIF", "Exif: " + orientation);
+                Log.e("EXIF", "Exif: " + orientation);
             }
             scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
                     scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,

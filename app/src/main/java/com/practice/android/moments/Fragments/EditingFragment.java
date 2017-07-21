@@ -1,6 +1,7 @@
 package com.practice.android.moments.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.BuildConfig;
 import com.practice.android.moments.R;
 
@@ -46,6 +48,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.practice.android.moments.Activities.BottomNavigation.usertoken;
 
 
 public class EditingFragment extends Fragment {
@@ -66,14 +69,18 @@ public class EditingFragment extends Fragment {
     StorageReference mstorageReference;
     File mImageFile;
     FirebaseUser firebaseuser;
-
+    ProgressDialog progressDialog;
     ImageView mEditedImageView;
     ImageView mOpenGalleryButton;
     FloatingActionButton mLaunchImageEditorButton;
     FloatingActionButton save, Uploadimage;
     ImageView mSelectedImageView;
     Uri mSelectedImageUri;
-
+    Uri selectedImage = null;
+    String imageName, imageTitle, imageDescription;
+    String user_id;
+    double progress1, progress2, progress3, progress;
+    String thumbpic, picture, thumbmed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -160,9 +167,39 @@ public class EditingFragment extends Fragment {
         });
 
 
+        Uploadimage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String title;
+                final CharSequence[] items = {"Choose from Library",
+                        "Cancel"};
+
+                title = "Select an option!";
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(title);
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        if (items[item].equals("Choose from Library")) {
+
+
+
+                        } else if (items[item].equals("Cancel")) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+
+
+            }
+        });
+
         return v;
     }
-
 
     public void saveImage() {
 
@@ -201,7 +238,7 @@ public class EditingFragment extends Fragment {
 
                 try {
 
-                    File cachePath = new File( myDir+ "/" + img_name.getText().toString() + ".jpg");
+                    File cachePath = new File(myDir + "/" + img_name.getText().toString() + ".jpg");
                     cachePath.createNewFile();
                     FileOutputStream ostream = new FileOutputStream(cachePath);
 
@@ -235,7 +272,6 @@ public class EditingFragment extends Fragment {
 
     }
 
-
     public void imageExistsPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -253,7 +289,6 @@ public class EditingFragment extends Fragment {
         builder.show();
     }
 
-
     public void fn_Choose_Image() {
 
         String title;
@@ -261,65 +296,63 @@ public class EditingFragment extends Fragment {
                 "Take Photo",
                 "Cancel"};
 
-                title = "Select an option!";
+        title = "Select an option!";
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(title);
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
 
-                        if (items[item].equals("Choose from Library")) {
+                if (items[item].equals("Choose from Library")) {
 
-                            Intent galleryPickerIntent = new Intent();
-                            galleryPickerIntent.setType("image/*");
-                            galleryPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
+                    Intent galleryPickerIntent = new Intent();
+                    galleryPickerIntent.setType("image/*");
+                    galleryPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-                            startActivityForResult(Intent.createChooser(galleryPickerIntent, "Select an image"), REQ_CODE_GALLERY_PICKER);
+                    startActivityForResult(Intent.createChooser(galleryPickerIntent, "Select an image"), REQ_CODE_GALLERY_PICKER);
 //
 //                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                            startActivityForResult(intent, GALLERY_PICTURE);
 
-                        } else if (items[item].equals("Take Photo")) {
+                } else if (items[item].equals("Take Photo")) {
 
-                            Calendar c = Calendar.getInstance();
-                            int day = c.get(Calendar.DAY_OF_MONTH);
-                            int month = c.get(Calendar.MONTH) + 1;
-                            int year = c.get(Calendar.YEAR);
-                            int hour = c.get(Calendar.HOUR_OF_DAY);
-                            int minutes = c.get(Calendar.MINUTE);
-                            int seconds = c.get(Calendar.SECOND);
-                            int milliSeconds = c.get(Calendar.MILLISECOND);
-
-
-                            //Can cause error in uploading
-                            String temp = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + ".png";
+                    Calendar c = Calendar.getInstance();
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    int month = c.get(Calendar.MONTH) + 1;
+                    int year = c.get(Calendar.YEAR);
+                    int hour = c.get(Calendar.HOUR_OF_DAY);
+                    int minutes = c.get(Calendar.MINUTE);
+                    int seconds = c.get(Calendar.SECOND);
+                    int milliSeconds = c.get(Calendar.MILLISECOND);
 
 
-                            mImageFile = new File(Environment.getExternalStorageDirectory() + File.separator + "DCIM" + File.separator + temp);
+                    //Can cause error in uploading
+                    String temp = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + ".png";
 
 
+                    mImageFile = new File(Environment.getExternalStorageDirectory() + File.separator + "DCIM" + File.separator + temp);
 
 
 //            Uri tempURI = Uri.parse(mImageFile.getAbsolutePath());
 
-                            tempURI = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",
-                                    mImageFile);
+                    tempURI = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider",
+                            mImageFile);
 
-                            Log.e("tempURI: ", tempURI.toString());
+                    Log.e("tempURI: ", tempURI.toString());
 
-                            Toast.makeText(getActivity(), tempURI.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), tempURI.toString(), Toast.LENGTH_SHORT).show();
 
-                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, tempURI);
-                            startActivityForResult(intent, REQ_CODE_CAMERA_REQUEST);
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, tempURI);
+                    startActivityForResult(intent, REQ_CODE_CAMERA_REQUEST);
 
-                        } else if (items[item].equals("Cancel")) {
-                            dialog.dismiss();
-                        }
-                    }
-                });
-                builder.show();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
 
 
     }
@@ -336,7 +369,7 @@ public class EditingFragment extends Fragment {
                     mSelectedImageUri = data.getData();
                     mSelectedImageView.setImageURI(mSelectedImageUri);
 
-                     file = compressImage(String.valueOf(data.getData()));
+                    file = compressImage(String.valueOf(data.getData()));
                     thumbnailpic = Uri.fromFile(new File(file));
 
                     mediumpic = Uri.fromFile(new File(file));
@@ -378,11 +411,9 @@ public class EditingFragment extends Fragment {
                     break;
 
 
-
             }
         }
     }
-
 
     public String compressImage(String imageUri) {
 
@@ -550,6 +581,137 @@ public class EditingFragment extends Fragment {
         Log.e("SIze ", String.valueOf(inSampleSize));
         return inSampleSize;
 
+    }
+
+    //Uploading File
+    private void uploadFile() {
+        //if there is a file to upload
+        if (selectedImage != null) {
+            //displaying a progress dialog while upload is going on
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
+            progressDialog.setCancelable(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+
+
+            StorageReference riversRef = mstorageReference.child("Photos")
+                    .child(firebaseuser.getUid()).child("User Photo")
+                    .child(selectedImage.getLastPathSegment());
+
+            riversRef.child("picture").putFile(selectedImage)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        //if the upload is successfull
+                        //hiding the progress dialog
+
+                        download_uri = taskSnapshot.getDownloadUrl();
+                        user_id = firebaseuser.getUid();
+                        picture = String.valueOf(download_uri);
+
+
+                        riversRef.child("thumbnail_medium").putFile(mediumpic).addOnSuccessListener(taskSnapshot2 -> {
+                            thumbmed = String.valueOf(taskSnapshot2.getDownloadUrl());
+                            riversRef.child("thumbnail").putFile(thumbnailpic).addOnSuccessListener(taskSnapshot1 -> {
+
+                                progressDialog.dismiss();
+
+
+                                thumbpic = String.valueOf(taskSnapshot1.getDownloadUrl());
+
+
+                                Calendar c = Calendar.getInstance();
+                                int day = c.get(Calendar.DAY_OF_MONTH);
+                                int month = c.get(Calendar.MONTH) + 1;
+                                int year = c.get(Calendar.YEAR);
+                                int hour = c.get(Calendar.HOUR_OF_DAY);
+                                int minutes = c.get(Calendar.MINUTE);
+                                int seconds = c.get(Calendar.SECOND);
+                                int milliSeconds = c.get(Calendar.MILLISECOND);
+
+
+                                //Can cause error in uploading
+                                imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                                Log.e("Camera", imageName);
+
+
+                                DatabaseReference currentuser_db = databaseReference.child("User Pictures");
+                                currentuser_db.child(imageName).orderByPriority();
+                                DatabaseReference currentuser = currentuser_db.child(imageName);
+                                currentuser.child("pic").setValue(picture);
+                                currentuser.child("picName").setValue(imageName);
+                                currentuser.child("userName").setValue(firebaseuser.getDisplayName());
+                                currentuser.child("user_id").setValue(user_id);
+                                currentuser.child("thumbnail_pic").setValue(thumbpic);
+                                currentuser.child("medium").setValue(thumbmed);
+                                currentuser.child("userToken").setValue(usertoken);
+//                                currentuser.child("title").setValue(title.getText().toString());
+//                                currentuser.child("description").setValue(description.getText().toString());
+
+
+                                DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
+                                user_db.child(imageName).orderByPriority();
+                                DatabaseReference user = user_db.child(imageName);
+                                user.child("pic").setValue(picture);
+                                user.child("picName").setValue(imageName);
+                                user.child("userName").setValue(firebaseuser.getDisplayName());
+                                user.child("user_id").setValue(user_id);
+                                user.child("userToken").setValue(usertoken);
+                                user.child("medium").setValue(thumbmed);
+                                user.child("thumbnail_pic").setValue(thumbpic);
+
+//                                user.child("title").setValue(title.getText().toString());
+//                                user.child("description").setValue(description.getText().toString());
+
+
+                                //and displaying a success toast
+                                Toast.makeText(getActivity(), "File Uploaded ", Toast.LENGTH_LONG).show();
+
+                                startActivity(new Intent(getActivity(), BottomNavigation.class));
+
+
+                            }).addOnProgressListener(taskSnapshot1 -> {
+                                //calculating progress percentage
+                                progress3 = (100.0 * taskSnapshot1.getBytesTransferred()) / taskSnapshot1.getTotalByteCount();
+                                Log.e("Process3", String.valueOf(progress3));
+
+                                progress = (progress1 + progress2 + progress3) / 3;
+
+                                Log.e("Process", String.valueOf(progress));
+
+                                //displaying percentage in progress dialog
+                                progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+
+                            });
+
+                        }).addOnProgressListener(taskSnapshot2 -> {
+                            //calculating progress percentage
+                            progress2 = (100.0 * taskSnapshot2.getBytesTransferred()) / taskSnapshot2.getTotalByteCount();
+                            Log.e("Process2", String.valueOf(progress2));
+                        });
+                    })
+                    .addOnFailureListener(exception -> {
+                        //if the upload is not successful
+                        //hiding the progress dialog
+                        progressDialog.dismiss();
+
+                        //and displaying error message
+                        Toast.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                    })
+                    .addOnProgressListener(taskSnapshot -> {
+                        //calculating progress percentage
+                        progress1 = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                        Log.e("Process1", String.valueOf(progress1));
+
+//                        //displaying percentage in progress dialog
+                        progressDialog.setMessage("Uploaded " + ((int) progress1) + "%...");
+                    });
+
+        }
+        //if there is not any file
+        else {
+            //you can display an error toast
+            Toast.makeText(getActivity(), "File Upload Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
