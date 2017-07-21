@@ -107,7 +107,7 @@ dependencies {
     compile('org.apache.httpcomponents:httpmime:4.3.5') {
         exclude module: 'org.apache.httpcomponents:httpclient'
     }
-
+    compile 'cc.cloudist.acplibrary:library:1.2.1'
     compile 'com.facebook.android:facebook-android-sdk:4.24.0'
 
     testCompile 'junit:junit:4.12'

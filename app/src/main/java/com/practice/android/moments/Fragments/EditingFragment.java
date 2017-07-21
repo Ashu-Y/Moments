@@ -77,7 +77,8 @@ public class EditingFragment extends Fragment {
     ImageView mSelectedImageView;
     Uri mSelectedImageUri;
     Uri selectedImage = null;
-    String imageName, imageTitle, imageDescription;
+    String imageName;
+    EditText imageTitle, imageDescription;
     String user_id;
     double progress1, progress2, progress3, progress;
     String thumbpic, picture, thumbmed;
@@ -172,7 +173,7 @@ public class EditingFragment extends Fragment {
             public void onClick(View v) {
 
                 String title;
-                final CharSequence[] items = {"Choose from Library",
+                final CharSequence[] items = {"Upload",
                         "Cancel"};
 
                 title = "Select an option!";
@@ -183,8 +184,8 @@ public class EditingFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
 
-                        if (items[item].equals("Choose from Library")) {
 
+                        if (items[item].equals("Upload")) {
 
 
                         } else if (items[item].equals("Cancel")) {
@@ -366,6 +367,11 @@ public class EditingFragment extends Fragment {
             switch (requestCode) {
 
                 case REQ_CODE_GALLERY_PICKER:
+                    mSelectedImageUri = null;
+                    mediumpic = null;
+                    thumbnailpic = null;
+
+
                     mSelectedImageUri = data.getData();
                     mSelectedImageView.setImageURI(mSelectedImageUri);
 
@@ -377,6 +383,9 @@ public class EditingFragment extends Fragment {
                     break;
 
                 case REQ_CODE_CAMERA_REQUEST:
+                    mSelectedImageUri = null;
+                    mediumpic = null;
+                    thumbnailpic = null;
 
 
                     mSelectedImageUri = Uri.fromFile(mImageFile);
@@ -398,6 +407,10 @@ public class EditingFragment extends Fragment {
 
 
                 case REQ_CODE_CSDK_IMAGE_EDITOR:
+
+                    mSelectedImageUri = null;
+                    mediumpic = null;
+                    thumbnailpic = null;
 
                     /* Set the image! */
                     Uri editedImageUri = data.getParcelableExtra(AdobeImageIntent.EXTRA_OUTPUT_URI);
@@ -586,20 +599,26 @@ public class EditingFragment extends Fragment {
     //Uploading File
     private void uploadFile() {
         //if there is a file to upload
-        if (selectedImage != null) {
+        if (mSelectedImageUri != null) {
             //displaying a progress dialog while upload is going on
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
             progressDialog.setCancelable(true);
             progressDialog.setCanceledOnTouchOutside(false);
+//            ACProgressPie dialog = new ACProgressPie.Builder(this)
+//                    .ringColor(Color.WHITE)
+//                    .pieColor(Color.WHITE)
+//                    .updateType(ACProgressConstant.PIE_AUTO_UPDATE)
+//                    .build();
+
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
                     .child(firebaseuser.getUid()).child("User Photo")
-                    .child(selectedImage.getLastPathSegment());
+                    .child(mSelectedImageUri.getLastPathSegment());
 
-            riversRef.child("picture").putFile(selectedImage)
+            riversRef.child("picture").putFile(mSelectedImageUri)
                     .addOnSuccessListener(taskSnapshot -> {
                         //if the upload is successfull
                         //hiding the progress dialog
@@ -630,7 +649,7 @@ public class EditingFragment extends Fragment {
 
 
                                 //Can cause error in uploading
-                                imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                                imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "" + user_id;
                                 Log.e("Camera", imageName);
 
 
@@ -644,8 +663,8 @@ public class EditingFragment extends Fragment {
                                 currentuser.child("thumbnail_pic").setValue(thumbpic);
                                 currentuser.child("medium").setValue(thumbmed);
                                 currentuser.child("userToken").setValue(usertoken);
-//                                currentuser.child("title").setValue(title.getText().toString());
-//                                currentuser.child("description").setValue(description.getText().toString());
+                                currentuser.child("title").setValue(imageTitle.getText().toString());
+                                currentuser.child("description").setValue(imageDescription.getText().toString());
 
 
                                 DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
@@ -659,8 +678,8 @@ public class EditingFragment extends Fragment {
                                 user.child("medium").setValue(thumbmed);
                                 user.child("thumbnail_pic").setValue(thumbpic);
 
-//                                user.child("title").setValue(title.getText().toString());
-//                                user.child("description").setValue(description.getText().toString());
+                                user.child("title").setValue(imageTitle.getText().toString());
+                                user.child("description").setValue(imageDescription.getText().toString());
 
 
                                 //and displaying a success toast
