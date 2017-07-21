@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.practice.android.moments.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = getClass().getSimpleName();
     FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference databaseReference;
     //variables
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         signin = (Button) findViewById(R.id.button);
         signup = (Button) findViewById(R.id.button2);
-
         Reset = (TextView) findViewById(R.id.passreset);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         firebaseAuth = FirebaseAuth.getInstance();
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+
         firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -126,9 +128,24 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             updateUI(null);
                         } else {
-                            hideProgressDialog();
-                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+                            if (!currentUser.isEmailVerified()) {
+                                currentUser.sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.e(TAG, "Email sent.");
+                                                    Toast.makeText(MainActivity.this, "Please verify your email....", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+
+                            } else {
+                                hideProgressDialog();
+                                Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+
+                            }
                         }
                     }
                 });
@@ -137,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();

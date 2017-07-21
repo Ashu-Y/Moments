@@ -35,7 +35,7 @@ public class SettingsFragment extends Fragment {
     //    GoogleApiClient googleApiClient;
     public static Context mContext;
     private String TAG = getClass().getSimpleName();
-    private Button profile, editProfile, changePassword, privacyPolicy, Logout_button, invitebutton;
+    private Button profile, editProfile, changePassword, privacyPolicy, Logout_button, ClearHistory, invitebutton;
 
     @Override
     public void onResume() {
@@ -53,6 +53,9 @@ public class SettingsFragment extends Fragment {
         mContext = getContext();
 
         profile = (Button) v.findViewById(R.id.profile);
+
+        ClearHistory = (Button) v.findViewById(R.id.ClearSearchHistory);
+
         editProfile = (Button) v.findViewById(R.id.EditProfile);
         changePassword = (Button) v.findViewById(R.id.changePassword);
         privacyPolicy = (Button) v.findViewById(R.id.privacyPolicy);
@@ -83,6 +86,13 @@ public class SettingsFragment extends Fragment {
         });
 
         invitebutton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Coming Soon", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ClearHistory.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, "Coming Soon", Toast.LENGTH_LONG).show();

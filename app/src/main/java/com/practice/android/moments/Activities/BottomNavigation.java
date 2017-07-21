@@ -96,7 +96,9 @@ public class BottomNavigation extends AppCompatActivity {
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
-//    Upload_picture mUpload_pictureFragment;
+    //    Upload_picture mUpload_pictureFragment;
+    HashMap<String, String> item;
+    HashMap<String, String> useritem;
     NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
@@ -525,16 +527,16 @@ public class BottomNavigation extends AppCompatActivity {
                                 Log.e("Key Node", "" + nodeKey);
                                 Log.e("number of OBJECTS", String.valueOf(number1) + "\n" + user.getName() + "\n" + user.getThumbnailProfilephoto() + "\n" + user.getUserToken());
 
-                                HashMap<String, String> item = new HashMap<String, String>();
+                                item = new HashMap<String, String>();
                                 item.put(USER_ID, nodeKey);
                                 item.put(USER_NAME, user.getName());
                                 item.put(USER_PHOTO, user.getThumbnailProfilephoto());
                                 item.put(USER_TOKEN, user.getUserToken());
 
                                 al_appsearch.add(item);
-                                HashMap<String, String> useritem = al_appsearch.get(i);
+                                useritem = al_appsearch.get(i);
                                 i++;
-                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
+//                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
 
                             }
 
@@ -724,7 +726,7 @@ public class BottomNavigation extends AppCompatActivity {
                             FragmentTransaction transaction = mFragmentManager.beginTransaction();
                             transaction.remove(mCommentFragment);
                             transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
-                            transaction.addToBackStack(null);
+                            transaction.addToBackStack("comment");
                             transaction.commit();
 
 
@@ -801,7 +803,9 @@ public class BottomNavigation extends AppCompatActivity {
 
         recyclerView.getRecycledViewPool().clear();
 
+
         try {
+
             firebaseRecyclerAdapter.notifyDataSetChanged();
             recyclerView.setAdapter(firebaseRecyclerAdapter);
         } catch (Exception e) {

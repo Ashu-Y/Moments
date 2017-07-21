@@ -249,15 +249,18 @@ public class Login_method extends AppCompatActivity {
                                             }
                                         });
 
-                                firebaseUser.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.e(TAG, "Email sent.");
+                                if (!firebaseUser.isEmailVerified()) {
+                                    firebaseUser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.e(TAG, "Email sent.");
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+
+                                }
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
@@ -309,17 +312,18 @@ public class Login_method extends AppCompatActivity {
                                             }
                                         });
 
-                                firebaseUser.sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Log.e(TAG, "Email sent.");
+                                if (!firebaseUser.isEmailVerified()) {
+                                    firebaseUser.sendEmailVerification()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.e(TAG, "Email sent.");
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
 
-
+                                }
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
@@ -415,15 +419,15 @@ public class Login_method extends AppCompatActivity {
         firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
 
-//            if(firebaseUser.isEmailVerified()){
-            updateUI(firebaseUser);
-            showProgressDialog();
-//            }else
-//            {
-//                updateUI(null);
-//                showProgressDialog();
-//
-//            }
+            if (firebaseUser.isEmailVerified()) {
+                updateUI(firebaseUser);
+                showProgressDialog();
+            } else {
+                Toast.makeText(this, "Please verify email....", Toast.LENGTH_SHORT).show();
+                updateUI(null);
+                showProgressDialog();
+
+            }
 
         }
     }

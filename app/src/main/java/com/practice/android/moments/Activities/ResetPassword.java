@@ -8,23 +8,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.practice.android.moments.R;
 
 public class ResetPassword extends AppCompatActivity {
     private static final String TAG = "Reset Password";
-    private Button emailVerfified, passwordreset;
-    private EditText emailReset, newpassword, newconfirmpassword;
-    private TextView passw;
-
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser user;
-
+    String emailAddress = null;
+    FirebaseAuth auth;
+    private Button passwordReset;
+    private EditText emailReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +28,33 @@ public class ResetPassword extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
 
         emailReset = (EditText) findViewById(R.id.emailreset);
-        passwordreset = (Button) findViewById(R.id.reset_button);
+        passwordReset = (Button) findViewById(R.id.reset_button);
 
 
-
-
-        passwordreset.setOnClickListener(new View.OnClickListener() {
+        passwordReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                String emailAddress = emailReset.getText().toString();
+                auth = FirebaseAuth.getInstance();
+                emailAddress = emailReset.getText().toString();
 
-                auth.sendPasswordResetEmail(emailAddress)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.e(TAG, "Email sent.");
-                                }
-                            }
-                        });
+                try {
+                    if (emailAddress != null) {
+                        auth.sendPasswordResetEmail(emailAddress)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.e(TAG, "Email sent.");
+                                        }
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(ResetPassword.this, "Please enter the valid email.....  ", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e("Reset Password:", e.getMessage());
+                }
             }
         });
     }
