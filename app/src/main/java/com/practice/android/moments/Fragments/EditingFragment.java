@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.BuildConfig;
+import com.practice.android.moments.Helper.MyCanvas;
 import com.practice.android.moments.R;
 
 import java.io.File;
@@ -48,6 +50,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.practice.android.moments.Activities.BottomNavigation.usertoken;
 
 
@@ -91,6 +94,13 @@ public class EditingFragment extends Fragment {
 
         /* 2) Find the layout's ImageView by ID */
         mEditedImageView = (ImageView) v.findViewById(R.id.editedImageView);
+
+
+        View drawView = new MyCanvas(getApplicationContext());
+        Bitmap bitmap = Bitmap.createBitmap(500/*width*/, 500/*height*/, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawView.draw(canvas);
+        mEditedImageView.setImageBitmap(bitmap);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -141,7 +151,10 @@ public class EditingFragment extends Fragment {
 
                     startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
                 } else {
-                    Toast.makeText(getActivity(), "Select an image from the Gallery", Toast.LENGTH_LONG).show();
+
+                    selectImagePopup();
+
+//                    Toast.makeText(getActivity(), "Select an image from the Gallery", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -171,42 +184,25 @@ public class EditingFragment extends Fragment {
         Uploadimage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String title;
-                final CharSequence[] items = {"Upload",
-                        "Cancel"};
-
-                title = "Select an option!";
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(title);
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int item) {
-
-
-                        if (items[item].equals("Upload")) {
-
-
-                        } else if (items[item].equals("Cancel")) {
-                            dialog.dismiss();
-                        }
-                    }
-                });
-                builder.show();
-
-
+                upload_dialog();
             }
         });
 
         return v;
     }
 
+    Bitmap bmp1 = null;
+
     public void saveImage() {
-
-
+        bmp1 = null;
         content.setDrawingCacheEnabled(true);
-        Bitmap bmp1 = ((BitmapDrawable) content.getDrawable()).getBitmap();
+
+        try {
+            bmp1 = ((BitmapDrawable) content.getDrawable()).getBitmap();
+
+        } catch (Exception e) {
+            Log.e("Save as", e.getMessage());
+        }
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = this.getLayoutInflater(getArguments());
@@ -267,7 +263,57 @@ public class EditingFragment extends Fragment {
             AlertDialog alertDialog = dialogBuilder.create();
             alertDialog.show();
         } else {
-            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
+
+            LayoutInflater li = this.getLayoutInflater(getArguments());
+            final View layout = li.inflate(R.layout.toast_layout, null);
+
+           selectImagePopup();
+
+//            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    public void upload_dialog() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = this.getLayoutInflater(getArguments());
+        final View dialogView = inflater.inflate(R.layout.upload_title_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        imageTitle = (EditText) dialogView.findViewById(R.id.title);
+        imageDescription = (EditText) dialogView.findViewById(R.id.desc);
+
+        dialogBuilder.setTitle("Upload Image ");
+        dialogBuilder.setIcon(R.drawable.ic_file_upload_black_24dp);
+
+        dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int whichButton) {
+                String title = imageTitle.getText().toString();
+                String description = imageDescription.getText().toString();
+                uploadFile(title, description);
+            }
+        });
+
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+
+        if (mSelectedImageUri != null) {
+            AlertDialog alertDialog = dialogBuilder.create();
+            alertDialog.show();
+        } else {
+
+            LayoutInflater li = this.getLayoutInflater(getArguments());
+            final View layout = li.inflate(R.layout.toast_layout, null);
+
+          selectImagePopup();
+
+//            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -290,6 +336,17 @@ public class EditingFragment extends Fragment {
         builder.show();
     }
 
+    public void selectImagePopup(){
+        LayoutInflater li = this.getLayoutInflater(getArguments());
+        final View layout = li.inflate(R.layout.toast_layout, null);
+
+        Toast toast = new Toast(getActivity());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setView(layout);//setting the view of custom toast layout
+        toast.show();
+    }
+
     public void fn_Choose_Image() {
 
         String title;
@@ -307,11 +364,14 @@ public class EditingFragment extends Fragment {
 
                 if (items[item].equals("Choose from Library")) {
 
-                    Intent galleryPickerIntent = new Intent();
-                    galleryPickerIntent.setType("image/*");
-                    galleryPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
+//                    Intent galleryPickerIntent = new Intent();
+//                    galleryPickerIntent.setType("image/*");
+//                    galleryPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-                    startActivityForResult(Intent.createChooser(galleryPickerIntent, "Select an image"), REQ_CODE_GALLERY_PICKER);
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQ_CODE_GALLERY_PICKER);
+
+//                    startActivityForResult(Intent.createChooser(galleryPickerIntent, "Select an image"), REQ_CODE_GALLERY_PICKER);
 //
 //                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                            startActivityForResult(intent, GALLERY_PICTURE);
@@ -361,7 +421,7 @@ public class EditingFragment extends Fragment {
     /* 3) Handle the results */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String file;
+        String file = null;
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
@@ -374,8 +434,9 @@ public class EditingFragment extends Fragment {
 
                     mSelectedImageUri = data.getData();
                     mSelectedImageView.setImageURI(mSelectedImageUri);
-
-                    file = compressImage(String.valueOf(data.getData()));
+//                    mediumpic = mSelectedImageUri;
+//                    thumbnailpic = mSelectedImageUri;
+                    file = compressImage(data.getData().toString());
                     thumbnailpic = Uri.fromFile(new File(file));
 
                     mediumpic = Uri.fromFile(new File(file));
@@ -389,9 +450,10 @@ public class EditingFragment extends Fragment {
 
 
                     mSelectedImageUri = Uri.fromFile(mImageFile);
-//
+//                    mediumpic = mSelectedImageUri;
+//                    thumbnailpic = mSelectedImageUri;
 
-                    file = compressImage(String.valueOf(mSelectedImageUri));
+                    file = compressImage(mSelectedImageUri.toString());
                     thumbnailpic = Uri.fromFile(new File(file));
 
                     mediumpic = Uri.fromFile(new File(file));
@@ -416,11 +478,12 @@ public class EditingFragment extends Fragment {
                     Uri editedImageUri = data.getParcelableExtra(AdobeImageIntent.EXTRA_OUTPUT_URI);
                     mSelectedImageView.setImageURI(editedImageUri);
 
-                    file = compressImage(String.valueOf(editedImageUri));
-                    thumbnailpic = Uri.fromFile(new File(file));
-
-                    mediumpic = Uri.fromFile(new File(file));
-
+//                    file = compressImage(String.valueOf(editedImageUri));
+//                    thumbnailpic = Uri.fromFile(new File(file));
+//
+//                    mediumpic = Uri.fromFile(new File(file));
+                    mediumpic = mSelectedImageUri;
+                    thumbnailpic = mSelectedImageUri;
                     break;
 
 
@@ -431,6 +494,7 @@ public class EditingFragment extends Fragment {
     public String compressImage(String imageUri) {
 
         String filePath = getRealPathFromURI(imageUri);
+//        String filePath = Uri.parse(imageUri).toString();
         Bitmap scaledBitmap = null;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
@@ -597,9 +661,11 @@ public class EditingFragment extends Fragment {
     }
 
     //Uploading File
-    private void uploadFile() {
+    private void uploadFile(String title, String description) {
         //if there is a file to upload
-        if (mSelectedImageUri != null) {
+
+        Log.e("Image details++: ", title + "\t" + description);
+        if (mSelectedImageUri != null && mediumpic != null && thumbnailpic != null) {
             //displaying a progress dialog while upload is going on
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
@@ -611,7 +677,6 @@ public class EditingFragment extends Fragment {
 //                    .pieColor(Color.WHITE)
 //                    .updateType(ACProgressConstant.PIE_AUTO_UPDATE)
 //                    .build();
-
 
 
             StorageReference riversRef = mstorageReference.child("Photos")
@@ -663,8 +728,8 @@ public class EditingFragment extends Fragment {
                                 currentuser.child("thumbnail_pic").setValue(thumbpic);
                                 currentuser.child("medium").setValue(thumbmed);
                                 currentuser.child("userToken").setValue(usertoken);
-                                currentuser.child("title").setValue(imageTitle.getText().toString());
-                                currentuser.child("description").setValue(imageDescription.getText().toString());
+                                currentuser.child("title").setValue(title);
+                                currentuser.child("description").setValue(description);
 
 
                                 DatabaseReference user_db = mdatabaseReference.child(user_id).child("User Pictures");
@@ -678,8 +743,8 @@ public class EditingFragment extends Fragment {
                                 user.child("medium").setValue(thumbmed);
                                 user.child("thumbnail_pic").setValue(thumbpic);
 
-                                user.child("title").setValue(imageTitle.getText().toString());
-                                user.child("description").setValue(imageDescription.getText().toString());
+                                user.child("title").setValue(title);
+                                user.child("description").setValue(description);
 
 
                                 //and displaying a success toast

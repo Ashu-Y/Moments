@@ -29,6 +29,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -85,6 +86,7 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
+    public static String FTAG = null;
     public static String Name;
     public static GoogleApiClient googleApiClient;
     public static Context context;
@@ -96,7 +98,7 @@ public class BottomNavigation extends AppCompatActivity {
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
-//    Upload_picture mUpload_pictureFragment;
+    //    Upload_picture mUpload_pictureFragment;
     NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
@@ -312,7 +314,6 @@ public class BottomNavigation extends AppCompatActivity {
 
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
                         transaction.replace(R.id.content, mNotificationFragment, "Notification Fragment");
-                        transaction.addToBackStack(null);
                         transaction.commit();
                     }
 
@@ -497,7 +498,6 @@ public class BottomNavigation extends AppCompatActivity {
         try {
             al_appsearch.clear();
             databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
-
                 int i = 0;
 
                 @Override
@@ -724,6 +724,7 @@ public class BottomNavigation extends AppCompatActivity {
                             FragmentTransaction transaction = mFragmentManager.beginTransaction();
                             transaction.remove(mCommentFragment);
                             transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
+                            FTAG = "Comment Fragment";
                             transaction.addToBackStack(null);
                             transaction.commit();
 
@@ -749,6 +750,7 @@ public class BottomNavigation extends AppCompatActivity {
                             FragmentTransaction transaction = mFragmentManager.beginTransaction();
                             transaction.remove(mLikeFragment);
                             transaction.add(R.id.content, mLikeFragment, "Like Fragment");
+                            FTAG = "Like Fragment";
                             transaction.addToBackStack(null);
                             transaction.commit();
 
@@ -1031,40 +1033,7 @@ public class BottomNavigation extends AppCompatActivity {
         return path;
     }
 
-    @Override
-    public void onBackPressed() {
 
-        if (mCurrentAnimator != null) {
-            mCurrentAnimator.cancel();
-        } else if (navigation.getSelectedItemId() != R.id.navigation_home) {
-            navigation.setSelectedItemId(R.id.navigation_home);
-        } else {
-
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
-            builder1.setMessage("You want to exit!!!!");
-            builder1.setCancelable(true);
-
-
-            builder1.setPositiveButton(
-                    "Yes",
-                    (dialog, id) -> {
-                        dialog.cancel();
-                        moveTaskToBack(true);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                    });
-
-            builder1.setNegativeButton(
-                    "No",
-                    (dialog, id) -> {
-                        dialog.cancel();
-                        Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
-                    });
-
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-        }
-    }
 
     public void setValues(String token, String name) {
 
@@ -1283,4 +1252,78 @@ public class BottomNavigation extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+        } else if (navigation.getSelectedItemId() != R.id.navigation_home) {
+            navigation.setSelectedItemId(R.id.navigation_home);
+        } else {
+
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
+            builder1.setMessage("You want to exit!!!!");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Yes",
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                    });
+
+            builder1.setNegativeButton(
+                    "No",
+                    (dialog, id) -> {
+                        dialog.cancel();
+                        Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            try {
+                if (FTAG.equals("Like Fragment")) {
+                    FTAG = null;
+                    if (mLikeFragment.isAdded()) {
+                        mFragmentManager.beginTransaction().remove(mLikeFragment).commit();
+                        fl.getLayoutParams().height = 0;
+                        fl.requestLayout();
+
+                        if (recyclerView.getVisibility() != View.VISIBLE) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                } else if (FTAG.equals("Comment Fragment")) {
+                    FTAG = null;
+                    if (mCommentFragment.isAdded()) {
+                        mFragmentManager.beginTransaction().remove(mCommentFragment).commit();
+
+                        fl.getLayoutParams().height = 0;
+                        fl.requestLayout();
+
+                        if (recyclerView.getVisibility() != View.VISIBLE) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+    }
 }

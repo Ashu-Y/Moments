@@ -94,8 +94,8 @@ public class ProfileFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 SettingsFragment settingsFragment = new SettingsFragment();
-
                 transaction.replace(R.id.content, settingsFragment, "Settings Fragment");
+                transaction.addToBackStack(null);
                 transaction.commit();
 
             }
