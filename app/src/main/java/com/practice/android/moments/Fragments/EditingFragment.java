@@ -771,6 +771,7 @@ public class EditingFragment extends Fragment {
                             //calculating progress percentage
                             progress2 = (100.0 * taskSnapshot2.getBytesTransferred()) / taskSnapshot2.getTotalByteCount();
                             Log.e("Process2", String.valueOf(progress2));
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         });
                     })
                     .addOnFailureListener(exception -> {
@@ -787,7 +788,7 @@ public class EditingFragment extends Fragment {
                         Log.e("Process1", String.valueOf(progress1));
 
 //                        //displaying percentage in progress dialog
-                        progressDialog.setMessage("Uploaded " + ((int) progress1) + "%...");
+                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                     });
 
         }

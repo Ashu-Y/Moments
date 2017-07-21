@@ -99,6 +99,8 @@ public class BottomNavigation extends AppCompatActivity {
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
     //    Upload_picture mUpload_pictureFragment;
+    HashMap<String, String> item;
+    HashMap<String, String> useritem;
     NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
@@ -416,8 +418,11 @@ public class BottomNavigation extends AppCompatActivity {
             Log.e("TimelineFrag", e.getMessage());
         }
 
-        mdatabaseReference.child("userToken").setValue(usertoken);
-
+        try {
+            mdatabaseReference.child("userToken").setValue(usertoken);
+        } catch (Exception e) {
+            e.getMessage();
+        }
         mdatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -498,6 +503,7 @@ public class BottomNavigation extends AppCompatActivity {
         try {
             al_appsearch.clear();
             databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+
                 int i = 0;
 
                 @Override
@@ -525,16 +531,16 @@ public class BottomNavigation extends AppCompatActivity {
                                 Log.e("Key Node", "" + nodeKey);
                                 Log.e("number of OBJECTS", String.valueOf(number1) + "\n" + user.getName() + "\n" + user.getThumbnailProfilephoto() + "\n" + user.getUserToken());
 
-                                HashMap<String, String> item = new HashMap<String, String>();
+                                item = new HashMap<String, String>();
                                 item.put(USER_ID, nodeKey);
                                 item.put(USER_NAME, user.getName());
                                 item.put(USER_PHOTO, user.getThumbnailProfilephoto());
                                 item.put(USER_TOKEN, user.getUserToken());
 
                                 al_appsearch.add(item);
-                                HashMap<String, String> useritem = al_appsearch.get(i);
+                                useritem = al_appsearch.get(i);
                                 i++;
-                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
+//                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
 
                             }
 
@@ -803,7 +809,9 @@ public class BottomNavigation extends AppCompatActivity {
 
         recyclerView.getRecycledViewPool().clear();
 
+
         try {
+
             firebaseRecyclerAdapter.notifyDataSetChanged();
             recyclerView.setAdapter(firebaseRecyclerAdapter);
         } catch (Exception e) {

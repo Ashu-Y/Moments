@@ -106,7 +106,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                         e.getMessage();
                     }
                     Glide.with(getApplicationContext()).load(user.getThumbnailProfilephoto())
-                            .thumbnail(Glide.with(getApplicationContext()).load(R.drawable.loader))
+                            .thumbnail(Glide.with(getApplicationContext()).load(R.drawable.giphy))
                             .into(profile);
 
                     Glide.with(getApplicationContext()).load(user.getThumbnailCoverPhoto())
@@ -205,8 +205,6 @@ public class AddFriendProfileActivity extends AppCompatActivity {
             e.getMessage();
         }
     }
-
-
 
 
 }

@@ -46,10 +46,6 @@ public class LikeFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_like, container, false);
-
-//        textname = (TextView) v.findViewById(R.id.image_name_id);
-//        textname.setText(mname);
-
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_like);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager lm_recycle = new LinearLayoutManager(context);
@@ -140,7 +136,6 @@ public class LikeFragment extends Fragment {
 
                     Username.setText(user.getName());
 
-
                     Glide.with(context).load(user.getThumbnailProfilephoto())
                             .skipMemoryCache(false)
                             .thumbnail(Glide.with(context).load(R.drawable.loader)).into(profile);
@@ -157,8 +152,5 @@ public class LikeFragment extends Fragment {
 
         }
 
-
     }
-
-
 }

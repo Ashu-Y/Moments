@@ -24,6 +24,7 @@ import com.practice.android.moments.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = getClass().getSimpleName();
     FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference databaseReference;
     //variables
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         signin = (Button) findViewById(R.id.button);
         signup = (Button) findViewById(R.id.button2);
-
         Reset = (TextView) findViewById(R.id.passreset);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         firebaseAuth = FirebaseAuth.getInstance();
@@ -119,25 +119,31 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            updateUI(null);
-                        } else {
-                            hideProgressDialog();
-                            Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+        if (currentUser.isEmailVerified()) {
+            firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                updateUI(null);
+                            } else {
+
+                                hideProgressDialog();
+                                Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+
+                            }
                         }
-                    }
-                });
+                    });
+        }else{
+            Toast.makeText(this, "Please verify email first.....", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();
@@ -153,4 +159,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(MainActivity.this, Login_method.class));
     }
+
+
 }

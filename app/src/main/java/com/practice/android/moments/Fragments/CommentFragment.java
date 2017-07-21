@@ -189,7 +189,7 @@ public class CommentFragment extends Fragment {
 
     }
 
-    public static class CommentViewHolder extends RecyclerView.ViewHolder {
+      public static class CommentViewHolder extends RecyclerView.ViewHolder {
 
         public static String TAG = "Comment TAG";
         TextView getname, user_comment;
@@ -262,9 +262,6 @@ public class CommentFragment extends Fragment {
 
         }
     }
-
-
-
 
 
 }
