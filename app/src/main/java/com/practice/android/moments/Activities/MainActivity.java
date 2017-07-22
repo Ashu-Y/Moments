@@ -22,12 +22,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
+import static com.practice.android.moments.Activities.Login_method.isEmail;
+
 public class MainActivity extends AppCompatActivity {
+
+    //variables
 
     private final String TAG = getClass().getSimpleName();
     FirebaseAuth.AuthStateListener authStateListener;
     DatabaseReference databaseReference;
-    //variables
     private EditText login, pass; // login and password edittext
     private Button signin, signup; // sign in  and sign up button
     private TextView Reset;
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, BottomNavigation.class));
 
         } else {
+            isEmail = false;
             Toast.makeText(MainActivity.this, "Authentication failed.",
                     Toast.LENGTH_SHORT).show();
         }
@@ -119,25 +123,37 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (currentUser.isEmailVerified()) {
-            firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                updateUI(null);
-                            } else {
+//        try {
 
-                                hideProgressDialog();
-                                Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+        firebaseAuth.signInWithEmailAndPassword(strLogin, strpassword)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            updateUI(null);
+                        } else {
+                            try {
+                                if (firebaseAuth.getCurrentUser().isEmailVerified()) {
+                                    hideProgressDialog();
+                                    Toast.makeText(MainActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(MainActivity.this, BottomNavigation.class));
+                                    isEmail = true;
+                                } else {
+                                    isEmail = false;
+                                    hideProgressDialog();
+                                    Toast.makeText(MainActivity.this, "Please Verify Email....", Toast.LENGTH_SHORT).show();
 
+                                }
+                            } catch (Exception e) {
+                                e.getMessage();
                             }
                         }
-                    });
-        }else{
-            Toast.makeText(this, "Please verify email first.....", Toast.LENGTH_SHORT).show();
-        }
+                    }
+                });
+
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
     }
 
     private void showProgressDialog() {
@@ -157,7 +173,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         startActivity(new Intent(MainActivity.this, Login_method.class));
+
+        finish();
     }
 
 

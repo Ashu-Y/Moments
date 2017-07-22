@@ -10,8 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/hello_blank_fragment"
+        android:id="@+id/onliketext"
+
+        android:text="No Notification Yet"
         android:textColor="#fff"
         android:textSize="@dimen/_26sdp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/likecommentn"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

@@ -51,6 +51,7 @@ public class Login_method extends AppCompatActivity {
 
     private static final String TAG = "Login Activity";
     private static final int RC_SIGN_IN = 0;
+    public static Boolean isEmail = true;
     DatabaseReference databaseReference;
     private Button ViaEmail;
     private Button Viaphone;
@@ -173,6 +174,7 @@ public class Login_method extends AppCompatActivity {
             public void onCancel() {
                 Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
                 updateUI(null);
+                isEmail = false;
             }
 
             @Override
@@ -183,6 +185,7 @@ public class Login_method extends AppCompatActivity {
                 LoginManager.getInstance().logOut();
                 Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
+                isEmail = false;
             }
         });
         //Facebook Button Ends
@@ -211,6 +214,7 @@ public class Login_method extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
                 updateUI(null);
+                isEmail = false;
             }
         }
 
@@ -265,7 +269,7 @@ public class Login_method extends AppCompatActivity {
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
                                 currentuser_db.child("email").setValue(acct.getEmail());
-
+                                isEmail = true;
                                 updateUI(firebaseUser);
                             }
                         } else {
@@ -273,6 +277,8 @@ public class Login_method extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login_method.this, "Authentication with Google failed.",
                                     Toast.LENGTH_SHORT).show();
+                            isEmail = false;
+
                             updateUI(null);
                         }
                     }
@@ -327,7 +333,7 @@ public class Login_method extends AppCompatActivity {
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(firebaseUser.getDisplayName());
                                 currentuser_db.child("email").setValue(firebaseUser.getEmail());
-
+                                isEmail = true;
                                 updateUI(firebaseUser);
                             }
                         } else {
@@ -335,6 +341,7 @@ public class Login_method extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login_method.this, "Authentication with Facebook failed.",
                                     Toast.LENGTH_SHORT).show();
+                            isEmail = false;
                             updateUI(null);
                         }
 
@@ -352,7 +359,7 @@ public class Login_method extends AppCompatActivity {
         } else {
             hideProgressDialog();
             Log.e(TAG, "No Authenticated user found");
-
+            isEmail = false;
             Toast.makeText(Login_method.this, "No Authenticated user found", Toast.LENGTH_SHORT).show();
 
 //            Toast.makeText(this, "Please verify Email", Toast.LENGTH_SHORT).show();
@@ -366,9 +373,9 @@ public class Login_method extends AppCompatActivity {
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setCancelable(true);
             mProgressDialog.setCanceledOnTouchOutside(false);
-
+            mProgressDialog.show();
         }
-        mProgressDialog.show();
+
     }
 
     private void hideProgressDialog() {
@@ -416,12 +423,18 @@ public class Login_method extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null) {
+        Log.e(TAG, String.valueOf(isEmail));
+        if (isEmail) {
+            firebaseUser = firebaseAuth.getCurrentUser();
+            if (firebaseUser != null) {
+                Log.e(TAG, String.valueOf(isEmail));
+                updateUI(firebaseUser);
+                showProgressDialog();
+            }
+            Log.e(TAG, String.valueOf(isEmail));
+        } else {
 
-            updateUI(firebaseUser);
-            showProgressDialog();
-
+            Log.e(TAG, String.valueOf(isEmail));
 
         }
     }

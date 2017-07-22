@@ -24,6 +24,7 @@ import com.practice.android.moments.R;
 
 import static com.practice.android.moments.Activities.BottomNavigation.context;
 import static com.practice.android.moments.Activities.BottomNavigation.googleApiClient;
+import static com.practice.android.moments.Activities.Login_method.isEmail;
 
 
 /**
@@ -122,7 +123,7 @@ public class SettingsFragment extends Fragment {
         Logout_button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                isEmail = false;
                 Log.i(TAG, "You clicked onClick Button");
                 FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();

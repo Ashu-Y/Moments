@@ -31,6 +31,8 @@ import com.practice.android.moments.R;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.practice.android.moments.Activities.Login_method.isEmail;
+
 public class Phoneprovider extends AppCompatActivity {
     private static final String TAG = "Phone Auth Provider";
     DatabaseReference databaseReference;
@@ -47,6 +49,7 @@ public class Phoneprovider extends AppCompatActivity {
     private Button EnterIn;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks Callbacks;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +146,8 @@ public class Phoneprovider extends AppCompatActivity {
             public void onVerificationFailed(FirebaseException e) {
                 Log.e(TAG, "onVerificationFailed", e);
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    isEmail = false;
                     Toast.makeText(Phoneprovider.this, "Wrong Number Entered", Toast.LENGTH_SHORT).show();
-//                    EnterIn.setVisibility(View.VISIBLE);
-//                    verify.setVisibility(View.GONE);
-//                    resend.setVisibility(View.GONE);
-
 
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     Snackbar.make(findViewById(android.R.id.content), "Quota exceeded.",
@@ -191,7 +191,7 @@ public class Phoneprovider extends AppCompatActivity {
                                             }
                                         }
                                     });
-
+                            isEmail = true;
                             DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                             currentuser_db.child("name").setValue(mname.getText().toString());
                             currentuser_db.child("email").setValue("Default");
@@ -207,6 +207,7 @@ public class Phoneprovider extends AppCompatActivity {
                             Log.e(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Verfiy_code.setError("Invalid code.");
+                                isEmail = false;
                             }
                         }
                     }
@@ -225,10 +226,12 @@ public class Phoneprovider extends AppCompatActivity {
 
     private void verifyPhoneNumberWithCode(String verificationId, String code) {
 
-
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithPhoneAuthCredential(credential);
-
+        try {
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        } catch (Exception e) {
+            e.getMessage();
+        }
     }
 
     private void resendVerificationCode(String phoneNumber,
@@ -255,6 +258,7 @@ public class Phoneprovider extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        isEmail = false;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         EnterIn.setVisibility(View.VISIBLE);
         verify.setVisibility(View.INVISIBLE);

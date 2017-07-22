@@ -101,83 +101,86 @@ public class Signup extends AppCompatActivity {
                                 } else
                                     //password length
                                     if (user_password.length() < 6) {
+                                        updateUI(null);
                                         Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                                     } else if (!Objects.equals(user_confirmpassword, user_password)) {
                                         Log.e(TAG, user_confirmpassword + "   " + user_password);
+                                        updateUI(null);
                                         Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
                                     } else {
 
-                                        if (!firebaseUser.isEmailVerified()) {
 
-                                            firebaseUser.sendEmailVerification()
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()) {
-                                                                Log.e(TAG, "Email sent.");
+                                        firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
+                                                addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                    @SuppressWarnings("ConstantConditions")
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                                                Toast toast = Toast.makeText(Signup.this, "Please verify email first...", Toast.LENGTH_SHORT);
-                                                                toast.setGravity(Gravity.CENTER, 0, 0);
-                                                                toast.show();
-                                                            }
-                                                        }
-                                                    });
-                                        } else {
-                                            firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
-                                                    addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                        @SuppressWarnings("ConstantConditions")
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                                            if (!task.isSuccessful()) {
-                                                                // there was an error
-                                                                if (password.length() < 6) {
-                                                                    password.setError(getString(R.string.minimum_password));
-                                                                } else {
-                                                                    Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                                                }
+                                                        if (!task.isSuccessful()) {
+                                                            // there was an error
+                                                            if (password.length() < 6) {
+                                                                password.setError(getString(R.string.minimum_password));
                                                             } else {
-                                                                String user_id;
+                                                                Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                                            }
+                                                        } else {
+                                                            String user_id;
 
-                                                                firebaseAuth = FirebaseAuth.getInstance();
-                                                                firebaseUser = firebaseAuth.getCurrentUser();
+                                                            firebaseAuth = FirebaseAuth.getInstance();
+                                                            firebaseUser = firebaseAuth.getCurrentUser();
 
-                                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                                        .setDisplayName(user_name)
-                                                                        .build();
+                                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                                    .setDisplayName(user_name)
+                                                                    .build();
 
-                                                                firebaseUser.updateProfile(profileUpdates)
+                                                            firebaseUser.updateProfile(profileUpdates)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Log.e("Editing", "User profile updated.");
+                                                                            }
+                                                                        }
+                                                                    });
+
+
+                                                            user_id = firebaseUser.getUid();
+
+                                                            DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                                            currentuser_db.child("name").setValue(user_name);
+                                                            currentuser_db.child("email").setValue(user_email);
+                                                            currentuser_db.child("phone").setValue(user_phone);
+                                                            currentuser_db.child("photo").setValue("Default");
+                                                            currentuser_db.child("gender").setValue("Default");
+                                                            currentuser_db.child("relationship").setValue("Default");
+                                                            currentuser_db.child("about").setValue("Default");
+                                                            currentuser_db.child("date_of_birth").setValue("Default");
+                                                            currentuser_db.child("coverPhoto").setValue("default");
+
+
+                                                            if (!firebaseUser.isEmailVerified()) {
+
+                                                                firebaseUser.sendEmailVerification()
                                                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                             @Override
                                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                                 if (task.isSuccessful()) {
-                                                                                    Log.e("Editing", "User profile updated.");
+                                                                                    Log.e(TAG, "Email sent.");
+
+                                                                                    Toast toast = Toast.makeText(Signup.this, "Please verify email ...", Toast.LENGTH_SHORT);
+                                                                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                                                                    toast.show();
                                                                                 }
                                                                             }
                                                                         });
-
-
-                                                                user_id = firebaseUser.getUid();
-
-                                                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
-                                                                currentuser_db.child("name").setValue(user_name);
-                                                                currentuser_db.child("email").setValue(user_email);
-                                                                currentuser_db.child("phone").setValue(user_phone);
-                                                                currentuser_db.child("photo").setValue("Default");
-                                                                currentuser_db.child("gender").setValue("Default");
-                                                                currentuser_db.child("relationship").setValue("Default");
-                                                                currentuser_db.child("about").setValue("Default");
-                                                                currentuser_db.child("date_of_birth").setValue("Default");
-                                                                currentuser_db.child("coverPhoto").setValue("default");
-
-                                                                updateUI(firebaseUser);
-                                                                startActivity(new Intent(Signup.this, MainActivity.class));
-                                                                finish();
                                                             }
-                                                            hideProgressDialog();
+                                                            startActivity(new Intent(Signup.this, BottomNavigation.class));
+                                                            finish();
                                                         }
-                                                    });
-                                        }
+                                                        hideProgressDialog();
+                                                    }
+                                                });
+
                                     }
 
             }

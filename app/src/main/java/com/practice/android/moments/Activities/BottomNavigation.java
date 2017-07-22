@@ -734,7 +734,6 @@ public class BottomNavigation extends AppCompatActivity {
                             transaction.addToBackStack(null);
                             transaction.commit();
 
-
                         }
                     });
 
