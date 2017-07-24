@@ -82,7 +82,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         mDataArray.clear();
 
         if (charText.length() == 0) {
-            mDataArray.addAll(BottomNavigation.al_appsearch);
+//            mDataArray.addAll(BottomNavigation.al_appsearch);
         } else {
             for (int i = 0; i < BottomNavigation.al_appsearch.size(); i++) {
 

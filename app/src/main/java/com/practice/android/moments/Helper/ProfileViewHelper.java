@@ -25,7 +25,7 @@ public class ProfileViewHelper extends RecyclerView.ViewHolder {
 
     View mView;
     DatabaseReference database;
-    ImageView profile;
+    public ImageView profile;
 
     public ProfileViewHelper(View itemView) {
         super(itemView);
