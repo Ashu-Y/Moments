@@ -58,6 +58,7 @@ import com.practice.android.moments.Fragments.LikeFragment;
 import com.practice.android.moments.Fragments.NotificationFragment;
 import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
+import com.practice.android.moments.Fragments.SettingsFragment;
 import com.practice.android.moments.Fragments.TimelineFragment;
 import com.practice.android.moments.Helper.BottomNavigationViewHelper;
 import com.practice.android.moments.Helper.ServiceHandler;
@@ -86,26 +87,30 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 1;
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
-    public static String FTAG = null;
+    public static String FTAG = "BLANK";
     public static String Name;
     public static GoogleApiClient googleApiClient;
     public static Context context;
     public static String usertoken;
     public static ArrayList<HashMap<String, String>> al_appsearch;
     ProgressDialog pDialog;
+
+    View thumb;
+    public static boolean zoom = false;
+
     ServiceHandler mServiceHandler;
     TimelineFragment mTimelineFragment;
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
     //    Upload_picture mUpload_pictureFragment;
-    HashMap<String, String> item;
-    HashMap<String, String> useritem;
+
     NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
     CommentFragment mCommentFragment;
     LikeFragment mLikeFragment;
+    SettingsFragment mSettingsFragment;
     RecyclerView recyclerView;
     DatabaseReference databaseReference, databaseReference1, databaseReference2, databaseReference3, databaseReference4, mdatabaseReference;
     FrameLayout fl;
@@ -124,7 +129,7 @@ public class BottomNavigation extends AppCompatActivity {
     String imageusertoken;
     String imageurl;
 
-
+    ImageView expandedImageView;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private String TAG = getClass().getSimpleName();
@@ -385,7 +390,7 @@ public class BottomNavigation extends AppCompatActivity {
 
 
         startService(new Intent(this, MyFirebaseInstanceIDService.class));
-
+        expandedImageView = (ImageView) findViewById(R.id.expanded_image);
 
         al_appsearch = new ArrayList<>();
         al_appsearch.clear();
@@ -481,6 +486,7 @@ public class BottomNavigation extends AppCompatActivity {
 //        mUpload_pictureFragment = new Upload_picture();
         mNotificationFragment = new NotificationFragment();
         mEditingFragment = new EditingFragment();
+        mSettingsFragment = new SettingsFragment();
         mFragmentManager = getSupportFragmentManager();
 
         // Google API CLIENT
@@ -531,16 +537,16 @@ public class BottomNavigation extends AppCompatActivity {
                                 Log.e("Key Node", "" + nodeKey);
                                 Log.e("number of OBJECTS", String.valueOf(number1) + "\n" + user.getName() + "\n" + user.getThumbnailProfilephoto() + "\n" + user.getUserToken());
 
-                                item = new HashMap<String, String>();
+                                HashMap<String, String> item = new HashMap<String, String>();
                                 item.put(USER_ID, nodeKey);
                                 item.put(USER_NAME, user.getName());
                                 item.put(USER_PHOTO, user.getThumbnailProfilephoto());
                                 item.put(USER_TOKEN, user.getUserToken());
 
                                 al_appsearch.add(item);
-                                useritem = al_appsearch.get(i);
+                                HashMap<String, String> useritem = al_appsearch.get(i);
                                 i++;
-//                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
+                                Log.e("Key ", "" + useritem.get(USER_PHOTO));
 
                             }
 
@@ -767,6 +773,7 @@ public class BottomNavigation extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             String Image = model.getPic();
+                            zoom = true;
                             zoomImageFromThumb(viewHolder.imageView, Image);
                         }
                     });
@@ -827,8 +834,10 @@ public class BottomNavigation extends AppCompatActivity {
             mCurrentAnimator.cancel();
         }
 
+        thumb = thumbView;
+
         // Load the high-resolution "zoomed-in" image.
-        ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+//        ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
 
 
 //        expandedImageView.setImageResource(imageResId);
@@ -883,6 +892,9 @@ public class BottomNavigation extends AppCompatActivity {
         thumbView.setAlpha(0f);
         expandedImageView.setVisibility(View.VISIBLE);
 
+
+        recyclerView.setVisibility(View.GONE);
+
         // Set the pivot point for SCALE_X and SCALE_Y transformations
         // to the top-left corner of the zoomed-in view (the default
         // is the center of the view).
@@ -927,8 +939,12 @@ public class BottomNavigation extends AppCompatActivity {
         expandedImageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                zoom = false;
+
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
+                    mCurrentAnimator = null;
                 }
 
                 // Animate the four positioning/sizing properties in parallel,
@@ -952,6 +968,7 @@ public class BottomNavigation extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         mCurrentAnimator = null;
                     }
 
@@ -959,6 +976,7 @@ public class BottomNavigation extends AppCompatActivity {
                     public void onAnimationCancel(Animator animation) {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         mCurrentAnimator = null;
                     }
                 });
@@ -1039,7 +1057,6 @@ public class BottomNavigation extends AppCompatActivity {
         cursor.close();
         return path;
     }
-
 
 
     public void setValues(String token, String name) {
@@ -1267,7 +1284,7 @@ public class BottomNavigation extends AppCompatActivity {
             mCurrentAnimator.cancel();
         } else if (navigation.getSelectedItemId() != R.id.navigation_home) {
             navigation.setSelectedItemId(R.id.navigation_home);
-        } else {
+        } else if (navigation.getSelectedItemId() == R.id.navigation_home) {
 
             AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
             builder1.setMessage("You want to exit!!!!");
@@ -1291,6 +1308,8 @@ public class BottomNavigation extends AppCompatActivity {
 
             AlertDialog alert11 = builder1.create();
             alert11.show();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -1299,38 +1318,185 @@ public class BottomNavigation extends AppCompatActivity {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
 
+
             try {
-                if (FTAG.equals("Like Fragment")) {
-                    FTAG = null;
-                    if (mLikeFragment.isAdded()) {
-                        mFragmentManager.beginTransaction().remove(mLikeFragment).commit();
-                        fl.getLayoutParams().height = 0;
-                        fl.requestLayout();
+                if (zoom) {
+                    check();
+                } else {
+                    if (FTAG.equals("Like Fragment")) {
+                        FTAG = "BLANK";
+                        if (mLikeFragment.isAdded()) {
+                            mFragmentManager.beginTransaction().remove(mLikeFragment).commit();
+                            fl.getLayoutParams().height = 0;
+                            fl.requestLayout();
 
-                        if (recyclerView.getVisibility() != View.VISIBLE) {
-                            recyclerView.setVisibility(View.VISIBLE);
+                            if (recyclerView.getVisibility() != View.VISIBLE) {
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
                         }
-                    }
-                } else if (FTAG.equals("Comment Fragment")) {
-                    FTAG = null;
-                    if (mCommentFragment.isAdded()) {
-                        mFragmentManager.beginTransaction().remove(mCommentFragment).commit();
+                    } else if (FTAG.equals("Comment Fragment")) {
+                        FTAG = "BLANK";
+                        if (mCommentFragment.isAdded()) {
+                            mFragmentManager.beginTransaction().remove(mCommentFragment).commit();
 
-                        fl.getLayoutParams().height = 0;
-                        fl.requestLayout();
+                            fl.getLayoutParams().height = 0;
+                            fl.requestLayout();
 
-                        if (recyclerView.getVisibility() != View.VISIBLE) {
-                            recyclerView.setVisibility(View.VISIBLE);
+                            if (recyclerView.getVisibility() != View.VISIBLE) {
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
                         }
+                    } else if (FTAG.equals("Settings Fragment")) {
+                        FTAG = "BLANK";
+                        mFragmentManager.beginTransaction().replace(R.id.content, mProfileFragment, "Profile Fragment").commit();
+
+                    } else if (FTAG.equals("ProfileScreen Fragment")) {
+                        FTAG = "Settings Fragment";
+                        mFragmentManager.beginTransaction().replace(R.id.content, mSettingsFragment, "Settings Fragment").commit();
+
+                    } else if (FTAG.equals("EditProfile Fragment")) {
+                        FTAG = "Settings Fragment";
+                        mFragmentManager.beginTransaction().replace(R.id.content, mSettingsFragment, "Settings Fragment").commit();
+
+                    } else if (FTAG.equals("Privacy Policy Fragment")) {
+                        FTAG = "Settings Fragment";
+                        mFragmentManager.beginTransaction().replace(R.id.content, mSettingsFragment, "Settings Fragment").commit();
+
+                    } else if (navigation.getSelectedItemId() != R.id.navigation_home) {
+                        navigation.setSelectedItemId(R.id.navigation_home);
+                    } else if (navigation.getSelectedItemId() == R.id.navigation_home) {
+
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(BottomNavigation.this);
+                        builder1.setMessage("You want to exit!!!!");
+                        builder1.setCancelable(true);
+
+                        builder1.setPositiveButton(
+                                "Yes",
+                                (dialog, id) -> {
+                                    dialog.cancel();
+                                    moveTaskToBack(true);
+                                    android.os.Process.killProcess(android.os.Process.myPid());
+                                    System.exit(1);
+                                });
+
+                        builder1.setNegativeButton(
+                                "No",
+                                (dialog, id) -> {
+                                    dialog.cancel();
+                                    Toast.makeText(BottomNavigation.this, "Thank you for Staying back", Toast.LENGTH_SHORT).show();
+                                });
+
+                        AlertDialog alert11 = builder1.create();
+                        alert11.show();
+                    } else {
+                        moveTaskToBack(true);
                     }
                 }
             } catch (NullPointerException e) {
                 e.printStackTrace();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
+
 
         return false;
     }
+
+
+    public void check() {
+
+        zoom = false;
+
+        // If there's an animation in progress, cancel it
+        // immediately and proceed with this one.
+        if (mCurrentAnimator != null) {
+            mCurrentAnimator.cancel();
+            mCurrentAnimator = null;
+        }
+
+        // Load the high-resolution "zoomed-in" image.
+//        ImageView expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+
+
+//        expandedImageView.setImageResource(imageResId);
+
+        // Calculate the starting and ending bounds for the zoomed-in image.
+        // This step involves lots of math.
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        thumb.getGlobalVisibleRect(startBounds);
+        findViewById(R.id.containerB).getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height()
+                > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        final float startScaleFinal = startScale;
+
+        AnimatorSet set = new AnimatorSet();
+        set.play(ObjectAnimator
+                .ofFloat(expandedImageView, View.X, startBounds.left))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.Y, startBounds.top))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.SCALE_X, startScaleFinal))
+                .with(ObjectAnimator
+                        .ofFloat(expandedImageView,
+                                View.SCALE_Y, startScaleFinal));
+        set.setDuration(mShortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                thumb.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                mCurrentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                thumb.setAlpha(1f);
+                expandedImageView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                mCurrentAnimator = null;
+            }
+        });
+        set.start();
+        mCurrentAnimator = set;
+    }
+
+
 }

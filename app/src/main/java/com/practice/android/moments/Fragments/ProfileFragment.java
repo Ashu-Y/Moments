@@ -34,6 +34,8 @@ import com.practice.android.moments.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.practice.android.moments.Activities.BottomNavigation.FTAG;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -47,6 +49,8 @@ public class ProfileFragment extends Fragment {
     TextView profilename;
     String PicName;
     TextView userfriends, userimages;
+
+    ImageView imageView, expandImage;
 
     FirebaseUser firebaseUser;
     String user_id, user_name;
@@ -72,6 +76,14 @@ public class ProfileFragment extends Fragment {
         context = getContext();
 
 
+        coverpic.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
         RecyclerView.LayoutManager lm_recycle = new GridLayoutManager(getContext(), 2);
         recyclerView.getRecycledViewPool().clear();
         recyclerView.setLayoutManager(lm_recycle);
@@ -94,6 +106,7 @@ public class ProfileFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 SettingsFragment settingsFragment = new SettingsFragment();
+                FTAG = "Settings Fragment";
                 transaction.replace(R.id.content, settingsFragment, "Settings Fragment");
                 transaction.addToBackStack(null);
                 transaction.commit();

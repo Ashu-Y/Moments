@@ -22,6 +22,7 @@ import com.practice.android.moments.Activities.ChangePassword;
 import com.practice.android.moments.Activities.Login_method;
 import com.practice.android.moments.R;
 
+import static com.practice.android.moments.Activities.BottomNavigation.FTAG;
 import static com.practice.android.moments.Activities.BottomNavigation.context;
 import static com.practice.android.moments.Activities.BottomNavigation.googleApiClient;
 import static com.practice.android.moments.Activities.Login_method.isEmail;
@@ -70,6 +71,7 @@ public class SettingsFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 ProfileScreenFragment profileScreenFragment = new ProfileScreenFragment();
+                FTAG = "ProfileScreen Fragment";
                 transaction.replace(R.id.content, profileScreenFragment, "Profile Fragment");
                 transaction.commit();
             }
@@ -81,6 +83,7 @@ public class SettingsFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 ProfileEditingFragment editProfileFragment = new ProfileEditingFragment();
+                FTAG = "EditProfile Fragment";
                 transaction.replace(R.id.content, editProfileFragment, "Edit Profile Fragment");
                 transaction.commit();
             }
@@ -115,7 +118,8 @@ public class SettingsFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 PrivacyPolicyFragment privacyPolicyFragment = new PrivacyPolicyFragment();
-                transaction.replace(R.id.content, privacyPolicyFragment, "Edit Profile Fragment");
+                FTAG = "Privacy Policy Fragment";
+                transaction.replace(R.id.content, privacyPolicyFragment, "Privacy Policy Fragment");
                 transaction.commit();
             }
         });

@@ -12,32 +12,32 @@
     tools:context="com.practice.android.moments.Activities.BottomNavigation">
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/navigation"
-            android:background="@android:color/white">
-        </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation"
+        android:background="@android:color/white">
+    </android.support.v7.widget.RecyclerView>
 
-        <FrameLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_above="@+id/navigation"
-            android:background="#011a27">
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/navigation"
+        android:background="#011a27">
 
-        </FrameLayout>
+    </FrameLayout>
 
-        <ImageView
-            android:id="@+id/expanded_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="Expand Image"
-            android:visibility="invisible"/>
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Expand Image"
+        android:visibility="invisible"/>
 
 
-        <android.support.design.widget.BottomNavigationView
+    <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_50sdp"

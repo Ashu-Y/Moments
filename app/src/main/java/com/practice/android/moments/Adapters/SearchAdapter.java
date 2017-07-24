@@ -34,7 +34,7 @@ import static com.practice.android.moments.Activities.BottomNavigation.USER_PHOT
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
 
-    static ArrayList<HashMap<String, String>> mDataArray = new ArrayList<>();
+    ArrayList<HashMap<String, String>> mDataArray = new ArrayList<>();
     Context mContext;
 
 
@@ -85,13 +85,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             mDataArray.addAll(BottomNavigation.al_appsearch);
         } else {
             for (int i = 0; i < BottomNavigation.al_appsearch.size(); i++) {
+
+                try {
                 String s = BottomNavigation.al_appsearch.get(i).get(USER_NAME);
                 if (s.toLowerCase(Locale.getDefault()).contains(a)) {
-                    try {
+
                         mDataArray.add(BottomNavigation.al_appsearch.get(i));
-                    } catch (NullPointerException e) {
-                        Log.e("SearchAdapter", e.getMessage());
                     }
+                }catch (NullPointerException e) {
+                    Log.e("SearchAdapter", e.getMessage());
                 }
             }
         }
