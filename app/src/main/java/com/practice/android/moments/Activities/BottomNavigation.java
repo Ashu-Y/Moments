@@ -94,8 +94,8 @@ public class BottomNavigation extends AppCompatActivity {
     public static String usertoken;
     public static ArrayList<HashMap<String, String>> al_appsearch;
     ProgressDialog pDialog;
-
-    View thumb;
+public static String ZOOMTAG = "BLANK";
+    public static View thumb;
     public static boolean zoom = false;
 
     ServiceHandler mServiceHandler;
@@ -116,10 +116,10 @@ public class BottomNavigation extends AppCompatActivity {
     FrameLayout fl;
     String user_id;
     String user_name;
-    Display display;
+    public static Display display;
     String google_key, deviceToken, heading, description, image;
     String jsonStr;
-    Point size;
+    public static Point size;
     FirebaseAuth firebaseAuth;
     Boolean picLike;
     FirebaseUser firebaseUser;
@@ -1481,6 +1481,7 @@ public class BottomNavigation extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 thumb.setAlpha(1f);
+
                 expandedImageView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 mCurrentAnimator = null;
