@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#011a27"
+    android:theme="@style/materialtheme2"
+    tools:context=".Activities.SettingsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:background="#011a27"
+            android:text="Invite Friends"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_18sdp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/Invitebutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Invite Friends"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/textViewAccount"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+
+            android:layout_marginTop="@dimen/_40sdp"
+            android:background="#011a27"
+            android:text="Account"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <!--<Button-->
+        <!--android:id="@+id/photosSaved"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#011a27"-->
+        <!--android:gravity="start|center_vertical"-->
+
+        <!--android:paddingLeft="@dimen/_40sdp"-->
+        <!--android:text=" Saved Memories"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textStyle="bold"-->
+        <!--/>-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/BlockedUsers"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#011a27"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingLeft="@dimen/_40sdp"-->
+        <!--android:text="Block List"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textStyle="bold"-->
+        <!--/>-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/Privacy"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#011a27"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingLeft="@dimen/_40sdp"-->
+        <!--android:text="Privacy"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textStyle="bold"-->
+        <!--/>-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/RecentLIkedPhotos"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#011a27"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingLeft="@dimen/_40sdp"-->
+        <!--android:text="Recent LIked Photos"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textStyle="bold"-->
+        <!--/>-->
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Profile"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/EditProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Edit Profile"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Change Password"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
+        <!--<Button-->
+        <!--android:id="@+id/SetNotification"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="#011a27"-->
+        <!--android:gravity="start|center_vertical"-->
+        <!--android:paddingLeft="@dimen/_40sdp"-->
+        <!--android:text="Set Notifications"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:textStyle="bold"-->
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+
+        <Button
+            android:id="@+id/privacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Privacy Policy"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/ClearSearchHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Clear Search History"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/Logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#011a27"
+            android:gravity="start|center_vertical"
+            android:paddingLeft="@dimen/_40sdp"
+            android:text="Logout"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@android:color/darker_gray" />
+
+    </LinearLayout>
+</ScrollView>

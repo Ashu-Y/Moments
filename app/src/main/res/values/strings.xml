@@ -2,7 +2,7 @@
     <string name="app_name">Moments</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="privacy_policy_statements">This is the privacy policy page</string>
     <string name="facebook_app_id">443382896033953</string>
     <string name="fb_login_protocol_scheme">fb443382896033953</string>
     <string name="title_activity_timeline">Timeline</string>
@@ -40,5 +40,49 @@
     <string name="emailpassword_title_text">Email and Password</string>
 
     <string name="phone_title_text">Phone Number</string>
+    <string name="send_image">Send Image to Firebase</string>
+    <string name="location">Location</string>
+    <string name="photos">Photos</string>
+    <string name="about">About</string>
+    <string name="i_love_diamonds">I Love Diamonds</string>
+    <string name="gautam">Gautam</string>
+    <string name="title_activity_wwewew">wwewew</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_bottom_navigation">BottomNavigation</string>
+    <string name="name">Name</string>
+    <string name="new_upload">New Upload</string>
+    <string name="enter_the_title">Enter the title</string>
+    <string name="enter_description">Enter Description</string>
+    <string name="choose_image">Choose Image</string>
+    <string name="upload">Upload Image</string>
+    <string name="submit">Submit</string>
+    <string name="relationship">Relationship</string>
+    <string name="date_of_birth">Date Of Birth</string>
+    <string name="email">Email</string>
+    <string name="user_info">User Info</string>
+    <string name="add_comments">add comments</string>
+    <string name="like">Like</string>
+    <string name="hey_there">Hey There</string>
+    <string name="title">Title</string>
+    <string name="_0_people_liked_your_post">0 friends liked your post</string>
+    <string name="user_name">USER NAME</string>
+    <string name="likes">Likes</string>
+
+
+    <string-array name="RelationshipStatus">
+        <item>Single</item>
+        <item>In a Relationship</item>
+        <item>Married</item>
+        <item>Complicated</item>
+
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="comment">Comment</string>
+    <string name="friends">Friends</string>
+    <string name="_0">0</string>
+
 
 </resources>

@@ -3,24 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3ff2ce"
     tools:context="com.practice.android.moments.Activities.Splash"
     tools:ignore="HardcodedText">
 
-    <ImageView
-        android:id="@+id/imageswitch"
+    <!--<ImageView-->
+        <!--android:id="@+id/imageswitch"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:contentDescription="splash"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:src="@drawable/splash"/>-->
+
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="splash" />
+        android:src="@drawable/new_splash"
+        android:scaleType="fitXY"
+        android:alpha="1"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="225dp"
-        android:text=" Splash"
-        android:textSize="40sp" />
 
 
 </RelativeLayout>

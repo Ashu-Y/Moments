@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#acac82"
+    tools:context="com.practice.android.moments.Fragments.LikeFragment">
+
+
+    <TextView
+        android:id="@+id/likeUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:padding="4dp"
+        android:text="@string/likes"
+        android:textAlignment="center"
+        android:textColor="#f7d53d"
+        android:textSize="32sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_like"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/likeUsers"
+        android:layout_marginTop="20sp"
+        android:padding="5dp" />
+
+
+</RelativeLayout>

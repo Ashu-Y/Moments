@@ -10,9 +10,10 @@ import com.practice.android.moments.R;
 
 public class Splash extends AppCompatActivity {
 
-    FirebaseUser user;
+    private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(2000);
                     Intent intent = new Intent(getApplicationContext(), Login_method.class);
                     startActivity(intent);
                     finish();

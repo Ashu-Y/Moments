@@ -2,15 +2,16 @@ package com.practice.android.moments.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
@@ -27,13 +29,14 @@ import java.util.Objects;
 public class Signup extends AppCompatActivity {
     private static final String TAG = "Sign up";
     //variables
-    EditText name, email, password, conpassword, phone;
-    Button sub, backtosign;
-    ProgressDialog mProgressDialog;
+    private EditText name, email, password, conpassword, phone;
+    private Button sub;
+    private TextView backtosign;
+    private ProgressDialog mProgressDialog;
 
-    FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReference;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -46,14 +49,14 @@ public class Signup extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 // giving data from xml to variables
 
-        name = (EditText) findViewById(R.id.nameca);
+        name = (EditText) findViewById(R.id.nameuser);
         email = (EditText) findViewById(R.id.emailuser);
         password = (EditText) findViewById(R.id.passworduser);
         conpassword = (EditText) findViewById(R.id.conpassworduser);
         phone = (EditText) findViewById(R.id.phoneuser);
 
         sub = (Button) findViewById(R.id.newaccount);
-        backtosign = (Button) findViewById(R.id.loginuser);
+        backtosign = (TextView) findViewById(R.id.loginuser);
 
 
         sub.setOnClickListener(new View.OnClickListener() {
@@ -98,47 +101,85 @@ public class Signup extends AppCompatActivity {
                                 } else
                                     //password length
                                     if (user_password.length() < 6) {
-                                        updateUI(null);
                                         Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
-                                    } else
-                                        //check if both pass are same
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                                            if (!Objects.equals(user_confirmpassword, user_password)) {
-                                                updateUI(null);
-                                                Log.d(TAG, user_confirmpassword + "   " + user_password);
-                                                Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
-                                                        addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                            @SuppressWarnings("ConstantConditions")
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                    } else if (!Objects.equals(user_confirmpassword, user_password)) {
+                                        Log.e(TAG, user_confirmpassword + "   " + user_password);
+                                        Toast.makeText(getApplicationContext(), "Password do not match", Toast.LENGTH_SHORT).show();
+                                    } else {
 
-                                                                if (!task.isSuccessful()) {
-                                                                    // there was an error
-                                                                    if (password.length() < 6) {
-                                                                        password.setError(getString(R.string.minimum_password));
-                                                                    } else {
-                                                                        Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
-                                                                    }
-                                                                } else {
-                                                                    String user_id = firebaseAuth.getCurrentUser().getUid();
+                                        if (!firebaseUser.isEmailVerified()) {
 
-                                                                    DatabaseReference currentuser_db = databaseReference.child(user_id);
-                                                                    currentuser_db.child("name").setValue(user_name);
+                                            firebaseUser.sendEmailVerification()
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()) {
+                                                                Log.e(TAG, "Email sent.");
 
-                                                                    currentuser_db.child("email").setValue(user_email);
-                                                                    currentuser_db.child("phone").setValue(user_phone);
-                                                                    currentuser_db.child("photo").setValue("Default");
-
-                                                                    startActivity(new Intent(Signup.this, Timeline.class));
-                                                                    finish();
-                                                                }
-                                                                hideProgressDialog();
+                                                                Toast toast = Toast.makeText(Signup.this, "Please verify email first...", Toast.LENGTH_SHORT);
+                                                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                                                toast.show();
                                                             }
-                                                        });
-                                            }
+                                                        }
+                                                    });
+                                        } else {
+                                            firebaseAuth.createUserWithEmailAndPassword(user_email, user_password).
+                                                    addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                                        @SuppressWarnings("ConstantConditions")
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                                                            if (!task.isSuccessful()) {
+                                                                // there was an error
+                                                                if (password.length() < 6) {
+                                                                    password.setError(getString(R.string.minimum_password));
+                                                                } else {
+                                                                    Toast.makeText(Signup.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                                                }
+                                                            } else {
+                                                                String user_id;
+
+                                                                firebaseAuth = FirebaseAuth.getInstance();
+                                                                firebaseUser = firebaseAuth.getCurrentUser();
+
+                                                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                                        .setDisplayName(user_name)
+                                                                        .build();
+
+                                                                firebaseUser.updateProfile(profileUpdates)
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                if (task.isSuccessful()) {
+                                                                                    Log.e("Editing", "User profile updated.");
+                                                                                }
+                                                                            }
+                                                                        });
+
+
+                                                                user_id = firebaseUser.getUid();
+
+                                                                DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
+                                                                currentuser_db.child("name").setValue(user_name);
+                                                                currentuser_db.child("email").setValue(user_email);
+                                                                currentuser_db.child("phone").setValue(user_phone);
+                                                                currentuser_db.child("photo").setValue("Default");
+                                                                currentuser_db.child("gender").setValue("Default");
+                                                                currentuser_db.child("relationship").setValue("Default");
+                                                                currentuser_db.child("about").setValue("Default");
+                                                                currentuser_db.child("date_of_birth").setValue("Default");
+                                                                currentuser_db.child("coverPhoto").setValue("default");
+
+                                                                updateUI(firebaseUser);
+                                                                startActivity(new Intent(Signup.this, MainActivity.class));
+                                                                finish();
+                                                            }
+                                                            hideProgressDialog();
+                                                        }
+                                                    });
                                         }
+                                    }
+
             }
         });
 
@@ -157,16 +198,18 @@ public class Signup extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
         hideProgressDialog();
         if (user != null) {
-            startActivity(new Intent(Signup.this, Timeline.class));
+            Toast.makeText(Signup.this, "Logged in", Toast.LENGTH_SHORT).show();
+
+            startActivity(new Intent(Signup.this, BottomNavigation.class));
         } else {
-            Log.w(TAG, "No Authenticated user found");
+            Log.e(TAG, "No Authenticated user found");
         }
     }
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("PLease wait");
+            mProgressDialog.setMessage("Please Wait");
             mProgressDialog.setIndeterminate(true);
         }
         mProgressDialog.show();

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_layout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_material_dark_1">
+
+
+        <ImageView
+            android:id="@+id/header_cover_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:background="#fff"
+            android:padding="@dimen/_2sdp"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"/>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_photo"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:layout_above="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_65sdp"
+            android:elevation="10dp"
+            android:scaleType="centerCrop"
+            app:civ_border_color="#fff"
+            app:civ_border_width="@dimen/_2sdp"
+            tools:ignore="UnusedAttribute"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/user_profile_photo"
+            android:layout_alignEnd="@id/user_profile_photo"
+            android:clickable="true"
+            android:elevation="50dp"
+            android:src="@drawable/ic_photo_camera_black_24dp"
+            app:backgroundTint="@android:color/holo_blue_bright"
+            app:fabSize="mini"
+            tools:ignore="NewApi"/>
+
+        <RelativeLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/header_cover_image"
+            android:background="@color/primary_material_dark_1"
+            android:elevation="5dp"
+            android:paddingBottom="@dimen/_24sdp"
+            tools:ignore="UnusedAttribute">
+
+
+            <TextView
+                android:id="@+id/user_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_minus28sdp"
+                android:layout_marginTop="@dimen/_48sdp"
+                android:text="Gautam"
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/user_profile_short_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_profile_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:text="I Love Diamonds"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                tools:ignore="HardcodedText"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/profile_layout"
+            android:background="#011a27"
+            android:orientation="horizontal">
+
+            <!--<ImageView-->
+            <!--android:id="@+id/add_friend"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_alignTop="@+id/drop_down_option_menu"-->
+            <!--android:layout_marginLeft="150dp"-->
+
+            <!--android:layout_toStartOf="@+id/drop_down_option_menu"-->
+            <!--android:background="@color/accent_material_dark"-->
+            <!--android:src="@drawable/ic_person_add_black_24dp"-->
+            <!--tools:ignore="ContentDescription,ObsoleteLayoutParam,PrivateResource,RtlHardcoded"/>-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/drop_down_option_menu"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginLeft="16dp"-->
+
+            <!--android:background="@color/accent_material_dark"-->
+            <!--android:src="@drawable/ic_photo_camera_white_24dp"-->
+            <!--android:tint="@color/cardview_light_background"-->
+            <!--tools:ignore="ContentDescription,ObsoleteLayoutParam,PrivateResource,RtlHardcoded" />-->
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll1"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="#011a27"
+            android:orientation="vertical"
+            tools:ignore="ContentDescriptionUnusedAttribute,VectorDrawableCompat,HardcodedText">
+
+            <TextView
+                android:id="@+id/editProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="@dimen/_4sdp"
+                android:text="Email"
+                android:textColor="#fff"
+                tools:ignore="UnusedAttribute"/>
+
+            <TextView
+                android:id="@+id/editText15"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/circle"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="@dimen/_4sdp"
+                android:text="Phone"
+                android:textColor="#fff"
+                tools:ignore="UnusedAttribute"/>
+
+            <TextView
+                android:id="@+id/TextviewPhone"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/circle"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="@dimen/_4sdp"
+                android:text="Relationship"
+                android:textColor="#fff" tools:ignore="UnusedAttribute"/>
+
+            <TextView
+                android:id="@+id/editText695"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/circle"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="@dimen/_4sdp"
+                android:text="Date of Birth"
+                android:textColor="#fff" tools:ignore="UnusedAttribute"/>
+
+
+            <TextView
+                android:id="@+id/dob"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/circle"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="#011a27"
+                android:clickable="true"
+                android:elevation="@dimen/_4sdp"
+                android:text="Gender"
+                android:textColor="#fff"/>
+
+
+            <TextView
+                android:id="@+id/gendertext"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="@dimen/_4sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/circle"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                tools:ignore="LabelFor"/>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
