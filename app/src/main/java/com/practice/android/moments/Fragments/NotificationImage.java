@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Activities.AddFriendProfileActivity;
+import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.Helper.ServiceHandler;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.Profile_model_class;
@@ -32,6 +34,7 @@ import com.practice.android.moments.R;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +43,7 @@ import static com.practice.android.moments.Activities.BottomNavigation.deviceTok
 import static com.practice.android.moments.Activities.BottomNavigation.google_key;
 import static com.practice.android.moments.Activities.BottomNavigation.heading;
 import static com.practice.android.moments.Activities.BottomNavigation.image;
+import static com.practice.android.moments.Activities.BottomNavigation.imageusertoken;
 import static com.practice.android.moments.Activities.BottomNavigation.jsonStr;
 import static com.practice.android.moments.Activities.BottomNavigation.mServiceHandler;
 
@@ -78,6 +82,7 @@ public class NotificationImage extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notification_image, container, false);
+
         profile = (CircleImageView) view.findViewById(R.id.user_profile_photo);
 
 
@@ -171,17 +176,19 @@ public class NotificationImage extends Fragment {
                         setTitle(image.getTitle());
                         setDescription(image.getDescription());
 
-//                        setPic(context, image.getMedium());
+                        setPic(context, image.getMedium());
+                        setUsername(image.getUserName());
+                        Log.e("image user name", image.getUser_id());
 
-
-                        database.child(image.getUser_id()).addValueEventListener(new ValueEventListener() {
+                        database.child(image.getUser_id()).child("User Info").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
 
                                 assert user != null;
+                                Log.e("image user name", user.getName());
                                 setUsername(user.getName());
-//                                setProfilepic(context, user.getThumbnailProfilephoto());
+                                setProfilepic(context, user.getThumbnailProfilephoto());
                             }
 
                             @Override
@@ -203,152 +210,151 @@ public class NotificationImage extends Fragment {
 
         }
 
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        int seconds = c.get(Calendar.SECOND);
+        int milliSeconds = c.get(Calendar.MILLISECOND);
 
-//        Like.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                picLike = true;
-//
-//                DatabaseReference currentuser_db = mdatabaseReference;
-//
-//                currentuser_db.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                        if (picLike) {
-//
-//                            if (dataSnapshot.child(imageName).child("Users").hasChild(firebaseUser.getUid())) {
-//                                i = dataSnapshot.child(imageName).child("Users").getChildrenCount();
-//                                Log.e("No. of likes", String.valueOf(i));
-//                                currentuser_db.child(imageName).child("Users").child(firebaseUser.getUid()).removeValue();
-//                                picLike = false;
-//                                if (i > 0) {
-//                                    i--;
-//                                    String like = String.valueOf(i);
-//                                    currentuser_db.child(imageName).child("Likes").setValue(like);
-//                                } else {
-//                                    String like = String.valueOf(i);
-//                                    currentuser_db.child(imageName).child("Likes").setValue(like);
-//                                }
-//                            } else {
-//                                i = dataSnapshot.child(imageName).child("Users").getChildrenCount();
-//                                Log.e("No. of likes", String.valueOf(i));
-//                                i++;
-//                                String like = String.valueOf(i);
-//                                currentuser_db.child(imageName).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
-//                                currentuser_db.child(imageName).child("Likes").setValue(like);
-//                                Log.e("Likes=====", like);
-//                                picLike = false;
-//                                //Post method
-//
-//                                databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
-//                                        .child(user_id).child("Notification");
-//
-//                                databaseReference3 = FirebaseDatabase.getInstance().getReference()
-//                                        .child("User Pictures").child(imageName);
-//
-//
-//                                databaseReference3.addValueEventListener(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                        Log.e("numberof elements", String.valueOf(dataSnapshot.getChildrenCount()));
-//                                        Blog user = dataSnapshot.getValue(Blog.class);
-//
-//                                        assert user != null;
-//                                        Log.e("User name: ", user.getPicName() + "\n" + user.getThumbnail_pic());
-//
-//                                        imageurl = user.getPic();
-//
-//                                        String userid = user.getUser_id();
-//
-//                                        databaseReference4 = FirebaseDatabase.getInstance().getReference()
-//                                                .child("Users").child(userid).child("User Info");
-//                                        databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
-//                                                .child(userid).child("Notification");
-//                                        //notification sender
-//                                        databaseReference5.addValueEventListener(new ValueEventListener() {
-//                                            @Override
-//                                            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//
-//                                                Calendar c = Calendar.getInstance();
-//                                                int day = c.get(Calendar.DAY_OF_MONTH);
-//                                                int month = c.get(Calendar.MONTH) + 1;
-//                                                int year = c.get(Calendar.YEAR);
-//                                                int hour = c.get(Calendar.HOUR_OF_DAY);
-//                                                int minutes = c.get(Calendar.MINUTE);
-//                                                int seconds = c.get(Calendar.SECOND);
-//                                                int milliSeconds = c.get(Calendar.MILLISECOND);
-//
-//
-//                                                //Can cause error in uploading
-//                                                imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "" + user_id;
-//                                                Log.e("Camera", imageName);
-//
-//                                                DatabaseReference rootReference = databaseReference5.child(imageName);
-//                                                rootReference.child("frienduserid").setValue(user_id);
-//                                                rootReference.child("userimageid").setValue(imageName);
-//                                                rootReference.child("status").setValue("Like");
-//
-//
-//                                            }
-//
-//                                            @Override
-//                                            public void onCancelled(DatabaseError databaseError) {
-//
-//                                            }
-//                                        });
-//
-//                                        //notification sender
-//
-//
-//                                        databaseReference4.addValueEventListener(new ValueEventListener() {
-//                                            @Override
-//                                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                                Profile_model_class userinfo = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                                                assert userinfo != null;
-//                                                imageusertoken = userinfo.getUserToken();
-//
-//                                                Log.e(TAG, "User Token        \n" + imageusertoken);
-//
-//                                                BottomNavigation.setValues(userinfo.getUserToken(), user.getPic());
-//                                                new SendAsync().execute();
-//
-//                                            }
-//
-//                                            @Override
-//                                            public void onCancelled(DatabaseError databaseError) {
-//
-//                                            }
-//                                        });
-//
-//
-//                                        Log.e("image details", imageusertoken + "\n" + imageurl);
-//
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//
-//
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-//            }
-//        });
+
+        //Can cause error in uploading
+        imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "" + user_id;
+        Log.e("Camera", imageName);
+        Like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                picLike = true;
+
+                DatabaseReference currentuser_db = mdatabaseReference;
+
+                currentuser_db.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (picLike) {
+
+                            if (dataSnapshot.child(imageName).child("Users").hasChild(firebaseUser.getUid())) {
+                                i = dataSnapshot.child(imageName).child("Users").getChildrenCount();
+                                Log.e("No. of likes", String.valueOf(i));
+                                currentuser_db.child(imageName).child("Users").child(firebaseUser.getUid()).removeValue();
+                                picLike = false;
+                                if (i > 0) {
+                                    i--;
+                                    String like = String.valueOf(i);
+                                    currentuser_db.child(imageName).child("Likes").setValue(like);
+                                } else {
+                                    String like = String.valueOf(i);
+                                    currentuser_db.child(imageName).child("Likes").setValue(like);
+                                }
+                            } else {
+                                i = dataSnapshot.child(imageName).child("Users").getChildrenCount();
+                                Log.e("No. of likes", String.valueOf(i));
+                                i++;
+                                String like = String.valueOf(i);
+                                currentuser_db.child(imageName).child("Users").child(firebaseUser.getUid()).setValue(firebaseUser.getDisplayName());
+                                currentuser_db.child(imageName).child("Likes").setValue(like);
+                                Log.e("Likes=====", like);
+                                picLike = false;
+                                //Post method
+
+                                databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
+                                        .child(user_id).child("Notification");
+
+                                databaseReference3 = FirebaseDatabase.getInstance().getReference()
+                                        .child("User Pictures").child(imageName);
+
+
+                                databaseReference3.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        Log.e("numberof elements", String.valueOf(dataSnapshot.getChildrenCount()));
+                                        Blog user = dataSnapshot.getValue(Blog.class);
+
+                                        assert user != null;
+                                        Log.e("User name: ", user.getPicName() + "\n" + user.getThumbnail_pic());
+
+                                        BottomNavigation.imageurl = user.getPic();
+
+                                        String userid = user.getUser_id();
+
+                                        databaseReference4 = FirebaseDatabase.getInstance().getReference()
+                                                .child("Users").child(userid).child("User Info");
+                                        databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
+                                                .child(userid).child("Notification");
+                                        //notification sender
+                                        databaseReference5.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+
+                                                DatabaseReference rootReference = databaseReference5.child(imageName);
+                                                rootReference.child("frienduserid").setValue(user_id);
+                                                rootReference.child("userimageid").setValue(imageName);
+                                                rootReference.child("status").setValue("Like");
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+                                        //notification sender
+
+
+                                        databaseReference4.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Profile_model_class userinfo = dataSnapshot.getValue(Profile_model_class.class);
+
+                                                assert userinfo != null;
+                                                imageusertoken = userinfo.getUserToken();
+
+                                                Log.e(TAG, "User Token        \n" + imageusertoken);
+
+                                                BottomNavigation.setValues(userinfo.getUserToken(), user.getPic());
+                                                new SendAsync().execute();
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+
+                                            }
+                                        });
+
+
+                                        Log.e("image details", imageusertoken + "\n" + BottomNavigation.imageurl);
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
 
         Blog_user_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -376,7 +382,7 @@ public class NotificationImage extends Fragment {
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.remove(mCommentFragment);
                 transaction.add(R.id.content, mCommentFragment, "Comment Fragment");
-//                FTAG = "Comment Fragment";
+                BottomNavigation.FTAG = "Comment Fragment";
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -394,7 +400,7 @@ public class NotificationImage extends Fragment {
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.remove(mLikeFragment);
                 transaction.add(R.id.content, mLikeFragment, "Like Fragment");
-//                FTAG = "Like Fragment";
+                BottomNavigation.FTAG = "Like Fragment";
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -481,45 +487,27 @@ public class NotificationImage extends Fragment {
         Log.e("Description =======", Blog_description.getText().toString());
     }
 
-//
-//    public void setPic(Context context, String photo) {
-//
-//        Glide.with(context).load(photo)
-//                .skipMemoryCache(false)
-//                .placeholder(R.drawable.placeholder)
-//                .into(imageView);
-//
-//        Log.e("Image URl =======", photo);
-//
-//    }
-//
-//
-//    public void setProfilepic(Context context, String user_id) {
-//
-//        Log.e("USER ID", user_id);
-//
-//        database.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-//
-//                assert user != null;
-//
-//                Glide.with(context).load(user.getThumbnailProfilephoto())
-//                        .placeholder(R.drawable.placeholder)
-//                        .into(profile);
-//
-//                Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//    }
+
+    public void setPic(Context context, String photo) {
+
+        Glide.with(getContext()).load(photo)
+                .skipMemoryCache(false)
+                .placeholder(R.drawable.placeholder)
+                .into(imageView);
+
+        Log.e("Image URl =======", photo);
+
+    }
+
+    public void setProfilepic(Context context, String image) {
+
+        Log.e("USER ID", image);
+
+        Glide.with(context).load(image)
+                .placeholder(R.drawable.placeholder)
+                .into(profile);
+        Log.e("Image URl =======", image);
+    }
 
 
     @SuppressLint("LongLogTag")
@@ -527,7 +515,7 @@ public class NotificationImage extends Fragment {
         this.imageName = imagename;
         this.mName = name;
 
-        Log.e("From LIKE COMMENT NOTIFICATION", imageName + "\n" + mName);
+        Log.e("From LIKE COMMENT NOTIFICATION outside", imageName + "\n" + mName);
     }
 
 
@@ -536,7 +524,7 @@ public class NotificationImage extends Fragment {
 
         this.imageName = imagename;
 
-        Log.e("From BOTTOM NOTIFICATION", "\n" + mName);
+        Log.e("From BOTTOM NOTIFICATION outside", imageName);
     }
 
     public class SendAsync extends AsyncTask<String, Void, String> {

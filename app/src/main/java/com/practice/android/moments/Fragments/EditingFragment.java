@@ -53,7 +53,6 @@ import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.practice.android.moments.Activities.BottomNavigation.usertoken;
 
-
 public class EditingFragment extends Fragment {
 
     static final int REQ_CODE_CSDK_IMAGE_EDITOR = 3001;

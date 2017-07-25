@@ -96,11 +96,11 @@
             </intent-filter>
         </activity>
 
-        <provider
-            android:name="com.aviary.android.feather.sdk.internal.cds.AviaryCdsProvider"
-            android:authorities="com.package.AviaryCdsProvider"
-            android:exported="false"
-            android:process=":aviary_cds" />
+        <!--<provider-->
+            <!--android:name="com.aviary.android.feather.sdk.internal.cds.AviaryCdsProvider"-->
+            <!--android:authorities="com.package.AviaryCdsProvider"-->
+            <!--android:exported="false"-->
+            <!--android:process=":aviary_cds" />-->
 
         <activity
             android:name=".Activities.Timeline"

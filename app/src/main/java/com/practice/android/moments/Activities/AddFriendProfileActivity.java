@@ -199,16 +199,17 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
                                     if (Status.equals("Requested")) {
 
-                                        mdatabaseReference.child(currentuser_id).child("Friends")
-                                                .child(userid).child("status").setValue("Accept");
-                                        mdatabaseReference.child(userid).child("Friends").child(currentuser_id)
-                                                .child("status").setValue("Accept");
-
-                                        plus.setVisibility(View.GONE);
-                                        mview.setVisibility(View.GONE);
-
-
-                                        friendButton.setText("Friends");
+                                        friendButton.setClickable(false);
+//                                        mdatabaseReference.child(currentuser_id).child("Friends")
+//                                                .child(userid).child("status").setValue("Accept");
+//                                        mdatabaseReference.child(userid).child("Friends").child(currentuser_id)
+//                                                .child("status").setValue("Accept");
+//
+//                                        plus.setVisibility(View.GONE);
+//                                        mview.setVisibility(View.GONE);
+//
+//
+//                                        friendButton.setText("Friends");
                                     } else if (Status.equals("Accept")) {
 
                                         mdatabaseReference.child(currentuser_id).child("Friends").child(userid).removeValue();
@@ -225,11 +226,8 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                                     friend = false;
                                 } else {
 
-                                    mdatabaseReference.child(currentuser_id).child("Friends")
-                                            .child(userid).child("status").setValue("Requested");
 
-
-                                    mdatabaseReference.child(currentuser_id).addValueEventListener(new ValueEventListener() {
+                                    mdatabaseReference.child(currentuser_id).child("User Info").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
@@ -237,6 +235,8 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                                             friendname = user.getName();
                                             mdatabaseReference.child(currentuser_id).child("Friends")
                                                     .child(userid).child("userName").setValue(friendname);
+                                            mdatabaseReference.child(currentuser_id).child("Friends")
+                                                    .child(userid).child("status").setValue("Requested");
 
                                         }
 

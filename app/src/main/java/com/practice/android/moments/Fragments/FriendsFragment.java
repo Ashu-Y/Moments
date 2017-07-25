@@ -53,7 +53,6 @@ public class FriendsFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.reycler);
         ifnofriend = (TextView) view.findViewById(R.id.onfriendtext);
 
-
         recyclerView.setHasFixedSize(true);
         lm_recycle = new LinearLayoutManager(getContext());
         lm_recycle.setReverseLayout(true);
@@ -122,87 +121,76 @@ public class FriendsFragment extends Fragment {
                     }
                 });
 
-//                viewHolder.friendstatus.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        {
-//                            viewHolder.friend = true;
-//                            try {
-//                                viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
-//                                        .child("Friends").addValueEventListener(new ValueEventListener() {
-//                                    @SuppressLint("SetTextI18n")
-//                                    @Override
-//                                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                        if (viewHolder.friend) {
-//                                            if (dataSnapshot.hasChild(user_id)) {
-//
-//                                                Friends friends = dataSnapshot.child(user_id).getValue(Friends.class);
-//
-//                                                assert friends != null;
-//                                                String Status = friends.getStatus();
-//
-//                                                if (Status.equals("Requested")) {
-//
-//                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends")
-//                                                            .child(userid).child("status").setValue("Accept");
-//
-//                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends")
-//                                                            .child(viewHolder.currentuser_id)
-//                                                            .child("status").setValue("Accept");
-//
-//                                                    viewHolder.friendstatus.setText("Friends");
-//                                                } else if (Status.equals("Accept")) {
-//
-//                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
-//                                                            .child("Friends").child(user_id).removeValue();
-//
-//                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends")
-//                                                            .child(viewHolder.currentuser_id).removeValue();
-//
-//                                                    viewHolder.friendstatus.setText("Add Friend");
-//
-//                                                }
-//
-//
-//                                                viewHolder.friend = false;
-//                                            }
-//                                        }
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(DatabaseError databaseError) {
-//
-//                                    }
-//                                });
-//
-//
-//                            } catch (NullPointerException e) {
-//                                e.getMessage();
-//                            }
-//                        }
-//                    }
-//                });
+                viewHolder.friendstatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        {
+                            viewHolder.friend = true;
+                            try {
+                                viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
+                                        .child("Friends").addValueEventListener(new ValueEventListener() {
+                                    @SuppressLint("SetTextI18n")
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        if (viewHolder.friend) {
+                                            if (dataSnapshot.hasChild(user_id)) {
+
+                                                Friends friends = dataSnapshot.child(user_id).getValue(Friends.class);
+
+                                                assert friends != null;
+                                                String Status = friends.getStatus();
+
+                                                if (Status.equals("Requested")) {
+
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends")
+                                                            .child(userid).child("status").setValue("Accept");
+
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends")
+                                                            .child(viewHolder.currentuser_id)
+                                                            .child("status").setValue("Accept");
+
+                                                    viewHolder.friendstatus.setText("Friends");
+                                                } else if (Status.equals("Accept")) {
+
+                                                    try {
+                                                        viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
+                                                                .child("Friends").child(user_id).removeValue();
+
+                                                        viewHolder.mdatabaseReference.child(user_id).child("Friends")
+                                                                .child(viewHolder.currentuser_id).removeValue();
+
+                                                    }catch (Exception e){
+                                                        e.getMessage();
+                                                    }
+
+
+                                                }
+
+
+                                                viewHolder.friend = false;
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                            } catch (NullPointerException e) {
+                                e.getMessage();
+                            }
+                        }
+                    }
+                });
 
             }
         };
 
-//        FirebaseRecyclerAdapter<Friends, FriendsHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Friends, FriendsHolder>(
-//                Friends.class,
-//                R.layout.friend_recycler,
-//                FriendsHolder.class,
-//                databaseReference.orderByValue()
-//
-//        ) {
-//            @Override
-//            protected void populateViewHolder(FriendsHolder viewHolder, Friends model, int position) {
-//
-//                String users = getRef(position).getKey();
-//
-//                Log.e("under recycler", users);
-//
-//            }
-//        };
+
 
 
         firebaseRecyclerAdapter.notifyDataSetChanged();

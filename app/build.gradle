@@ -97,6 +97,7 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
     compile 'com.adobe.creativesdk.foundation:auth:0.9.1251'
     compile 'com.adobe.creativesdk:image:4.8.4'
+    compile 'com.adobe.creativesdk:color:0.9.1251'
     compile 'com.localytics.android:library:3.8.0'
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'com.hbb20:ccp:1.8'
