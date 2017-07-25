@@ -41,7 +41,7 @@ public class NotificationFragment extends Fragment {
         frameLayout = (FrameLayout) v.findViewById(R.id.notif_frame);
 
         mFragmentManager = getFragmentManager();
-
+        friends = new FriendsFragment();
 
         follows();
 
@@ -69,7 +69,7 @@ public class NotificationFragment extends Fragment {
                     transaction.commit();
                 }
 
-                friends = new FriendsFragment();
+
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
                 transaction.remove(friends);
                 transaction.add(R.id.notif_frame, friends, "friends Fragment");

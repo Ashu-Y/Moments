@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -213,7 +214,8 @@ public class FriendsFragment extends Fragment {
 
     public static class FriendsHolder extends RecyclerView.ViewHolder {
 
-        TextView friendname, friendstatus;
+        TextView friendname;
+        Button friendstatus;
         DatabaseReference mdatabaseReference;
         FirebaseUser firebaseUser;
         String currentuser_id;
@@ -223,7 +225,7 @@ public class FriendsFragment extends Fragment {
             super(itemView);
             mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
             friendname = (TextView) itemView.findViewById(R.id.friendusername);
-            friendstatus = (TextView) itemView.findViewById(R.id.frienduserstatus);
+            friendstatus = (Button) itemView.findViewById(R.id.frienduserstatus);
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             assert firebaseUser != null;
             currentuser_id = firebaseUser.getUid();

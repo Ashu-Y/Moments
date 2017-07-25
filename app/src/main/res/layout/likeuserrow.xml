@@ -33,7 +33,7 @@
             android:elevation="5dp"
             android:gravity="center"
             android:text="@string/hello_blank_fragment"
-            android:textColor="@color/com_adobe_image_black_semi_transparent"
+            android:textColor="#dd000000"
             android:textSize="16sp" />
 
     </RelativeLayout>

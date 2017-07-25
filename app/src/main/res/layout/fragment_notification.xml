@@ -14,13 +14,23 @@
 
         <Button
             android:id="@+id/notif_friends"
-            android:layout_width="@dimen/_160sdp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_height="wrap_content"
             android:text="Friends" />
 
         <Button
             android:id="@+id/notify"
-            android:layout_width="@dimen/_160sdp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
             android:layout_height="wrap_content"
             android:text="Follows" />
     </LinearLayout>
@@ -28,6 +38,7 @@
 
     <FrameLayout
         android:id="@+id/notif_frame"
+        android:layout_marginTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

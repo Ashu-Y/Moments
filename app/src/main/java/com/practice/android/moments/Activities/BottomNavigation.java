@@ -321,6 +321,7 @@ public class BottomNavigation extends AppCompatActivity {
 
 
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
+
                         transaction.replace(R.id.content, mNotificationFragment, "Notification Fragment");
                         transaction.commit();
                     }
@@ -875,7 +876,7 @@ public class BottomNavigation extends AppCompatActivity {
                             FragmentTransaction transaction = mFragmentManager.beginTransaction();
                             transaction.remove(notificationImage);
                             transaction.add(R.id.content, notificationImage, "NotificationImage Fragment");
-                            FTAG = "NotificationImage Fragment";
+                            FTAG = "NotificationImageMAIN Fragment";
                             transaction.addToBackStack(null);
                             transaction.commit();
                         }
@@ -1196,6 +1197,22 @@ public class BottomNavigation extends AppCompatActivity {
                                 recyclerView.setVisibility(View.VISIBLE);
                             }
                         }
+                    } else if (FTAG.equals("NotificationImageMAIN Fragment")) {
+                        FTAG = "BLANK";
+                        if (notificationImage.isAdded()) {
+                            mFragmentManager.beginTransaction().remove(notificationImage).commit();
+
+                            fl.getLayoutParams().height = 0;
+                            fl.requestLayout();
+
+                            if (recyclerView.getVisibility() != View.VISIBLE) {
+                                recyclerView.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    } else if (FTAG.equals("NotificationImage Fragment")) {
+                        FTAG = "BLANK";
+                        mFragmentManager.beginTransaction().replace(R.id.content, mNotificationFragment, "Notification Fragment").commit();
+
                     } else if (FTAG.equals("Settings Fragment")) {
                         FTAG = "BLANK";
                         mFragmentManager.beginTransaction().replace(R.id.content, mProfileFragment, "Profile Fragment").commit();

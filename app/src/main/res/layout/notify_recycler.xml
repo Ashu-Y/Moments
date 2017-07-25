@@ -12,8 +12,12 @@
         android:id="@+id/clicktoopen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="4dp"
         app:cardBackgroundColor="#F0EFF0"
+        android:padding="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
         app:contentPadding="5dp">

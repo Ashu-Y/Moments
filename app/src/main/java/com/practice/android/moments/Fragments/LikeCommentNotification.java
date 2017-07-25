@@ -135,6 +135,7 @@ public class LikeCommentNotification extends Fragment {
                         public void onClick(View v) {
                             String Name = getRef(viewHolder.getAdapterPosition()).getKey();
 
+                            BottomNavigation.FTAG = "NotificationImage Fragment";
 
                             notificationImage.setImageResourceName(viewHolder.userImageID, Name);
 
@@ -142,7 +143,7 @@ public class LikeCommentNotification extends Fragment {
                             FragmentTransaction transaction = mFragmentManager.beginTransaction();
                             transaction.remove(notificationImage);
                             transaction.add(R.id.content, notificationImage, "NotificationImage Fragment");
-                            BottomNavigation.FTAG = "Like Fragment";
+
                             transaction.addToBackStack(null);
                             transaction.commit();
 

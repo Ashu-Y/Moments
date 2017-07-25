@@ -1,11 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:background="#aeecc9"
+    android:background="#F7EFE2"
     android:orientation="vertical"
     app:cardBackgroundColor="#d6c2a3"
     tools:context="com.practice.android.moments.Fragments.NotificationImage">
