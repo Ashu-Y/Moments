@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Helper.ProfileViewHelper;
+import com.practice.android.moments.Models.Friends;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
@@ -205,11 +206,11 @@ public class ProfileFragment extends Fragment {
 
                         coveruri = user.getCoverPhoto();
                         Glide.with(getContext()).load(user.getThumbnailProfilephoto())
-                                .thumbnail(Glide.with(getContext()).load(R.drawable.giphy))
+                                .placeholder(R.drawable.placeholder)
                                 .into(profile);
 
                         Glide.with(getContext()).load(user.getThumbnailCoverPhoto())
-                                .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                                .placeholder(R.drawable.placeholder)
                                 .into(coverpic);
 
                         Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getPhoto() + "    " + user.getCoverPhoto());
@@ -227,16 +228,48 @@ public class ProfileFragment extends Fragment {
             e.getMessage();
         }
         //Friend count
+
         try {
+
             databaseReference.child("Friends").addListenerForSingleValueEvent(new ValueEventListener() {
+                long numberoffriends = 0;
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Long numberoffriends = dataSnapshot.getChildrenCount();
 
-                    if (numberoffriends > 0) {
-                        userfriends.setText(String.valueOf(numberoffriends));
-                    } else {
-                        userfriends.setText("0");
+                    numberoffriends = dataSnapshot.getChildrenCount();
+
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
+                        String Friendid = childDataSnapshot.getKey();
+
+
+                        Log.e("Friends Id", Friendid);
+                        try {
+                            databaseReference.child("Friends").child(String.valueOf(Friendid)).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    Friends friends = dataSnapshot.getValue(Friends.class);
+
+                                    assert friends != null;
+                                    if (friends.getStatus().equals("Accept")) {
+                                        numberoffriends++;
+                                        userfriends.setText(String.valueOf(numberoffriends));
+                                    } else {
+                                        userfriends.setText("0");
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.getMessage();
+                        }
 
                     }
 

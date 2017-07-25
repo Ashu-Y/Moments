@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.practice.android.moments.Activities.BottomNavigation;
 import com.practice.android.moments.R;
 
 
@@ -40,14 +41,20 @@ public class NotificationFragment extends Fragment {
         frameLayout = (FrameLayout) v.findViewById(R.id.notif_frame);
 
         mFragmentManager = getFragmentManager();
+
+
+        follows();
+
+        //On click of
         likecomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeCommentNotification = new LikeCommentNotification();
-                FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                transaction.replace(R.id.notif_frame, likeCommentNotification, "Like comments Fragment");
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if (friends.isAdded()) {
+                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                    transaction.remove(friends);
+                    transaction.commit();
+                }
+                follows();
 
             }
         });
@@ -56,9 +63,17 @@ public class NotificationFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if (likeCommentNotification.isAdded()) {
+                    FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                    transaction.remove(likeCommentNotification);
+                    transaction.commit();
+                }
+
                 friends = new FriendsFragment();
                 FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                transaction.replace(R.id.notif_frame, friends, "friends Fragment");
+                transaction.remove(friends);
+                transaction.add(R.id.notif_frame, friends, "friends Fragment");
+                BottomNavigation.FTAG = "friends Fragment";
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -66,6 +81,19 @@ public class NotificationFragment extends Fragment {
 
 
         return v;
+    }
+
+    public void follows() {
+
+
+        likeCommentNotification = new LikeCommentNotification();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.remove(likeCommentNotification);
+        transaction.add(R.id.notif_frame, likeCommentNotification, "likeCommentNotification Fragment");
+        BottomNavigation.FTAG = "likeCommentNotification Fragment";
+        transaction.addToBackStack(null);
+        transaction.commit();
+
     }
 
 }

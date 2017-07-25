@@ -28,10 +28,6 @@ import static com.practice.android.moments.Activities.BottomNavigation.googleApi
 import static com.practice.android.moments.Activities.Login_method.isEmail;
 
 
-/**
- * Created by Ashutosh on 7/10/2017.
- */
-
 public class SettingsFragment extends Fragment {
 
     //    GoogleApiClient googleApiClient;

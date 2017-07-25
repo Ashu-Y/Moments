@@ -66,7 +66,7 @@ public class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapte
 
             Glide.with(mContext)
                     .load(post.getImageId())
-                    .thumbnail(Glide.with(mContext).load(R.drawable.loader))
+                    .placeholder(R.drawable.placeholder)
                     .fitCenter()
                     .into(image);
 

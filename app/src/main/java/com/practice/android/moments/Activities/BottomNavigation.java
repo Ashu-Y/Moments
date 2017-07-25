@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -50,12 +51,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.practice.android.moments.Fragments.CommentFragment;
 import com.practice.android.moments.Fragments.DashboardFragment;
 import com.practice.android.moments.Fragments.EditingFragment;
 import com.practice.android.moments.Fragments.LikeFragment;
 import com.practice.android.moments.Fragments.NotificationFragment;
+import com.practice.android.moments.Fragments.NotificationImage;
 import com.practice.android.moments.Fragments.ProfileFragment;
 import com.practice.android.moments.Fragments.SearchFragment;
 import com.practice.android.moments.Fragments.SettingsFragment;
@@ -65,12 +66,12 @@ import com.practice.android.moments.Helper.ServiceHandler;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
-import com.practice.android.moments.Service.MyFirebaseInstanceIDService;
 
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -88,48 +89,48 @@ public class BottomNavigation extends AppCompatActivity {
     private static final int GALLERY_PICTURE = 1;
     private static final int CAMERA_REQUEST = 0;
     public static String FTAG = "BLANK";
+    public static String imageusertoken = null;
+    public static String imageurl = null;
+
     public static String Name;
     public static GoogleApiClient googleApiClient;
     public static Context context;
-    public static String usertoken;
+    public static String usertoken = null;
     public static ArrayList<HashMap<String, String>> al_appsearch;
-    ProgressDialog pDialog;
-public static String ZOOMTAG = "BLANK";
-    public static View thumb;
+    public static String google_key, deviceToken, heading, description, image;
+    public static ServiceHandler mServiceHandler;
+    public static String jsonStr;
     public static boolean zoom = false;
-
-    ServiceHandler mServiceHandler;
+    public static String ZOOMTAG = "BLANK";
+    public static View thumb;
+    public static Display display;
+    public static Point size;
+    String imageName;
+    ProgressDialog pDialog;
     TimelineFragment mTimelineFragment;
     DashboardFragment mDashboardFragment;
     SearchFragment mSearchFragment;
     ProfileFragment mProfileFragment;
-    //    Upload_picture mUpload_pictureFragment;
-
     NotificationFragment mNotificationFragment;
     EditingFragment mEditingFragment;
     FragmentManager mFragmentManager;
     CommentFragment mCommentFragment;
+    NotificationImage notificationImage;
     LikeFragment mLikeFragment;
     SettingsFragment mSettingsFragment;
     RecyclerView recyclerView;
-    DatabaseReference databaseReference, databaseReference1, databaseReference2, databaseReference3, databaseReference4, mdatabaseReference;
+    DatabaseReference databaseReference, databaseReference1, databaseReference2, databaseReference3, databaseReference4, databaseReference5, mdatabaseReference;
     FrameLayout fl;
     String user_id;
     String user_name;
-    public static Display display;
-    String google_key, deviceToken, heading, description, image;
-    String jsonStr;
-    public static Point size;
     FirebaseAuth firebaseAuth;
     Boolean picLike;
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
-    FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
-    String imageusertoken;
-    String imageurl;
-
     ImageView expandedImageView;
+
+    FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
     private Animator mCurrentAnimator;
     private int mShortAnimationDuration;
     private String TAG = getClass().getSimpleName();
@@ -377,6 +378,25 @@ public static String ZOOMTAG = "BLANK";
 
     };
 
+    public static void setValues(String token, String name) {
+
+
+        Log.e("Image ", token + "\n  Details   \n" + name);
+
+        Log.e("image details 222222\n", imageusertoken + "\n" + imageurl);
+
+//        google_key = "AIzaSyCKGEx1mIpaCKqB-LxRECQKDmA8Yv9BB30";
+
+        google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
+        deviceToken = usertoken;
+        heading = "hello";
+        description = "Photo Liked By";
+        image = imageurl;
+        Log.e("Image ", usertoken + "\n  Details   \n" + name);
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -385,11 +405,11 @@ public static String ZOOMTAG = "BLANK";
 
         pDialog = new ProgressDialog(this);
 
-
-        usertoken = FirebaseInstanceId.getInstance().getToken();
-
-
-        startService(new Intent(this, MyFirebaseInstanceIDService.class));
+//        try {
+//            startService(new Intent(this, MyFirebaseInstanceIDService.class));
+//        }catch(Exception e){
+//            e.getMessage();
+//        }
         expandedImageView = (ImageView) findViewById(R.id.expanded_image);
 
         al_appsearch = new ArrayList<>();
@@ -405,6 +425,8 @@ public static String ZOOMTAG = "BLANK";
         display.getSize(size);
 
         try {
+
+//            usertoken = FirebaseInstanceId.getInstance().getToken();
             assert firebaseUser != null;
             user_id = firebaseUser.getUid();
             user_name = firebaseUser.getDisplayName();
@@ -483,8 +505,11 @@ public static String ZOOMTAG = "BLANK";
         mCommentFragment = new CommentFragment();
         mLikeFragment = new LikeFragment();
         mProfileFragment = new ProfileFragment();
+        mEditingFragment = new EditingFragment();
 //        mUpload_pictureFragment = new Upload_picture();
         mNotificationFragment = new NotificationFragment();
+
+        notificationImage = new NotificationImage();
         mEditingFragment = new EditingFragment();
         mSettingsFragment = new SettingsFragment();
         mFragmentManager = getSupportFragmentManager();
@@ -580,6 +605,15 @@ public static String ZOOMTAG = "BLANK";
         recyclerView.getRecycledViewPool().clear();
         al_appsearch.clear();
         context = getApplicationContext();
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH) + 1;
+        int year = c.get(Calendar.YEAR);
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        int seconds = c.get(Calendar.SECOND);
+        int milliSeconds = c.get(Calendar.MILLISECOND);
+
 
         try {
 
@@ -618,6 +652,8 @@ public static String ZOOMTAG = "BLANK";
                             currentuser_db.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "" + user_id;
+                                    Log.e("Camera", imageName);
 
                                     if (picLike) {
 
@@ -667,6 +703,31 @@ public static String ZOOMTAG = "BLANK";
                                                     databaseReference4 = FirebaseDatabase.getInstance().getReference()
                                                             .child("Users").child(userid).child("User Info");
 
+                                                    databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
+                                                            .child(userid).child("Notification");
+                                                    //notification sender
+
+                                                    try {
+                                                        databaseReference5.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+                                                                DatabaseReference rootReference = databaseReference5.child(imageName);
+                                                                rootReference.child("frienduserid").setValue(user_id);
+                                                                rootReference.child("userimageid").setValue(Name);
+                                                                rootReference.child("status").setValue("Like");
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                    } catch (Exception e) {
+                                                        e.getMessage();
+                                                    }
                                                     databaseReference4.addValueEventListener(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -798,6 +859,28 @@ public static String ZOOMTAG = "BLANK";
                     });
 
 
+                    viewHolder.click.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            fl.setMinimumHeight(size.y);
+                            fl.getLayoutParams().height = size.y;
+                            fl.requestLayout();
+
+                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
+
+                            notificationImage.setImageResource(Name);
+
+                            Log.e("Pic Name", "\n" + Name);
+                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+                            transaction.remove(notificationImage);
+                            transaction.add(R.id.content, notificationImage, "NotificationImage Fragment");
+                            FTAG = "NotificationImage Fragment";
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                    });
+
                 }
 
             };
@@ -844,7 +927,7 @@ public static String ZOOMTAG = "BLANK";
 
         Glide.with(context).load(imageResId)
                 .skipMemoryCache(false)
-                .thumbnail(Glide.with(context).load(R.drawable.loader))
+                .placeholder(R.drawable.newplaceholder)
                 .into(expandedImageView);
 
         // Calculate the starting and ending bounds for the zoomed-in image.
@@ -988,20 +1071,6 @@ public static String ZOOMTAG = "BLANK";
         });
     }
 
-
-//    public void LogoutButton() {
-//        Log.e(TAG, "You clicked onClick Button");
-//        FirebaseAuth.getInstance().signOut();
-//        LoginManager.getInstance().logOut();
-//        Auth.GoogleSignInApi.signOut(googleApiClient)
-//                .setResultCallback(
-//                        status -> {
-//                            Log.e(TAG, "log off from google sign button");
-//                            Toast.makeText(this, "You have Successfully Sign off", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(this, Login_method.class));
-//                        });
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1057,225 +1126,6 @@ public static String ZOOMTAG = "BLANK";
         cursor.close();
         return path;
     }
-
-
-    public void setValues(String token, String name) {
-
-
-        Log.e("Image ", token + "\n  Details   \n" + name);
-
-        Log.e("image details 222222\n", imageusertoken + "\n" + imageurl);
-
-//        google_key = "AIzaSyCKGEx1mIpaCKqB-LxRECQKDmA8Yv9BB30";
-
-        google_key = "AIzaSyCiTL3tC8Ns7t_IzulyIHEzcfPoX0IPelo";
-        deviceToken = usertoken;
-        heading = "hello";
-        description = "Photo Liked By";
-        image = imageurl;
-        Log.e("Image ", usertoken + "\n  Details   \n" + name);
-
-
-    }
-
-    public static class BlogViewHolder extends RecyclerView.ViewHolder {
-
-
-        View mView;
-        DatabaseReference mdatabaseReference, database;
-        CircleImageView profile;
-        ImageView comment;
-        Long i;
-
-        ImageView imageView, expandImage;
-
-        ImageView Like;
-        FirebaseUser firebaseUser;
-        TextView Numberlike;
-        TextView Blog_user_name, Blog_title, Blog_description;
-
-        public BlogViewHolder(View itemView) {
-            super(itemView);
-
-            mView = itemView;
-            mdatabaseReference = FirebaseDatabase.getInstance().getReference()
-                    .child("Likes");
-            database = FirebaseDatabase.getInstance().getReference()
-                    .child("Users");
-
-            profile = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
-
-
-            imageView = (ImageView) mView.findViewById(R.id.image);
-            expandImage = (ImageView) mView.findViewById(R.id.expanded_image);
-
-            Like = (ImageView) mView.findViewById(R.id.like_btn);
-            comment = (ImageView) mView.findViewById(R.id.comment_btn);
-            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            Numberlike = (TextView) mView.findViewById(R.id.likes);
-
-            Blog_user_name = (TextView) mView.findViewById(R.id.username);
-            Blog_title = (TextView) mView.findViewById(R.id._title);
-
-            Blog_description = (TextView) mView.findViewById(R.id._description);
-        }
-
-
-        public void setLike(String ImageName) {
-            DatabaseReference currentuser_db = mdatabaseReference;
-
-            currentuser_db.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    if (dataSnapshot.child(ImageName).child("Users").hasChild(firebaseUser.getUid())) {
-
-                        Like.setImageResource(R.drawable.like2);
-
-                    } else {
-                        Like.setImageResource(R.drawable.like);
-                    }
-
-                }
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-        public void setNumberLike(String ImageName) {
-            DatabaseReference currentuser_db = mdatabaseReference;
-
-            currentuser_db.addValueEventListener(new ValueEventListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    Long i = dataSnapshot.child(ImageName).child("Users").getChildrenCount();
-
-                    if (i == 1 || i == 0) {
-                        Numberlike.setText(i + " friend liked your post");
-                    } else if (i > 1) {
-                        Numberlike.setText(i + " friends liked your post");
-                    }
-
-
-                }
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-
-
-        public void setUsername(String username) {
-
-            Blog_user_name.setText(username);
-
-            Log.e("Username =======", Blog_user_name.getText().toString());
-        }
-
-        public void setTitle(String title) {
-
-            Blog_title.setText(title);
-
-            Log.e("Title =======", Blog_title.getText().toString());
-        }
-
-        public void setDescription(String description) {
-
-            Blog_description.setText(description);
-
-            Log.e("Description =======", Blog_description.getText().toString());
-        }
-
-
-        public void setPic(Context context, String photo) {
-
-            Glide.with(context).load(photo)
-                    .skipMemoryCache(false)
-                    .thumbnail(Glide.with(context).load(R.drawable.loader))
-                    .into(imageView);
-
-            Log.e("Image URl =======", photo);
-
-        }
-
-
-        public void setProfilepic(Context context, String user_id) {
-
-            Log.e("USER ID", user_id);
-
-            database.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-
-                    assert user != null;
-
-                    Glide.with(context).load(user.getThumbnailProfilephoto())
-                            .thumbnail(Glide.with(context).load(R.drawable.loader))
-                            .into(profile);
-
-                    Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
-        }
-    }
-
-    private class SendAsync extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-
-            mServiceHandler = new ServiceHandler(BottomNavigation.this);
-
-            ArrayList<BasicNameValuePair> nameValuePairs = new ArrayList<>();
-            nameValuePairs.add(new BasicNameValuePair("google_key", google_key));
-            nameValuePairs.add(new BasicNameValuePair("deviceToken", deviceToken));
-            nameValuePairs.add(new BasicNameValuePair("heading", heading));
-            nameValuePairs.add(new BasicNameValuePair("description", description));
-            nameValuePairs.add(new BasicNameValuePair("image", image));
-
-            jsonStr = mServiceHandler.makeServiceCall("http://appzynga.com/projects/trainee/and_notifications/notification.php/",
-                    ServiceHandler.POST,
-                    nameValuePairs);
-
-            Log.e("Notifyyyy", jsonStr);
-
-
-            return null;
-        }
-
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-        }
-
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -1404,7 +1254,6 @@ public static String ZOOMTAG = "BLANK";
         return false;
     }
 
-
     public void check() {
 
         zoom = false;
@@ -1497,6 +1346,207 @@ public static String ZOOMTAG = "BLANK";
         });
         set.start();
         mCurrentAnimator = set;
+    }
+
+    public static class BlogViewHolder extends RecyclerView.ViewHolder {
+
+
+        View mView;
+        DatabaseReference mdatabaseReference, database;
+        CircleImageView profile;
+        ImageView comment;
+        Long i;
+
+        ImageView imageView, expandImage;
+
+        ImageView Like;
+        FirebaseUser firebaseUser;
+        TextView Numberlike;
+        TextView Blog_user_name, Blog_title, Blog_description;
+        CardView click;
+
+        public BlogViewHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
+            mdatabaseReference = FirebaseDatabase.getInstance().getReference()
+                    .child("Likes");
+            database = FirebaseDatabase.getInstance().getReference()
+                    .child("Users");
+
+            profile = (CircleImageView) mView.findViewById(R.id.user_profile_photo);
+
+
+            click = (CardView) mView.findViewById(R.id.clicktoCard);
+            imageView = (ImageView) mView.findViewById(R.id.image);
+            expandImage = (ImageView) mView.findViewById(R.id.expanded_image);
+
+            Like = (ImageView) mView.findViewById(R.id.like_btn);
+            comment = (ImageView) mView.findViewById(R.id.comment_btn);
+            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            Numberlike = (TextView) mView.findViewById(R.id.likes);
+
+            Blog_user_name = (TextView) mView.findViewById(R.id.username);
+            Blog_title = (TextView) mView.findViewById(R.id._title);
+
+            Blog_description = (TextView) mView.findViewById(R.id._description);
+        }
+
+
+        public void setLike(String ImageName) {
+            DatabaseReference currentuser_db = mdatabaseReference;
+
+            currentuser_db.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.child(ImageName).child("Users").hasChild(firebaseUser.getUid())) {
+
+                        Like.setImageResource(R.drawable.like2);
+
+                    } else {
+                        Like.setImageResource(R.drawable.like);
+                    }
+
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        public void setNumberLike(String ImageName) {
+            DatabaseReference currentuser_db = mdatabaseReference;
+
+            currentuser_db.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Long i = dataSnapshot.child(ImageName).child("Users").getChildrenCount();
+
+                    if (i == 1 || i == 0) {
+                        Numberlike.setText(i + " friend liked your post");
+                    } else if (i > 1) {
+                        Numberlike.setText(i + " friends liked your post");
+                    }
+
+
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+
+        public void setUsername(String username) {
+
+            Blog_user_name.setText(username);
+
+            Log.e("Username =======", Blog_user_name.getText().toString());
+        }
+
+        public void setTitle(String title) {
+
+            Blog_title.setText(title);
+
+            Log.e("Title =======", Blog_title.getText().toString());
+        }
+
+        public void setDescription(String description) {
+
+            Blog_description.setText(description);
+
+            Log.e("Description =======", Blog_description.getText().toString());
+        }
+
+
+        public void setPic(Context context, String photo) {
+
+            Glide.with(context).load(photo)
+                    .skipMemoryCache(false)
+                    .placeholder(R.drawable.placeholder)
+                    .into(imageView);
+
+            Log.e("Image URl =======", photo);
+
+        }
+
+
+        public void setProfilepic(Context context, String user_id) {
+
+            Log.e("USER ID", user_id);
+
+            database.child(user_id).child("User Info").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                    assert user != null;
+
+                    Glide.with(context).load(user.getThumbnailProfilephoto())
+                            .placeholder(R.drawable.placeholder)
+                            .into(profile);
+
+                    Log.e("PROFILE PIC", "\n" + user.getThumbnailProfilephoto());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+    }
+
+    @SuppressLint("NewApi")
+    protected class SendAsync extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+            mServiceHandler = new ServiceHandler(BottomNavigation.this);
+
+            ArrayList<BasicNameValuePair> nameValuePairs = new ArrayList<>();
+            nameValuePairs.add(new BasicNameValuePair("google_key", google_key));
+            nameValuePairs.add(new BasicNameValuePair("deviceToken", deviceToken));
+            nameValuePairs.add(new BasicNameValuePair("heading", heading));
+            nameValuePairs.add(new BasicNameValuePair("description", description));
+            nameValuePairs.add(new BasicNameValuePair("image", image));
+
+            jsonStr = mServiceHandler.makeServiceCall("http://appzynga.com/projects/trainee/and_notifications/notification.php/",
+                    ServiceHandler.POST,
+                    nameValuePairs);
+
+            Log.e("Notifyyyy", jsonStr);
+
+
+            return null;
+        }
+
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
     }
 
 

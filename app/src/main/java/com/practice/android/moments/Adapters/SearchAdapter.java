@@ -27,10 +27,6 @@ import static com.practice.android.moments.Activities.BottomNavigation.USER_NAME
 import static com.practice.android.moments.Activities.BottomNavigation.USER_PHOTO;
 
 
-/**
- * Created by Ashutosh on 7/14/2017.
- */
-
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
 
@@ -119,7 +115,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
 
             Glide.with(mContext)
                     .load(searchModel.get(USER_PHOTO))
-                    .thumbnail(Glide.with(mContext).load(R.drawable.loader))
+                    .placeholder(R.drawable.placeholder)
                     .fitCenter()
                     .into(profilePic);
 

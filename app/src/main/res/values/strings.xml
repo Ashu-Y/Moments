@@ -83,6 +83,7 @@
     <string name="comment">Comment</string>
     <string name="friends">Friends</string>
     <string name="_0">0</string>
+    <string name="no_notification_yet">No Notification Yet</string>
 
 
 </resources>

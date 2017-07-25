@@ -458,14 +458,13 @@ public class ProfileScreenFragment extends Fragment {
                 getrealtion_ship.setText(user.getRelationship());
                 getgender.setText(user.getGender());
 
-//                Picasso.with(getContext()).load(user.getPhoto()).fit().centerCrop().into(BackPIC);
                 Glide.with(getContext()).load(user.getThumbnailProfilephoto())
-                        .thumbnail(Glide.with(getContext()).load(R.drawable.giphy))
+                        .placeholder(R.drawable.placeholder)
                         .into(profile_pic);
 
 
                 Glide.with(getContext()).load(user.getThumbnailCoverPhoto())
-                        .thumbnail(Glide.with(getContext()).load(R.drawable.loader))
+                        .placeholder(R.drawable.placeholder)
                         .into(BackPIC);
 
                 Log.e(TAG, "\n" + user.getPhoto() + "        " + user.getGender() + "    " + user.getRelationship() + "    " + user.getAbout());
@@ -507,6 +506,7 @@ public class ProfileScreenFragment extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
 
         try {
+            assert fOut != null;
             fOut.flush();
             fOut.close();
         } catch (IOException e) {

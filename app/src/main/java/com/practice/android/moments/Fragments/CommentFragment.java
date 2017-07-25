@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.Comment;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
@@ -41,8 +42,9 @@ public class CommentFragment extends Fragment {
     ImageView send;
     FirebaseUser firebaseUser;
     String user_id;
+    String imageName;
     Context context;
-    DatabaseReference databaseReference, data;
+    DatabaseReference databaseReference, databaseReference4, data, databaseReference5;
 
 
     @Override
@@ -98,7 +100,7 @@ public class CommentFragment extends Fragment {
 
 
                     //Can cause error in uploading
-                    String imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "";
+                    imageName = day + "-" + month + "-" + year + "-" + hour + ":" + minutes + ":" + seconds + ":" + milliSeconds + "" + user_id;
                     Log.e("Camera", imageName);
 
 
@@ -111,6 +113,53 @@ public class CommentFragment extends Fragment {
                     user_comment.setText("");
 
                     Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+
+                    Log.e("imageName", name);
+                    databaseReference4 = FirebaseDatabase.getInstance().getReference().child("User Pictures")
+                            .child(name);
+                    Log.e("imageName ", name + "database" + databaseReference4);
+                    databaseReference4.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Blog image = dataSnapshot.getValue(Blog.class);
+                            assert image != null;
+
+                            Log.e("info=====", image.getUser_id());
+
+
+                            databaseReference5 = FirebaseDatabase.getInstance().getReference().child("Users")
+                                    .child(image.getUser_id()).child("Notification");
+
+                            Log.e("imageName ", image.getUser_id() + "database" + databaseReference5);
+                            databaseReference5.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    DatabaseReference rootReference = databaseReference5.child(imageName);
+                                    rootReference.child("frienduserid").setValue(user_id);
+                                    rootReference.child("userimageid").setValue(name);
+                                    rootReference.child("status").setValue("Comment");
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
                 } else {
                     user_comment.setError("Empty Comment");
                     Toast.makeText(getContext(), "Empty Comment", Toast.LENGTH_SHORT).show();
@@ -189,7 +238,7 @@ public class CommentFragment extends Fragment {
 
     }
 
-      public static class CommentViewHolder extends RecyclerView.ViewHolder {
+    public static class CommentViewHolder extends RecyclerView.ViewHolder {
 
         public static String TAG = "Comment TAG";
         TextView getname, user_comment;
@@ -237,7 +286,7 @@ public class CommentFragment extends Fragment {
                             getname.setText(user.getName());
 
                             Glide.with(context).load(user.getThumbnailProfilephoto())
-                                    .thumbnail(Glide.with(context).load(R.drawable.loader))
+                                    .placeholder(R.drawable.placeholder)
                                     .into(user_image);
 
 

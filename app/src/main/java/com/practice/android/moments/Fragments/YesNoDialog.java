@@ -7,9 +7,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
-/**
- * Created by Ashutosh on 6/22/2017.
- */
 
 public class YesNoDialog extends DialogFragment {
     public static final String ARG_TITLE = "YesNoDialog.Title";

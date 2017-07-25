@@ -78,7 +78,7 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
 
         Glide.with(mContext)
                 .load(itemList.get(position).getImageId())
-
+                .placeholder(R.drawable.placeholder)
                 .into(holder.dashImage);
 
 //        Picasso.with(mContext)

@@ -3,14 +3,10 @@ package com.practice.android.moments.Activities;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +16,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -42,9 +39,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.practice.android.moments.R;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class Login_method extends AppCompatActivity {
@@ -53,47 +49,27 @@ public class Login_method extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
     public static Boolean isEmail = true;
     DatabaseReference databaseReference;
-    private Button ViaEmail;
-    private Button Viaphone;
-    private GoogleSignInOptions googleSignInOptions;
-    private GoogleApiClient googleApiClient;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private com.google.android.gms.common.SignInButton signInButton;
-    private GoogleSignInAccount account;
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
-    private ProgressDialog mProgressDialog;
+    Button ViaEmail;
+    Button Viaphone;
+    GoogleSignInOptions googleSignInOptions;
+    GoogleApiClient googleApiClient;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    FirebaseAuth.AuthStateListener authStateListener;
+    com.google.android.gms.common.SignInButton signInButton;
+    GoogleSignInAccount account;
+    LoginButton loginButton;
+    CallbackManager callbackManager;
+    ProgressDialog mProgressDialog;
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //facebook SDK initialized
-//        try {
-//            FacebookSdk.sdkInitialize(getApplicationContext());
-//        }catch (Exception e){
-//            e.getMessage();
-//        }
-
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login_method);
 
-
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.facebook.samples.hellofacebook",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -157,35 +133,43 @@ public class Login_method extends AppCompatActivity {
 //Facebook Button Starts
         //Facebook Sign in Variable
         loginButton = (LoginButton) findViewById(R.id.Face_login_button);
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                showProgressDialog();
-                Log.e(TAG, "facebook:onSuccess:" + loginResult);
-                Log.e(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
+            public void onClick(View v) {
+                callbackManager = CallbackManager.Factory.create();
+                loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
 
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
-                updateUI(null);
-                isEmail = false;
-            }
+                LoginManager.getInstance().logInWithReadPermissions(Login_method.this, Collections.singletonList("public_profile"));
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
-            @Override
-            public void onError(FacebookException error) {
-                Log.e(TAG, error.getMessage());
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        showProgressDialog();
+                        Log.e(TAG, "facebook:onSuccess:" + loginResult);
+                        Log.e(TAG, "facebook:Result:" + loginResult.getAccessToken().getUserId());
+
+                        handleFacebookAccessToken(loginResult.getAccessToken());
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(Login_method.this, "FaceBook Sign in cancelled", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                        isEmail = false;
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.e(TAG, error.getMessage());
 //                Log.e(TAG, "Account already registered with us other option");
-                Toast.makeText(Login_method.this, "Account already registered with us other option", Toast.LENGTH_SHORT).show();
-                LoginManager.getInstance().logOut();
-                Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
-                updateUI(null);
-                isEmail = false;
+                        Toast.makeText(Login_method.this, "Account already registered with us other option", Toast.LENGTH_SHORT).show();
+                        LoginManager.getInstance().logOut();
+                        Toast.makeText(Login_method.this, "FaceBook Sign in Failed", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                        isEmail = false;
+                    }
+                });
             }
         });
         //Facebook Button Ends
@@ -219,8 +203,13 @@ public class Login_method extends AppCompatActivity {
         }
 
 //callback to the facebook login button
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        Log.e("Facebook=========", callbackManager.toString() + "==========" + requestCode);
+else{
+        try {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+            Log.e("Facebook=========", callbackManager.toString() + "==========" + requestCode);
+        } catch (Exception e) {
+            e.getMessage();
+        }}
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -253,18 +242,18 @@ public class Login_method extends AppCompatActivity {
                                             }
                                         });
 
-                                if (!firebaseUser.isEmailVerified()) {
-                                    firebaseUser.sendEmailVerification()
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.e(TAG, "Email sent.");
-                                                    }
-                                                }
-                                            });
-
-                                }
+//                                if (!firebaseUser.isEmailVerified()) {
+//                                    firebaseUser.sendEmailVerification()
+//                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                @Override
+//                                                public void onComplete(@NonNull Task<Void> task) {
+//                                                    if (task.isSuccessful()) {
+//                                                        Log.e(TAG, "Email sent.");
+//                                                    }
+//                                                }
+//                                            });
+//
+//                                }
 
                                 DatabaseReference currentuser_db = databaseReference.child(user_id).child("User Info");
                                 currentuser_db.child("name").setValue(acct.getDisplayName());
@@ -373,9 +362,9 @@ public class Login_method extends AppCompatActivity {
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setCancelable(true);
             mProgressDialog.setCanceledOnTouchOutside(false);
-            mProgressDialog.show();
-        }
 
+        }
+        mProgressDialog.show();
     }
 
     private void hideProgressDialog() {

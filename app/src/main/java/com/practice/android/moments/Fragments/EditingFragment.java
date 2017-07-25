@@ -144,12 +144,18 @@ public class EditingFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (mSelectedImageUri != null) {
+
+                    try{
                     Intent imageEditorIntent = new AdobeImageIntent.Builder(getActivity())
                             .setData(mSelectedImageUri)
                             .withVibrationEnabled(true)
                             .build();
 
-                    startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);
+                    startActivityForResult(imageEditorIntent, REQ_CODE_CSDK_IMAGE_EDITOR);}
+
+                    catch(Exception e){
+                        e.printStackTrace();
+                    }
                 } else {
 
                     selectImagePopup();

@@ -7,27 +7,40 @@ package com.practice.android.moments.Models;
 
 public class notification {
 
-    String userid;
-    String Status;
+    String frienduserid;
+    String userimageid;
+    String status;
 
-    public notification(String userid, String status) {
-        this.userid = userid;
-        Status = status;
+    public notification() {
     }
 
-    public String getUserid() {
-        return userid;
+    public notification(String frienduserid, String userimageid, String status) {
+        this.frienduserid = frienduserid;
+        this.userimageid = userimageid;
+        this.status = status;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public String getFrienduserid() {
+        return frienduserid;
+    }
+
+    public void setFrienduserid(String frienduserid) {
+        this.frienduserid = frienduserid;
+    }
+
+    public String getUserimageid() {
+        return userimageid;
+    }
+
+    public void setUserimageid(String userimageid) {
+        this.userimageid = userimageid;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 }

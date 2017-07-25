@@ -11,8 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:id="@+id/onliketext"
-
-        android:text="No Notification Yet"
+        android:text="@string/no_notification_yet"
         android:textColor="#fff"
         android:textSize="@dimen/_26sdp" />
 
