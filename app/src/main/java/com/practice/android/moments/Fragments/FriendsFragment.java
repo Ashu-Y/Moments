@@ -26,11 +26,16 @@ import com.practice.android.moments.Models.Friends;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
+import static android.support.v7.appcompat.R.color.accent_material_dark;
+import static com.practice.android.moments.Fragments.LikeCommentNotification.nonotifactiontext;
+import static com.practice.android.moments.R.color.Request_send;
+import static com.practice.android.moments.R.color.foreground_material_dark;
+
 
 public class FriendsFragment extends Fragment {
 
+    public static TextView ifnofriend;
     static String noFriend = "No Friends Yet";
-    TextView ifnofriend;
     RecyclerView recyclerView;
     DatabaseReference databaseReference;
 
@@ -44,10 +49,11 @@ public class FriendsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
+        nonotifactiontext.setVisibility(View.GONE);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         userid = firebaseUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid).child("Friends");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userid).child("Friends").child("All");
 
         Log.e("friends===", databaseReference.toString());
         recyclerView = (RecyclerView) view.findViewById(R.id.reycler);
@@ -124,73 +130,141 @@ public class FriendsFragment extends Fragment {
                 viewHolder.friendstatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        {
-                            viewHolder.friend = true;
-                            try {
-                                viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
-                                        .child("Friends").addValueEventListener(new ValueEventListener() {
-                                    @SuppressLint("SetTextI18n")
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        if (viewHolder.friend) {
-                                            if (dataSnapshot.hasChild(user_id)) {
+                        viewHolder.friend = true;
+                        try {
+                            viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends")
+                                    .child("All").addValueEventListener(new ValueEventListener() {
+                                @SuppressLint("SetTextI18n")
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                                Friends friends = dataSnapshot.child(user_id).getValue(Friends.class);
+                                    if (viewHolder.friend) {
+                                        if (dataSnapshot.hasChild(user_id)) {
+                                            Friends friends = dataSnapshot.child(user_id).getValue(Friends.class);
 
-                                                assert friends != null;
-                                                String Status = friends.getStatus();
+                                            assert friends != null;
+                                            String Status = friends.getStatus();
+                                            switch (Status) {
+                                                case "Request send":
 
-                                                if (Status.equals("Requested")) {
+                                                    viewHolder.friendstatus.setClickable(false);
 
-                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends")
-                                                            .child(userid).child("status").setValue("Accept");
+                                                    break;
+                                                case "Requested":
 
-                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends")
-                                                            .child(viewHolder.currentuser_id)
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("All")
+                                                            .child(user_id).child("status").setValue("Accept");
+
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends").child("All").child(viewHolder.currentuser_id)
                                                             .child("status").setValue("Accept");
 
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("Accepted Friends")
+                                                            .child(user_id).child("status").setValue("Accept");
+
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends").child("Accepted Friends").child(viewHolder.currentuser_id)
+                                                            .child("status").setValue("Accept");
+
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("Accepted Friends")
+                                                            .child(user_id).child("userName").setValue(viewHolder.Friendname);
+
+
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends").child("Accepted Friends")
+                                                            .child(viewHolder.currentuser_id).child("userName").setValue(viewHolder.myname);
+
+
                                                     viewHolder.friendstatus.setText("Friends");
-                                                } else if (Status.equals("Accept")) {
 
-                                                    try {
-                                                        viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
-                                                                .child("Friends").child(user_id).removeValue();
+                                                    break;
+                                                case "Accept":
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends")
+                                                            .child("All").child(user_id).removeValue();
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends")
+                                                            .child("All").child(viewHolder.currentuser_id).removeValue();
 
-                                                        viewHolder.mdatabaseReference.child(user_id).child("Friends")
-                                                                .child(viewHolder.currentuser_id).removeValue();
+                                                    viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("Accepted Friends")
+                                                            .child(user_id).removeValue();
+                                                    viewHolder.mdatabaseReference.child(user_id).child("Friends").child("Accepted Friends")
+                                                            .child(viewHolder.currentuser_id).removeValue();
 
-                                                    }catch (Exception e){
-                                                        e.getMessage();
-                                                    }
+
+                                                    viewHolder.friendstatus.setText("Add Friend");
+
+                                                    break;
+                                            }
+
+
+                                            viewHolder.friend = false;
+                                        } else {
+
+                                            viewHolder.mdatabaseReference.child(viewHolder.currentuser_id)
+                                                    .child("User Info").addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                                                    assert user != null;
+
+                                                    viewHolder.myname = user.getName();
+                                                    Log.e("My name is ===", viewHolder.myname);
+
+                                                    viewHolder.mdatabaseReference.child(user_id).child("User Info").addValueEventListener(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                                            Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                                                            assert user != null;
+
+                                                            viewHolder.Friendname = user.getName();
+                                                            Log.e("My Friend name is ===", viewHolder.Friendname);
+
+                                                            viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("All")
+                                                                    .child(user_id).child("userName").setValue(viewHolder.Friendname);
+
+                                                            viewHolder.mdatabaseReference.child(viewHolder.currentuser_id).child("Friends").child("All")
+                                                                    .child(user_id).child("status").setValue("Request send");
+
+                                                            viewHolder.mdatabaseReference.child(user_id).child("Friends").child("All")
+                                                                    .child(viewHolder.currentuser_id).child("userName").setValue(viewHolder.myname);
+
+                                                            viewHolder.mdatabaseReference.child(user_id).child("Friends").child("All")
+                                                                    .child(viewHolder.currentuser_id).child("status").setValue("Requested");
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(DatabaseError databaseError) {
+
+                                                        }
+                                                    });
 
 
                                                 }
 
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
 
-                                                viewHolder.friend = false;
-                                            }
+                                                }
+                                            });
+                                            viewHolder.friend = false;
                                         }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
 
                                     }
-                                });
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
 
 
-                            } catch (NullPointerException e) {
-                                e.getMessage();
-                            }
+                        } catch (NullPointerException e) {
+                            e.getMessage();
                         }
                     }
                 });
-
             }
         };
-
-
 
 
         firebaseRecyclerAdapter.notifyDataSetChanged();
@@ -206,6 +280,8 @@ public class FriendsFragment extends Fragment {
         Button friendstatus;
         DatabaseReference mdatabaseReference;
         FirebaseUser firebaseUser;
+        String Friendname = null;
+        String myname = null;
         String currentuser_id;
         Boolean friend = false;
 
@@ -217,13 +293,14 @@ public class FriendsFragment extends Fragment {
             firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             assert firebaseUser != null;
             currentuser_id = firebaseUser.getUid();
+            myname = firebaseUser.getDisplayName();
         }
 
 
         public void setStatus(String user_id) {
 
 
-            mdatabaseReference.child(currentuser_id).child("Friends").addValueEventListener(new ValueEventListener() {
+            mdatabaseReference.child(currentuser_id).child("Friends").child("All").addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -253,14 +330,29 @@ public class FriendsFragment extends Fragment {
                             }
                         });
 
-                        if (Status.equals("Requested")) {
-
-                            friendstatus.setText("Requested");
-
-                        } else if (Status.equals("Accept")) {
-
-                            friendstatus.setText("Friends");
-
+                        try {
+                            switch (Status) {
+                                case "Requested": {
+                                    friendstatus.setBackgroundResource(foreground_material_dark);
+                                    friendstatus.setText("Requested");
+                                    break;
+                                }
+                                case "Accept": {
+                                    friendstatus.setBackgroundResource(accent_material_dark);
+                                    friendstatus.setText("Friends");
+                                    break;
+                                }
+                                case "Request send": {
+                                    friendstatus.setBackgroundResource(Request_send);
+                                    friendstatus.setText("Request Send");
+                                    break;
+                                }
+                                default: {
+                                    friendstatus.setText("Add Friend");
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.getMessage();
                         }
 
                     }

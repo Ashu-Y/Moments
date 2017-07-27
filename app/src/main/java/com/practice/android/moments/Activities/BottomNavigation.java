@@ -107,6 +107,9 @@ public class BottomNavigation extends AppCompatActivity {
     public static View thumb = null;
     public static Display display;
     public static Point size;
+    public static ImageView expandedImageView;
+    public static Animator mCurrentAnimator;
+    public static int mShortAnimationDuration;
     String imageName;
     ProgressDialog pDialog;
     TimelineFragment mTimelineFragment;
@@ -130,11 +133,6 @@ public class BottomNavigation extends AppCompatActivity {
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
-    public static ImageView expandedImageView;
-    public static Animator mCurrentAnimator;
-    public static int mShortAnimationDuration;
-
-
     FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
 
 
@@ -155,7 +153,7 @@ public class BottomNavigation extends AppCompatActivity {
                         if (zoom) {
                             check();
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.getMessage();
                     }
                     if (recyclerView.getVisibility() != View.VISIBLE) {
@@ -735,12 +733,14 @@ public class BottomNavigation extends AppCompatActivity {
                                                             @Override
                                                             public void onDataChange(DataSnapshot dataSnapshot) {
                                                                 Name = getRef(viewHolder.getAdapterPosition()).getKey();
-
-                                                                DatabaseReference rootReference = databaseReference5.child(imageName);
-                                                                rootReference.child("frienduserid").setValue(user_id);
-                                                                rootReference.child("userimageid").setValue(Name);
-                                                                rootReference.child("status").setValue("Like");
-
+                                                                try {
+                                                                    DatabaseReference rootReference = databaseReference5.child(imageName);
+                                                                    rootReference.child("frienduserid").setValue(user_id);
+                                                                    rootReference.child("userimageid").setValue(Name);
+                                                                    rootReference.child("status").setValue("Like");
+                                                                } catch (Exception e) {
+                                                                    e.getMessage();
+                                                                }
                                                             }
 
                                                             @Override
@@ -876,36 +876,31 @@ public class BottomNavigation extends AppCompatActivity {
                             Intent i = new Intent(BottomNavigation.this, AddFriendProfileActivity.class);
                             i.putExtra("imageName", Name);
                             startActivity(i);
-
-
                         }
                     });
 
-
-                    viewHolder.click.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            fl.setMinimumHeight(size.y);
-                            fl.getLayoutParams().height = size.y;
-                            fl.requestLayout();
-
-                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
-
-                            notificationImage.setImageResource(Name);
-
-                            Log.e("Pic Name", "\n" + Name);
-                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
-                            transaction.remove(notificationImage);
-                            transaction.add(R.id.content, notificationImage, "NotificationImage Fragment");
-                            FTAG = "NotificationImageMAIN Fragment";
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                        }
-                    });
-
+//                    viewHolder.click.setOnClickListener(new OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            fl.setMinimumHeight(size.y);
+//                            fl.getLayoutParams().height = size.y;
+//                            fl.requestLayout();
+//
+//                            Name = getRef(viewHolder.getAdapterPosition()).getKey();
+//
+//                            notificationImage.setImageResource(Name);
+//
+//                            Log.e("Pic Name", "\n" + Name);
+//                            FragmentTransaction transaction = mFragmentManager.beginTransaction();
+//                            transaction.remove(notificationImage);
+//                            transaction.add(R.id.content, notificationImage, "NotificationImage Fragment");
+//                            FTAG = "NotificationImageMAIN Fragment";
+//                            transaction.addToBackStack(null);
+//                            transaction.commit();
+//                        }
+//                    });
                 }
-
             };
 
             firebaseRecyclerAdapter.notifyDataSetChanged();
@@ -1373,7 +1368,7 @@ public class BottomNavigation extends AppCompatActivity {
                 expandedImageView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 mCurrentAnimator = null;
-                if (ZOOMTAG.equals("Profile Fragment")){
+                if (ZOOMTAG.equals("Profile Fragment")) {
                     ZOOMTAG = "BLANK";
                     gone.setVisibility(View.VISIBLE);
                 }
@@ -1385,7 +1380,7 @@ public class BottomNavigation extends AppCompatActivity {
                 expandedImageView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 mCurrentAnimator = null;
-                if (ZOOMTAG.equals("Profile Fragment")){
+                if (ZOOMTAG.equals("Profile Fragment")) {
                     ZOOMTAG = "BLANK";
                     gone.setVisibility(View.VISIBLE);
                 }

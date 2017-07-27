@@ -9,13 +9,23 @@ public class Friends {
 
 
     String status;
+    String userName;
 
     public Friends() {
     }
 
-    public Friends(String status) {
-
+    public Friends(String status, String userName) {
         this.status = status;
+        this.userName = userName;
+    }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getStatus() {

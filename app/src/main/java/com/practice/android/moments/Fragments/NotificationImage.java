@@ -292,13 +292,15 @@ public class NotificationImage extends Fragment {
                                             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
+                                                try {
 
-
-                                                DatabaseReference rootReference = databaseReference5.child(imageName);
-                                                rootReference.child("frienduserid").setValue(user_id);
-                                                rootReference.child("userimageid").setValue(imageName);
-                                                rootReference.child("status").setValue("Like");
-
+                                                    DatabaseReference rootReference = databaseReference5.child(imageName);
+                                                    rootReference.child("frienduserid").setValue(user_id);
+                                                    rootReference.child("userimageid").setValue(imageName);
+                                                    rootReference.child("status").setValue("Like");
+                                                } catch (Exception e) {
+                                                    e.getMessage();
+                                                }
 
                                             }
 

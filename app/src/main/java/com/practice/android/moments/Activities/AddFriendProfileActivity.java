@@ -35,9 +35,13 @@ import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
+import static android.support.v7.appcompat.R.color.accent_material_dark;
 import static com.practice.android.moments.Activities.BottomNavigation.thumb;
+import static com.practice.android.moments.R.color.Request_send;
+import static com.practice.android.moments.R.color.foreground_material_dark;
 
 
+@SuppressWarnings("ObjectEqualsNull")
 public class AddFriendProfileActivity extends AppCompatActivity {
 
 
@@ -48,10 +52,9 @@ public class AddFriendProfileActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     ImageView expandedImageView;
-    private Animator mCurrentAnimator;
-    private int mShortAnimationDuration;
     String coveruri = null;
     View containerA;
+    long numberoffriends;
     LinearLayout gone;
     ImageView profile, coverpic;
     TextView profilename, userfriends, userimages, friendButton;
@@ -59,9 +62,12 @@ public class AddFriendProfileActivity extends AppCompatActivity {
     LinearLayout addfriend;
     DatabaseReference databaseReference, mdatabaseReference;
     RecyclerView recyclerView;
-
     Boolean friend = false;
     View mview;
+    String Friendname = null;
+    String myname = null;
+    private Animator mCurrentAnimator;
+    private int mShortAnimationDuration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
         assert firebaseUser != null;
         currentuser_id = firebaseUser.getUid();
 
+        myname = firebaseUser.getDisplayName();
         mview = findViewById(R.id.view);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("User Pictures");
         mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -111,12 +118,15 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     Blog image = dataSnapshot.getValue(Blog.class);
+                    try {
+                        assert image != null;
 
-                    assert image != null;
-                    profilename.setText(image.getUserName());
-                    Userinformation(image.getUser_id());
-                    Log.e(TAG, image.getUser_id());
-
+                        profilename.setText(image.getUserName());
+                        Userinformation(image.getUser_id());
+                        Log.e(TAG, image.getUser_id());
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
                 }
 
                 @Override
@@ -135,11 +145,14 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     Blog image = dataSnapshot.getValue(Blog.class);
-
-                    assert image != null;
-                    profilename.setText(image.getUserName());
-                    Userinformation(image.getUser_id());
-                    Log.e(TAG, image.getUser_id());
+                    try {
+                        assert image != null;
+                        profilename.setText(image.getUserName());
+                        Userinformation(image.getUser_id());
+                        Log.e(TAG, image.getUser_id());
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
 
                 }
 
@@ -166,66 +179,159 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
 
     public void Userinformation(String userid) {
+
+
+        mdatabaseReference.child(userid).child("User Info").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+
+                assert user != null;
+                try {
+
+                    Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getThumbnailProfilephoto());
+
+                    friendname = user.getName();
+
+
+                    try {
+                        profilename.setText(user.getName());
+                    } catch (Exception e) {
+                        e.getMessage();
+                    }
+                    Glide.with(getApplicationContext()).load(user.getThumbnailProfilephoto())
+                            .placeholder(R.drawable.placeholder)
+                            .into(profile);
+
+                    Glide.with(getApplicationContext()).load(user.getThumbnailCoverPhoto())
+                            .placeholder(R.drawable.placeholder)
+                            .into(coverpic);
+                    coveruri = user.getCoverPhoto();
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
         addfriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 friend = true;
                 try {
-                    mdatabaseReference.child(currentuser_id).child("Friends").addValueEventListener(new ValueEventListener() {
+                    mdatabaseReference.child(currentuser_id).child("Friends")
+                            .child("All").addValueEventListener(new ValueEventListener() {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-
                             if (friend) {
                                 if (dataSnapshot.hasChild(userid)) {
-
                                     Friends friends = dataSnapshot.child(userid).getValue(Friends.class);
 
                                     assert friends != null;
                                     String Status = friends.getStatus();
+                                    switch (Status) {
+                                        case "Request send":
 
-                                    if (Status.equals("Requested")) {
+                                            friendButton.setClickable(false);
 
-                                        friendButton.setClickable(false);
-//                                        mdatabaseReference.child(currentuser_id).child("Friends")
-//                                                .child(userid).child("status").setValue("Accept");
-//                                        mdatabaseReference.child(userid).child("Friends").child(currentuser_id)
-//                                                .child("status").setValue("Accept");
-//
-//                                        plus.setVisibility(View.GONE);
-//                                        mview.setVisibility(View.GONE);
-//
-//
-//                                        friendButton.setText("Friends");
-                                    } else if (Status.equals("Accept")) {
+                                            break;
+                                        case "Requested":
 
-                                        mdatabaseReference.child(currentuser_id).child("Friends").child(userid).removeValue();
-                                        mdatabaseReference.child(userid).child("Friends").child(currentuser_id).removeValue();
+                                            mdatabaseReference.child(currentuser_id).child("Friends").child("All")
+                                                    .child(userid).child("status").setValue("Accept");
 
-                                        plus.setVisibility(View.VISIBLE);
-                                        mview.setVisibility(View.VISIBLE);
+                                            mdatabaseReference.child(userid).child("Friends").child("All").child(currentuser_id)
+                                                    .child("status").setValue("Accept");
 
-                                        friendButton.setText("Add Friend");
+                                            mdatabaseReference.child(currentuser_id).child("Friends").child("Accepted Friends")
+                                                    .child(userid).child("status").setValue("Accept");
 
+                                            mdatabaseReference.child(userid).child("Friends").child("Accepted Friends").child(currentuser_id)
+                                                    .child("status").setValue("Accept");
+
+                                            mdatabaseReference.child(currentuser_id).child("Friends").child("Accepted Friends")
+                                                    .child(userid).child("userName").setValue(Friendname);
+
+
+                                            mdatabaseReference.child(userid).child("Friends").child("Accepted Friends")
+                                                    .child(currentuser_id).child("userName").setValue(myname);
+
+
+                                            plus.setVisibility(View.GONE);
+                                            mview.setVisibility(View.GONE);
+
+
+                                            friendButton.setText("Friends");
+
+                                            break;
+                                        case "Accept":
+                                            mdatabaseReference.child(currentuser_id).child("Friends")
+                                                    .child("All").child(userid).removeValue();
+                                            mdatabaseReference.child(userid).child("Friends")
+                                                    .child("All").child(currentuser_id).removeValue();
+
+                                            mdatabaseReference.child(currentuser_id).child("Friends").child("Accepted Friends")
+                                                    .child(userid).removeValue();
+                                            mdatabaseReference.child(userid).child("Friends").child("Accepted Friends")
+                                                    .child(currentuser_id).removeValue();
+
+                                            plus.setVisibility(View.VISIBLE);
+                                            mview.setVisibility(View.VISIBLE);
+
+                                            friendButton.setText("Add Friend");
+
+                                            break;
                                     }
 
 
                                     friend = false;
                                 } else {
 
-
                                     mdatabaseReference.child(currentuser_id).child("User Info").addValueEventListener(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
+
                                             Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
                                             assert user != null;
-                                            friendname = user.getName();
-                                            mdatabaseReference.child(currentuser_id).child("Friends")
-                                                    .child(userid).child("userName").setValue(friendname);
-                                            mdatabaseReference.child(currentuser_id).child("Friends")
-                                                    .child(userid).child("status").setValue("Requested");
+
+                                            myname = user.getName();
+                                            Log.e("My name is ===", myname);
+
+                                            mdatabaseReference.child(userid).child("User Info").addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
+                                                    assert user != null;
+
+                                                    Friendname = user.getName();
+                                                    Log.e("My Friend name is ===", Friendname);
+
+                                                    mdatabaseReference.child(currentuser_id).child("Friends").child("All")
+                                                            .child(userid).child("userName").setValue(Friendname);
+
+                                                    mdatabaseReference.child(currentuser_id).child("Friends").child("All")
+                                                            .child(userid).child("status").setValue("Request send");
+
+                                                    mdatabaseReference.child(userid).child("Friends").child("All")
+                                                            .child(currentuser_id).child("userName").setValue(myname);
+
+                                                    mdatabaseReference.child(userid).child("Friends").child("All")
+                                                            .child(currentuser_id).child("status").setValue("Requested");
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+                                            });
+
 
                                         }
 
@@ -234,28 +340,6 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
                                         }
                                     });
-
-                                    mdatabaseReference.child(userid).child("Friends")
-                                            .child(currentuser_id).child("status").setValue("Requested");
-
-
-                                    mdatabaseReference.child(userid).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-                                            assert user != null;
-                                            friendname = user.getName();
-                                            mdatabaseReference.child(userid).child("Friends")
-                                                    .child(currentuser_id).child("userName").setValue(friendname);
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
-
-                                        }
-                                    });
-
 
                                     plus.setVisibility(View.GONE);
                                     mview.setVisibility(View.GONE);
@@ -283,142 +367,94 @@ public class AddFriendProfileActivity extends AppCompatActivity {
         });
 
 
-        mdatabaseReference.child(currentuser_id).child("Friends").addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-                if (dataSnapshot.hasChild(userid)) {
-                    Friends friends = dataSnapshot.child(userid).getValue(Friends.class);
-
-                    assert friends != null;
-                    String Status = friends.getStatus();
-                    if (Status.equals("Requested")) {
-
-                        plus.setVisibility(View.GONE);
-                        mview.setVisibility(View.GONE);
-
-                        friendButton.setText("Requested");
-
-                    } else if (Status.equals("Accept")) {
-
-                        plus.setVisibility(View.GONE);
-                        mview.setVisibility(View.GONE);
-
-                        friendButton.setText("Friends");
-
-                    }
-
-                } else {
-                    plus.setVisibility(View.VISIBLE);
-
-                    friendButton.setText("Add Friend");
-
-                }
-
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        mdatabaseReference.child(userid).child("User Info").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Profile_model_class user = dataSnapshot.getValue(Profile_model_class.class);
-
-                assert user != null;
-                try {
-
-                    Log.e(TAG, "User name: " + user.getName() + ", email " + user.getEmail() + "    " + user.getThumbnailProfilephoto());
-
-                    friendname = user.getName();
-
-                    try {
-                        profilename.setText(user.getName());
-                    } catch (Exception e) {
-                        e.getMessage();
-                    }
-                    Glide.with(getApplicationContext()).load(user.getThumbnailProfilephoto())
-                            .placeholder(R.drawable.placeholder)
-                            .into(profile);
-
-                    Glide.with(getApplicationContext()).load(user.getThumbnailCoverPhoto())
-                            .placeholder(R.drawable.placeholder)
-                            .into(coverpic);
-                    coveruri = user.getCoverPhoto();
-                } catch (Exception e) {
-                    e.getMessage();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-        //Friend count
         try {
-            mdatabaseReference.child(userid).child("Friends").addListenerForSingleValueEvent(new ValueEventListener() {
+            mdatabaseReference.child(currentuser_id).child("Friends").child("All").addValueEventListener(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
-                long numberoffriends = 0;
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                    numberoffriends = dataSnapshot.getChildrenCount();
+                    if (dataSnapshot.hasChild(userid)) {
+                        Friends friends = dataSnapshot.child(userid).getValue(Friends.class);
 
-                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-
-                        String Friendid = childDataSnapshot.getKey();
-
-
-                        Log.e("Friends Id", Friendid);
+                        assert friends != null;
+                        String Status = friends.getStatus();
                         try {
-                            mdatabaseReference.child(userid).child("Friends").child(String.valueOf(Friendid)).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                    Friends friends = dataSnapshot.getValue(Friends.class);
-
-                                    assert friends != null;
-                                    if (friends.getStatus().equals("Accept")) {
-                                        numberoffriends++;
-                                        userfriends.setText(String.valueOf(numberoffriends));
-                                    } else {
-                                        userfriends.setText("0");
-
-                                    }
+                            switch (Status) {
+                                case "Requested": {
+                                    plus.setVisibility(View.GONE);
+                                    mview.setVisibility(View.GONE);
+                                    addfriend.setBackgroundResource(foreground_material_dark);
+                                    friendButton.setBackgroundResource(foreground_material_dark);
+                                    friendButton.setText("Requested");
+                                    break;
                                 }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
+                                case "Accept": {
+                                    plus.setVisibility(View.GONE);
+                                    mview.setVisibility(View.GONE);
+                                    addfriend.setBackgroundResource(accent_material_dark);
+                                    friendButton.setBackgroundResource(accent_material_dark);
+                                    friendButton.setText("Friends");
+                                    break;
                                 }
-                            });
+                                case "Request send": {
+                                    plus.setVisibility(View.GONE);
+                                    mview.setVisibility(View.GONE);
+
+                                    addfriend.setBackgroundResource(Request_send);
+                                    friendButton.setBackgroundResource(Request_send);
+                                    friendButton.setText("Request Send");
+                                    break;
+                                }
+                                default: {
+                                    plus.setVisibility(View.VISIBLE);
+                                    mview.setVisibility(View.VISIBLE);
+                                    friendButton.setText("Add Friend");
+                                }
+                            }
                         } catch (Exception e) {
                             e.getMessage();
                         }
-
                     }
-        }
+                }
+
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
         } catch (Exception e) {
             e.getMessage();
         }
 
+        numberoffriends = 0;
+        try {
+            mdatabaseReference.child(userid).child("Friends").child("Accepted Friends").addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    numberoffriends = dataSnapshot.getChildrenCount();
+
+                    userfriends.setText(String.valueOf(numberoffriends));
+                    Log.e("number of friends", String.valueOf(numberoffriends));
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+
         //Image count
+
+
         try {
             mdatabaseReference.child(userid).child("User Pictures").addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
@@ -440,8 +476,8 @@ public class AddFriendProfileActivity extends AppCompatActivity {
             e.getMessage();
         }
 
-        // Recycler adapter
 
+        // Recycler adapter
         try {
             Log.e(TAG, "recycler adapter started ");
             FirebaseRecyclerAdapter<Image, ProfileViewHelper> firebaseRecyclerAdapter = new
@@ -517,7 +553,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(imageResId)
                 .skipMemoryCache(false)
-                .placeholder(R.drawable.coffee1)
+                .placeholder(R.drawable.placeholder)
                 .into(expandedImageView);
 
 //        expandedImageView.setImageResource(imageResId);

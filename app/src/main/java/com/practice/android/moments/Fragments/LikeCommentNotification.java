@@ -33,13 +33,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LikeCommentNotification extends Fragment {
 
+    public static TextView nonotifactiontext;
     static String noLikecomment = "No Notification Yet";
     DatabaseReference databaseReference;
     String user_id;
     FirebaseUser firebaseUser;
     Context context;
     RecyclerView recyclerView;
-    TextView onliketext;
     LinearLayoutManager lm_recycle;
     NotificationImage notificationImage;
     android.support.v4.app.FragmentManager mFragmentManager;
@@ -54,7 +54,7 @@ public class LikeCommentNotification extends Fragment {
         assert firebaseUser != null;
         user_id = firebaseUser.getUid();
         recyclerView = (RecyclerView) v.findViewById(R.id.likecommentn);
-        onliketext = (TextView) v.findViewById(R.id.onliketext);
+        nonotifactiontext = (TextView) v.findViewById(R.id.onliketext);
         context = getActivity();
 
 
@@ -91,11 +91,11 @@ public class LikeCommentNotification extends Fragment {
                 try {
                     if (null == dataSnapshot.getValue(String.class)) {
                         Log.e("dataSnapshotKey", dataSnapshot.getValue() + noLikecomment);
-                        onliketext.setText(noLikecomment);
-                        onliketext.setVisibility(View.VISIBLE);
+                        nonotifactiontext.setText(noLikecomment);
+                        nonotifactiontext.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     } else {
-                        onliketext.setVisibility(View.GONE);
+                        nonotifactiontext.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
 
                     }
@@ -124,7 +124,7 @@ public class LikeCommentNotification extends Fragment {
                     String pos = getRef(position).getKey();
                     Log.e("POSITION++++++", pos);
                     String posvalu = String.valueOf(getRef(position).getDatabase());
-                    onliketext.setVisibility(View.GONE);
+                    nonotifactiontext.setVisibility(View.GONE);
                     Log.e("Database Values will be", posvalu);
 
                     viewHolder.getnotify(context, pos);

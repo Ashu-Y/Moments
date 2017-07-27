@@ -8,5 +8,6 @@
     <color name="accent_material_dark">#f0810f</color>
     <color name="background_material_dark">#063852</color>
     <color name="foreground_material_dark">#e4ea8c</color>
+    <color name="Request_send">#90c3f5</color>
     <color name="colormaterial">#363237</color>
 </resources>

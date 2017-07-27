@@ -35,7 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.practice.android.moments.Helper.ProfileViewHelper;
-import com.practice.android.moments.Models.Friends;
 import com.practice.android.moments.Models.Blog;
 import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
@@ -70,10 +69,6 @@ public class ProfileFragment extends Fragment {
 
     View containerA;
 
-
-    //    ImageView expandedImageView;
-//    private Animator mCurrentAnimator;
-//    private int mShortAnimationDuration;
     String coveruri;
     FirebaseUser firebaseUser;
     String user_id, user_name;
@@ -235,7 +230,7 @@ public class ProfileFragment extends Fragment {
 
         try {
 
-            databaseReference.child("Friends").addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReference.child("Friends").child("Accepted Friends").addListenerForSingleValueEvent(new ValueEventListener() {
                 long numberoffriends = 0;
 
                 @Override
@@ -243,39 +238,41 @@ public class ProfileFragment extends Fragment {
 
                     numberoffriends = dataSnapshot.getChildrenCount();
 
-                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    userfriends.setText(String.valueOf(numberoffriends));
 
-                        String Friendid = childDataSnapshot.getKey();
-
-
-                        Log.e("Friends Id", Friendid);
-                        try {
-                            databaseReference.child("Friends").child(String.valueOf(Friendid)).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                    Friends friends = dataSnapshot.getValue(Friends.class);
-
-                                    assert friends != null;
-                                    if (friends.getStatus().equals("Accept")) {
-                                        numberoffriends++;
-                                        userfriends.setText(String.valueOf(numberoffriends));
-                                    } else {
-                                        userfriends.setText("0");
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.getMessage();
-                        }
-
-                    }
+//                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+//
+//                        String Friendid = childDataSnapshot.getKey();
+//
+//
+//                        Log.e("Friends Id", Friendid);
+//                        try {
+//                            databaseReference.child("Friends").child(String.valueOf(Friendid)).addValueEventListener(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                                    Friends friends = dataSnapshot.getValue(Friends.class);
+//
+//                                    assert friends != null;
+//                                    if (friends.getStatus().equals("Accept")) {
+//                                        numberoffriends++;
+//                                        userfriends.setText(String.valueOf(numberoffriends));
+//                                    } else {
+//                                        userfriends.setText("0");
+//
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(DatabaseError databaseError) {
+//
+//                                }
+//                            });
+//                        } catch (Exception e) {
+//                            e.getMessage();
+//                        }
+//
+//                    }
 
 
                 }
@@ -388,7 +385,7 @@ public class ProfileFragment extends Fragment {
 
         Glide.with(context).load(imageResId)
                 .skipMemoryCache(false)
-                .placeholder(R.drawable.coffee1)
+                .placeholder(R.drawable.placeholder)
                 .into(expandedImageView);
 
 //        expandedImageView.setImageResource(imageResId);

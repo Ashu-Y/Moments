@@ -12,7 +12,7 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true"/>
+        android:required="true" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
@@ -82,7 +82,8 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
@@ -99,10 +100,11 @@
         <provider
             android:name="com.adobe.creativesdk.aviary.internal.cds.CdsProvider"
             android:authorities="${applicationId}.CdsProvider"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name=".Activities.Timeline"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="InnerclassSeparator" />
         <activity
@@ -116,30 +118,39 @@
         </activity>
         <activity
             android:name=".Activities.Login_method"
+            android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.Phoneprovider"
+            android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.ResetPassword"
+            android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.PhotoVideosdatabase"
-            tools:ignore="InnerclassSeparator"/>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Editing.EditingActivity"
-            tools:ignore="InnerclassSeparator"/>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.BottomNavigation"
-            tools:ignore="InnerclassSeparator"/>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.SettingsActivity"
-            tools:ignore="InnerclassSeparator"/>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
             android:name=".Activities.ChangePassword"
-            tools:ignore="InnerclassSeparator"/>
-        <activity android:name=".Activities.AddFriendProfileActivity">
-        </activity>
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
+        <activity
+            android:name=".Activities.AddFriendProfileActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
