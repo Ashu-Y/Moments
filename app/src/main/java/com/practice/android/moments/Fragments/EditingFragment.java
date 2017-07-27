@@ -77,13 +77,14 @@ public class EditingFragment extends Fragment {
     FloatingActionButton mLaunchImageEditorButton;
     FloatingActionButton save, Uploadimage;
     ImageView mSelectedImageView;
-    Uri mSelectedImageUri;
+    Uri mSelectedImageUri = null;
     Uri selectedImage = null;
     String imageName;
     EditText imageTitle, imageDescription;
     String user_id;
     double progress1, progress2, progress3, progress;
     String thumbpic, picture, thumbmed;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,7 +101,7 @@ public class EditingFragment extends Fragment {
         Canvas canvas = new Canvas(bitmap);
         drawView.draw(canvas);
         mEditedImageView.setImageBitmap(bitmap);
-
+        mSelectedImageUri = null;
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mdatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mstorageReference = FirebaseStorage.getInstance().getReference();
@@ -272,7 +273,7 @@ public class EditingFragment extends Fragment {
             LayoutInflater li = this.getLayoutInflater(getArguments());
             final View layout = li.inflate(R.layout.toast_layout, null);
 
-           selectImagePopup();
+            selectImagePopup();
 
 //            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
         }
@@ -316,7 +317,7 @@ public class EditingFragment extends Fragment {
             LayoutInflater li = this.getLayoutInflater(getArguments());
             final View layout = li.inflate(R.layout.toast_layout, null);
 
-          selectImagePopup();
+            selectImagePopup();
 
 //            Toast.makeText(getActivity(), "Select an image first", Toast.LENGTH_SHORT).show();
         }
@@ -341,7 +342,7 @@ public class EditingFragment extends Fragment {
         builder.show();
     }
 
-    public void selectImagePopup(){
+    public void selectImagePopup() {
         LayoutInflater li = this.getLayoutInflater(getArguments());
         final View layout = li.inflate(R.layout.toast_layout, null);
 
@@ -351,6 +352,7 @@ public class EditingFragment extends Fragment {
         toast.setView(layout);//setting the view of custom toast layout
         toast.show();
     }
+
 
     public void fn_Choose_Image() {
 
@@ -487,6 +489,7 @@ public class EditingFragment extends Fragment {
 //                    thumbnailpic = Uri.fromFile(new File(file));
 //
 //                    mediumpic = Uri.fromFile(new File(file));
+                    mSelectedImageUri = editedImageUri;
                     mediumpic = mSelectedImageUri;
                     thumbnailpic = mSelectedImageUri;
                     break;

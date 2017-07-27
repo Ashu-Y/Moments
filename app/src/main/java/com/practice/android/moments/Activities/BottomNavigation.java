@@ -76,6 +76,8 @@ import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.practice.android.moments.Fragments.ProfileFragment.gone;
+
 
 public class BottomNavigation extends AppCompatActivity {
 
@@ -102,7 +104,7 @@ public class BottomNavigation extends AppCompatActivity {
     public static String jsonStr;
     public static boolean zoom = false;
     public static String ZOOMTAG = "BLANK";
-    public static View thumb;
+    public static View thumb = null;
     public static Display display;
     public static Point size;
     String imageName;
@@ -128,11 +130,14 @@ public class BottomNavigation extends AppCompatActivity {
     FirebaseUser firebaseUser;
     BottomNavigationView navigation;
     String PicName;
-    ImageView expandedImageView;
+    public static ImageView expandedImageView;
+    public static Animator mCurrentAnimator;
+    public static int mShortAnimationDuration;
+
 
     FirebaseRecyclerAdapter<Blog, BlogViewHolder> firebaseRecyclerAdapter;
-    private Animator mCurrentAnimator;
-    private int mShortAnimationDuration;
+
+
     private String TAG = getClass().getSimpleName();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -146,6 +151,13 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.getLayoutParams().height = 0;
                     fl.requestLayout();
 
+                    try {
+                        if (zoom) {
+                            check();
+                        }
+                    }catch (Exception e){
+                        e.getMessage();
+                    }
                     if (recyclerView.getVisibility() != View.VISIBLE) {
                         recyclerView.setVisibility(View.VISIBLE);
                     }
@@ -191,6 +203,9 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.setMinimumHeight(size.y);
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
+                    if (zoom) {
+                        check();
+                    }
 
 //                    if (mUpload_pictureFragment.isAdded()) {
 //                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -237,6 +252,9 @@ public class BottomNavigation extends AppCompatActivity {
                     fl.getLayoutParams().height = size.y;
                     fl.requestLayout();
 
+                    if (zoom) {
+                        check();
+                    }
 //                    if (mUpload_pictureFragment.isAdded()) {
 //                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 //                        transaction.remove(mUpload_pictureFragment);
@@ -280,7 +298,9 @@ public class BottomNavigation extends AppCompatActivity {
                     if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
-
+                    if (zoom) {
+                        check();
+                    }
 
                     if (mEditingFragment.isAdded()) {
                         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -333,7 +353,9 @@ public class BottomNavigation extends AppCompatActivity {
                     if (recyclerView.getVisibility() == View.VISIBLE) {
                         recyclerView.setVisibility(View.GONE);
                     }
-
+                    if (zoom) {
+                        check();
+                    }
 //                    if (mUpload_pictureFragment.isAdded()) {
 //                        FragmentTransaction transaction = mFragmentManager.beginTransaction();
 //                        transaction.remove(mUpload_pictureFragment);
@@ -1351,6 +1373,10 @@ public class BottomNavigation extends AppCompatActivity {
                 expandedImageView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 mCurrentAnimator = null;
+                if (ZOOMTAG.equals("Profile Fragment")){
+                    ZOOMTAG = "BLANK";
+                    gone.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -1359,6 +1385,10 @@ public class BottomNavigation extends AppCompatActivity {
                 expandedImageView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
                 mCurrentAnimator = null;
+                if (ZOOMTAG.equals("Profile Fragment")){
+                    ZOOMTAG = "BLANK";
+                    gone.setVisibility(View.VISIBLE);
+                }
             }
         });
         set.start();

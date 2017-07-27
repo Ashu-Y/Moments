@@ -45,6 +45,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.practice.android.moments.Activities.BottomNavigation.FTAG;
 import static com.practice.android.moments.Activities.BottomNavigation.ZOOMTAG;
+import static com.practice.android.moments.Activities.BottomNavigation.expandedImageView;
+import static com.practice.android.moments.Activities.BottomNavigation.mCurrentAnimator;
+import static com.practice.android.moments.Activities.BottomNavigation.mShortAnimationDuration;
 import static com.practice.android.moments.Activities.BottomNavigation.size;
 import static com.practice.android.moments.Activities.BottomNavigation.thumb;
 import static com.practice.android.moments.Activities.BottomNavigation.zoom;
@@ -65,11 +68,11 @@ public class ProfileFragment extends Fragment {
 
     View containerA;
 
-    LinearLayout gone;
+    public static LinearLayout gone;
 
-    ImageView expandedImageView;
-    private Animator mCurrentAnimator;
-    private int mShortAnimationDuration;
+    //    ImageView expandedImageView;
+//    private Animator mCurrentAnimator;
+//    private int mShortAnimationDuration;
     String coveruri;
     FirebaseUser firebaseUser;
     String user_id, user_name;
