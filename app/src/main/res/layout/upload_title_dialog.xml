@@ -23,11 +23,11 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/input"
         android:hint="Enter Title"
-        android:textColorHint="#fdb3abab"
         android:paddingBottom="5dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="5dp"/>
+        android:paddingTop="5dp"
+        android:textColorHint="#fdb3abab"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,11 +45,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/input"
-        android:textColorHint="#fdb3abab"
         android:hint="Enter Description"
         android:paddingBottom="5dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingTop="5dp"/>
+        android:paddingTop="5dp"
+        android:textColorHint="#fdb3abab"/>
 
 </LinearLayout>

@@ -55,6 +55,8 @@ import static com.practice.android.moments.Activities.BottomNavigation.zoom;
 
 public class ProfileFragment extends Fragment {
 
+    @SuppressLint("StaticFieldLeak")
+    public static LinearLayout gone;
     private final String TAG = getClass().getSimpleName();
     ImageView settings, coverpic;
     LinearLayout photosNum;
@@ -68,7 +70,6 @@ public class ProfileFragment extends Fragment {
 
     View containerA;
 
-    public static LinearLayout gone;
 
     //    ImageView expandedImageView;
 //    private Animator mCurrentAnimator;
@@ -353,7 +354,7 @@ public class ProfileFragment extends Fragment {
 
                                             assert image != null;
                                             image.getMedium();
-
+                                            zoom = true;
                                             zoomImageFromThumb(viewHolder.profile, image.getMedium());
 
 

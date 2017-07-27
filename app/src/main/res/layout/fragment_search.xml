@@ -20,8 +20,8 @@
             android:drawableLeft="@drawable/search"
             android:gravity="center_vertical"
             android:hint="Search"
-            android:textColorHint="#fff"
-            android:textColor="#fff" />
+            android:textColor="#fff"
+            android:textColorHint="#fff"/>
 
 
     </LinearLayout>

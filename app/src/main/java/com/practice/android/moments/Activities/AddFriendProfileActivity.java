@@ -18,7 +18,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -36,10 +35,7 @@ import com.practice.android.moments.Models.Image;
 import com.practice.android.moments.Models.Profile_model_class;
 import com.practice.android.moments.R;
 
-import static com.practice.android.moments.Activities.BottomNavigation.context;
-import static com.practice.android.moments.Activities.BottomNavigation.size;
 import static com.practice.android.moments.Activities.BottomNavigation.thumb;
-import static com.practice.android.moments.Activities.BottomNavigation.zoom;
 
 
 public class AddFriendProfileActivity extends AppCompatActivity {
@@ -99,7 +95,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
         gone = (LinearLayout) findViewById(R.id.gone2);
         expandedImageView = (ImageView) findViewById(R.id.expanded_image);
-        containerA = findViewById(R.id.container);
+
 
         Log.e("data check", imagename_from_bottom + "\t" + userid_from_search);
 
@@ -155,24 +151,17 @@ public class AddFriendProfileActivity extends AppCompatActivity {
         }
 
 
+        coverpic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomNavigation.ZOOMTAG = "Profile Fragment";
+                zoomImageFromThumb(coverpic, coveruri);
 
-        try {
-            coverpic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    BottomNavigation.zoom = true;
-                    BottomNavigation.ZOOMTAG = "Profile Fragment";
-                    if (coveruri != null) {
-                        zoomImageFromThumb(coverpic, coveruri);
+            }
+        });
 
-                    } else {
-                        Toast.makeText(AddFriendProfileActivity.this, "Please Wait", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        } catch (Exception e) {
-            e.getMessage();
-        }
+        mShortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
     }
 
 
@@ -526,7 +515,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
 
         thumb = thumbView;
 
-        Glide.with(context).load(imageResId)
+        Glide.with(getApplicationContext()).load(imageResId)
                 .skipMemoryCache(false)
                 .placeholder(R.drawable.coffee1)
                 .into(expandedImageView);
@@ -540,9 +529,11 @@ public class AddFriendProfileActivity extends AppCompatActivity {
         final Point globalOffset = new Point();
 
         thumbView.getGlobalVisibleRect(startBounds);
-        containerA.getGlobalVisibleRect(finalBounds, globalOffset);
+        findViewById(R.id.container)
+                .getGlobalVisibleRect(finalBounds, globalOffset);
         startBounds.offset(-globalOffset.x, -globalOffset.y);
         finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
 
         float startScale;
         if ((float) finalBounds.width() / finalBounds.height()
@@ -568,9 +559,9 @@ public class AddFriendProfileActivity extends AppCompatActivity {
         thumbView.setAlpha(0f);
         gone.setVisibility(View.GONE);
 
-        containerA.setMinimumHeight(size.y);
-        containerA.getLayoutParams().height = size.y;
-        containerA.requestLayout();
+//        containerA.setMinimumHeight(size.y);
+//        containerA.getLayoutParams().height = size.y;
+//        containerA.requestLayout();
 
         expandedImageView.setVisibility(View.VISIBLE);
 
@@ -615,7 +606,6 @@ public class AddFriendProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                zoom = false;
 
                 if (mCurrentAnimator != null) {
                     mCurrentAnimator.cancel();
@@ -643,9 +633,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         gone.setVisibility(View.VISIBLE);
-                        containerA.setMinimumHeight(0);
-                        containerA.getLayoutParams().height = 0;
-                        containerA.requestLayout();
+
                         mCurrentAnimator = null;
                     }
 
@@ -654,9 +642,7 @@ public class AddFriendProfileActivity extends AppCompatActivity {
                         thumbView.setAlpha(1f);
                         expandedImageView.setVisibility(View.GONE);
                         gone.setVisibility(View.VISIBLE);
-                        containerA.setMinimumHeight(0);
-                        containerA.getLayoutParams().height = 0;
-                        containerA.requestLayout();
+
                         mCurrentAnimator = null;
                     }
                 });

@@ -9,19 +9,19 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:gravity="center_horizontal"
-        android:textSize="32sp"
-        android:textColor="#fff"
-        android:textStyle="italic"
         android:layout_height="wrap_content"
-        android:text="Privacy Policy"/>
+        android:gravity="center_horizontal"
+        android:text="Privacy Policy"
+        android:textColor="#fff"
+        android:textSize="32sp"
+        android:textStyle="italic"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textSize="24sp"
+        android:text="Coming Soon..."
         android:textColor="#fff"
-        android:text="Coming Soon..."/>
+        android:textSize="24sp"/>
 
 </LinearLayout>

@@ -66,6 +66,7 @@ public class EditingFragment extends Fragment {
     Uri tempURI;
     Uri mediumpic = null;
     Uri thumbnailpic = null;
+    Bitmap bmp1 = null;
     Uri download_uri;
     DatabaseReference databaseReference, mdatabaseReference;
     StorageReference mstorageReference;
@@ -197,7 +198,7 @@ public class EditingFragment extends Fragment {
         return v;
     }
 
-    Bitmap bmp1 = null;
+
 
     public void saveImage() {
         bmp1 = null;
